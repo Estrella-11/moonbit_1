@@ -2,9 +2,15 @@
 package "moonbit-community/moondockit"
 
 // Values
+pub fn blocks_to_toc(Array[MarkdownBlock]) -> Array[TocItem]
+
 pub fn extract_toc(String) -> Array[TocItem]
 
 pub fn html_escape(String) -> String
+
+pub fn parse_blocks(String) -> Array[MarkdownBlock]
+
+pub fn render_blocks(Array[MarkdownBlock]) -> String
 
 pub fn render_markdown(String) -> String
 
@@ -26,6 +32,14 @@ pub(all) struct DocPage {
 pub(all) struct DocSite {
   title : String
   pages : Array[DocPage]
+}
+
+pub(all) enum MarkdownBlock {
+  Heading(Int, String)
+  Paragraph(String)
+  UnorderedList(Array[String])
+  BlockQuote(String)
+  CodeBlock(String)
 }
 
 pub(all) struct RenderedPage {

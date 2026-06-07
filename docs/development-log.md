@@ -35,9 +35,12 @@ Repository setup:
 - Pushed the full project to GitHub `origin/main`.
 - Generated a one-page PDF project proposal at
   `docs/MoonDocKit-项目申报书.pdf`.
+- Added a block-level Markdown AST with `MarkdownBlock`, `parse_blocks`,
+  `blocks_to_toc`, and `render_blocks`, then kept the public
+  `render_markdown` API as a compatibility wrapper.
 
 Next engineering target:
 
-- Replace the line-oriented renderer with a block-level AST so later features
-  such as front matter, duplicate heading anchors, route planning, search index
-  generation, and templates can be built on a cleaner core.
+- Expand the block-level AST with inline parsing, source spans, front matter,
+  duplicate heading anchors, route planning, search index generation, and
+  templates.

@@ -29,6 +29,39 @@ test "extract_toc ignores code fences" {
   inspect(toc[2].anchor, content="usage")
 }
 
+test "parse_blocks builds stable block ast" {
+  let blocks = @moondockit.parse_blocks("# Guide\n\nIntro\n\n- one\n- two\n\n> note\n\n```\n# code\n```")
+  inspect(blocks.length(), content="5")
+  match blocks[0] {
+    Heading(level, title) => {
+      inspect(level, content="1")
+      inspect(title, content="Guide")
+    }
+    _ => fail("expected heading")
+  }
+  match blocks[2] {
+    UnorderedList(items) => {
+      inspect(items.length(), content="2")
+      inspect(items[1], content="two")
+    }
+    _ => fail("expected list")
+  }
+  match blocks[4] {
+    CodeBlock(code) => assert_true(code.contains("# code"))
+    _ => fail("expected code block")
+  }
+}
+
+test "render_blocks keeps renderer reusable" {
+  let blocks : Array[@moondockit.MarkdownBlock] = [
+    Heading(2, "API <Reference>"),
+    Paragraph("Use <safe> text."),
+  ]
+  let html = @moondockit.render_blocks(blocks)
+  assert_true(html.contains("<h2 id=\"api-reference\">API &lt;Reference&gt;</h2>"))
+  assert_true(html.contains("<p>Use &lt;safe&gt; text.</p>"))
+}
+
 test "render_site emits deterministic html pages" {
   let page : @moondockit.DocPage = {
     title: "Guide",

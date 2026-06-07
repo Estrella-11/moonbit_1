@@ -18,6 +18,15 @@ pub(all) struct TocItem {
   anchor : String
 }
 
+/// Block-level Markdown nodes used by the documentation pipeline.
+pub(all) enum MarkdownBlock {
+  Heading(Int, String)
+  Paragraph(String)
+  UnorderedList(Array[String])
+  BlockQuote(String)
+  CodeBlock(String)
+}
+
 /// Site metadata and pages.
 pub(all) struct DocSite {
   title : String
@@ -63,118 +72,148 @@ pub fn slugify(title : String) -> String {
 
 /// Extract level-1 and level-2 headings from Markdown source.
 pub fn extract_toc(markdown : String) -> Array[TocItem] {
+  blocks_to_toc(parse_blocks(markdown))
+}
+
+/// Extract heading entries from parsed Markdown blocks.
+pub fn blocks_to_toc(blocks : Array[MarkdownBlock]) -> Array[TocItem] {
   let items : Array[TocItem] = []
-  let mut in_code = false
-  for raw in markdown.split("\n") {
-    let line = raw.to_owned().trim().to_owned()
-    if line == "```" {
-      in_code = !in_code
-      continue
-    }
-    if in_code {
-      continue
-    }
-    if line.has_prefix("# ") {
-      let title = line[2:].to_owned()
-      items.push({ level: 1, title, anchor: slugify(title) })
-    } else if line.has_prefix("## ") {
-      let title = line[3:].to_owned()
-      items.push({ level: 2, title, anchor: slugify(title) })
+  for block in blocks {
+    match block {
+      Heading(level, title) => items.push({ level, title, anchor: slugify(title) })
+      _ => ()
     }
   }
   items
 }
 
-/// Render a useful subset of Markdown into HTML.
-///
-/// The current milestone intentionally keeps the parser line-oriented:
-/// headings, paragraphs, unordered lists, block quotes and fenced code blocks.
-/// Later milestones will replace this with a block AST while preserving the API.
-pub fn render_markdown(markdown : String) -> String {
-  let out = StringBuilder(size_hint=markdown.length() + 128)
+/// Parse a useful Markdown subset into block-level nodes.
+pub fn parse_blocks(markdown : String) -> Array[MarkdownBlock] {
+  let blocks : Array[MarkdownBlock] = []
   let mut in_code = false
+  let code = StringBuilder()
   let mut in_list = false
+  let list_items : Array[String] = []
   for raw in markdown.split("\n") {
     let line = raw.to_owned()
     let trimmed = line.trim().to_owned()
     if trimmed == "```" {
       if in_list {
-        out.write_string("</ul>\n")
+        blocks.push(UnorderedList(list_items.copy()))
+        list_items.clear()
         in_list = false
       }
       if in_code {
-        out.write_string("</code></pre>\n")
+        blocks.push(CodeBlock(code.to_string()))
+        code.reset()
       } else {
-        out.write_string("<pre><code>")
+        code.reset()
       }
       in_code = !in_code
       continue
     }
     if in_code {
-      out.write_string(html_escape(line))
-      out.write_char('\n')
+      code.write_string(line)
+      code.write_char('\n')
       continue
     }
     if trimmed == "" {
       if in_list {
-        out.write_string("</ul>\n")
+        blocks.push(UnorderedList(list_items.copy()))
+        list_items.clear()
         in_list = false
       }
       continue
     }
     if trimmed.has_prefix("# ") {
-      close_list(out, in_list)
+      close_pending_list(blocks, list_items, in_list)
       in_list = false
-      let text = trimmed[2:].to_owned()
-      out.write_string("<h1 id=\"")
-      out.write_string(slugify(text))
-      out.write_string("\">")
-      out.write_string(html_escape(text))
-      out.write_string("</h1>\n")
+      blocks.push(Heading(1, trimmed[2:].to_owned()))
     } else if trimmed.has_prefix("## ") {
-      close_list(out, in_list)
+      close_pending_list(blocks, list_items, in_list)
       in_list = false
-      let text = trimmed[3:].to_owned()
-      out.write_string("<h2 id=\"")
-      out.write_string(slugify(text))
-      out.write_string("\">")
-      out.write_string(html_escape(text))
-      out.write_string("</h2>\n")
+      blocks.push(Heading(2, trimmed[3:].to_owned()))
     } else if trimmed.has_prefix("- ") {
-      if !in_list {
-        out.write_string("<ul>\n")
-        in_list = true
-      }
-      out.write_string("<li>")
-      out.write_string(render_inline(trimmed[2:].to_owned()))
-      out.write_string("</li>\n")
+      in_list = true
+      list_items.push(trimmed[2:].to_owned())
     } else if trimmed.has_prefix("> ") {
-      close_list(out, in_list)
+      close_pending_list(blocks, list_items, in_list)
       in_list = false
-      out.write_string("<blockquote>")
-      out.write_string(render_inline(trimmed[2:].to_owned()))
-      out.write_string("</blockquote>\n")
+      blocks.push(BlockQuote(trimmed[2:].to_owned()))
     } else {
-      close_list(out, in_list)
+      close_pending_list(blocks, list_items, in_list)
       in_list = false
-      out.write_string("<p>")
-      out.write_string(render_inline(trimmed))
-      out.write_string("</p>\n")
+      blocks.push(Paragraph(trimmed))
     }
   }
   if in_list {
-    out.write_string("</ul>\n")
+    blocks.push(UnorderedList(list_items.copy()))
   }
   if in_code {
-    out.write_string("</code></pre>\n")
+    blocks.push(CodeBlock(code.to_string()))
+  }
+  blocks
+}
+
+fn close_pending_list(
+  blocks : Array[MarkdownBlock],
+  list_items : Array[String],
+  is_open : Bool,
+) -> Unit {
+  if is_open {
+    blocks.push(UnorderedList(list_items.copy()))
+    list_items.clear()
+  }
+}
+
+/// Render parsed Markdown blocks to HTML.
+pub fn render_blocks(blocks : Array[MarkdownBlock]) -> String {
+  let out = StringBuilder()
+  for block in blocks {
+    match block {
+      Heading(level, text) => {
+        out.write_string("<h")
+        out.write_string(level.to_string())
+        out.write_string(" id=\"")
+        out.write_string(slugify(text))
+        out.write_string("\">")
+        out.write_string(html_escape(text))
+        out.write_string("</h")
+        out.write_string(level.to_string())
+        out.write_string(">\n")
+      }
+      Paragraph(text) => {
+        out.write_string("<p>")
+        out.write_string(render_inline(text))
+        out.write_string("</p>\n")
+      }
+      UnorderedList(items) => {
+        out.write_string("<ul>\n")
+        for item in items {
+          out.write_string("<li>")
+          out.write_string(render_inline(item))
+          out.write_string("</li>\n")
+        }
+        out.write_string("</ul>\n")
+      }
+      BlockQuote(text) => {
+        out.write_string("<blockquote>")
+        out.write_string(render_inline(text))
+        out.write_string("</blockquote>\n")
+      }
+      CodeBlock(code) => {
+        out.write_string("<pre><code>")
+        out.write_string(html_escape(code))
+        out.write_string("</code></pre>\n")
+      }
+    }
   }
   out.to_string()
 }
 
-fn close_list(out : StringBuilder, is_open : Bool) -> Unit {
-  if is_open {
-    out.write_string("</ul>\n")
-  }
+/// Render a useful subset of Markdown into HTML.
+pub fn render_markdown(markdown : String) -> String {
+  render_blocks(parse_blocks(markdown))
 }
 
 fn render_inline(input : String) -> String {

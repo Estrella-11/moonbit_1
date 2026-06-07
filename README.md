@@ -20,8 +20,9 @@ Repository mirrors:
 
 - Safe HTML escaping for generated pages.
 - Stable ASCII slug generation for headings and page routes.
-- A small line-oriented Markdown renderer for headings, paragraphs, lists,
-  block quotes, and fenced code blocks.
+- Block-level Markdown AST for headings, paragraphs, lists, block quotes, and
+  fenced code blocks.
+- HTML rendering from parsed Markdown blocks.
 - Heading extraction and automatic on-page table of contents.
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.
@@ -50,7 +51,7 @@ site.
 MoonDocKit will grow into a practical documentation toolkit for the MoonBit
 ecosystem:
 
-- Parse project docs into a block-level AST.
+- Expand the block-level AST with inline nodes and source spans.
 - Render multi-page static documentation sites.
 - Generate search indexes.
 - Support front matter for page title, order, tags, and layout.
