@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API Reference - MoonDocKit Example</title>
+  <style>
+    body { margin: 0; font: 16px/1.6 system-ui, sans-serif; color: #172033; }
+    aside { position: fixed; inset: 0 auto 0 0; width: 240px; padding: 28px; background: #f6f8fc; border-right: 1px solid #dde3ee; }
+    nav { display: grid; gap: 8px; margin-top: 18px; }
+    main { max-width: 820px; margin-left: 300px; padding: 42px 32px; }
+    a { color: #2457c5; text-decoration: none; }
+    pre { padding: 16px; background: #101828; color: #eef4ff; overflow: auto; }
+  </style>
+</head>
+<body>
+  <aside><strong>MoonDocKit Example</strong><nav><a href="quick-start.html">Quick Start</a>
+<a href="api.html">API Reference</a>
+<a href="changelog.html">Changelog</a></nav></aside>
+  <main><h1 id="api-reference">API Reference</h1>
+<p>The public API is built around a few small data models.</p>
+<h2 id="pages">Pages</h2>
+<p>`DocPage` stores a source page with a title, slug, and Markdown body.</p>
+<h2 id="routes">Routes</h2>
+<p>`plan_routes` reads page metadata and creates deterministic page paths.</p>
+<h2 id="output">Output</h2>
+<p>`build_site_manifest` returns generated files without touching the filesystem.</p></main>
+</body>
+</html>

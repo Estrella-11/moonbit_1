@@ -1,0 +1,5 @@
+[
+  {"title":"Quick Start","path":"quick-start.html","text":"# Quick Start  MoonDocKit turns MoonBit package notes into a small static documentation site.  - parse front matter - render HTML pages - generate navigation - build a search index  ## Install  Add the package once it is published to mooncakes.io.  ## Generate  Use the library API to build an output manifest, then write every `OutputFile` to a destination directory."},
+  {"title":"API Reference","path":"api.html","text":"# API Reference  The public API is built around a few small data models.  ## Pages  `DocPage` stores a source page with a title, slug, and Markdown body.  ## Routes  `plan_routes` reads page metadata and creates deterministic page paths.  ## Output  `build_site_manifest` returns generated files without touching the filesystem."},
+  {"title":"Changelog","path":"changelog.html","text":"# Changelog  ## 0.1.0  Initial competition baseline:  - block-level Markdown parsing - front matter parsing - table of contents generation - static output manifest - search index generation"}
+]

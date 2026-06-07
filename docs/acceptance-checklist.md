@@ -25,5 +25,8 @@
 - [x] Search index implemented.
 - [x] Site summary metadata implemented.
 - [x] CLI demo prints manifest and summary.
+- [x] Example documentation site added.
+- [x] Benchmark notes added.
+- [x] Acceptance guide added.
 - [ ] mooncakes.io package published.
 - [ ] Final acceptance material prepared.

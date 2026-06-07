@@ -52,7 +52,11 @@ site.
 - One-page project proposal: `docs/MoonDocKit-项目申报书.pdf`
 - Development plan: `docs/competition-plan.md`
 - Acceptance checklist: `docs/acceptance-checklist.md`
+- Acceptance guide: `docs/acceptance-guide.md`
 - Development log: `docs/development-log.md`
+- Benchmark notes: `docs/benchmark-notes.md`
+- Example site sources: `examples/site`
+- Generated example site: `dist-example`
 
 ## Project Direction
 

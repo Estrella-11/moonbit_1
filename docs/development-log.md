@@ -56,6 +56,9 @@ Repository setup:
 - Added `SiteSummary` and `summarize_site` for demo output and validation.
 - Upgraded `cmd/main` so `moon run cmd/main` prints generated output files and
   site statistics instead of a raw HTML page.
+- Added example documentation sources under `examples/site` and generated a
+  static example site under `dist-example`.
+- Added benchmark notes and an acceptance guide for reviewer verification.
 
 Next engineering target:
 
