@@ -10,11 +10,15 @@ pub fn build_site_manifest(DocSite) -> Array[OutputFile]
 
 pub fn collect_search_entries(DocSite) -> Array[SearchEntry]
 
+pub fn diagnostics_to_text(ValidationReport) -> String
+
 pub fn empty_front_matter() -> FrontMatter
 
 pub fn extract_headings(Array[MarkdownBlock]) -> Array[AnchoredHeading]
 
 pub fn extract_toc(String) -> Array[TocItem]
+
+pub fn has_validation_errors(ValidationReport) -> Bool
 
 pub fn html_escape(String) -> String
 
@@ -36,6 +40,8 @@ pub fn slugify(String) -> String
 
 pub fn summarize_site(DocSite) -> SiteSummary
 
+pub fn validate_site(DocSite) -> ValidationReport
+
 // Errors
 
 // Types and methods
@@ -43,6 +49,11 @@ pub(all) struct AnchoredHeading {
   level : Int
   title : String
   anchor : String
+}
+
+pub(all) enum DiagnosticLevel {
+  DiagError
+  DiagWarning
 }
 
 pub(all) struct DocPage {
@@ -101,6 +112,13 @@ pub(all) struct SearchEntry {
   tags : Array[String]
 }
 
+pub(all) struct SiteDiagnostic {
+  level : DiagnosticLevel
+  code : String
+  message : String
+  page : String?
+}
+
 pub(all) struct SiteSummary {
   page_count : Int
   output_count : Int
@@ -112,6 +130,10 @@ pub(all) struct TocItem {
   level : Int
   title : String
   anchor : String
+}
+
+pub(all) struct ValidationReport {
+  diagnostics : Array[SiteDiagnostic]
 }
 
 // Type aliases

@@ -24,6 +24,7 @@
 - [x] Multi-page static output manifest implemented.
 - [x] Search index implemented.
 - [x] Site summary metadata implemented.
+- [x] Site validation diagnostics implemented.
 - [x] CLI demo prints manifest and summary.
 - [x] Example documentation site added.
 - [x] Benchmark notes added.

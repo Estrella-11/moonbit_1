@@ -33,6 +33,25 @@ pub(all) struct SiteSummary {
   tag_count : Int
 }
 
+/// Severity level for site validation diagnostics.
+pub(all) enum DiagnosticLevel {
+  DiagError
+  DiagWarning
+}
+
+/// A validation finding for a site or one source page.
+pub(all) struct SiteDiagnostic {
+  level : DiagnosticLevel
+  code : String
+  message : String
+  page : String?
+}
+
+/// Site validation result returned before rendering or publishing.
+pub(all) struct ValidationReport {
+  diagnostics : Array[SiteDiagnostic]
+}
+
 /// Planned route metadata for one documentation page.
 pub(all) struct RouteEntry {
   title : String
@@ -606,6 +625,113 @@ pub fn summarize_site(site : DocSite) -> SiteSummary {
     search_entry_count: search_entries.length(),
     tag_count: tags.length(),
   }
+}
+
+/// Validate a site before rendering or publishing.
+pub fn validate_site(site : DocSite) -> ValidationReport {
+  let diagnostics : Array[SiteDiagnostic] = []
+  if site.title.trim().to_owned() == "" {
+    diagnostics.push({
+      level: DiagWarning,
+      code: "empty-site-title",
+      message: "site title is empty",
+      page: None,
+    })
+  }
+  if site.pages.length() == 0 {
+    diagnostics.push({
+      level: DiagError,
+      code: "empty-site",
+      message: "site has no pages",
+      page: None,
+    })
+  }
+  let paths : Array[String] = []
+  for page in site.pages {
+    validate_page(page, paths, diagnostics)
+  }
+  { diagnostics, }
+}
+
+fn validate_page(
+  page : DocPage,
+  paths : Array[String],
+  diagnostics : Array[SiteDiagnostic],
+) -> Unit {
+  let route = route_for_page(page)
+  let page_name = if page.title.trim().to_owned() == "" { page.slug } else { page.title }
+  if route.title.trim().to_owned() == "" {
+    diagnostics.push({
+      level: DiagError,
+      code: "empty-page-title",
+      message: "page title is empty",
+      page: Some(page_name),
+    })
+  }
+  if route.slug.trim().to_owned() == "" {
+    diagnostics.push({
+      level: DiagError,
+      code: "empty-route",
+      message: "page route slug is empty",
+      page: Some(page_name),
+    })
+  } else if paths.contains(route.path) {
+    diagnostics.push({
+      level: DiagError,
+      code: "duplicate-route",
+      message: "more than one page renders to " + route.path,
+      page: Some(page_name),
+    })
+  } else {
+    paths.push(route.path)
+  }
+  if page.source.trim().to_owned() == "" {
+    diagnostics.push({
+      level: DiagWarning,
+      code: "empty-source",
+      message: "page source is empty",
+      page: Some(page_name),
+    })
+  }
+}
+
+/// Return true when a validation report contains at least one error.
+pub fn has_validation_errors(report : ValidationReport) -> Bool {
+  for diagnostic in report.diagnostics {
+    match diagnostic.level {
+      DiagError => return true
+      DiagWarning => ()
+    }
+  }
+  false
+}
+
+/// Render diagnostics as stable text for CLI output and logs.
+pub fn diagnostics_to_text(report : ValidationReport) -> String {
+  if report.diagnostics.length() == 0 {
+    return "ok"
+  }
+  let out = StringBuilder()
+  for diagnostic in report.diagnostics {
+    match diagnostic.level {
+      DiagError => out.write_string("error")
+      DiagWarning => out.write_string("warning")
+    }
+    out.write_string(" ")
+    out.write_string(diagnostic.code)
+    match diagnostic.page {
+      Some(page) => {
+        out.write_string(" [")
+        out.write_string(page)
+        out.write_string("]")
+      }
+      None => ()
+    }
+    out.write_string(": ")
+    out.write_string(diagnostic.message)
+    out.write_char('\n')
+  }
+  out.to_string()
 }
 
 fn blocks_to_plain_text(blocks : Array[MarkdownBlock]) -> String {

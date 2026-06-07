@@ -63,6 +63,9 @@ Repository setup:
   competition baseline.
 - Added `tools/verify_project.py` as a one-shot local verification script for
   required files, proposal PDF, example output, and MoonBit commands.
+- Added site validation diagnostics with machine-readable severity, code,
+  message, and optional page metadata; the demo now reports diagnostic counts
+  before listing generated files.
 
 Next engineering target:
 

@@ -31,6 +31,8 @@ Repository mirrors:
 - Static output manifest generation for rendered HTML files.
 - JSON search index generation.
 - Site summary metadata for demos and validation.
+- Site validation diagnostics for empty sites, empty titles, empty source
+  pages, and duplicate output routes.
 - Runnable demo that prints generated files and site statistics.
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.
@@ -69,6 +71,7 @@ ecosystem:
 - Expand the block-level AST with inline nodes and source spans.
 - Add a CLI writer for static output manifests.
 - Generate search indexes.
+- Report validation diagnostics before publishing.
 - Support front matter for page title, order, tags, and layout.
 - Provide templates for package docs, tutorials, examples, and changelogs.
 - Publish as a reusable package on mooncakes.io.

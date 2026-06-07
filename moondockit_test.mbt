@@ -158,6 +158,46 @@ test "summarize_site counts pages outputs search and tags" {
   inspect(summary.tag_count, content="2")
 }
 
+test "validate_site accepts healthy documentation sites" {
+  let page : @moondockit.DocPage = {
+    title: "Guide",
+    slug: "guide",
+    source: "# Guide\n\nShip docs.",
+  }
+  let report = @moondockit.validate_site({ title: "Docs", pages: [page] })
+  inspect(report.diagnostics.length(), content="0")
+  assert_false(@moondockit.has_validation_errors(report))
+  inspect(@moondockit.diagnostics_to_text(report), content="ok")
+}
+
+test "validate_site reports empty and duplicate routes" {
+  let empty_report = @moondockit.validate_site({ title: "", pages: [] })
+  inspect(empty_report.diagnostics.length(), content="2")
+  assert_true(@moondockit.has_validation_errors(empty_report))
+  let empty_text = @moondockit.diagnostics_to_text(empty_report)
+  assert_true(empty_text.contains("warning empty-site-title"))
+  assert_true(empty_text.contains("error empty-site"))
+
+  let first : @moondockit.DocPage = {
+    title: "Intro",
+    slug: "intro",
+    source: "# Intro",
+  }
+  let second : @moondockit.DocPage = {
+    title: "Intro Again",
+    slug: "intro",
+    source: "",
+  }
+  let duplicate_report = @moondockit.validate_site({
+    title: "Docs",
+    pages: [first, second],
+  })
+  assert_true(@moondockit.has_validation_errors(duplicate_report))
+  let duplicate_text = @moondockit.diagnostics_to_text(duplicate_report)
+  assert_true(duplicate_text.contains("error duplicate-route [Intro Again]"))
+  assert_true(duplicate_text.contains("warning empty-source [Intro Again]"))
+}
+
 test "parse_blocks builds stable block ast" {
   let blocks = @moondockit.parse_blocks("# Guide\n\nIntro\ncontinued\n\n- one\n- two\n\n> note\n\n```mbt\n# code\n```")
   inspect(blocks.length(), content="5")

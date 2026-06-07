@@ -13,8 +13,10 @@ fn main {
   }
   let site : @moondockit.DocSite = { title: "MoonDocKit Demo", pages: [guide, api] }
   let summary = @moondockit.summarize_site(site)
+  let report = @moondockit.validate_site(site)
   println("MoonDocKit Demo")
   println("pages: \{summary.page_count}, outputs: \{summary.output_count}, search entries: \{summary.search_entry_count}, tags: \{summary.tag_count}")
+  println("diagnostics: \{report.diagnostics.length()}, has errors: \{@moondockit.has_validation_errors(report)}")
   println("files:")
   for file in @moondockit.build_site_manifest(site) {
     println("- \{file.path} (\{file.content.length()} bytes)")
