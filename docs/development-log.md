@@ -25,6 +25,14 @@ Verification:
 - `moon test`
 - `moon run cmd/main`
 
+Repository setup:
+
+- Configured GitHub remote: https://github.com/Estrella-11/moonbit_1
+- Configured Gitlink remote: https://gitlink.org.cn/Estrella/moonbit
+- Pushed the initial `main` branch to Gitlink.
+- GitHub push is pending because the current environment could not connect to
+  `github.com:443`.
+
 Next engineering target:
 
 - Replace the line-oriented renderer with a block-level AST so later features

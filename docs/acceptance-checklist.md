@@ -10,7 +10,8 @@
 - [x] Development log started.
 - [x] GitHub repository URL filled in.
 - [x] Gitlink repository created.
-- [ ] Gitlink repository synchronized.
+- [x] Gitlink repository synchronized.
+- [ ] GitHub repository synchronized from local main branch.
 - [ ] 10-20 meaningful declaration-stage commits completed.
 - [ ] Project proposal exported as one-page PDF.
 - [ ] Block AST parser implemented.
