@@ -34,7 +34,7 @@ Repository setup:
   `gitlink/master`, so the default branch also displays the project.
 - Pushed the full project to GitHub `origin/main`.
 - Generated a one-page PDF project proposal at
-  `docs/MoonDocKit-项目申报书.pdf`.
+  `docs/MoonDocKit-项目申报书-附录二模板版.pdf`.
 - Added a block-level Markdown AST with `MarkdownBlock`, `parse_blocks`,
   `blocks_to_toc`, and `render_blocks`, then kept the public
   `render_markdown` API as a compatibility wrapper.

@@ -26,10 +26,9 @@ def require(path: str) -> Path:
 
 
 def verify_pdf() -> None:
-    matches = sorted((ROOT / "docs").glob("MoonDocKit-*.pdf"))
-    if not matches:
-        raise SystemExit("missing required file: docs/MoonDocKit-*.pdf")
-    pdf = matches[0]
+    pdf = ROOT / "docs" / "MoonDocKit-项目申报书-附录二模板版.pdf"
+    if not pdf.exists():
+        raise SystemExit("missing required file: docs/MoonDocKit-项目申报书-附录二模板版.pdf")
     if PdfReader is None:
         print("warning: pypdf is not installed; skipped one-page PDF validation")
         return

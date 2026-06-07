@@ -62,7 +62,7 @@ For competition review, start with:
 
 ## Competition Materials
 
-- One-page project proposal: `docs/MoonDocKit-项目申报书.pdf`
+- One-page project proposal: `docs/MoonDocKit-项目申报书-附录二模板版.pdf`
 - Development plan: `docs/competition-plan.md`
 - Acceptance checklist: `docs/acceptance-checklist.md`
 - Acceptance guide: `docs/acceptance-guide.md`

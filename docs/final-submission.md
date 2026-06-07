@@ -11,7 +11,7 @@ open-source competition.
 ## Reviewer Entry Points
 
 - Project overview: `README.md`
-- One-page proposal PDF: `docs/MoonDocKit-*.pdf`
+- One-page proposal PDF: `docs/MoonDocKit-项目申报书-附录二模板版.pdf`
 - Acceptance guide: `docs/acceptance-guide.md`
 - Release notes: `docs/release.md`
 - Example source pages: `examples/site`
