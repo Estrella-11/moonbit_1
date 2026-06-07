@@ -18,6 +18,7 @@
 - [x] Project proposal exported as one-page PDF.
 - [x] Block AST parser implemented.
 - [x] Front matter parser implemented.
+- [x] Route planning for multi-page docs implemented.
 - [x] TOC generation implemented.
 - [x] Duplicate heading anchors handled.
 - [ ] Multi-page static output implemented.

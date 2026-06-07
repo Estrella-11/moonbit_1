@@ -27,6 +27,7 @@ Repository mirrors:
 - Heading extraction and automatic on-page table of contents.
 - Page-unique heading anchors for duplicate section titles.
 - Front matter parsing for page title, order, tags, and custom fields.
+- Route planning for multi-page sites using page slug and front matter order.
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.
 - Blackbox tests for public behavior.

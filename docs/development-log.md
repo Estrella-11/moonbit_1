@@ -47,8 +47,10 @@ Repository setup:
 - Added front matter parsing with `FrontMatter` and `ParsedDocument`, covering
   page title, order, tags, custom fields, and graceful fallback for unclosed
   metadata blocks.
+- Added route planning with `RouteEntry` and `plan_routes`, using front matter
+  title/order/tags plus page slugs to generate deterministic navigation paths.
 
 Next engineering target:
 
-- Expand the block-level AST with inline parsing, source spans, route planning,
-  search index generation, and templates.
+- Expand the block-level AST with inline parsing, source spans, static output
+  manifests, search index generation, and templates.

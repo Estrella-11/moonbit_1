@@ -16,6 +16,8 @@ pub fn parse_blocks(String) -> Array[MarkdownBlock]
 
 pub fn parse_document(String) -> ParsedDocument
 
+pub fn plan_routes(DocSite) -> Array[RouteEntry]
+
 pub fn render_blocks(Array[MarkdownBlock]) -> String
 
 pub fn render_markdown(String) -> String
@@ -69,6 +71,14 @@ pub(all) struct ParsedDocument {
 pub(all) struct RenderedPage {
   path : String
   html : String
+}
+
+pub(all) struct RouteEntry {
+  title : String
+  slug : String
+  path : String
+  order : Int?
+  tags : Array[String]
 }
 
 pub(all) struct TocItem {

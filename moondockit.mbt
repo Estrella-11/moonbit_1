@@ -11,6 +11,15 @@ pub(all) struct RenderedPage {
   html : String
 }
 
+/// Planned route metadata for one documentation page.
+pub(all) struct RouteEntry {
+  title : String
+  slug : String
+  path : String
+  order : Int?
+  tags : Array[String]
+}
+
 /// Parsed page metadata from a leading front matter block.
 pub(all) struct FrontMatter {
   title : String?
@@ -57,6 +66,51 @@ pub fn empty_front_matter() -> FrontMatter {
 pub(all) struct DocSite {
   title : String
   pages : Array[DocPage]
+}
+
+/// Build a stable route table for all pages in a site.
+pub fn plan_routes(site : DocSite) -> Array[RouteEntry] {
+  let routes : Array[RouteEntry] = []
+  for page in site.pages {
+    let doc = parse_document(page.source)
+    let title = match doc.front_matter.title {
+      Some(value) => value
+      None => page.title
+    }
+    let slug = if page.slug == "" { slugify(title) } else { page.slug }
+    routes.push({
+      title,
+      slug,
+      path: slug + ".html",
+      order: doc.front_matter.order,
+      tags: doc.front_matter.tags,
+    })
+  }
+  routes.sort_by(compare_routes)
+  routes
+}
+
+fn compare_routes(left : RouteEntry, right : RouteEntry) -> Int {
+  match (left.order, right.order) {
+    (Some(a), Some(b)) =>
+      if a != b {
+        a - b
+      } else {
+        compare_route_title(left, right)
+      }
+    (Some(_), None) => -1
+    (None, Some(_)) => 1
+    (None, None) => compare_route_title(left, right)
+  }
+}
+
+fn compare_route_title(left : RouteEntry, right : RouteEntry) -> Int {
+  let by_title = left.title.compare(right.title)
+  if by_title != 0 {
+    by_title
+  } else {
+    left.slug.compare(right.slug)
+  }
 }
 
 /// Escape text for safe HTML output.
@@ -431,6 +485,7 @@ fn render_inline(input : String) -> String {
 pub fn render_page(site : DocSite, page : DocPage) -> RenderedPage {
   let body = render_markdown(page.source)
   let toc = render_toc(extract_toc(page.source))
+  let routes = plan_routes(site)
   let out = StringBuilder(size_hint=body.length() + 1024)
   out.write_string("<!doctype html>\n<html><head><meta charset=\"utf-8\">\n")
   out.write_string("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n")
@@ -443,10 +498,10 @@ pub fn render_page(site : DocSite, page : DocPage) -> RenderedPage {
   out.write_string("</head><body><aside><strong>")
   out.write_string(html_escape(site.title))
   out.write_string("</strong><nav>")
-  for item in site.pages {
+  for item in routes {
     out.write_string("<a href=\"")
-    out.write_string(html_escape(item.slug))
-    out.write_string(".html\">")
+    out.write_string(html_escape(item.path))
+    out.write_string("\">")
     out.write_string(html_escape(item.title))
     out.write_string("</a>")
   }

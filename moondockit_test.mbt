@@ -72,6 +72,36 @@ test "parse_document ignores unclosed front matter" {
   assert_true(@moondockit.render_blocks(doc.blocks).contains("title: Draft"))
 }
 
+test "plan_routes uses front matter and stable ordering" {
+  let intro : @moondockit.DocPage = {
+    title: "Fallback Intro",
+    slug: "",
+    source: "---\ntitle: Intro\norder: 2\ntags: [guide]\n---\n# Intro",
+  }
+  let api : @moondockit.DocPage = {
+    title: "API",
+    slug: "api",
+    source: "---\norder: 1\ntags: [reference, moonbit]\n---\n# API",
+  }
+  let changelog : @moondockit.DocPage = {
+    title: "Changelog",
+    slug: "changelog",
+    source: "# Changelog",
+  }
+  let site : @moondockit.DocSite = {
+    title: "Docs",
+    pages: [intro, changelog, api],
+  }
+  let routes = @moondockit.plan_routes(site)
+  inspect(routes.length(), content="3")
+  inspect(routes[0].title, content="API")
+  inspect(routes[0].path, content="api.html")
+  inspect(routes[0].tags[1], content="moonbit")
+  inspect(routes[1].title, content="Intro")
+  inspect(routes[1].slug, content="intro")
+  inspect(routes[2].title, content="Changelog")
+}
+
 test "parse_blocks builds stable block ast" {
   let blocks = @moondockit.parse_blocks("# Guide\n\nIntro\ncontinued\n\n- one\n- two\n\n> note\n\n```mbt\n# code\n```")
   inspect(blocks.length(), content="5")
