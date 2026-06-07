@@ -24,7 +24,7 @@ pub(all) enum MarkdownBlock {
   Paragraph(String)
   UnorderedList(Array[String])
   BlockQuote(String)
-  CodeBlock(String)
+  CodeBlock(String, String)
 }
 
 /// Site metadata and pages.
@@ -91,23 +91,25 @@ pub fn blocks_to_toc(blocks : Array[MarkdownBlock]) -> Array[TocItem] {
 pub fn parse_blocks(markdown : String) -> Array[MarkdownBlock] {
   let blocks : Array[MarkdownBlock] = []
   let mut in_code = false
+  let mut code_language = ""
   let code = StringBuilder()
   let mut in_list = false
   let list_items : Array[String] = []
+  let paragraph = StringBuilder()
   for raw in markdown.split("\n") {
     let line = raw.to_owned()
     let trimmed = line.trim().to_owned()
-    if trimmed == "```" {
-      if in_list {
-        blocks.push(UnorderedList(list_items.copy()))
-        list_items.clear()
-        in_list = false
-      }
+    if trimmed.has_prefix("```") {
+      close_pending_paragraph(blocks, paragraph)
+      close_pending_list(blocks, list_items, in_list)
+      in_list = false
       if in_code {
-        blocks.push(CodeBlock(code.to_string()))
+        blocks.push(CodeBlock(code_language, code.to_string()))
         code.reset()
+        code_language = ""
       } else {
         code.reset()
+        code_language = trimmed[3:].to_owned().trim().to_owned()
       }
       in_code = !in_code
       continue
@@ -118,41 +120,63 @@ pub fn parse_blocks(markdown : String) -> Array[MarkdownBlock] {
       continue
     }
     if trimmed == "" {
-      if in_list {
-        blocks.push(UnorderedList(list_items.copy()))
-        list_items.clear()
-        in_list = false
-      }
+      close_pending_paragraph(blocks, paragraph)
+      close_pending_list(blocks, list_items, in_list)
+      in_list = false
       continue
     }
     if trimmed.has_prefix("# ") {
+      close_pending_paragraph(blocks, paragraph)
       close_pending_list(blocks, list_items, in_list)
       in_list = false
       blocks.push(Heading(1, trimmed[2:].to_owned()))
     } else if trimmed.has_prefix("## ") {
+      close_pending_paragraph(blocks, paragraph)
       close_pending_list(blocks, list_items, in_list)
       in_list = false
       blocks.push(Heading(2, trimmed[3:].to_owned()))
     } else if trimmed.has_prefix("- ") {
+      close_pending_paragraph(blocks, paragraph)
       in_list = true
       list_items.push(trimmed[2:].to_owned())
     } else if trimmed.has_prefix("> ") {
+      close_pending_paragraph(blocks, paragraph)
       close_pending_list(blocks, list_items, in_list)
       in_list = false
       blocks.push(BlockQuote(trimmed[2:].to_owned()))
     } else {
-      close_pending_list(blocks, list_items, in_list)
-      in_list = false
-      blocks.push(Paragraph(trimmed))
+      if in_list {
+        close_pending_list(blocks, list_items, in_list)
+        in_list = false
+      }
+      append_paragraph_line(paragraph, trimmed)
     }
   }
+  close_pending_paragraph(blocks, paragraph)
   if in_list {
     blocks.push(UnorderedList(list_items.copy()))
   }
   if in_code {
-    blocks.push(CodeBlock(code.to_string()))
+    blocks.push(CodeBlock(code_language, code.to_string()))
   }
   blocks
+}
+
+fn append_paragraph_line(paragraph : StringBuilder, line : String) -> Unit {
+  if !paragraph.is_empty() {
+    paragraph.write_char(' ')
+  }
+  paragraph.write_string(line)
+}
+
+fn close_pending_paragraph(
+  blocks : Array[MarkdownBlock],
+  paragraph : StringBuilder,
+) -> Unit {
+  if !paragraph.is_empty() {
+    blocks.push(Paragraph(paragraph.to_string()))
+    paragraph.reset()
+  }
 }
 
 fn close_pending_list(
@@ -201,8 +225,14 @@ pub fn render_blocks(blocks : Array[MarkdownBlock]) -> String {
         out.write_string(render_inline(text))
         out.write_string("</blockquote>\n")
       }
-      CodeBlock(code) => {
-        out.write_string("<pre><code>")
+      CodeBlock(language, code) => {
+        if language == "" {
+          out.write_string("<pre><code>")
+        } else {
+          out.write_string("<pre><code class=\"language-")
+          out.write_string(html_escape(slugify(language)))
+          out.write_string("\">")
+        }
         out.write_string(html_escape(code))
         out.write_string("</code></pre>\n")
       }

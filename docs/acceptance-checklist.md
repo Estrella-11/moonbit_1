@@ -13,6 +13,7 @@
 - [x] Gitlink repository synchronized.
 - [x] GitHub repository synchronized from local main branch.
 - [x] Block AST data model implemented.
+- [x] Block parser handles paragraph folding and fenced code languages.
 - [ ] 10-20 meaningful declaration-stage commits completed.
 - [x] Project proposal exported as one-page PDF.
 - [x] Block AST parser implemented.

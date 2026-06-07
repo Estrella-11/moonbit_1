@@ -39,7 +39,7 @@ pub(all) enum MarkdownBlock {
   Paragraph(String)
   UnorderedList(Array[String])
   BlockQuote(String)
-  CodeBlock(String)
+  CodeBlock(String, String)
 }
 
 pub(all) struct RenderedPage {

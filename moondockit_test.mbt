@@ -30,7 +30,7 @@ test "extract_toc ignores code fences" {
 }
 
 test "parse_blocks builds stable block ast" {
-  let blocks = @moondockit.parse_blocks("# Guide\n\nIntro\n\n- one\n- two\n\n> note\n\n```\n# code\n```")
+  let blocks = @moondockit.parse_blocks("# Guide\n\nIntro\ncontinued\n\n- one\n- two\n\n> note\n\n```mbt\n# code\n```")
   inspect(blocks.length(), content="5")
   match blocks[0] {
     Heading(level, title) => {
@@ -47,8 +47,15 @@ test "parse_blocks builds stable block ast" {
     _ => fail("expected list")
   }
   match blocks[4] {
-    CodeBlock(code) => assert_true(code.contains("# code"))
+    CodeBlock(language, code) => {
+      inspect(language, content="mbt")
+      assert_true(code.contains("# code"))
+    }
     _ => fail("expected code block")
+  }
+  match blocks[1] {
+    Paragraph(text) => inspect(text, content="Intro continued")
+    _ => fail("expected merged paragraph")
   }
 }
 
@@ -56,10 +63,12 @@ test "render_blocks keeps renderer reusable" {
   let blocks : Array[@moondockit.MarkdownBlock] = [
     Heading(2, "API <Reference>"),
     Paragraph("Use <safe> text."),
+    CodeBlock("mbt", "let ok = true"),
   ]
   let html = @moondockit.render_blocks(blocks)
   assert_true(html.contains("<h2 id=\"api-reference\">API &lt;Reference&gt;</h2>"))
   assert_true(html.contains("<p>Use &lt;safe&gt; text.</p>"))
+  assert_true(html.contains("<code class=\"language-mbt\">let ok = true</code>"))
 }
 
 test "render_site emits deterministic html pages" {

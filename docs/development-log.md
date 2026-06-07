@@ -38,6 +38,9 @@ Repository setup:
 - Added a block-level Markdown AST with `MarkdownBlock`, `parse_blocks`,
   `blocks_to_toc`, and `render_blocks`, then kept the public
   `render_markdown` API as a compatibility wrapper.
+- Improved block parsing so adjacent paragraph lines fold into one paragraph,
+  fenced code blocks keep their language label, and HTML rendering emits
+  language-specific code classes.
 
 Next engineering target:
 
