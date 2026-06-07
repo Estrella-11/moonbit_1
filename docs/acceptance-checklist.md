@@ -1,0 +1,22 @@
+# Acceptance Checklist
+
+- [x] MoonBit module initialized.
+- [x] Apache-2.0 license selected.
+- [x] README explains goal, usage, examples, and competition fit.
+- [x] Runnable demo package exists at `cmd/main`.
+- [x] Core behavior has blackbox tests.
+- [x] GitHub Actions CI added.
+- [x] Heading extraction and TOC rendering implemented.
+- [x] Development log started.
+- [x] GitHub repository URL filled in.
+- [x] Gitlink repository created.
+- [ ] Gitlink repository synchronized.
+- [ ] 10-20 meaningful declaration-stage commits completed.
+- [ ] Project proposal exported as one-page PDF.
+- [ ] Block AST parser implemented.
+- [ ] Front matter parser implemented.
+- [x] TOC generation implemented.
+- [ ] Multi-page static output implemented.
+- [ ] Search index implemented.
+- [ ] mooncakes.io package published.
+- [ ] Final acceptance material prepared.

@@ -1,0 +1,45 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbit-community/moondockit"
+
+// Values
+pub fn extract_toc(String) -> Array[TocItem]
+
+pub fn html_escape(String) -> String
+
+pub fn render_markdown(String) -> String
+
+pub fn render_page(DocSite, DocPage) -> RenderedPage
+
+pub fn render_site(DocSite) -> Array[RenderedPage]
+
+pub fn slugify(String) -> String
+
+// Errors
+
+// Types and methods
+pub(all) struct DocPage {
+  title : String
+  slug : String
+  source : String
+}
+
+pub(all) struct DocSite {
+  title : String
+  pages : Array[DocPage]
+}
+
+pub(all) struct RenderedPage {
+  path : String
+  html : String
+}
+
+pub(all) struct TocItem {
+  level : Int
+  title : String
+  anchor : String
+}
+
+// Type aliases
+
+// Traits
+

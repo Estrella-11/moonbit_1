@@ -1,0 +1,7 @@
+import {
+  "moonbit-community/moondockit" @moondockit,
+}
+
+options(
+  "is-main": true,
+)
