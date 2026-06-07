@@ -32,5 +32,7 @@
 - [x] Acceptance guide added.
 - [x] Release notes added.
 - [x] mooncakes.io publishing plan documented.
+- [x] Final submission notes added.
+- [x] One-shot verification works with ordinary Python environments.
 - [ ] mooncakes.io package published.
 - [ ] Final acceptance material prepared.

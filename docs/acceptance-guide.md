@@ -13,8 +13,9 @@ moon run cmd/main
 Expected result:
 
 - `moon check` completes successfully.
-- `moon test` reports all tests passing.
-- `moon run cmd/main` prints a MoonDocKit demo summary with generated files.
+- `moon test` reports 17 passing tests.
+- `moon run cmd/main` prints a MoonDocKit demo summary with generated files,
+  site statistics, and validation diagnostics.
 
 ## Example Site
 
@@ -42,6 +43,10 @@ python tools/verify_project.py
 The script checks required files, validates the one-page proposal PDF, rebuilds
 the example site, and runs the MoonBit check/test/demo commands.
 
+If the local Python environment does not provide `pypdf`, the script prints a
+warning and skips strict PDF page-count validation while keeping the rest of the
+checks active.
+
 ## Competition Checklist
 
 Before final submission, confirm:
@@ -51,4 +56,5 @@ Before final submission, confirm:
 - CI covers check, test, and demo run.
 - Core functionality has tests.
 - One-page project proposal PDF exists.
+- `docs/final-submission.md` is current.
 - mooncakes.io publishing is completed or documented.

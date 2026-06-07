@@ -69,8 +69,10 @@ Repository setup:
 - Added `SiteTheme`, `default_theme`, and themed render/manifest APIs so
   generated documentation sites can customize colors, sidebar width, and
   content width without replacing the renderer.
+- Added final submission notes and made the one-shot verification script usable
+  even when the local Python environment does not have optional PDF tooling.
 
 Next engineering target:
 
-- Expand the block-level AST with inline parsing, source spans, a CLI manifest
-  writer, templates, and final publishing notes.
+- Finalize the competition form submission, then publish to mooncakes.io when
+  account access is available.

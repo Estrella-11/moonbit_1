@@ -48,8 +48,17 @@ moon run cmd/main
 python tools/verify_project.py
 ```
 
-The demo prints a complete HTML page generated from an in-memory documentation
-site.
+The demo prints generated output files, summary metadata, and validation
+diagnostics for an in-memory documentation site.
+
+## Reviewer Path
+
+For competition review, start with:
+
+- `docs/final-submission.md`
+- `docs/acceptance-guide.md`
+- `docs/release.md`
+- `dist-example`
 
 ## Competition Materials
 
@@ -57,6 +66,7 @@ site.
 - Development plan: `docs/competition-plan.md`
 - Acceptance checklist: `docs/acceptance-checklist.md`
 - Acceptance guide: `docs/acceptance-guide.md`
+- Final submission notes: `docs/final-submission.md`
 - Release notes: `docs/release.md`
 - Mooncakes publishing plan: `docs/mooncakes-publishing.md`
 - Development log: `docs/development-log.md`
