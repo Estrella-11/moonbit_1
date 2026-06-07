@@ -25,6 +25,7 @@
 - [x] Search index implemented.
 - [x] Site summary metadata implemented.
 - [x] Site validation diagnostics implemented.
+- [x] Theme configuration implemented.
 - [x] CLI demo prints manifest and summary.
 - [x] Example documentation site added.
 - [x] Benchmark notes added.

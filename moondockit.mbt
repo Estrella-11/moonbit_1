@@ -33,6 +33,19 @@ pub(all) struct SiteSummary {
   tag_count : Int
 }
 
+/// Visual theme values used by generated HTML pages.
+pub(all) struct SiteTheme {
+  background : String
+  surface : String
+  text : String
+  accent : String
+  border : String
+  code_background : String
+  code_text : String
+  sidebar_width_px : Int
+  content_width_px : Int
+}
+
 /// Severity level for site validation diagnostics.
 pub(all) enum DiagnosticLevel {
   DiagError
@@ -101,6 +114,21 @@ pub(all) enum MarkdownBlock {
 /// Return empty front matter metadata.
 pub fn empty_front_matter() -> FrontMatter {
   { title: None, order: None, tags: [], fields: [] }
+}
+
+/// Return the default MoonDocKit page theme.
+pub fn default_theme() -> SiteTheme {
+  {
+    background: "#f7f8fb",
+    surface: "#ffffff",
+    text: "#172033",
+    accent: "#2457c5",
+    border: "#dde3ee",
+    code_background: "#101828",
+    code_text: "#eef4ff",
+    sidebar_width_px: 240,
+    content_width_px: 820,
+  }
 }
 
 /// Site metadata and pages.
@@ -512,6 +540,15 @@ fn render_inline(input : String) -> String {
 
 /// Render a complete HTML page with navigation.
 pub fn render_page(site : DocSite, page : DocPage) -> RenderedPage {
+  render_page_with_theme(site, page, default_theme())
+}
+
+/// Render a complete HTML page with navigation and a custom theme.
+pub fn render_page_with_theme(
+  site : DocSite,
+  page : DocPage,
+  theme : SiteTheme,
+) -> RenderedPage {
   let route = route_for_page(page)
   let body = render_markdown(page.source)
   let toc = render_toc(extract_toc(page.source))
@@ -524,7 +561,7 @@ pub fn render_page(site : DocSite, page : DocPage) -> RenderedPage {
   out.write_string(" - ")
   out.write_string(html_escape(site.title))
   out.write_string("</title>\n")
-  out.write_string(default_style())
+  out.write_string(render_theme_style(theme))
   out.write_string("</head><body><aside><strong>")
   out.write_string(html_escape(site.title))
   out.write_string("</strong><nav>")
@@ -544,14 +581,27 @@ pub fn render_page(site : DocSite, page : DocPage) -> RenderedPage {
 
 /// Render all pages in a documentation site.
 pub fn render_site(site : DocSite) -> Array[RenderedPage] {
-  site.pages.map(page => render_page(site, page))
+  render_site_with_theme(site, default_theme())
+}
+
+/// Render all pages in a documentation site with a custom theme.
+pub fn render_site_with_theme(site : DocSite, theme : SiteTheme) -> Array[RenderedPage] {
+  site.pages.map(page => render_page_with_theme(site, page, theme))
 }
 
 /// Build all static output files for a site without touching the filesystem.
 pub fn build_site_manifest(site : DocSite) -> Array[OutputFile] {
+  build_site_manifest_with_theme(site, default_theme())
+}
+
+/// Build all static output files for a site using a custom theme.
+pub fn build_site_manifest_with_theme(
+  site : DocSite,
+  theme : SiteTheme,
+) -> Array[OutputFile] {
   let files : Array[OutputFile] = []
   for page in site.pages {
-    let rendered = render_page(site, page)
+    let rendered = render_page_with_theme(site, page, theme)
     files.push({ path: rendered.path, content: rendered.html })
   }
   files.push({ path: "search-index.json", content: build_search_index(site) })
@@ -787,8 +837,41 @@ fn route_for_page(page : DocPage) -> RouteEntry {
   }
 }
 
-fn default_style() -> String {
-  "<style>body{margin:0;font:16px/1.6 system-ui,sans-serif;color:#172033;background:#f7f8fb}aside{position:fixed;inset:0 auto 0 0;width:240px;padding:28px;background:#fff;border-right:1px solid #dde3ee}nav{display:grid;gap:8px;margin-top:20px}a{color:#2457c5;text-decoration:none}main{max-width:820px;margin-left:300px;padding:42px 32px}.toc{padding:16px 18px;margin:0 0 28px;border:1px solid #dde3ee;background:#fff}.toc-title{font-weight:700;margin-bottom:8px}.toc a{display:block}.toc .level-2{padding-left:16px}pre{padding:16px;background:#101828;color:#eef4ff;overflow:auto}code{font-family:ui-monospace,monospace}</style>\n"
+fn render_theme_style(theme : SiteTheme) -> String {
+  let sidebar_width = positive_or_default(theme.sidebar_width_px, 240)
+  let content_width = positive_or_default(theme.content_width_px, 820)
+  let main_margin = sidebar_width + 60
+  let out = StringBuilder()
+  out.write_string("<style>body{margin:0;font:16px/1.6 system-ui,sans-serif;color:")
+  out.write_string(theme.text)
+  out.write_string(";background:")
+  out.write_string(theme.background)
+  out.write_string("}aside{position:fixed;inset:0 auto 0 0;width:")
+  out.write_string(sidebar_width.to_string())
+  out.write_string("px;padding:28px;background:")
+  out.write_string(theme.surface)
+  out.write_string(";border-right:1px solid ")
+  out.write_string(theme.border)
+  out.write_string("}nav{display:grid;gap:8px;margin-top:20px}a{color:")
+  out.write_string(theme.accent)
+  out.write_string(";text-decoration:none}main{max-width:")
+  out.write_string(content_width.to_string())
+  out.write_string("px;margin-left:")
+  out.write_string(main_margin.to_string())
+  out.write_string("px;padding:42px 32px}.toc{padding:16px 18px;margin:0 0 28px;border:1px solid ")
+  out.write_string(theme.border)
+  out.write_string(";background:")
+  out.write_string(theme.surface)
+  out.write_string("}.toc-title{font-weight:700;margin-bottom:8px}.toc a{display:block}.toc .level-2{padding-left:16px}pre{padding:16px;background:")
+  out.write_string(theme.code_background)
+  out.write_string(";color:")
+  out.write_string(theme.code_text)
+  out.write_string(";overflow:auto}code{font-family:ui-monospace,monospace}</style>\n")
+  out.to_string()
+}
+
+fn positive_or_default(value : Int, fallback : Int) -> Int {
+  if value > 0 { value } else { fallback }
 }
 
 fn render_toc(items : Array[TocItem]) -> String {

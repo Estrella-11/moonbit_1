@@ -123,6 +123,31 @@ test "build_site_manifest returns deterministic output files" {
   assert_true(files[1].content.contains("<a href=\"api.html\">API</a>"))
 }
 
+test "custom themes change generated page style" {
+  let page : @moondockit.DocPage = {
+    title: "Guide",
+    slug: "guide",
+    source: "# Guide\n\nShip docs.",
+  }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [page] }
+  let theme : @moondockit.SiteTheme = {
+    background: "#111111",
+    surface: "#fafafa",
+    text: "#222222",
+    accent: "#008a7a",
+    border: "#cccccc",
+    code_background: "#202020",
+    code_text: "#f6f6f6",
+    sidebar_width_px: 280,
+    content_width_px: 900,
+  }
+  let rendered = @moondockit.render_page_with_theme(site, page, theme)
+  assert_true(rendered.html.contains("background:#111111"))
+  assert_true(rendered.html.contains("color:#008a7a"))
+  assert_true(rendered.html.contains("width:280px"))
+  assert_true(rendered.html.contains("max-width:900px"))
+}
+
 test "build_search_index serializes searchable page text" {
   let page : @moondockit.DocPage = {
     title: "Guide",

@@ -33,6 +33,7 @@ Repository mirrors:
 - Site summary metadata for demos and validation.
 - Site validation diagnostics for empty sites, empty titles, empty source
   pages, and duplicate output routes.
+- Theme configuration for generated page colors and layout widths.
 - Runnable demo that prints generated files and site statistics.
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.
@@ -74,6 +75,7 @@ ecosystem:
 - Report validation diagnostics before publishing.
 - Support front matter for page title, order, tags, and layout.
 - Provide templates for package docs, tutorials, examples, and changelogs.
+- Expand theme presets for package, tutorial, and API reference sites.
 - Publish as a reusable package on mooncakes.io.
 
 ## Competition Fit

@@ -66,6 +66,9 @@ Repository setup:
 - Added site validation diagnostics with machine-readable severity, code,
   message, and optional page metadata; the demo now reports diagnostic counts
   before listing generated files.
+- Added `SiteTheme`, `default_theme`, and themed render/manifest APIs so
+  generated documentation sites can customize colors, sidebar width, and
+  content width without replacing the renderer.
 
 Next engineering target:
 
