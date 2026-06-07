@@ -115,11 +115,47 @@ test "build_site_manifest returns deterministic output files" {
   }
   let site : @moondockit.DocSite = { title: "Docs", pages: [intro, api] }
   let files = @moondockit.build_site_manifest(site)
-  inspect(files.length(), content="2")
+  inspect(files.length(), content="3")
   inspect(files[0].path, content="api.html")
   inspect(files[1].path, content="intro.html")
+  inspect(files[2].path, content="search-index.json")
   assert_true(files[1].content.contains("<title>Intro - Docs</title>"))
   assert_true(files[1].content.contains("<a href=\"api.html\">API</a>"))
+}
+
+test "build_search_index serializes searchable page text" {
+  let page : @moondockit.DocPage = {
+    title: "Guide",
+    slug: "guide",
+    source: "---\ntags: [docs, moonbit]\n---\n# Guide\n\nUse \"safe\" docs.\n\n- fast",
+  }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [page] }
+  let entries = @moondockit.collect_search_entries(site)
+  inspect(entries.length(), content="1")
+  inspect(entries[0].path, content="guide.html")
+  assert_true(entries[0].text.contains("Use \"safe\" docs."))
+  let json = @moondockit.build_search_index(site)
+  assert_true(json.contains("\"path\":\"guide.html\""))
+  assert_true(json.contains("Use \\\"safe\\\" docs."))
+  assert_true(json.contains("\"tags\":[\"docs\",\"moonbit\"]"))
+}
+
+test "summarize_site counts pages outputs search and tags" {
+  let a : @moondockit.DocPage = {
+    title: "A",
+    slug: "a",
+    source: "---\ntags: [docs, moonbit]\n---\n# A",
+  }
+  let b : @moondockit.DocPage = {
+    title: "B",
+    slug: "b",
+    source: "---\ntags: [docs]\n---\n# B",
+  }
+  let summary = @moondockit.summarize_site({ title: "Docs", pages: [a, b] })
+  inspect(summary.page_count, content="2")
+  inspect(summary.output_count, content="3")
+  inspect(summary.search_entry_count, content="2")
+  inspect(summary.tag_count, content="2")
 }
 
 test "parse_blocks builds stable block ast" {

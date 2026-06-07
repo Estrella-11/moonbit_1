@@ -22,6 +22,8 @@
 - [x] TOC generation implemented.
 - [x] Duplicate heading anchors handled.
 - [x] Multi-page static output manifest implemented.
-- [ ] Search index implemented.
+- [x] Search index implemented.
+- [x] Site summary metadata implemented.
+- [x] CLI demo prints manifest and summary.
 - [ ] mooncakes.io package published.
 - [ ] Final acceptance material prepared.

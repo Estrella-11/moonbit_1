@@ -17,6 +17,22 @@ pub(all) struct OutputFile {
   content : String
 }
 
+/// Searchable text metadata for one route.
+pub(all) struct SearchEntry {
+  title : String
+  path : String
+  text : String
+  tags : Array[String]
+}
+
+/// Aggregate metadata for a documentation site.
+pub(all) struct SiteSummary {
+  page_count : Int
+  output_count : Int
+  search_entry_count : Int
+  tag_count : Int
+}
+
 /// Planned route metadata for one documentation page.
 pub(all) struct RouteEntry {
   title : String
@@ -519,8 +535,114 @@ pub fn build_site_manifest(site : DocSite) -> Array[OutputFile] {
     let rendered = render_page(site, page)
     files.push({ path: rendered.path, content: rendered.html })
   }
+  files.push({ path: "search-index.json", content: build_search_index(site) })
   files.sort_by((left, right) => left.path.compare(right.path))
   files
+}
+
+/// Build a small JSON search index for the rendered site.
+pub fn build_search_index(site : DocSite) -> String {
+  let entries = collect_search_entries(site)
+  let out = StringBuilder()
+  out.write_string("[")
+  for i, entry in entries {
+    if i > 0 {
+      out.write_string(",")
+    }
+    out.write_string("{\"title\":\"")
+    out.write_string(json_escape(entry.title))
+    out.write_string("\",\"path\":\"")
+    out.write_string(json_escape(entry.path))
+    out.write_string("\",\"text\":\"")
+    out.write_string(json_escape(entry.text))
+    out.write_string("\",\"tags\":[")
+    for j, tag in entry.tags {
+      if j > 0 {
+        out.write_string(",")
+      }
+      out.write_string("\"")
+      out.write_string(json_escape(tag))
+      out.write_string("\"")
+    }
+    out.write_string("]}")
+  }
+  out.write_string("]")
+  out.to_string()
+}
+
+/// Collect structured search entries before JSON serialization.
+pub fn collect_search_entries(site : DocSite) -> Array[SearchEntry] {
+  let entries : Array[SearchEntry] = []
+  for page in site.pages {
+    let route = route_for_page(page)
+    let doc = parse_document(page.source)
+    entries.push({
+      title: route.title,
+      path: route.path,
+      text: blocks_to_plain_text(doc.blocks),
+      tags: route.tags,
+    })
+  }
+  entries.sort_by((left, right) => left.path.compare(right.path))
+  entries
+}
+
+/// Summarize the generated site for demos, logs and validation.
+pub fn summarize_site(site : DocSite) -> SiteSummary {
+  let routes = plan_routes(site)
+  let manifest = build_site_manifest(site)
+  let search_entries = collect_search_entries(site)
+  let tags : Array[String] = []
+  for route in routes {
+    for tag in route.tags {
+      if !tags.contains(tag) {
+        tags.push(tag)
+      }
+    }
+  }
+  {
+    page_count: routes.length(),
+    output_count: manifest.length(),
+    search_entry_count: search_entries.length(),
+    tag_count: tags.length(),
+  }
+}
+
+fn blocks_to_plain_text(blocks : Array[MarkdownBlock]) -> String {
+  let out = StringBuilder()
+  for block in blocks {
+    match block {
+      Heading(_, text) | Paragraph(text) | BlockQuote(text) => append_search_text(out, text)
+      UnorderedList(items) =>
+        for item in items {
+          append_search_text(out, item)
+        }
+      CodeBlock(_, code) => append_search_text(out, code)
+    }
+  }
+  out.to_string()
+}
+
+fn append_search_text(out : StringBuilder, text : String) -> Unit {
+  if !out.is_empty() {
+    out.write_char(' ')
+  }
+  out.write_string(text.trim().to_owned())
+}
+
+fn json_escape(input : String) -> String {
+  let out = StringBuilder(size_hint=input.length())
+  for _, ch in input {
+    match ch {
+      '"' => out.write_string("\\\"")
+      '\\' => out.write_string("\\\\")
+      '\n' => out.write_string("\\n")
+      '\r' => out.write_string("\\r")
+      '\t' => out.write_string("\\t")
+      _ => out.write_char(ch)
+    }
+  }
+  out.to_string()
 }
 
 fn route_for_page(page : DocPage) -> RouteEntry {

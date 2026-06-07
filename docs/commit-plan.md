@@ -22,12 +22,12 @@ progress.
 11. Implement static output manifest.
 12. Add default template renderer.
 13. Add search index model and generator.
-14. Add example documentation site.
-15. Add benchmark notes and performance tests.
-16. Add error reporting and validation helpers.
-17. Add mooncakes.io publishing notes.
-18. Add final acceptance checklist updates.
-19. Add showcase script and demo walkthrough.
+14. Add site summary metadata.
+15. Upgrade runnable demo for manifest and search output.
+16. Add example documentation site.
+17. Add benchmark notes and performance tests.
+18. Add error reporting and validation helpers.
+19. Add mooncakes.io publishing notes.
 20. Prepare final release candidate.
 
 ## Commit Quality Rules

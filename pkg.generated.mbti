@@ -4,7 +4,11 @@ package "moonbit-community/moondockit"
 // Values
 pub fn blocks_to_toc(Array[MarkdownBlock]) -> Array[TocItem]
 
+pub fn build_search_index(DocSite) -> String
+
 pub fn build_site_manifest(DocSite) -> Array[OutputFile]
+
+pub fn collect_search_entries(DocSite) -> Array[SearchEntry]
 
 pub fn empty_front_matter() -> FrontMatter
 
@@ -29,6 +33,8 @@ pub fn render_page(DocSite, DocPage) -> RenderedPage
 pub fn render_site(DocSite) -> Array[RenderedPage]
 
 pub fn slugify(String) -> String
+
+pub fn summarize_site(DocSite) -> SiteSummary
 
 // Errors
 
@@ -86,6 +92,20 @@ pub(all) struct RouteEntry {
   path : String
   order : Int?
   tags : Array[String]
+}
+
+pub(all) struct SearchEntry {
+  title : String
+  path : String
+  text : String
+  tags : Array[String]
+}
+
+pub(all) struct SiteSummary {
+  page_count : Int
+  output_count : Int
+  search_entry_count : Int
+  tag_count : Int
 }
 
 pub(all) struct TocItem {

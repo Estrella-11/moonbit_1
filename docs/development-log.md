@@ -51,8 +51,13 @@ Repository setup:
   title/order/tags plus page slugs to generate deterministic navigation paths.
 - Added `OutputFile` and `build_site_manifest`, producing deterministic static
   HTML output manifests that a CLI can write to disk later.
+- Added `SearchEntry`, `collect_search_entries`, and `build_search_index` to
+  generate a JSON search index from page blocks, routes, and tags.
+- Added `SiteSummary` and `summarize_site` for demo output and validation.
+- Upgraded `cmd/main` so `moon run cmd/main` prints generated output files and
+  site statistics instead of a raw HTML page.
 
 Next engineering target:
 
 - Expand the block-level AST with inline parsing, source spans, a CLI manifest
-  writer, search index generation, and templates.
+  writer, templates, and final publishing notes.

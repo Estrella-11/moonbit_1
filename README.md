@@ -29,6 +29,9 @@ Repository mirrors:
 - Front matter parsing for page title, order, tags, and custom fields.
 - Route planning for multi-page sites using page slug and front matter order.
 - Static output manifest generation for rendered HTML files.
+- JSON search index generation.
+- Site summary metadata for demos and validation.
+- Runnable demo that prints generated files and site statistics.
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.
 - Blackbox tests for public behavior.
