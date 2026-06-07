@@ -30,8 +30,9 @@ Repository setup:
 - Configured GitHub remote: https://github.com/Estrella-11/moonbit_1
 - Configured Gitlink remote: https://gitlink.org.cn/Estrella/moonbit
 - Pushed the initial `main` branch to Gitlink.
-- GitHub push is pending because the current environment could not connect to
-  `github.com:443`.
+- Merged Gitlink `master` initialization and pushed the full project to
+  `gitlink/master`, so the default branch also displays the project.
+- Pushed the full project to GitHub `origin/main`.
 
 Next engineering target:
 
