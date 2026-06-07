@@ -31,6 +31,17 @@ Expected generated files:
 - `dist-example/changelog.html`
 - `dist-example/search-index.json`
 
+## One-Shot Verification
+
+Run:
+
+```bash
+python tools/verify_project.py
+```
+
+The script checks required files, validates the one-page proposal PDF, rebuilds
+the example site, and runs the MoonBit check/test/demo commands.
+
 ## Competition Checklist
 
 Before final submission, confirm:

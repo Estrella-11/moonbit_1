@@ -59,6 +59,10 @@ Repository setup:
 - Added example documentation sources under `examples/site` and generated a
   static example site under `dist-example`.
 - Added benchmark notes and an acceptance guide for reviewer verification.
+- Added release notes and mooncakes.io publishing plan for the 0.1.0
+  competition baseline.
+- Added `tools/verify_project.py` as a one-shot local verification script for
+  required files, proposal PDF, example output, and MoonBit commands.
 
 Next engineering target:
 

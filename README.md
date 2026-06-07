@@ -42,6 +42,7 @@ Repository mirrors:
 moon check
 moon test
 moon run cmd/main
+python tools/verify_project.py
 ```
 
 The demo prints a complete HTML page generated from an in-memory documentation
@@ -53,6 +54,8 @@ site.
 - Development plan: `docs/competition-plan.md`
 - Acceptance checklist: `docs/acceptance-checklist.md`
 - Acceptance guide: `docs/acceptance-guide.md`
+- Release notes: `docs/release.md`
+- Mooncakes publishing plan: `docs/mooncakes-publishing.md`
 - Development log: `docs/development-log.md`
 - Benchmark notes: `docs/benchmark-notes.md`
 - Example site sources: `examples/site`
