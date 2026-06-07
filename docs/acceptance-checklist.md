@@ -21,7 +21,7 @@
 - [x] Route planning for multi-page docs implemented.
 - [x] TOC generation implemented.
 - [x] Duplicate heading anchors handled.
-- [ ] Multi-page static output implemented.
+- [x] Multi-page static output manifest implemented.
 - [ ] Search index implemented.
 - [ ] mooncakes.io package published.
 - [ ] Final acceptance material prepared.

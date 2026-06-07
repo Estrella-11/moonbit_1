@@ -11,6 +11,12 @@ pub(all) struct RenderedPage {
   html : String
 }
 
+/// A generated output file ready for a CLI to write to disk.
+pub(all) struct OutputFile {
+  path : String
+  content : String
+}
+
 /// Planned route metadata for one documentation page.
 pub(all) struct RouteEntry {
   title : String
@@ -72,19 +78,7 @@ pub(all) struct DocSite {
 pub fn plan_routes(site : DocSite) -> Array[RouteEntry] {
   let routes : Array[RouteEntry] = []
   for page in site.pages {
-    let doc = parse_document(page.source)
-    let title = match doc.front_matter.title {
-      Some(value) => value
-      None => page.title
-    }
-    let slug = if page.slug == "" { slugify(title) } else { page.slug }
-    routes.push({
-      title,
-      slug,
-      path: slug + ".html",
-      order: doc.front_matter.order,
-      tags: doc.front_matter.tags,
-    })
+    routes.push(route_for_page(page))
   }
   routes.sort_by(compare_routes)
   routes
@@ -483,6 +477,7 @@ fn render_inline(input : String) -> String {
 
 /// Render a complete HTML page with navigation.
 pub fn render_page(site : DocSite, page : DocPage) -> RenderedPage {
+  let route = route_for_page(page)
   let body = render_markdown(page.source)
   let toc = render_toc(extract_toc(page.source))
   let routes = plan_routes(site)
@@ -509,12 +504,39 @@ pub fn render_page(site : DocSite, page : DocPage) -> RenderedPage {
   out.write_string(toc)
   out.write_string(body)
   out.write_string("</main></body></html>\n")
-  { path: page.slug + ".html", html: out.to_string() }
+  { path: route.path, html: out.to_string() }
 }
 
 /// Render all pages in a documentation site.
 pub fn render_site(site : DocSite) -> Array[RenderedPage] {
   site.pages.map(page => render_page(site, page))
+}
+
+/// Build all static output files for a site without touching the filesystem.
+pub fn build_site_manifest(site : DocSite) -> Array[OutputFile] {
+  let files : Array[OutputFile] = []
+  for page in site.pages {
+    let rendered = render_page(site, page)
+    files.push({ path: rendered.path, content: rendered.html })
+  }
+  files.sort_by((left, right) => left.path.compare(right.path))
+  files
+}
+
+fn route_for_page(page : DocPage) -> RouteEntry {
+  let doc = parse_document(page.source)
+  let title = match doc.front_matter.title {
+    Some(value) => value
+    None => page.title
+  }
+  let slug = if page.slug == "" { slugify(title) } else { page.slug }
+  {
+    title,
+    slug,
+    path: slug + ".html",
+    order: doc.front_matter.order,
+    tags: doc.front_matter.tags,
+  }
 }
 
 fn default_style() -> String {

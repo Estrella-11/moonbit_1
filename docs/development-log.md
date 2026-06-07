@@ -49,8 +49,10 @@ Repository setup:
   metadata blocks.
 - Added route planning with `RouteEntry` and `plan_routes`, using front matter
   title/order/tags plus page slugs to generate deterministic navigation paths.
+- Added `OutputFile` and `build_site_manifest`, producing deterministic static
+  HTML output manifests that a CLI can write to disk later.
 
 Next engineering target:
 
-- Expand the block-level AST with inline parsing, source spans, static output
-  manifests, search index generation, and templates.
+- Expand the block-level AST with inline parsing, source spans, a CLI manifest
+  writer, search index generation, and templates.

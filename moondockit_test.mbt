@@ -102,6 +102,26 @@ test "plan_routes uses front matter and stable ordering" {
   inspect(routes[2].title, content="Changelog")
 }
 
+test "build_site_manifest returns deterministic output files" {
+  let intro : @moondockit.DocPage = {
+    title: "Intro",
+    slug: "",
+    source: "---\ntitle: Intro\norder: 2\n---\n# Intro",
+  }
+  let api : @moondockit.DocPage = {
+    title: "API",
+    slug: "api",
+    source: "---\norder: 1\n---\n# API",
+  }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [intro, api] }
+  let files = @moondockit.build_site_manifest(site)
+  inspect(files.length(), content="2")
+  inspect(files[0].path, content="api.html")
+  inspect(files[1].path, content="intro.html")
+  assert_true(files[1].content.contains("<title>Intro - Docs</title>"))
+  assert_true(files[1].content.contains("<a href=\"api.html\">API</a>"))
+}
+
 test "parse_blocks builds stable block ast" {
   let blocks = @moondockit.parse_blocks("# Guide\n\nIntro\ncontinued\n\n- one\n- two\n\n> note\n\n```mbt\n# code\n```")
   inspect(blocks.length(), content="5")

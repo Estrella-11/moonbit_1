@@ -28,6 +28,7 @@ Repository mirrors:
 - Page-unique heading anchors for duplicate section titles.
 - Front matter parsing for page title, order, tags, and custom fields.
 - Route planning for multi-page sites using page slug and front matter order.
+- Static output manifest generation for rendered HTML files.
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.
 - Blackbox tests for public behavior.
@@ -56,7 +57,7 @@ MoonDocKit will grow into a practical documentation toolkit for the MoonBit
 ecosystem:
 
 - Expand the block-level AST with inline nodes and source spans.
-- Render multi-page static documentation sites.
+- Add a CLI writer for static output manifests.
 - Generate search indexes.
 - Support front matter for page title, order, tags, and layout.
 - Provide templates for package docs, tutorials, examples, and changelogs.
