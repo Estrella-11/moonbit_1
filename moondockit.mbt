@@ -11,6 +11,20 @@ pub(all) struct RenderedPage {
   html : String
 }
 
+/// Parsed page metadata from a leading front matter block.
+pub(all) struct FrontMatter {
+  title : String?
+  order : Int?
+  tags : Array[String]
+  fields : Array[(String, String)]
+}
+
+/// Markdown source split into metadata and body blocks.
+pub(all) struct ParsedDocument {
+  front_matter : FrontMatter
+  blocks : Array[MarkdownBlock]
+}
+
 /// A heading entry extracted from a source page.
 pub(all) struct TocItem {
   level : Int
@@ -32,6 +46,11 @@ pub(all) enum MarkdownBlock {
   UnorderedList(Array[String])
   BlockQuote(String)
   CodeBlock(String, String)
+}
+
+/// Return empty front matter metadata.
+pub fn empty_front_matter() -> FrontMatter {
+  { title: None, order: None, tags: [], fields: [] }
 }
 
 /// Site metadata and pages.
@@ -126,6 +145,123 @@ fn unique_anchor(base : String, seen : Array[String]) -> String {
 
 /// Parse a useful Markdown subset into block-level nodes.
 pub fn parse_blocks(markdown : String) -> Array[MarkdownBlock] {
+  parse_document(markdown).blocks
+}
+
+/// Parse optional front matter and Markdown blocks.
+pub fn parse_document(markdown : String) -> ParsedDocument {
+  let (front_matter, body) = split_front_matter(markdown)
+  { front_matter, blocks: parse_body_blocks(body) }
+}
+
+fn split_front_matter(markdown : String) -> (FrontMatter, String) {
+  let lines = markdown.split("\n").map(line => line.to_owned()).to_array()
+  if lines.length() == 0 || lines[0].trim().to_owned() != "---" {
+    return (empty_front_matter(), markdown)
+  }
+  let meta_lines : Array[String] = []
+  let body_lines : Array[String] = []
+  let mut in_meta = true
+  let mut closed = false
+  for i in 1..<lines.length() {
+    let line = lines[i]
+    if in_meta && line.trim().to_owned() == "---" {
+      in_meta = false
+      closed = true
+      continue
+    }
+    if in_meta {
+      meta_lines.push(line)
+    } else {
+      body_lines.push(line)
+    }
+  }
+  if !closed {
+    return (empty_front_matter(), markdown)
+  }
+  (parse_front_matter_lines(meta_lines), body_lines.join("\n"))
+}
+
+fn parse_front_matter_lines(lines : Array[String]) -> FrontMatter {
+  let fields : Array[(String, String)] = []
+  let tags : Array[String] = []
+  let mut title : String? = None
+  let mut order : Int? = None
+  for raw in lines {
+    let line = raw.trim().to_owned()
+    if line == "" || line.has_prefix("#") {
+      continue
+    }
+    match line.split_once(":") {
+      Some((key_view, value_view)) => {
+        let key = key_view.to_owned().trim().to_owned()
+        let value = value_view.to_owned().trim().to_owned()
+        fields.push((key, value))
+        if key == "title" {
+          title = Some(unquote(value))
+        } else if key == "order" {
+          order = parse_positive_int(value)
+        } else if key == "tags" {
+          for tag in parse_tags(value) {
+            tags.push(tag)
+          }
+        }
+      }
+      None => ()
+    }
+  }
+  { title, order, tags, fields }
+}
+
+fn parse_tags(value : String) -> Array[String] {
+  let inner = strip_brackets(value)
+  let tags : Array[String] = []
+  for item in inner.split(",") {
+    let tag = unquote(item.to_owned().trim().to_owned())
+    if tag != "" {
+      tags.push(tag)
+    }
+  }
+  tags
+}
+
+fn strip_brackets(value : String) -> String {
+  let trimmed = value.trim().to_owned()
+  if trimmed.length() >= 2 && trimmed.has_prefix("[") && trimmed.has_suffix("]") {
+    trimmed[1:trimmed.length() - 1].to_owned()
+  } else {
+    trimmed
+  }
+}
+
+fn unquote(value : String) -> String {
+  let trimmed = value.trim().to_owned()
+  if trimmed.length() >= 2 {
+    let first = trimmed[0]
+    let last = trimmed[trimmed.length() - 1]
+    if (first == '"' && last == '"') || (first == '\'' && last == '\'') {
+      return trimmed[1:trimmed.length() - 1].to_owned()
+    }
+  }
+  trimmed
+}
+
+fn parse_positive_int(value : String) -> Int? {
+  let trimmed = value.trim().to_owned()
+  if trimmed == "" {
+    return None
+  }
+  let mut result = 0
+  for _, ch in trimmed {
+    if !(ch is ('0'..='9')) {
+      return None
+    }
+    result = result * 10 + (ch.to_int() - '0'.to_int())
+  }
+  Some(result)
+}
+
+fn parse_body_blocks(markdown : String) -> Array[MarkdownBlock] {
   let blocks : Array[MarkdownBlock] = []
   let mut in_code = false
   let mut code_language = ""

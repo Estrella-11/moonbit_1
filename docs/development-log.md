@@ -44,9 +44,11 @@ Repository setup:
 - Added page-unique heading anchor generation so repeated section titles produce
   stable anchors such as `intro`, `intro-2`, and `intro-3`; TOC and HTML
   rendering now share the same heading extraction path.
+- Added front matter parsing with `FrontMatter` and `ParsedDocument`, covering
+  page title, order, tags, custom fields, and graceful fallback for unclosed
+  metadata blocks.
 
 Next engineering target:
 
-- Expand the block-level AST with inline parsing, source spans, front matter,
-  duplicate heading anchors, route planning, search index generation, and
-  templates.
+- Expand the block-level AST with inline parsing, source spans, route planning,
+  search index generation, and templates.

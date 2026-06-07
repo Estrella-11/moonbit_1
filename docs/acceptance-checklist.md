@@ -17,7 +17,7 @@
 - [ ] 10-20 meaningful declaration-stage commits completed.
 - [x] Project proposal exported as one-page PDF.
 - [x] Block AST parser implemented.
-- [ ] Front matter parser implemented.
+- [x] Front matter parser implemented.
 - [x] TOC generation implemented.
 - [x] Duplicate heading anchors handled.
 - [ ] Multi-page static output implemented.

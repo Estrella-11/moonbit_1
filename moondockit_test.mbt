@@ -42,6 +42,36 @@ test "headings receive unique anchors" {
   assert_true(html.contains("<h1 id=\"intro-3\">Intro</h1>"))
 }
 
+test "parse_document reads simple front matter" {
+  let doc = @moondockit.parse_document("---\ntitle: \"Quick Start\"\norder: 12\ntags: [guide, moonbit]\nlayout: docs\n---\n# Quick Start\n\nBody")
+  match doc.front_matter.title {
+    Some(title) => inspect(title, content="Quick Start")
+    None => fail("expected title")
+  }
+  match doc.front_matter.order {
+    Some(order) => inspect(order, content="12")
+    None => fail("expected order")
+  }
+  inspect(doc.front_matter.tags.length(), content="2")
+  inspect(doc.front_matter.tags[1], content="moonbit")
+  inspect(doc.front_matter.fields.length(), content="4")
+  inspect(doc.blocks.length(), content="2")
+  match doc.blocks[0] {
+    Heading(_, title) => inspect(title, content="Quick Start")
+    _ => fail("expected body heading")
+  }
+}
+
+test "parse_document ignores unclosed front matter" {
+  let doc = @moondockit.parse_document("---\ntitle: Draft\n# Still body")
+  match doc.front_matter.title {
+    None => ()
+    Some(_) => fail("expected no title")
+  }
+  inspect(doc.blocks.length(), content="2")
+  assert_true(@moondockit.render_blocks(doc.blocks).contains("title: Draft"))
+}
+
 test "parse_blocks builds stable block ast" {
   let blocks = @moondockit.parse_blocks("# Guide\n\nIntro\ncontinued\n\n- one\n- two\n\n> note\n\n```mbt\n# code\n```")
   inspect(blocks.length(), content="5")
