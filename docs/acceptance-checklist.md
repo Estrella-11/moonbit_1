@@ -13,7 +13,7 @@
 - [x] Gitlink repository synchronized.
 - [x] GitHub repository synchronized from local main branch.
 - [ ] 10-20 meaningful declaration-stage commits completed.
-- [ ] Project proposal exported as one-page PDF.
+- [x] Project proposal exported as one-page PDF.
 - [ ] Block AST parser implemented.
 - [ ] Front matter parser implemented.
 - [x] TOC generation implemented.

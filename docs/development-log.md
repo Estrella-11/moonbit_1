@@ -33,6 +33,8 @@ Repository setup:
 - Merged Gitlink `master` initialization and pushed the full project to
   `gitlink/master`, so the default branch also displays the project.
 - Pushed the full project to GitHub `origin/main`.
+- Generated a one-page PDF project proposal at
+  `docs/MoonDocKit-项目申报书.pdf`.
 
 Next engineering target:
 

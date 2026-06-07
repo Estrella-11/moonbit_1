@@ -38,6 +38,13 @@ moon run cmd/main
 The demo prints a complete HTML page generated from an in-memory documentation
 site.
 
+## Competition Materials
+
+- One-page project proposal: `docs/MoonDocKit-项目申报书.pdf`
+- Development plan: `docs/competition-plan.md`
+- Acceptance checklist: `docs/acceptance-checklist.md`
+- Development log: `docs/development-log.md`
+
 ## Project Direction
 
 MoonDocKit will grow into a practical documentation toolkit for the MoonBit
