@@ -18,6 +18,13 @@ pub(all) struct TocItem {
   anchor : String
 }
 
+/// A heading with a page-unique anchor.
+pub(all) struct AnchoredHeading {
+  level : Int
+  title : String
+  anchor : String
+}
+
 /// Block-level Markdown nodes used by the documentation pipeline.
 pub(all) enum MarkdownBlock {
   Heading(Int, String)
@@ -77,14 +84,44 @@ pub fn extract_toc(markdown : String) -> Array[TocItem] {
 
 /// Extract heading entries from parsed Markdown blocks.
 pub fn blocks_to_toc(blocks : Array[MarkdownBlock]) -> Array[TocItem] {
-  let items : Array[TocItem] = []
+  extract_headings(blocks).map(heading => {
+    level: heading.level,
+    title: heading.title,
+    anchor: heading.anchor,
+  })
+}
+
+/// Extract headings and assign page-unique anchors.
+pub fn extract_headings(blocks : Array[MarkdownBlock]) -> Array[AnchoredHeading] {
+  let headings : Array[AnchoredHeading] = []
+  let seen : Array[String] = []
   for block in blocks {
     match block {
-      Heading(level, title) => items.push({ level, title, anchor: slugify(title) })
+      Heading(level, title) => {
+        let base = slugify(title)
+        let anchor = unique_anchor(base, seen)
+        seen.push(anchor)
+        headings.push({ level, title, anchor })
+      }
       _ => ()
     }
   }
-  items
+  headings
+}
+
+fn unique_anchor(base : String, seen : Array[String]) -> String {
+  let stable_base = if base == "" { "section" } else { base }
+  let mut count = 1
+  for item in seen {
+    if item == stable_base || item.has_prefix(stable_base + "-") {
+      count = count + 1
+    }
+  }
+  if count == 1 {
+    stable_base
+  } else {
+    stable_base + "-" + count.to_string()
+  }
 }
 
 /// Parse a useful Markdown subset into block-level nodes.
@@ -193,13 +230,17 @@ fn close_pending_list(
 /// Render parsed Markdown blocks to HTML.
 pub fn render_blocks(blocks : Array[MarkdownBlock]) -> String {
   let out = StringBuilder()
+  let headings = extract_headings(blocks)
+  let mut heading_index = 0
   for block in blocks {
     match block {
       Heading(level, text) => {
+        let anchor = headings[heading_index].anchor
+        heading_index = heading_index + 1
         out.write_string("<h")
         out.write_string(level.to_string())
         out.write_string(" id=\"")
-        out.write_string(slugify(text))
+        out.write_string(anchor)
         out.write_string("\">")
         out.write_string(html_escape(text))
         out.write_string("</h")

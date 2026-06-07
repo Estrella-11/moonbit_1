@@ -4,6 +4,8 @@ package "moonbit-community/moondockit"
 // Values
 pub fn blocks_to_toc(Array[MarkdownBlock]) -> Array[TocItem]
 
+pub fn extract_headings(Array[MarkdownBlock]) -> Array[AnchoredHeading]
+
 pub fn extract_toc(String) -> Array[TocItem]
 
 pub fn html_escape(String) -> String
@@ -23,6 +25,12 @@ pub fn slugify(String) -> String
 // Errors
 
 // Types and methods
+pub(all) struct AnchoredHeading {
+  level : Int
+  title : String
+  anchor : String
+}
+
 pub(all) struct DocPage {
   title : String
   slug : String

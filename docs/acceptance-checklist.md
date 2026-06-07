@@ -19,6 +19,7 @@
 - [x] Block AST parser implemented.
 - [ ] Front matter parser implemented.
 - [x] TOC generation implemented.
+- [x] Duplicate heading anchors handled.
 - [ ] Multi-page static output implemented.
 - [ ] Search index implemented.
 - [ ] mooncakes.io package published.

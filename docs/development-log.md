@@ -41,6 +41,9 @@ Repository setup:
 - Improved block parsing so adjacent paragraph lines fold into one paragraph,
   fenced code blocks keep their language label, and HTML rendering emits
   language-specific code classes.
+- Added page-unique heading anchor generation so repeated section titles produce
+  stable anchors such as `intro`, `intro-2`, and `intro-3`; TOC and HTML
+  rendering now share the same heading extraction path.
 
 Next engineering target:
 

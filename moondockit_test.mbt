@@ -29,6 +29,19 @@ test "extract_toc ignores code fences" {
   inspect(toc[2].anchor, content="usage")
 }
 
+test "headings receive unique anchors" {
+  let blocks = @moondockit.parse_blocks("# Intro\n\n## Intro\n\n# Intro")
+  let headings = @moondockit.extract_headings(blocks)
+  inspect(headings.length(), content="3")
+  inspect(headings[0].anchor, content="intro")
+  inspect(headings[1].anchor, content="intro-2")
+  inspect(headings[2].anchor, content="intro-3")
+  let html = @moondockit.render_blocks(blocks)
+  assert_true(html.contains("<h1 id=\"intro\">Intro</h1>"))
+  assert_true(html.contains("<h2 id=\"intro-2\">Intro</h2>"))
+  assert_true(html.contains("<h1 id=\"intro-3\">Intro</h1>"))
+}
+
 test "parse_blocks builds stable block ast" {
   let blocks = @moondockit.parse_blocks("# Guide\n\nIntro\ncontinued\n\n- one\n- two\n\n> note\n\n```mbt\n# code\n```")
   inspect(blocks.length(), content="5")

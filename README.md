@@ -25,6 +25,7 @@ Repository mirrors:
 - Paragraph line folding and fenced code language labels.
 - HTML rendering from parsed Markdown blocks.
 - Heading extraction and automatic on-page table of contents.
+- Page-unique heading anchors for duplicate section titles.
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.
 - Blackbox tests for public behavior.
