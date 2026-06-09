@@ -92,6 +92,8 @@ Repository setup:
 - Added document and site metrics for headings, code blocks, word counts, and
   estimated reading time; the demo now reports content metrics alongside build
   output information.
+- Added quality gate evaluation for publish-readiness checks, combining
+  validation, content metrics, output manifest shape, and readability scoring.
 
 Next engineering target:
 

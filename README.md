@@ -36,6 +36,7 @@ Repository mirrors:
 - Build report generation for output file counts, file kinds, and byte totals.
 - Document and site metrics for headings, code blocks, word counts, and
   estimated reading time.
+- Quality gate evaluation for publish-readiness checks and scoring.
 - Site summary metadata for demos and validation.
 - Site validation diagnostics for empty sites, empty titles, empty source
   pages, and duplicate output routes.

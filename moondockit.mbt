@@ -33,6 +33,20 @@ pub(all) struct BuildReport {
   files : Array[OutputFileInfo]
 }
 
+/// One quality gate check result.
+pub(all) struct QualityCheck {
+  name : String
+  passed : Bool
+  message : String
+}
+
+/// Aggregate quality gate result for a documentation site.
+pub(all) struct QualityGate {
+  passed : Bool
+  score : Int
+  checks : Array[QualityCheck]
+}
+
 /// Searchable text metadata for one route.
 pub(all) struct SearchEntry {
   title : String
@@ -906,6 +920,61 @@ pub fn inspect_manifest(files : Array[OutputFile]) -> BuildReport {
 /// Build a report for the default generated site manifest.
 pub fn build_site_report(site : DocSite) -> BuildReport {
   inspect_manifest(build_site_manifest(site))
+}
+
+/// Evaluate a documentation site against basic publish-readiness checks.
+pub fn evaluate_quality(site : DocSite) -> QualityGate {
+  let checks : Array[QualityCheck] = []
+  let validation = validate_site(site)
+  let metrics = measure_site(site)
+  let build = build_site_report(site)
+  checks.push({
+    name: "validation",
+    passed: !has_validation_errors(validation),
+    message: if has_validation_errors(validation) {
+      "site has validation errors"
+    } else {
+      "site validation passed"
+    },
+  })
+  checks.push({
+    name: "content",
+    passed: metrics.word_count > 0 && metrics.heading_count > 0,
+    message: if metrics.word_count > 0 && metrics.heading_count > 0 {
+      "site has measurable documentation content"
+    } else {
+      "site needs headings and body content"
+    },
+  })
+  checks.push({
+    name: "outputs",
+    passed: build.html_count == metrics.page_count && build.data_count >= 2,
+    message: if build.html_count == metrics.page_count && build.data_count >= 2 {
+      "manifest includes html pages and data outputs"
+    } else {
+      "manifest output mix is incomplete"
+    },
+  })
+  checks.push({
+    name: "readability",
+    passed: metrics.reading_minutes <= 30,
+    message: if metrics.reading_minutes <= 30 {
+      "site reading time is within the baseline threshold"
+    } else {
+      "site may need splitting into smaller pages"
+    },
+  })
+  let mut passed_count = 0
+  for check in checks {
+    if check.passed {
+      passed_count = passed_count + 1
+    }
+  }
+  {
+    passed: passed_count == checks.length(),
+    score: if checks.length() == 0 { 0 } else { passed_count * 100 / checks.length() },
+    checks,
+  }
 }
 
 /// Build a small JSON search index for the rendered site.

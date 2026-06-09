@@ -323,6 +323,27 @@ test "measure_site aggregates page metrics" {
   inspect(metrics.reading_minutes, content="1")
 }
 
+test "evaluate_quality passes publishable sites" {
+  let page : @moondockit.DocPage = {
+    title: "Guide",
+    slug: "guide",
+    source: "# Guide\n\nShip docs.",
+  }
+  let gate = @moondockit.evaluate_quality({ title: "Docs", pages: [page] })
+  assert_true(gate.passed)
+  inspect(gate.score, content="100")
+  inspect(gate.checks.length(), content="4")
+  inspect(gate.checks[0].name, content="validation")
+}
+
+test "evaluate_quality fails empty sites" {
+  let gate = @moondockit.evaluate_quality({ title: "", pages: [] })
+  assert_false(gate.passed)
+  assert_true(gate.score < 100)
+  assert_false(gate.checks[0].passed)
+  assert_false(gate.checks[1].passed)
+}
+
 test "summarize_site counts pages outputs search and tags" {
   let a : @moondockit.DocPage = {
     title: "A",

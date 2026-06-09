@@ -28,6 +28,8 @@ pub fn diagnostics_to_text(ValidationReport) -> String
 
 pub fn empty_front_matter() -> FrontMatter
 
+pub fn evaluate_quality(DocSite) -> QualityGate
+
 pub fn extract_headings(Array[MarkdownBlock]) -> Array[AnchoredHeading]
 
 pub fn extract_toc(String) -> Array[TocItem]
@@ -143,6 +145,18 @@ pub(all) struct OutputFileInfo {
 pub(all) struct ParsedDocument {
   front_matter : FrontMatter
   blocks : Array[MarkdownBlock]
+}
+
+pub(all) struct QualityCheck {
+  name : String
+  passed : Bool
+  message : String
+}
+
+pub(all) struct QualityGate {
+  passed : Bool
+  score : Int
+  checks : Array[QualityCheck]
 }
 
 pub(all) struct RenderedPage {
