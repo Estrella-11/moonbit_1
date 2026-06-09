@@ -40,6 +40,7 @@ Repository mirrors:
 - Theme configuration for generated page colors and layout widths.
 - Template options for generated page language, description metadata, and
   footer content.
+- Canonical links and Open Graph metadata for generated pages.
 - Runnable demo that prints generated files and site statistics.
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.

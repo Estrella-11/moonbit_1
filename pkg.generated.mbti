@@ -160,6 +160,7 @@ pub(all) struct SiteDiagnostic {
 pub(all) struct SiteOptions {
   language : String
   description : String
+  site_url : String
   footer : String
 }
 

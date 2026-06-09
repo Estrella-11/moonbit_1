@@ -5,6 +5,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "examples" / "site"
 OUT = ROOT / "dist-example"
+SITE_URL = "https://example.com/moondockit"
 
 
 def split_front_matter(text: str) -> tuple[dict[str, str], str]:
@@ -128,7 +129,8 @@ def render_markdown(markdown: str) -> str:
     return "\n".join(html)
 
 
-def page_shell(title: str, nav: str, body: str) -> str:
+def page_shell(title: str, slug: str, nav: str, body: str) -> str:
+    canonical = f"{SITE_URL}/{slug}.html"
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -136,6 +138,10 @@ def page_shell(title: str, nav: str, body: str) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="MoonDocKit example documentation site">
   <title>{escape(title)} - MoonDocKit Example</title>
+  <meta property="og:title" content="{escape(title)} - MoonDocKit Example">
+  <meta property="og:description" content="MoonDocKit example documentation site">
+  <link rel="canonical" href="{canonical}">
+  <meta property="og:url" content="{canonical}">
   <style>
     body {{ margin: 0; font: 16px/1.6 system-ui, sans-serif; color: #172033; }}
     aside {{ position: fixed; inset: 0 auto 0 0; width: 240px; padding: 28px; background: #f6f8fc; border-right: 1px solid #dde3ee; }}
@@ -167,7 +173,7 @@ def main() -> None:
     nav = "\n".join(f'<a href="{slug}.html">{escape(title)}</a>' for _, title, slug, _ in pages)
     search_entries = []
     for _, title, slug, body in pages:
-        html = page_shell(title, nav, render_markdown(body))
+        html = page_shell(title, slug, nav, render_markdown(body))
         (OUT / f"{slug}.html").write_text(html, encoding="utf-8")
         search_entries.append({"title": title, "path": f"{slug}.html", "text": body.replace("\n", " ")})
     index = "[\n" + ",\n".join(

@@ -177,6 +177,7 @@ test "site options add page metadata and footer" {
   let options : @moondockit.SiteOptions = {
     language: "zh-CN",
     description: "MoonBit docs <site>",
+    site_url: "https://docs.example/moondockit/",
     footer: "Built with `MoonDocKit`",
   }
   let rendered = @moondockit.render_page_with_options(
@@ -187,6 +188,10 @@ test "site options add page metadata and footer" {
   )
   assert_true(rendered.html.contains("<html lang=\"zh-CN\">"))
   assert_true(rendered.html.contains("<meta name=\"description\" content=\"MoonBit docs &lt;site&gt;\">"))
+  assert_true(rendered.html.contains("<meta property=\"og:title\" content=\"Guide - Docs\">"))
+  assert_true(rendered.html.contains("<meta property=\"og:description\" content=\"MoonBit docs &lt;site&gt;\">"))
+  assert_true(rendered.html.contains("<link rel=\"canonical\" href=\"https://docs.example/moondockit/guide.html\">"))
+  assert_true(rendered.html.contains("<meta property=\"og:url\" content=\"https://docs.example/moondockit/guide.html\">"))
   assert_true(rendered.html.contains("<footer>Built with <code>MoonDocKit</code></footer>"))
 }
 
@@ -200,6 +205,7 @@ test "site options sanitize invalid language values" {
   let options : @moondockit.SiteOptions = {
     language: "zh_CN<script>",
     description: "",
+    site_url: "javascript:alert(1)",
     footer: "",
   }
   let rendered = @moondockit.render_page_with_options(
@@ -211,6 +217,8 @@ test "site options sanitize invalid language values" {
   assert_true(rendered.html.contains("<html lang=\"en\">"))
   assert_false(rendered.html.contains("<footer>"))
   assert_false(rendered.html.contains("description"))
+  assert_false(rendered.html.contains("canonical"))
+  assert_false(rendered.html.contains("og:url"))
 }
 
 test "build_search_index serializes searchable page text" {

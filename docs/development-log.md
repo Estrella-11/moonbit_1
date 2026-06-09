@@ -87,6 +87,8 @@ Repository setup:
   counts, output kind counts, per-file byte counts, and total output bytes.
 - Added robots.txt generation to the MoonBit manifest and Python example site
   builder, pairing the generated sitemap with crawler guidance for static docs.
+- Added canonical link and Open Graph metadata generation through `SiteOptions`,
+  and updated the example site builder to emit the same metadata.
 
 Next engineering target:
 
