@@ -77,6 +77,9 @@ Repository setup:
 - Added `SiteOptions`, `default_site_options`, and template-aware render and
   manifest APIs for generated page language, description metadata, and footer
   content.
+- Upgraded the generated example site to demonstrate inline code, strong text,
+  safe links, description metadata, and footer output, keeping `dist-example`
+  aligned with current renderer capabilities.
 
 Next engineering target:
 

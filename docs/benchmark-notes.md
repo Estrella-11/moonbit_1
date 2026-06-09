@@ -26,9 +26,11 @@ moon run cmd/main
 As of the current baseline:
 
 - `moon check` passes
-- `moon test` passes with 14 tests
-- `moon run cmd/main` prints generated file counts
+- `moon test` passes with 21 tests
+- `moon run cmd/main` prints generated file counts and validation status
 - `tools/build_example_site.py` writes 4 files to `dist-example`
+- The generated example site includes inline code, strong text, safe links,
+  description metadata, and footer content
 
 ## Future Benchmark Targets
 

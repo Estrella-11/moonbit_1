@@ -30,6 +30,7 @@
 - [x] Template options for language, description, and footer implemented.
 - [x] CLI demo prints manifest and summary.
 - [x] Example documentation site added.
+- [x] Example site output demonstrates inline rendering and template metadata.
 - [x] Benchmark notes added.
 - [x] Acceptance guide added.
 - [x] Release notes added.
