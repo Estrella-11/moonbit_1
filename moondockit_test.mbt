@@ -247,6 +247,35 @@ test "build_sitemap serializes sorted page routes" {
   assert_true(sitemap.contains("<loc>intro.html</loc>"))
 }
 
+test "inspect_manifest reports generated output files" {
+  let files : Array[@moondockit.OutputFile] = [
+    { path: "index.html", content: "<html></html>" },
+    { path: "search-index.json", content: "[]" },
+    { path: "sitemap.xml", content: "<urlset></urlset>" },
+  ]
+  let report = @moondockit.inspect_manifest(files)
+  inspect(report.file_count, content="3")
+  inspect(report.html_count, content="1")
+  inspect(report.data_count, content="2")
+  inspect(report.total_bytes, content="32")
+  inspect(report.files[0].path, content="index.html")
+  inspect(report.files[0].kind, content="html")
+  inspect(report.files[1].kind, content="data")
+}
+
+test "build_site_report summarizes default manifest outputs" {
+  let page : @moondockit.DocPage = {
+    title: "Guide",
+    slug: "guide",
+    source: "# Guide\n\nShip docs.",
+  }
+  let report = @moondockit.build_site_report({ title: "Docs", pages: [page] })
+  inspect(report.file_count, content="3")
+  inspect(report.html_count, content="1")
+  inspect(report.data_count, content="2")
+  assert_true(report.total_bytes > 0)
+}
+
 test "summarize_site counts pages outputs search and tags" {
   let a : @moondockit.DocPage = {
     title: "A",

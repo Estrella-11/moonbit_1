@@ -17,6 +17,22 @@ pub(all) struct OutputFile {
   content : String
 }
 
+/// File metadata derived from a generated output manifest.
+pub(all) struct OutputFileInfo {
+  path : String
+  kind : String
+  byte_count : Int
+}
+
+/// Aggregate report for generated output files.
+pub(all) struct BuildReport {
+  file_count : Int
+  html_count : Int
+  data_count : Int
+  total_bytes : Int
+  files : Array[OutputFileInfo]
+}
+
 /// Searchable text metadata for one route.
 pub(all) struct SearchEntry {
   title : String
@@ -791,6 +807,37 @@ pub fn build_sitemap(site : DocSite) -> String {
   out.to_string()
 }
 
+/// Inspect generated output files and return a deterministic build report.
+pub fn inspect_manifest(files : Array[OutputFile]) -> BuildReport {
+  let infos : Array[OutputFileInfo] = []
+  let mut html_count = 0
+  let mut data_count = 0
+  let mut total_bytes = 0
+  for file in files {
+    let kind = classify_output(file.path)
+    if kind == "html" {
+      html_count = html_count + 1
+    } else if kind == "data" {
+      data_count = data_count + 1
+    }
+    total_bytes = total_bytes + file.content.length()
+    infos.push({ path: file.path, kind, byte_count: file.content.length() })
+  }
+  infos.sort_by((left, right) => left.path.compare(right.path))
+  {
+    file_count: infos.length(),
+    html_count,
+    data_count,
+    total_bytes,
+    files: infos,
+  }
+}
+
+/// Build a report for the default generated site manifest.
+pub fn build_site_report(site : DocSite) -> BuildReport {
+  inspect_manifest(build_site_manifest(site))
+}
+
 /// Build a small JSON search index for the rendered site.
 pub fn build_search_index(site : DocSite) -> String {
   let entries = collect_search_entries(site)
@@ -1016,6 +1063,16 @@ fn xml_escape(input : String) -> String {
     }
   }
   out.to_string()
+}
+
+fn classify_output(path : String) -> String {
+  if path.has_suffix(".html") || path.has_suffix(".htm") {
+    "html"
+  } else if path.has_suffix(".json") || path.has_suffix(".xml") {
+    "data"
+  } else {
+    "asset"
+  }
 }
 
 fn route_for_page(page : DocPage) -> RouteEntry {

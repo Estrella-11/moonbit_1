@@ -33,8 +33,11 @@ fn main {
   println("MoonDocKit Demo")
   println("pages: \{summary.page_count}, outputs: \{summary.output_count}, search entries: \{summary.search_entry_count}, tags: \{summary.tag_count}")
   println("diagnostics: \{report.diagnostics.length()}, has errors: \{@moondockit.has_validation_errors(report)}")
+  let manifest = @moondockit.build_site_manifest_with_options(site, theme, options)
+  let build = @moondockit.inspect_manifest(manifest)
+  println("build: files=\{build.file_count}, html=\{build.html_count}, data=\{build.data_count}, bytes=\{build.total_bytes}")
   println("files:")
-  for file in @moondockit.build_site_manifest_with_options(site, theme, options) {
+  for file in manifest {
     println("- \{file.path} (\{file.content.length()} bytes)")
   }
 }

@@ -25,6 +25,7 @@
 - [x] Multi-page static output manifest implemented.
 - [x] Search index implemented.
 - [x] Sitemap generation implemented.
+- [x] Build report generation implemented.
 - [x] Site summary metadata implemented.
 - [x] Site validation diagnostics implemented.
 - [x] Theme configuration implemented.

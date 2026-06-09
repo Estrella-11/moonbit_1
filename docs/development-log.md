@@ -83,6 +83,8 @@ Repository setup:
 - Added XML sitemap generation to the MoonBit manifest and Python example site
   builder, so generated sites now include HTML pages, search index, and
   sitemap output.
+- Added build report APIs for generated manifest inspection, including file
+  counts, output kind counts, per-file byte counts, and total output bytes.
 
 Next engineering target:
 

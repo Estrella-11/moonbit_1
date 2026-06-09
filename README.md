@@ -32,6 +32,7 @@ Repository mirrors:
 - Static output manifest generation for rendered HTML files.
 - JSON search index generation.
 - XML sitemap generation.
+- Build report generation for output file counts, file kinds, and byte totals.
 - Site summary metadata for demos and validation.
 - Site validation diagnostics for empty sites, empty titles, empty source
   pages, and duplicate output routes.
