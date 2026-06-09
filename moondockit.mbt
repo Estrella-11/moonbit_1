@@ -535,7 +535,117 @@ pub fn render_markdown(markdown : String) -> String {
 }
 
 fn render_inline(input : String) -> String {
-  html_escape(input)
+  let out = StringBuilder(size_hint=input.length())
+  let mut i = 0
+  while i < input.length() {
+    if starts_with_at(input, i, "`") {
+      match find_char_from(input, i + 1, '`') {
+        Some(close) => {
+          out.write_string("<code>")
+          out.write_string(html_escape(input[i + 1:close].to_owned()))
+          out.write_string("</code>")
+          i = close + 1
+        }
+        None => {
+          out.write_string("`")
+          i = i + 1
+        }
+      }
+    } else if starts_with_at(input, i, "**") {
+      match find_marker_from(input, i + 2, "**") {
+        Some(close) => {
+          out.write_string("<strong>")
+          out.write_string(render_inline(input[i + 2:close].to_owned()))
+          out.write_string("</strong>")
+          i = close + 2
+        }
+        None => {
+          out.write_string("**")
+          i = i + 2
+        }
+      }
+    } else if input[i] == '[' {
+      match parse_link(input, i) {
+        Some((close, label, href)) => {
+          out.write_string("<a href=\"")
+          out.write_string(html_escape(safe_href(href)))
+          out.write_string("\">")
+          out.write_string(render_inline(label))
+          out.write_string("</a>")
+          i = close + 1
+        }
+        None => {
+          out.write_string(html_escape(input[i:i + 1].to_owned()))
+          i = i + 1
+        }
+      }
+    } else {
+      out.write_string(html_escape(input[i:i + 1].to_owned()))
+      i = i + 1
+    }
+  }
+  out.to_string()
+}
+
+fn starts_with_at(input : String, index : Int, marker : String) -> Bool {
+  index + marker.length() <= input.length() &&
+  input[index:index + marker.length()].to_owned() == marker
+}
+
+fn find_char_from(input : String, start : Int, target : UInt16) -> Int? {
+  let mut i = start
+  while i < input.length() {
+    if input[i] == target {
+      return Some(i)
+    }
+    i = i + 1
+  }
+  None
+}
+
+fn find_marker_from(input : String, start : Int, marker : String) -> Int? {
+  let mut i = start
+  while i + marker.length() <= input.length() {
+    if starts_with_at(input, i, marker) {
+      return Some(i)
+    }
+    i = i + 1
+  }
+  None
+}
+
+fn parse_link(input : String, start : Int) -> (Int, String, String)? {
+  match find_char_from(input, start + 1, ']') {
+    Some(label_end) =>
+      if label_end + 1 < input.length() && input[label_end + 1] == '(' {
+        match find_char_from(input, label_end + 2, ')') {
+          Some(href_end) =>
+            Some((
+              href_end,
+              input[start + 1:label_end].to_owned(),
+              input[label_end + 2:href_end].to_owned(),
+            ))
+          None => None
+        }
+      } else {
+        None
+      }
+    None => None
+  }
+}
+
+fn safe_href(href : String) -> String {
+  let value = href.trim().to_owned()
+  if value.has_prefix("http://") ||
+     value.has_prefix("https://") ||
+     value.has_prefix("#") ||
+     value.has_prefix("./") ||
+     value.has_prefix("../") ||
+     !value.contains(":") {
+    value
+  } else {
+    "#"
+  }
 }
 
 /// Render a complete HTML page with navigation.

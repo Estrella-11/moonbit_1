@@ -71,8 +71,11 @@ Repository setup:
   content width without replacing the renderer.
 - Added final submission notes and made the one-shot verification script usable
   even when the local Python environment does not have optional PDF tooling.
+- After passing declaration review, added inline Markdown rendering for code
+  spans, strong text, and safe links, including tests for unsafe link
+  sanitization.
 
 Next engineering target:
 
-- Finalize the competition form submission, then publish to mooncakes.io when
-  account access is available.
+- Continue toward final acceptance by improving real documentation generation,
+  examples, tests, README clarity, and mooncakes.io publishing readiness.

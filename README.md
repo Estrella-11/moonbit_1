@@ -22,6 +22,7 @@ Repository mirrors:
 - Stable ASCII slug generation for headings and page routes.
 - Block-level Markdown AST for headings, paragraphs, lists, block quotes, and
   fenced code blocks.
+- Inline Markdown rendering for code spans, strong text, and safe links.
 - Paragraph line folding and fenced code language labels.
 - HTML rendering from parsed Markdown blocks.
 - Heading extraction and automatic on-page table of contents.

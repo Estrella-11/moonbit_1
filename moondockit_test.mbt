@@ -21,6 +21,23 @@ test "render_markdown supports the first block set" {
   assert_true(html.contains("let x = 1 &lt; 2"))
 }
 
+test "render_markdown supports inline code strong and links" {
+  let html = @moondockit.render_markdown(
+    "Use `moon test`, read **safe docs**, and open [MoonBit](https://www.moonbitlang.com).",
+  )
+  assert_true(html.contains("<code>moon test</code>"))
+  assert_true(html.contains("<strong>safe docs</strong>"))
+  assert_true(html.contains("<a href=\"https://www.moonbitlang.com\">MoonBit</a>"))
+}
+
+test "render_markdown escapes inline text and blocks unsafe links" {
+  let html = @moondockit.render_markdown(
+    "Click [bad <link>](javascript:alert(1)) and keep `<raw>` safe.",
+  )
+  assert_true(html.contains("<a href=\"#\">bad &lt;link&gt;</a>"))
+  assert_true(html.contains("<code>&lt;raw&gt;</code>"))
+}
+
 test "extract_toc ignores code fences" {
   let toc = @moondockit.extract_toc("# Guide\n\n## Install\n\n```\n# Not a heading\n```\n## Usage")
   inspect(toc.length(), content="3")
