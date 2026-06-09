@@ -8,9 +8,13 @@ pub fn build_search_index(DocSite) -> String
 
 pub fn build_site_manifest(DocSite) -> Array[OutputFile]
 
+pub fn build_site_manifest_with_options(DocSite, SiteTheme, SiteOptions) -> Array[OutputFile]
+
 pub fn build_site_manifest_with_theme(DocSite, SiteTheme) -> Array[OutputFile]
 
 pub fn collect_search_entries(DocSite) -> Array[SearchEntry]
+
+pub fn default_site_options() -> SiteOptions
 
 pub fn default_theme() -> SiteTheme
 
@@ -38,9 +42,13 @@ pub fn render_markdown(String) -> String
 
 pub fn render_page(DocSite, DocPage) -> RenderedPage
 
+pub fn render_page_with_options(DocSite, DocPage, SiteTheme, SiteOptions) -> RenderedPage
+
 pub fn render_page_with_theme(DocSite, DocPage, SiteTheme) -> RenderedPage
 
 pub fn render_site(DocSite) -> Array[RenderedPage]
+
+pub fn render_site_with_options(DocSite, SiteTheme, SiteOptions) -> Array[RenderedPage]
 
 pub fn render_site_with_theme(DocSite, SiteTheme) -> Array[RenderedPage]
 
@@ -125,6 +133,12 @@ pub(all) struct SiteDiagnostic {
   code : String
   message : String
   page : String?
+}
+
+pub(all) struct SiteOptions {
+  language : String
+  description : String
+  footer : String
 }
 
 pub(all) struct SiteSummary {

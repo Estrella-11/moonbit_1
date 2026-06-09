@@ -165,6 +165,52 @@ test "custom themes change generated page style" {
   assert_true(rendered.html.contains("max-width:900px"))
 }
 
+test "site options add page metadata and footer" {
+  let page : @moondockit.DocPage = {
+    title: "Guide",
+    slug: "guide",
+    source: "# Guide\n\nShip docs.",
+  }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [page] }
+  let options : @moondockit.SiteOptions = {
+    language: "zh-CN",
+    description: "MoonBit docs <site>",
+    footer: "Built with `MoonDocKit`",
+  }
+  let rendered = @moondockit.render_page_with_options(
+    site,
+    page,
+    @moondockit.default_theme(),
+    options,
+  )
+  assert_true(rendered.html.contains("<html lang=\"zh-CN\">"))
+  assert_true(rendered.html.contains("<meta name=\"description\" content=\"MoonBit docs &lt;site&gt;\">"))
+  assert_true(rendered.html.contains("<footer>Built with <code>MoonDocKit</code></footer>"))
+}
+
+test "site options sanitize invalid language values" {
+  let page : @moondockit.DocPage = {
+    title: "Guide",
+    slug: "guide",
+    source: "# Guide",
+  }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [page] }
+  let options : @moondockit.SiteOptions = {
+    language: "zh_CN<script>",
+    description: "",
+    footer: "",
+  }
+  let rendered = @moondockit.render_page_with_options(
+    site,
+    page,
+    @moondockit.default_theme(),
+    options,
+  )
+  assert_true(rendered.html.contains("<html lang=\"en\">"))
+  assert_false(rendered.html.contains("<footer>"))
+  assert_false(rendered.html.contains("description"))
+}
+
 test "build_search_index serializes searchable page text" {
   let page : @moondockit.DocPage = {
     title: "Guide",

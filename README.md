@@ -35,6 +35,8 @@ Repository mirrors:
 - Site validation diagnostics for empty sites, empty titles, empty source
   pages, and duplicate output routes.
 - Theme configuration for generated page colors and layout widths.
+- Template options for generated page language, description metadata, and
+  footer content.
 - Runnable demo that prints generated files and site statistics.
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.

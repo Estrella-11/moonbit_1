@@ -74,6 +74,9 @@ Repository setup:
 - After passing declaration review, added inline Markdown rendering for code
   spans, strong text, and safe links, including tests for unsafe link
   sanitization.
+- Added `SiteOptions`, `default_site_options`, and template-aware render and
+  manifest APIs for generated page language, description metadata, and footer
+  content.
 
 Next engineering target:
 
