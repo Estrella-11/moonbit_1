@@ -292,6 +292,37 @@ test "build_site_report summarizes default manifest outputs" {
   assert_true(report.total_bytes > 0)
 }
 
+test "measure_document reports content metrics" {
+  let metrics = @moondockit.measure_document(
+    "# Guide\n\nIntro text.\n\n- one item\n- two\n\n> quoted note\n\n```mbt\nlet x = 1\n```",
+  )
+  inspect(metrics.heading_count, content="1")
+  inspect(metrics.paragraph_count, content="2")
+  inspect(metrics.list_item_count, content="2")
+  inspect(metrics.code_block_count, content="1")
+  inspect(metrics.word_count, content="8")
+  inspect(metrics.reading_minutes, content="1")
+}
+
+test "measure_site aggregates page metrics" {
+  let a : @moondockit.DocPage = {
+    title: "A",
+    slug: "a",
+    source: "# A\n\none two",
+  }
+  let b : @moondockit.DocPage = {
+    title: "B",
+    slug: "b",
+    source: "# B\n\n```mbt\nlet ok = true\n```",
+  }
+  let metrics = @moondockit.measure_site({ title: "Docs", pages: [a, b] })
+  inspect(metrics.page_count, content="2")
+  inspect(metrics.heading_count, content="2")
+  inspect(metrics.code_block_count, content="1")
+  inspect(metrics.word_count, content="4")
+  inspect(metrics.reading_minutes, content="1")
+}
+
 test "summarize_site counts pages outputs search and tags" {
   let a : @moondockit.DocPage = {
     title: "A",

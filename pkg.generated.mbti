@@ -38,6 +38,12 @@ pub fn html_escape(String) -> String
 
 pub fn inspect_manifest(Array[OutputFile]) -> BuildReport
 
+pub fn measure_blocks(Array[MarkdownBlock]) -> DocumentMetrics
+
+pub fn measure_document(String) -> DocumentMetrics
+
+pub fn measure_site(DocSite) -> SiteMetrics
+
 pub fn parse_blocks(String) -> Array[MarkdownBlock]
 
 pub fn parse_document(String) -> ParsedDocument
@@ -99,6 +105,15 @@ pub(all) struct DocSite {
   pages : Array[DocPage]
 }
 
+pub(all) struct DocumentMetrics {
+  heading_count : Int
+  paragraph_count : Int
+  list_item_count : Int
+  code_block_count : Int
+  word_count : Int
+  reading_minutes : Int
+}
+
 pub(all) struct FrontMatter {
   title : String?
   order : Int?
@@ -155,6 +170,14 @@ pub(all) struct SiteDiagnostic {
   code : String
   message : String
   page : String?
+}
+
+pub(all) struct SiteMetrics {
+  page_count : Int
+  heading_count : Int
+  code_block_count : Int
+  word_count : Int
+  reading_minutes : Int
 }
 
 pub(all) struct SiteOptions {

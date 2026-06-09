@@ -27,6 +27,7 @@
 - [x] Sitemap generation implemented.
 - [x] robots.txt generation implemented.
 - [x] Build report generation implemented.
+- [x] Document and site metrics implemented.
 - [x] Site summary metadata implemented.
 - [x] Site validation diagnostics implemented.
 - [x] Theme configuration implemented.

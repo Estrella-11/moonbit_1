@@ -49,6 +49,25 @@ pub(all) struct SiteSummary {
   tag_count : Int
 }
 
+/// Content metrics for one parsed documentation page.
+pub(all) struct DocumentMetrics {
+  heading_count : Int
+  paragraph_count : Int
+  list_item_count : Int
+  code_block_count : Int
+  word_count : Int
+  reading_minutes : Int
+}
+
+/// Aggregate content metrics for a documentation site.
+pub(all) struct SiteMetrics {
+  page_count : Int
+  heading_count : Int
+  code_block_count : Int
+  word_count : Int
+  reading_minutes : Int
+}
+
 /// Visual theme values used by generated HTML pages.
 pub(all) struct SiteTheme {
   background : String
@@ -957,6 +976,66 @@ pub fn summarize_site(site : DocSite) -> SiteSummary {
   }
 }
 
+/// Measure content size and structure for one Markdown document.
+pub fn measure_document(markdown : String) -> DocumentMetrics {
+  measure_blocks(parse_blocks(markdown))
+}
+
+/// Measure content size and structure for parsed Markdown blocks.
+pub fn measure_blocks(blocks : Array[MarkdownBlock]) -> DocumentMetrics {
+  let mut heading_count = 0
+  let mut paragraph_count = 0
+  let mut list_item_count = 0
+  let mut code_block_count = 0
+  let mut word_count = 0
+  for block in blocks {
+    match block {
+      Heading(_, title) => {
+        heading_count = heading_count + 1
+        word_count = word_count + count_words(title)
+      }
+      Paragraph(text) | BlockQuote(text) => {
+        paragraph_count = paragraph_count + 1
+        word_count = word_count + count_words(text)
+      }
+      UnorderedList(items) =>
+        for item in items {
+          list_item_count = list_item_count + 1
+          word_count = word_count + count_words(item)
+        }
+      CodeBlock(_, _) => code_block_count = code_block_count + 1
+    }
+  }
+  {
+    heading_count,
+    paragraph_count,
+    list_item_count,
+    code_block_count,
+    word_count,
+    reading_minutes: reading_minutes_for_words(word_count),
+  }
+}
+
+/// Measure aggregate content size and structure for all site pages.
+pub fn measure_site(site : DocSite) -> SiteMetrics {
+  let mut heading_count = 0
+  let mut code_block_count = 0
+  let mut word_count = 0
+  for page in site.pages {
+    let metrics = measure_document(page.source)
+    heading_count = heading_count + metrics.heading_count
+    code_block_count = code_block_count + metrics.code_block_count
+    word_count = word_count + metrics.word_count
+  }
+  {
+    page_count: site.pages.length(),
+    heading_count,
+    code_block_count,
+    word_count,
+    reading_minutes: reading_minutes_for_words(word_count),
+  }
+}
+
 /// Validate a site before rendering or publishing.
 pub fn validate_site(site : DocSite) -> ValidationReport {
   let diagnostics : Array[SiteDiagnostic] = []
@@ -1084,6 +1163,28 @@ fn append_search_text(out : StringBuilder, text : String) -> Unit {
     out.write_char(' ')
   }
   out.write_string(text.trim().to_owned())
+}
+
+fn count_words(text : String) -> Int {
+  let mut count = 0
+  let mut in_word = false
+  for _, ch in text {
+    let lower = ch.to_ascii_lowercase()
+    let is_word = (lower is ('a'..='z')) || (lower is ('0'..='9'))
+    if is_word && !in_word {
+      count = count + 1
+    }
+    in_word = is_word
+  }
+  count
+}
+
+fn reading_minutes_for_words(word_count : Int) -> Int {
+  if word_count == 0 {
+    0
+  } else {
+    (word_count + 199) / 200
+  }
 }
 
 fn json_escape(input : String) -> String {

@@ -89,6 +89,9 @@ Repository setup:
   builder, pairing the generated sitemap with crawler guidance for static docs.
 - Added canonical link and Open Graph metadata generation through `SiteOptions`,
   and updated the example site builder to emit the same metadata.
+- Added document and site metrics for headings, code blocks, word counts, and
+  estimated reading time; the demo now reports content metrics alongside build
+  output information.
 
 Next engineering target:
 
