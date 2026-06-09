@@ -25,6 +25,7 @@
 - [x] Multi-page static output manifest implemented.
 - [x] Search index implemented.
 - [x] Sitemap generation implemented.
+- [x] robots.txt generation implemented.
 - [x] Build report generation implemented.
 - [x] Site summary metadata implemented.
 - [x] Site validation diagnostics implemented.
@@ -32,7 +33,7 @@
 - [x] Template options for language, description, and footer implemented.
 - [x] CLI demo prints manifest and summary.
 - [x] Example documentation site added.
-- [x] Example site output demonstrates inline rendering, template metadata, and sitemap output.
+- [x] Example site output demonstrates inline rendering, template metadata, sitemap output, and robots.txt output.
 - [x] Benchmark notes added.
 - [x] Acceptance guide added.
 - [x] Release notes added.

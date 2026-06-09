@@ -182,7 +182,11 @@ def main() -> None:
         + "</urlset>\n"
     )
     (OUT / "sitemap.xml").write_text(sitemap, encoding="utf-8")
-    print(f"Wrote {len(pages) + 2} files to {OUT}")
+    (OUT / "robots.txt").write_text(
+        "User-agent: *\nAllow: /\nSitemap: sitemap.xml\n",
+        encoding="utf-8",
+    )
+    print(f"Wrote {len(pages) + 3} files to {OUT}")
 
 
 if __name__ == "__main__":

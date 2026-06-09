@@ -9,9 +9,10 @@ performance claims.
 The current example site contains:
 
 - 3 source Markdown pages
-- 5 generated output files
+- 6 generated output files
 - 1 search index
 - 1 sitemap
+- 1 robots.txt
 
 Command:
 
@@ -29,9 +30,9 @@ As of the current baseline:
 - `moon check` passes
 - `moon test` passes with 21 tests
 - `moon run cmd/main` prints generated file counts and validation status
-- `tools/build_example_site.py` writes 5 files to `dist-example`
+- `tools/build_example_site.py` writes 6 files to `dist-example`
 - The generated example site includes inline code, strong text, safe links,
-  description metadata, footer content, and sitemap output
+  description metadata, footer content, sitemap output, and robots.txt output
 
 ## Future Benchmark Targets
 

@@ -85,6 +85,8 @@ Repository setup:
   sitemap output.
 - Added build report APIs for generated manifest inspection, including file
   counts, output kind counts, per-file byte counts, and total output bytes.
+- Added robots.txt generation to the MoonBit manifest and Python example site
+  builder, pairing the generated sitemap with crawler guidance for static docs.
 
 Next engineering target:
 

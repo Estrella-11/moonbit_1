@@ -788,8 +788,14 @@ pub fn build_site_manifest_with_options(
   }
   files.push({ path: "search-index.json", content: build_search_index(site) })
   files.push({ path: "sitemap.xml", content: build_sitemap(site) })
+  files.push({ path: "robots.txt", content: build_robots_txt() })
   files.sort_by((left, right) => left.path.compare(right.path))
   files
+}
+
+/// Build a robots.txt file that points crawlers to the generated sitemap.
+pub fn build_robots_txt() -> String {
+  "User-agent: *\nAllow: /\nSitemap: sitemap.xml\n"
 }
 
 /// Build a minimal XML sitemap for generated HTML pages.

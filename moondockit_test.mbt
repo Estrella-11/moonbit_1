@@ -132,11 +132,12 @@ test "build_site_manifest returns deterministic output files" {
   }
   let site : @moondockit.DocSite = { title: "Docs", pages: [intro, api] }
   let files = @moondockit.build_site_manifest(site)
-  inspect(files.length(), content="4")
+  inspect(files.length(), content="5")
   inspect(files[0].path, content="api.html")
   inspect(files[1].path, content="intro.html")
-  inspect(files[2].path, content="sitemap.xml")
-  inspect(files[3].path, content="search-index.json")
+  inspect(files[2].path, content="robots.txt")
+  inspect(files[3].path, content="sitemap.xml")
+  inspect(files[4].path, content="search-index.json")
   assert_true(files[1].content.contains("<title>Intro - Docs</title>"))
   assert_true(files[1].content.contains("<a href=\"api.html\">API</a>"))
 }
@@ -247,6 +248,13 @@ test "build_sitemap serializes sorted page routes" {
   assert_true(sitemap.contains("<loc>intro.html</loc>"))
 }
 
+test "build_robots_txt allows crawlers and references sitemap" {
+  let robots = @moondockit.build_robots_txt()
+  assert_true(robots.contains("User-agent: *"))
+  assert_true(robots.contains("Allow: /"))
+  assert_true(robots.contains("Sitemap: sitemap.xml"))
+}
+
 test "inspect_manifest reports generated output files" {
   let files : Array[@moondockit.OutputFile] = [
     { path: "index.html", content: "<html></html>" },
@@ -270,7 +278,7 @@ test "build_site_report summarizes default manifest outputs" {
     source: "# Guide\n\nShip docs.",
   }
   let report = @moondockit.build_site_report({ title: "Docs", pages: [page] })
-  inspect(report.file_count, content="3")
+  inspect(report.file_count, content="4")
   inspect(report.html_count, content="1")
   inspect(report.data_count, content="2")
   assert_true(report.total_bytes > 0)
@@ -289,7 +297,7 @@ test "summarize_site counts pages outputs search and tags" {
   }
   let summary = @moondockit.summarize_site({ title: "Docs", pages: [a, b] })
   inspect(summary.page_count, content="2")
-  inspect(summary.output_count, content="4")
+  inspect(summary.output_count, content="5")
   inspect(summary.search_entry_count, content="2")
   inspect(summary.tag_count, content="2")
 }

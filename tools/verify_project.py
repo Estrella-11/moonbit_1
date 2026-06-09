@@ -46,6 +46,7 @@ def verify_example_site() -> None:
         "dist-example/quick-start.html",
         "dist-example/api.html",
         "dist-example/changelog.html",
+        "dist-example/robots.txt",
         "dist-example/search-index.json",
         "dist-example/sitemap.xml",
     ]:
