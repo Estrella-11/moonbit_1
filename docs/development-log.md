@@ -80,6 +80,9 @@ Repository setup:
 - Upgraded the generated example site to demonstrate inline code, strong text,
   safe links, description metadata, and footer output, keeping `dist-example`
   aligned with current renderer capabilities.
+- Added XML sitemap generation to the MoonBit manifest and Python example site
+  builder, so generated sites now include HTML pages, search index, and
+  sitemap output.
 
 Next engineering target:
 

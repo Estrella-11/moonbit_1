@@ -175,7 +175,14 @@ def main() -> None:
         for item in search_entries
     ) + "\n]\n"
     (OUT / "search-index.json").write_text(index, encoding="utf-8")
-    print(f"Wrote {len(pages) + 1} files to {OUT}")
+    sitemap = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "".join(f"  <url><loc>{slug}.html</loc></url>\n" for _, _, slug, _ in pages)
+        + "</urlset>\n"
+    )
+    (OUT / "sitemap.xml").write_text(sitemap, encoding="utf-8")
+    print(f"Wrote {len(pages) + 2} files to {OUT}")
 
 
 if __name__ == "__main__":

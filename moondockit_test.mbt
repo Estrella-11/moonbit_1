@@ -132,10 +132,11 @@ test "build_site_manifest returns deterministic output files" {
   }
   let site : @moondockit.DocSite = { title: "Docs", pages: [intro, api] }
   let files = @moondockit.build_site_manifest(site)
-  inspect(files.length(), content="3")
+  inspect(files.length(), content="4")
   inspect(files[0].path, content="api.html")
   inspect(files[1].path, content="intro.html")
-  inspect(files[2].path, content="search-index.json")
+  inspect(files[2].path, content="sitemap.xml")
+  inspect(files[3].path, content="search-index.json")
   assert_true(files[1].content.contains("<title>Intro - Docs</title>"))
   assert_true(files[1].content.contains("<a href=\"api.html\">API</a>"))
 }
@@ -228,6 +229,24 @@ test "build_search_index serializes searchable page text" {
   assert_true(json.contains("\"tags\":[\"docs\",\"moonbit\"]"))
 }
 
+test "build_sitemap serializes sorted page routes" {
+  let intro : @moondockit.DocPage = {
+    title: "Intro",
+    slug: "intro",
+    source: "---\norder: 2\n---\n# Intro",
+  }
+  let api : @moondockit.DocPage = {
+    title: "API",
+    slug: "api",
+    source: "---\norder: 1\n---\n# API",
+  }
+  let sitemap = @moondockit.build_sitemap({ title: "Docs", pages: [intro, api] })
+  assert_true(sitemap.contains("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"))
+  assert_true(sitemap.contains("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">"))
+  assert_true(sitemap.contains("<loc>api.html</loc>"))
+  assert_true(sitemap.contains("<loc>intro.html</loc>"))
+}
+
 test "summarize_site counts pages outputs search and tags" {
   let a : @moondockit.DocPage = {
     title: "A",
@@ -241,7 +260,7 @@ test "summarize_site counts pages outputs search and tags" {
   }
   let summary = @moondockit.summarize_site({ title: "Docs", pages: [a, b] })
   inspect(summary.page_count, content="2")
-  inspect(summary.output_count, content="3")
+  inspect(summary.output_count, content="4")
   inspect(summary.search_entry_count, content="2")
   inspect(summary.tag_count, content="2")
 }

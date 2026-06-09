@@ -12,6 +12,8 @@ pub fn build_site_manifest_with_options(DocSite, SiteTheme, SiteOptions) -> Arra
 
 pub fn build_site_manifest_with_theme(DocSite, SiteTheme) -> Array[OutputFile]
 
+pub fn build_sitemap(DocSite) -> String
+
 pub fn collect_search_entries(DocSite) -> Array[SearchEntry]
 
 pub fn default_site_options() -> SiteOptions

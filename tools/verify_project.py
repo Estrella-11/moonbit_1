@@ -47,6 +47,7 @@ def verify_example_site() -> None:
         "dist-example/api.html",
         "dist-example/changelog.html",
         "dist-example/search-index.json",
+        "dist-example/sitemap.xml",
     ]:
         require(path)
 

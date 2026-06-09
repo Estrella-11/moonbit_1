@@ -31,6 +31,7 @@ Repository mirrors:
 - Route planning for multi-page sites using page slug and front matter order.
 - Static output manifest generation for rendered HTML files.
 - JSON search index generation.
+- XML sitemap generation.
 - Site summary metadata for demos and validation.
 - Site validation diagnostics for empty sites, empty titles, empty source
   pages, and duplicate output routes.

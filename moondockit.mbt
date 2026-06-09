@@ -771,8 +771,24 @@ pub fn build_site_manifest_with_options(
     files.push({ path: rendered.path, content: rendered.html })
   }
   files.push({ path: "search-index.json", content: build_search_index(site) })
+  files.push({ path: "sitemap.xml", content: build_sitemap(site) })
   files.sort_by((left, right) => left.path.compare(right.path))
   files
+}
+
+/// Build a minimal XML sitemap for generated HTML pages.
+pub fn build_sitemap(site : DocSite) -> String {
+  let routes = plan_routes(site)
+  let out = StringBuilder()
+  out.write_string("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
+  out.write_string("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n")
+  for route in routes {
+    out.write_string("  <url><loc>")
+    out.write_string(xml_escape(route.path))
+    out.write_string("</loc></url>\n")
+  }
+  out.write_string("</urlset>\n")
+  out.to_string()
 }
 
 /// Build a small JSON search index for the rendered site.
@@ -981,6 +997,21 @@ fn json_escape(input : String) -> String {
       '\n' => out.write_string("\\n")
       '\r' => out.write_string("\\r")
       '\t' => out.write_string("\\t")
+      _ => out.write_char(ch)
+    }
+  }
+  out.to_string()
+}
+
+fn xml_escape(input : String) -> String {
+  let out = StringBuilder(size_hint=input.length())
+  for _, ch in input {
+    match ch {
+      '&' => out.write_string("&amp;")
+      '<' => out.write_string("&lt;")
+      '>' => out.write_string("&gt;")
+      '"' => out.write_string("&quot;")
+      '\'' => out.write_string("&apos;")
       _ => out.write_char(ch)
     }
   }
