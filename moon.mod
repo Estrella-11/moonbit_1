@@ -19,6 +19,12 @@ repository = "https://github.com/Estrella-11/moonbit_1"
 
 license = "Apache-2.0"
 
-keywords = ["documentation", "static-site", "markdown", "moonbit", "mooncakes"]
+keywords = [
+  "documentation",
+  "static-site",
+  "markdown",
+  "moonbit",
+  "mooncakes",
+]
 
 description = "A MoonBit-first documentation site toolkit for package authors."

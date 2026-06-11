@@ -1,3 +1,4 @@
+///|
 test "html_escape protects generated pages" {
   inspect(
     @moondockit.html_escape("<script>alert('x') & \"y\"</script>"),
@@ -5,11 +6,16 @@ test "html_escape protects generated pages" {
   )
 }
 
+///|
 test "slugify keeps stable ascii anchors" {
-  inspect(@moondockit.slugify("MoonBit Docs: Quick Start!"), content="moonbit-docs-quick-start")
+  inspect(
+    @moondockit.slugify("MoonBit Docs: Quick Start!"),
+    content="moonbit-docs-quick-start",
+  )
   inspect(@moondockit.slugify("  API   Reference  "), content="api-reference")
 }
 
+///|
 test "render_markdown supports the first block set" {
   let html = @moondockit.render_markdown(
     "# Intro\n\nA <safe> paragraph.\n\n- fast\n- typed\n\n> reusable\n\n```\nlet x = 1 < 2\n```",
@@ -21,15 +27,19 @@ test "render_markdown supports the first block set" {
   assert_true(html.contains("let x = 1 &lt; 2"))
 }
 
+///|
 test "render_markdown supports inline code strong and links" {
   let html = @moondockit.render_markdown(
     "Use `moon test`, read **safe docs**, and open [MoonBit](https://www.moonbitlang.com).",
   )
   assert_true(html.contains("<code>moon test</code>"))
   assert_true(html.contains("<strong>safe docs</strong>"))
-  assert_true(html.contains("<a href=\"https://www.moonbitlang.com\">MoonBit</a>"))
+  assert_true(
+    html.contains("<a href=\"https://www.moonbitlang.com\">MoonBit</a>"),
+  )
 }
 
+///|
 test "render_markdown escapes inline text and blocks unsafe links" {
   let html = @moondockit.render_markdown(
     "Click [bad <link>](javascript:alert(1)) and keep `<raw>` safe.",
@@ -38,14 +48,18 @@ test "render_markdown escapes inline text and blocks unsafe links" {
   assert_true(html.contains("<code>&lt;raw&gt;</code>"))
 }
 
+///|
 test "extract_toc ignores code fences" {
-  let toc = @moondockit.extract_toc("# Guide\n\n## Install\n\n```\n# Not a heading\n```\n## Usage")
+  let toc = @moondockit.extract_toc(
+    "# Guide\n\n## Install\n\n```\n# Not a heading\n```\n## Usage",
+  )
   inspect(toc.length(), content="3")
   inspect(toc[0].anchor, content="guide")
   inspect(toc[1].title, content="Install")
   inspect(toc[2].anchor, content="usage")
 }
 
+///|
 test "headings receive unique anchors" {
   let blocks = @moondockit.parse_blocks("# Intro\n\n## Intro\n\n# Intro")
   let headings = @moondockit.extract_headings(blocks)
@@ -59,8 +73,11 @@ test "headings receive unique anchors" {
   assert_true(html.contains("<h1 id=\"intro-3\">Intro</h1>"))
 }
 
+///|
 test "parse_document reads simple front matter" {
-  let doc = @moondockit.parse_document("---\ntitle: \"Quick Start\"\norder: 12\ntags: [guide, moonbit]\nlayout: docs\n---\n# Quick Start\n\nBody")
+  let doc = @moondockit.parse_document(
+    "---\ntitle: \"Quick Start\"\norder: 12\ntags: [guide, moonbit]\nlayout: docs\n---\n# Quick Start\n\nBody",
+  )
   match doc.front_matter.title {
     Some(title) => inspect(title, content="Quick Start")
     None => fail("expected title")
@@ -79,6 +96,7 @@ test "parse_document reads simple front matter" {
   }
 }
 
+///|
 test "parse_document ignores unclosed front matter" {
   let doc = @moondockit.parse_document("---\ntitle: Draft\n# Still body")
   match doc.front_matter.title {
@@ -89,6 +107,7 @@ test "parse_document ignores unclosed front matter" {
   assert_true(@moondockit.render_blocks(doc.blocks).contains("title: Draft"))
 }
 
+///|
 test "plan_routes uses front matter and stable ordering" {
   let intro : @moondockit.DocPage = {
     title: "Fallback Intro",
@@ -119,6 +138,7 @@ test "plan_routes uses front matter and stable ordering" {
   inspect(routes[2].title, content="Changelog")
 }
 
+///|
 test "build_site_manifest returns deterministic output files" {
   let intro : @moondockit.DocPage = {
     title: "Intro",
@@ -142,6 +162,7 @@ test "build_site_manifest returns deterministic output files" {
   assert_true(files[1].content.contains("<a href=\"api.html\">API</a>"))
 }
 
+///|
 test "custom themes change generated page style" {
   let page : @moondockit.DocPage = {
     title: "Guide",
@@ -167,11 +188,12 @@ test "custom themes change generated page style" {
   assert_true(rendered.html.contains("max-width:900px"))
 }
 
+///|
 test "site options add page metadata and footer" {
   let page : @moondockit.DocPage = {
-    title: "Guide",
+    title: "guide",
     slug: "guide",
-    source: "# Guide\n\nShip docs.",
+    source: "---\ntitle: Guide\n---\n# Guide\n\nShip docs.",
   }
   let site : @moondockit.DocSite = { title: "Docs", pages: [page] }
   let options : @moondockit.SiteOptions = {
@@ -187,14 +209,40 @@ test "site options add page metadata and footer" {
     options,
   )
   assert_true(rendered.html.contains("<html lang=\"zh-CN\">"))
-  assert_true(rendered.html.contains("<meta name=\"description\" content=\"MoonBit docs &lt;site&gt;\">"))
-  assert_true(rendered.html.contains("<meta property=\"og:title\" content=\"Guide - Docs\">"))
-  assert_true(rendered.html.contains("<meta property=\"og:description\" content=\"MoonBit docs &lt;site&gt;\">"))
-  assert_true(rendered.html.contains("<link rel=\"canonical\" href=\"https://docs.example/moondockit/guide.html\">"))
-  assert_true(rendered.html.contains("<meta property=\"og:url\" content=\"https://docs.example/moondockit/guide.html\">"))
-  assert_true(rendered.html.contains("<footer>Built with <code>MoonDocKit</code></footer>"))
+  assert_true(rendered.html.contains("<title>Guide - Docs</title>"))
+  assert_true(
+    rendered.html.contains(
+      "<meta name=\"description\" content=\"MoonBit docs &lt;site&gt;\">",
+    ),
+  )
+  assert_true(
+    rendered.html.contains(
+      "<meta property=\"og:title\" content=\"Guide - Docs\">",
+    ),
+  )
+  assert_true(
+    rendered.html.contains(
+      "<meta property=\"og:description\" content=\"MoonBit docs &lt;site&gt;\">",
+    ),
+  )
+  assert_true(
+    rendered.html.contains(
+      "<link rel=\"canonical\" href=\"https://docs.example/moondockit/guide.html\">",
+    ),
+  )
+  assert_true(
+    rendered.html.contains(
+      "<meta property=\"og:url\" content=\"https://docs.example/moondockit/guide.html\">",
+    ),
+  )
+  assert_true(
+    rendered.html.contains(
+      "<footer>Built with <code>MoonDocKit</code></footer>",
+    ),
+  )
 }
 
+///|
 test "site options sanitize invalid language values" {
   let page : @moondockit.DocPage = {
     title: "Guide",
@@ -221,6 +269,7 @@ test "site options sanitize invalid language values" {
   assert_false(rendered.html.contains("og:url"))
 }
 
+///|
 test "build_search_index serializes searchable page text" {
   let page : @moondockit.DocPage = {
     title: "Guide",
@@ -238,6 +287,7 @@ test "build_search_index serializes searchable page text" {
   assert_true(json.contains("\"tags\":[\"docs\",\"moonbit\"]"))
 }
 
+///|
 test "build_sitemap serializes sorted page routes" {
   let intro : @moondockit.DocPage = {
     title: "Intro",
@@ -251,11 +301,16 @@ test "build_sitemap serializes sorted page routes" {
   }
   let sitemap = @moondockit.build_sitemap({ title: "Docs", pages: [intro, api] })
   assert_true(sitemap.contains("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"))
-  assert_true(sitemap.contains("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">"))
+  assert_true(
+    sitemap.contains(
+      "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">",
+    ),
+  )
   assert_true(sitemap.contains("<loc>api.html</loc>"))
   assert_true(sitemap.contains("<loc>intro.html</loc>"))
 }
 
+///|
 test "build_robots_txt allows crawlers and references sitemap" {
   let robots = @moondockit.build_robots_txt()
   assert_true(robots.contains("User-agent: *"))
@@ -263,6 +318,7 @@ test "build_robots_txt allows crawlers and references sitemap" {
   assert_true(robots.contains("Sitemap: sitemap.xml"))
 }
 
+///|
 test "inspect_manifest reports generated output files" {
   let files : Array[@moondockit.OutputFile] = [
     { path: "index.html", content: "<html></html>" },
@@ -279,6 +335,7 @@ test "inspect_manifest reports generated output files" {
   inspect(report.files[1].kind, content="data")
 }
 
+///|
 test "build_site_report summarizes default manifest outputs" {
   let page : @moondockit.DocPage = {
     title: "Guide",
@@ -292,6 +349,7 @@ test "build_site_report summarizes default manifest outputs" {
   assert_true(report.total_bytes > 0)
 }
 
+///|
 test "measure_document reports content metrics" {
   let metrics = @moondockit.measure_document(
     "# Guide\n\nIntro text.\n\n- one item\n- two\n\n> quoted note\n\n```mbt\nlet x = 1\n```",
@@ -304,6 +362,7 @@ test "measure_document reports content metrics" {
   inspect(metrics.reading_minutes, content="1")
 }
 
+///|
 test "measure_site aggregates page metrics" {
   let a : @moondockit.DocPage = {
     title: "A",
@@ -323,6 +382,7 @@ test "measure_site aggregates page metrics" {
   inspect(metrics.reading_minutes, content="1")
 }
 
+///|
 test "evaluate_quality passes publishable sites" {
   let page : @moondockit.DocPage = {
     title: "Guide",
@@ -336,6 +396,7 @@ test "evaluate_quality passes publishable sites" {
   inspect(gate.checks[0].name, content="validation")
 }
 
+///|
 test "evaluate_quality fails empty sites" {
   let gate = @moondockit.evaluate_quality({ title: "", pages: [] })
   assert_false(gate.passed)
@@ -344,6 +405,7 @@ test "evaluate_quality fails empty sites" {
   assert_false(gate.checks[1].passed)
 }
 
+///|
 test "summarize_site counts pages outputs search and tags" {
   let a : @moondockit.DocPage = {
     title: "A",
@@ -362,6 +424,7 @@ test "summarize_site counts pages outputs search and tags" {
   inspect(summary.tag_count, content="2")
 }
 
+///|
 test "validate_site accepts healthy documentation sites" {
   let page : @moondockit.DocPage = {
     title: "Guide",
@@ -374,6 +437,7 @@ test "validate_site accepts healthy documentation sites" {
   inspect(@moondockit.diagnostics_to_text(report), content="ok")
 }
 
+///|
 test "validate_site reports empty and duplicate routes" {
   let empty_report = @moondockit.validate_site({ title: "", pages: [] })
   inspect(empty_report.diagnostics.length(), content="2")
@@ -402,8 +466,11 @@ test "validate_site reports empty and duplicate routes" {
   assert_true(duplicate_text.contains("warning empty-source [Intro Again]"))
 }
 
+///|
 test "parse_blocks builds stable block ast" {
-  let blocks = @moondockit.parse_blocks("# Guide\n\nIntro\ncontinued\n\n- one\n- two\n\n> note\n\n```mbt\n# code\n```")
+  let blocks = @moondockit.parse_blocks(
+    "# Guide\n\nIntro\ncontinued\n\n- one\n- two\n\n> note\n\n```mbt\n# code\n```",
+  )
   inspect(blocks.length(), content="5")
   match blocks[0] {
     Heading(level, title) => {
@@ -432,6 +499,7 @@ test "parse_blocks builds stable block ast" {
   }
 }
 
+///|
 test "render_blocks keeps renderer reusable" {
   let blocks : Array[@moondockit.MarkdownBlock] = [
     Heading(2, "API <Reference>"),
@@ -439,11 +507,16 @@ test "render_blocks keeps renderer reusable" {
     CodeBlock("mbt", "let ok = true"),
   ]
   let html = @moondockit.render_blocks(blocks)
-  assert_true(html.contains("<h2 id=\"api-reference\">API &lt;Reference&gt;</h2>"))
+  assert_true(
+    html.contains("<h2 id=\"api-reference\">API &lt;Reference&gt;</h2>"),
+  )
   assert_true(html.contains("<p>Use &lt;safe&gt; text.</p>"))
-  assert_true(html.contains("<code class=\"language-mbt\">let ok = true</code>"))
+  assert_true(
+    html.contains("<code class=\"language-mbt\">let ok = true</code>"),
+  )
 }
 
+///|
 test "render_site emits deterministic html pages" {
   let page : @moondockit.DocPage = {
     title: "Guide",

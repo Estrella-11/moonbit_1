@@ -8,14 +8,18 @@ This guide is the quick verification path for project reviewers.
 moon check
 moon test
 moon run cmd/main
+moon check --target js
+moon run --target js cmd/moondockit --source examples/site --output dist-cli-example --title "MoonDocKit CLI Example"
 ```
 
 Expected result:
 
 - `moon check` completes successfully.
-- `moon test` reports 17 passing tests.
+- `moon test` reports 29 passing tests.
+- `moon check --target js` verifies the Node.js CLI target.
 - `moon run cmd/main` prints a MoonDocKit demo summary with generated files,
   site statistics, and validation diagnostics.
+- The MoonBit CLI writes a complete static site to `dist-cli-example`.
 
 ## Example Site
 
@@ -31,6 +35,8 @@ Expected generated files:
 - `dist-example/api.html`
 - `dist-example/changelog.html`
 - `dist-example/search-index.json`
+- `dist-example/sitemap.xml`
+- `dist-example/robots.txt`
 
 ## One-Shot Verification
 
@@ -41,7 +47,8 @@ python tools/verify_project.py
 ```
 
 The script checks required files, validates the one-page proposal PDF, rebuilds
-the example site, and runs the MoonBit check/test/demo commands.
+both example sites, and runs the MoonBit check/test/demo and JavaScript CLI
+commands.
 
 If the local Python environment does not provide `pypdf`, the script prints a
 warning and skips strict PDF page-count validation while keeping the rest of the

@@ -17,6 +17,9 @@ This document records the intended release path.
 moon check
 moon test
 moon run cmd/main
+moon check --target js
+moon run --target js cmd/moondockit --source examples/site --output dist-cli-example --title "MoonDocKit CLI Example"
+python tools/verify_project.py
 moon package
 ```
 
@@ -25,6 +28,7 @@ Also verify:
 - README describes usage and competition fit.
 - `docs/acceptance-guide.md` is current.
 - `docs/release.md` is current.
+- The MoonBit CLI produces the six expected static-site files.
 - GitHub and Gitlink are synchronized.
 - No generated private credentials or local-only files are included.
 

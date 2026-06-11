@@ -1,3 +1,4 @@
+///|
 /// A source page in a MoonDocKit documentation site.
 pub(all) struct DocPage {
   title : String
@@ -5,18 +6,21 @@ pub(all) struct DocPage {
   source : String
 }
 
+///|
 /// A rendered page that can be written to disk by a CLI package.
 pub(all) struct RenderedPage {
   path : String
   html : String
 }
 
+///|
 /// A generated output file ready for a CLI to write to disk.
 pub(all) struct OutputFile {
   path : String
   content : String
 }
 
+///|
 /// File metadata derived from a generated output manifest.
 pub(all) struct OutputFileInfo {
   path : String
@@ -24,6 +28,7 @@ pub(all) struct OutputFileInfo {
   byte_count : Int
 }
 
+///|
 /// Aggregate report for generated output files.
 pub(all) struct BuildReport {
   file_count : Int
@@ -33,6 +38,7 @@ pub(all) struct BuildReport {
   files : Array[OutputFileInfo]
 }
 
+///|
 /// One quality gate check result.
 pub(all) struct QualityCheck {
   name : String
@@ -40,6 +46,7 @@ pub(all) struct QualityCheck {
   message : String
 }
 
+///|
 /// Aggregate quality gate result for a documentation site.
 pub(all) struct QualityGate {
   passed : Bool
@@ -47,6 +54,7 @@ pub(all) struct QualityGate {
   checks : Array[QualityCheck]
 }
 
+///|
 /// Searchable text metadata for one route.
 pub(all) struct SearchEntry {
   title : String
@@ -55,6 +63,7 @@ pub(all) struct SearchEntry {
   tags : Array[String]
 }
 
+///|
 /// Aggregate metadata for a documentation site.
 pub(all) struct SiteSummary {
   page_count : Int
@@ -63,6 +72,7 @@ pub(all) struct SiteSummary {
   tag_count : Int
 }
 
+///|
 /// Content metrics for one parsed documentation page.
 pub(all) struct DocumentMetrics {
   heading_count : Int
@@ -73,6 +83,7 @@ pub(all) struct DocumentMetrics {
   reading_minutes : Int
 }
 
+///|
 /// Aggregate content metrics for a documentation site.
 pub(all) struct SiteMetrics {
   page_count : Int
@@ -82,6 +93,7 @@ pub(all) struct SiteMetrics {
   reading_minutes : Int
 }
 
+///|
 /// Visual theme values used by generated HTML pages.
 pub(all) struct SiteTheme {
   background : String
@@ -95,6 +107,7 @@ pub(all) struct SiteTheme {
   content_width_px : Int
 }
 
+///|
 /// Page template options used by generated HTML pages.
 pub(all) struct SiteOptions {
   language : String
@@ -103,12 +116,14 @@ pub(all) struct SiteOptions {
   footer : String
 }
 
+///|
 /// Severity level for site validation diagnostics.
 pub(all) enum DiagnosticLevel {
   DiagError
   DiagWarning
 }
 
+///|
 /// A validation finding for a site or one source page.
 pub(all) struct SiteDiagnostic {
   level : DiagnosticLevel
@@ -117,11 +132,13 @@ pub(all) struct SiteDiagnostic {
   page : String?
 }
 
+///|
 /// Site validation result returned before rendering or publishing.
 pub(all) struct ValidationReport {
   diagnostics : Array[SiteDiagnostic]
 }
 
+///|
 /// Planned route metadata for one documentation page.
 pub(all) struct RouteEntry {
   title : String
@@ -131,6 +148,7 @@ pub(all) struct RouteEntry {
   tags : Array[String]
 }
 
+///|
 /// Parsed page metadata from a leading front matter block.
 pub(all) struct FrontMatter {
   title : String?
@@ -139,12 +157,14 @@ pub(all) struct FrontMatter {
   fields : Array[(String, String)]
 }
 
+///|
 /// Markdown source split into metadata and body blocks.
 pub(all) struct ParsedDocument {
   front_matter : FrontMatter
   blocks : Array[MarkdownBlock]
 }
 
+///|
 /// A heading entry extracted from a source page.
 pub(all) struct TocItem {
   level : Int
@@ -152,6 +172,7 @@ pub(all) struct TocItem {
   anchor : String
 }
 
+///|
 /// A heading with a page-unique anchor.
 pub(all) struct AnchoredHeading {
   level : Int
@@ -159,6 +180,7 @@ pub(all) struct AnchoredHeading {
   anchor : String
 }
 
+///|
 /// Block-level Markdown nodes used by the documentation pipeline.
 pub(all) enum MarkdownBlock {
   Heading(Int, String)
@@ -168,11 +190,13 @@ pub(all) enum MarkdownBlock {
   CodeBlock(String, String)
 }
 
+///|
 /// Return empty front matter metadata.
 pub fn empty_front_matter() -> FrontMatter {
   { title: None, order: None, tags: [], fields: [] }
 }
 
+///|
 /// Return the default MoonDocKit page theme.
 pub fn default_theme() -> SiteTheme {
   {
@@ -188,6 +212,7 @@ pub fn default_theme() -> SiteTheme {
   }
 }
 
+///|
 /// Return default generated page metadata and footer options.
 pub fn default_site_options() -> SiteOptions {
   {
@@ -198,12 +223,14 @@ pub fn default_site_options() -> SiteOptions {
   }
 }
 
+///|
 /// Site metadata and pages.
 pub(all) struct DocSite {
   title : String
   pages : Array[DocPage]
 }
 
+///|
 /// Build a stable route table for all pages in a site.
 pub fn plan_routes(site : DocSite) -> Array[RouteEntry] {
   let routes : Array[RouteEntry] = []
@@ -214,6 +241,7 @@ pub fn plan_routes(site : DocSite) -> Array[RouteEntry] {
   routes
 }
 
+///|
 fn compare_routes(left : RouteEntry, right : RouteEntry) -> Int {
   match (left.order, right.order) {
     (Some(a), Some(b)) =>
@@ -228,6 +256,7 @@ fn compare_routes(left : RouteEntry, right : RouteEntry) -> Int {
   }
 }
 
+///|
 fn compare_route_title(left : RouteEntry, right : RouteEntry) -> Int {
   let by_title = left.title.compare(right.title)
   if by_title != 0 {
@@ -237,6 +266,7 @@ fn compare_route_title(left : RouteEntry, right : RouteEntry) -> Int {
   }
 }
 
+///|
 /// Escape text for safe HTML output.
 pub fn html_escape(input : String) -> String {
   let out = StringBuilder(size_hint=input.length())
@@ -253,6 +283,7 @@ pub fn html_escape(input : String) -> String {
   out.to_string()
 }
 
+///|
 /// Convert a heading or page title into a stable URL slug.
 pub fn slugify(title : String) -> String {
   let out = StringBuilder(size_hint=title.length())
@@ -274,11 +305,13 @@ pub fn slugify(title : String) -> String {
   out.to_string()
 }
 
+///|
 /// Extract level-1 and level-2 headings from Markdown source.
 pub fn extract_toc(markdown : String) -> Array[TocItem] {
   blocks_to_toc(parse_blocks(markdown))
 }
 
+///|
 /// Extract heading entries from parsed Markdown blocks.
 pub fn blocks_to_toc(blocks : Array[MarkdownBlock]) -> Array[TocItem] {
   extract_headings(blocks).map(heading => {
@@ -288,8 +321,11 @@ pub fn blocks_to_toc(blocks : Array[MarkdownBlock]) -> Array[TocItem] {
   })
 }
 
+///|
 /// Extract headings and assign page-unique anchors.
-pub fn extract_headings(blocks : Array[MarkdownBlock]) -> Array[AnchoredHeading] {
+pub fn extract_headings(
+  blocks : Array[MarkdownBlock],
+) -> Array[AnchoredHeading] {
   let headings : Array[AnchoredHeading] = []
   let seen : Array[String] = []
   for block in blocks {
@@ -306,6 +342,7 @@ pub fn extract_headings(blocks : Array[MarkdownBlock]) -> Array[AnchoredHeading]
   headings
 }
 
+///|
 fn unique_anchor(base : String, seen : Array[String]) -> String {
   let stable_base = if base == "" { "section" } else { base }
   let mut count = 1
@@ -321,17 +358,20 @@ fn unique_anchor(base : String, seen : Array[String]) -> String {
   }
 }
 
+///|
 /// Parse a useful Markdown subset into block-level nodes.
 pub fn parse_blocks(markdown : String) -> Array[MarkdownBlock] {
   parse_document(markdown).blocks
 }
 
+///|
 /// Parse optional front matter and Markdown blocks.
 pub fn parse_document(markdown : String) -> ParsedDocument {
   let (front_matter, body) = split_front_matter(markdown)
   { front_matter, blocks: parse_body_blocks(body) }
 }
 
+///|
 fn split_front_matter(markdown : String) -> (FrontMatter, String) {
   let lines = markdown.split("\n").map(line => line.to_owned()).to_array()
   if lines.length() == 0 || lines[0].trim().to_owned() != "---" {
@@ -360,6 +400,7 @@ fn split_front_matter(markdown : String) -> (FrontMatter, String) {
   (parse_front_matter_lines(meta_lines), body_lines.join("\n"))
 }
 
+///|
 fn parse_front_matter_lines(lines : Array[String]) -> FrontMatter {
   let fields : Array[(String, String)] = []
   let tags : Array[String] = []
@@ -391,6 +432,7 @@ fn parse_front_matter_lines(lines : Array[String]) -> FrontMatter {
   { title, order, tags, fields }
 }
 
+///|
 fn parse_tags(value : String) -> Array[String] {
   let inner = strip_brackets(value)
   let tags : Array[String] = []
@@ -403,6 +445,7 @@ fn parse_tags(value : String) -> Array[String] {
   tags
 }
 
+///|
 fn strip_brackets(value : String) -> String {
   let trimmed = value.trim().to_owned()
   if trimmed.length() >= 2 && trimmed.has_prefix("[") && trimmed.has_suffix("]") {
@@ -412,6 +455,7 @@ fn strip_brackets(value : String) -> String {
   }
 }
 
+///|
 fn unquote(value : String) -> String {
   let trimmed = value.trim().to_owned()
   if trimmed.length() >= 2 {
@@ -424,6 +468,7 @@ fn unquote(value : String) -> String {
   trimmed
 }
 
+///|
 fn parse_positive_int(value : String) -> Int? {
   let trimmed = value.trim().to_owned()
   if trimmed == "" {
@@ -439,6 +484,7 @@ fn parse_positive_int(value : String) -> Int? {
   Some(result)
 }
 
+///|
 fn parse_body_blocks(markdown : String) -> Array[MarkdownBlock] {
   let blocks : Array[MarkdownBlock] = []
   let mut in_code = false
@@ -513,6 +559,7 @@ fn parse_body_blocks(markdown : String) -> Array[MarkdownBlock] {
   blocks
 }
 
+///|
 fn append_paragraph_line(paragraph : StringBuilder, line : String) -> Unit {
   if !paragraph.is_empty() {
     paragraph.write_char(' ')
@@ -520,6 +567,7 @@ fn append_paragraph_line(paragraph : StringBuilder, line : String) -> Unit {
   paragraph.write_string(line)
 }
 
+///|
 fn close_pending_paragraph(
   blocks : Array[MarkdownBlock],
   paragraph : StringBuilder,
@@ -530,6 +578,7 @@ fn close_pending_paragraph(
   }
 }
 
+///|
 fn close_pending_list(
   blocks : Array[MarkdownBlock],
   list_items : Array[String],
@@ -541,6 +590,7 @@ fn close_pending_list(
   }
 }
 
+///|
 /// Render parsed Markdown blocks to HTML.
 pub fn render_blocks(blocks : Array[MarkdownBlock]) -> String {
   let out = StringBuilder()
@@ -596,11 +646,13 @@ pub fn render_blocks(blocks : Array[MarkdownBlock]) -> String {
   out.to_string()
 }
 
+///|
 /// Render a useful subset of Markdown into HTML.
 pub fn render_markdown(markdown : String) -> String {
   render_blocks(parse_blocks(markdown))
 }
 
+///|
 fn render_inline(input : String) -> String {
   let out = StringBuilder(size_hint=input.length())
   let mut i = 0
@@ -654,11 +706,13 @@ fn render_inline(input : String) -> String {
   out.to_string()
 }
 
+///|
 fn starts_with_at(input : String, index : Int, marker : String) -> Bool {
   index + marker.length() <= input.length() &&
   input[index:index + marker.length()].to_owned() == marker
 }
 
+///|
 fn find_char_from(input : String, start : Int, target : UInt16) -> Int? {
   let mut i = start
   while i < input.length() {
@@ -670,6 +724,7 @@ fn find_char_from(input : String, start : Int, target : UInt16) -> Int? {
   None
 }
 
+///|
 fn find_marker_from(input : String, start : Int, marker : String) -> Int? {
   let mut i = start
   while i + marker.length() <= input.length() {
@@ -681,17 +736,20 @@ fn find_marker_from(input : String, start : Int, marker : String) -> Int? {
   None
 }
 
+///|
 fn parse_link(input : String, start : Int) -> (Int, String, String)? {
   match find_char_from(input, start + 1, ']') {
     Some(label_end) =>
       if label_end + 1 < input.length() && input[label_end + 1] == '(' {
         match find_char_from(input, label_end + 2, ')') {
           Some(href_end) =>
-            Some((
-              href_end,
-              input[start + 1:label_end].to_owned(),
-              input[label_end + 2:href_end].to_owned(),
-            ))
+            Some(
+              (
+                href_end,
+                input[start + 1:label_end].to_owned(),
+                input[label_end + 2:href_end].to_owned(),
+              ),
+            )
           None => None
         }
       } else {
@@ -701,25 +759,28 @@ fn parse_link(input : String, start : Int) -> (Int, String, String)? {
   }
 }
 
+///|
 fn safe_href(href : String) -> String {
   let value = href.trim().to_owned()
   if value.has_prefix("http://") ||
-     value.has_prefix("https://") ||
-     value.has_prefix("#") ||
-     value.has_prefix("./") ||
-     value.has_prefix("../") ||
-     !value.contains(":") {
+    value.has_prefix("https://") ||
+    value.has_prefix("#") ||
+    value.has_prefix("./") ||
+    value.has_prefix("../") ||
+    !value.contains(":") {
     value
   } else {
     "#"
   }
 }
 
+///|
 /// Render a complete HTML page with navigation.
 pub fn render_page(site : DocSite, page : DocPage) -> RenderedPage {
   render_page_with_options(site, page, default_theme(), default_site_options())
 }
 
+///|
 /// Render a complete HTML page with navigation and a custom theme.
 pub fn render_page_with_theme(
   site : DocSite,
@@ -729,6 +790,7 @@ pub fn render_page_with_theme(
   render_page_with_options(site, page, theme, default_site_options())
 }
 
+///|
 /// Render a complete HTML page with custom theme and template options.
 pub fn render_page_with_options(
   site : DocSite,
@@ -744,18 +806,20 @@ pub fn render_page_with_options(
   out.write_string("<!doctype html>\n<html lang=\"")
   out.write_string(html_escape(safe_language(options.language)))
   out.write_string("\"><head><meta charset=\"utf-8\">\n")
-  out.write_string("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n")
+  out.write_string(
+    "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n",
+  )
   if options.description.trim().to_owned() != "" {
     out.write_string("<meta name=\"description\" content=\"")
     out.write_string(html_escape(options.description.trim().to_owned()))
     out.write_string("\">\n")
   }
   out.write_string("<title>")
-  out.write_string(html_escape(page.title))
+  out.write_string(html_escape(route.title))
   out.write_string(" - ")
   out.write_string(html_escape(site.title))
   out.write_string("</title>\n")
-  write_social_metadata(out, site, page, route, options)
+  write_social_metadata(out, site, route, options)
   out.write_string(render_theme_style(theme))
   out.write_string("</head><body><aside><strong>")
   out.write_string(html_escape(site.title))
@@ -779,14 +843,14 @@ pub fn render_page_with_options(
   { path: route.path, html: out.to_string() }
 }
 
+///|
 fn write_social_metadata(
   out : StringBuilder,
   site : DocSite,
-  page : DocPage,
   route : RouteEntry,
   options : SiteOptions,
 ) -> Unit {
-  let title = page.title + " - " + site.title
+  let title = route.title + " - " + site.title
   out.write_string("<meta property=\"og:title\" content=\"")
   out.write_string(html_escape(title))
   out.write_string("\">\n")
@@ -808,6 +872,7 @@ fn write_social_metadata(
   }
 }
 
+///|
 fn canonical_url(site_url : String, path : String) -> String? {
   let base = site_url.trim().to_owned()
   if base == "" {
@@ -816,21 +881,31 @@ fn canonical_url(site_url : String, path : String) -> String? {
   if !(base.has_prefix("http://") || base.has_prefix("https://")) {
     return None
   }
-  let clean_base = if base.has_suffix("/") { base[0:base.length() - 1].to_owned() } else { base }
+  let clean_base = if base.has_suffix("/") {
+    base[0:base.length() - 1].to_owned()
+  } else {
+    base
+  }
   let clean_path = if path.has_prefix("/") { path[1:].to_owned() } else { path }
   Some(clean_base + "/" + clean_path)
 }
 
+///|
 /// Render all pages in a documentation site.
 pub fn render_site(site : DocSite) -> Array[RenderedPage] {
   render_site_with_theme(site, default_theme())
 }
 
+///|
 /// Render all pages in a documentation site with a custom theme.
-pub fn render_site_with_theme(site : DocSite, theme : SiteTheme) -> Array[RenderedPage] {
+pub fn render_site_with_theme(
+  site : DocSite,
+  theme : SiteTheme,
+) -> Array[RenderedPage] {
   render_site_with_options(site, theme, default_site_options())
 }
 
+///|
 /// Render all pages in a documentation site with custom theme and options.
 pub fn render_site_with_options(
   site : DocSite,
@@ -840,11 +915,13 @@ pub fn render_site_with_options(
   site.pages.map(page => render_page_with_options(site, page, theme, options))
 }
 
+///|
 /// Build all static output files for a site without touching the filesystem.
 pub fn build_site_manifest(site : DocSite) -> Array[OutputFile] {
   build_site_manifest_with_theme(site, default_theme())
 }
 
+///|
 /// Build all static output files for a site using a custom theme.
 pub fn build_site_manifest_with_theme(
   site : DocSite,
@@ -853,6 +930,7 @@ pub fn build_site_manifest_with_theme(
   build_site_manifest_with_options(site, theme, default_site_options())
 }
 
+///|
 /// Build all static output files using custom theme and template options.
 pub fn build_site_manifest_with_options(
   site : DocSite,
@@ -871,17 +949,21 @@ pub fn build_site_manifest_with_options(
   files
 }
 
+///|
 /// Build a robots.txt file that points crawlers to the generated sitemap.
 pub fn build_robots_txt() -> String {
   "User-agent: *\nAllow: /\nSitemap: sitemap.xml\n"
 }
 
+///|
 /// Build a minimal XML sitemap for generated HTML pages.
 pub fn build_sitemap(site : DocSite) -> String {
   let routes = plan_routes(site)
   let out = StringBuilder()
   out.write_string("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
-  out.write_string("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n")
+  out.write_string(
+    "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n",
+  )
   for route in routes {
     out.write_string("  <url><loc>")
     out.write_string(xml_escape(route.path))
@@ -891,6 +973,7 @@ pub fn build_sitemap(site : DocSite) -> String {
   out.to_string()
 }
 
+///|
 /// Inspect generated output files and return a deterministic build report.
 pub fn inspect_manifest(files : Array[OutputFile]) -> BuildReport {
   let infos : Array[OutputFileInfo] = []
@@ -917,11 +1000,13 @@ pub fn inspect_manifest(files : Array[OutputFile]) -> BuildReport {
   }
 }
 
+///|
 /// Build a report for the default generated site manifest.
 pub fn build_site_report(site : DocSite) -> BuildReport {
   inspect_manifest(build_site_manifest(site))
 }
 
+///|
 /// Evaluate a documentation site against basic publish-readiness checks.
 pub fn evaluate_quality(site : DocSite) -> QualityGate {
   let checks : Array[QualityCheck] = []
@@ -972,11 +1057,16 @@ pub fn evaluate_quality(site : DocSite) -> QualityGate {
   }
   {
     passed: passed_count == checks.length(),
-    score: if checks.length() == 0 { 0 } else { passed_count * 100 / checks.length() },
+    score: if checks.length() == 0 {
+      0
+    } else {
+      passed_count * 100 / checks.length()
+    },
     checks,
   }
 }
 
+///|
 /// Build a small JSON search index for the rendered site.
 pub fn build_search_index(site : DocSite) -> String {
   let entries = collect_search_entries(site)
@@ -1007,6 +1097,7 @@ pub fn build_search_index(site : DocSite) -> String {
   out.to_string()
 }
 
+///|
 /// Collect structured search entries before JSON serialization.
 pub fn collect_search_entries(site : DocSite) -> Array[SearchEntry] {
   let entries : Array[SearchEntry] = []
@@ -1024,6 +1115,7 @@ pub fn collect_search_entries(site : DocSite) -> Array[SearchEntry] {
   entries
 }
 
+///|
 /// Summarize the generated site for demos, logs and validation.
 pub fn summarize_site(site : DocSite) -> SiteSummary {
   let routes = plan_routes(site)
@@ -1045,11 +1137,13 @@ pub fn summarize_site(site : DocSite) -> SiteSummary {
   }
 }
 
+///|
 /// Measure content size and structure for one Markdown document.
 pub fn measure_document(markdown : String) -> DocumentMetrics {
   measure_blocks(parse_blocks(markdown))
 }
 
+///|
 /// Measure content size and structure for parsed Markdown blocks.
 pub fn measure_blocks(blocks : Array[MarkdownBlock]) -> DocumentMetrics {
   let mut heading_count = 0
@@ -1085,6 +1179,7 @@ pub fn measure_blocks(blocks : Array[MarkdownBlock]) -> DocumentMetrics {
   }
 }
 
+///|
 /// Measure aggregate content size and structure for all site pages.
 pub fn measure_site(site : DocSite) -> SiteMetrics {
   let mut heading_count = 0
@@ -1105,6 +1200,7 @@ pub fn measure_site(site : DocSite) -> SiteMetrics {
   }
 }
 
+///|
 /// Validate a site before rendering or publishing.
 pub fn validate_site(site : DocSite) -> ValidationReport {
   let diagnostics : Array[SiteDiagnostic] = []
@@ -1131,13 +1227,18 @@ pub fn validate_site(site : DocSite) -> ValidationReport {
   { diagnostics, }
 }
 
+///|
 fn validate_page(
   page : DocPage,
   paths : Array[String],
   diagnostics : Array[SiteDiagnostic],
 ) -> Unit {
   let route = route_for_page(page)
-  let page_name = if page.title.trim().to_owned() == "" { page.slug } else { page.title }
+  let page_name = if page.title.trim().to_owned() == "" {
+    page.slug
+  } else {
+    page.title
+  }
   if route.title.trim().to_owned() == "" {
     diagnostics.push({
       level: DiagError,
@@ -1173,6 +1274,7 @@ fn validate_page(
   }
 }
 
+///|
 /// Return true when a validation report contains at least one error.
 pub fn has_validation_errors(report : ValidationReport) -> Bool {
   for diagnostic in report.diagnostics {
@@ -1184,6 +1286,7 @@ pub fn has_validation_errors(report : ValidationReport) -> Bool {
   false
 }
 
+///|
 /// Render diagnostics as stable text for CLI output and logs.
 pub fn diagnostics_to_text(report : ValidationReport) -> String {
   if report.diagnostics.length() == 0 {
@@ -1212,11 +1315,13 @@ pub fn diagnostics_to_text(report : ValidationReport) -> String {
   out.to_string()
 }
 
+///|
 fn blocks_to_plain_text(blocks : Array[MarkdownBlock]) -> String {
   let out = StringBuilder()
   for block in blocks {
     match block {
-      Heading(_, text) | Paragraph(text) | BlockQuote(text) => append_search_text(out, text)
+      Heading(_, text) | Paragraph(text) | BlockQuote(text) =>
+        append_search_text(out, text)
       UnorderedList(items) =>
         for item in items {
           append_search_text(out, item)
@@ -1227,6 +1332,7 @@ fn blocks_to_plain_text(blocks : Array[MarkdownBlock]) -> String {
   out.to_string()
 }
 
+///|
 fn append_search_text(out : StringBuilder, text : String) -> Unit {
   if !out.is_empty() {
     out.write_char(' ')
@@ -1234,12 +1340,13 @@ fn append_search_text(out : StringBuilder, text : String) -> Unit {
   out.write_string(text.trim().to_owned())
 }
 
+///|
 fn count_words(text : String) -> Int {
   let mut count = 0
   let mut in_word = false
   for _, ch in text {
     let lower = ch.to_ascii_lowercase()
-    let is_word = (lower is ('a'..='z')) || (lower is ('0'..='9'))
+    let is_word = lower is ('a'..='z') || lower is ('0'..='9')
     if is_word && !in_word {
       count = count + 1
     }
@@ -1248,6 +1355,7 @@ fn count_words(text : String) -> Int {
   count
 }
 
+///|
 fn reading_minutes_for_words(word_count : Int) -> Int {
   if word_count == 0 {
     0
@@ -1256,6 +1364,7 @@ fn reading_minutes_for_words(word_count : Int) -> Int {
   }
 }
 
+///|
 fn json_escape(input : String) -> String {
   let out = StringBuilder(size_hint=input.length())
   for _, ch in input {
@@ -1271,6 +1380,7 @@ fn json_escape(input : String) -> String {
   out.to_string()
 }
 
+///|
 fn xml_escape(input : String) -> String {
   let out = StringBuilder(size_hint=input.length())
   for _, ch in input {
@@ -1286,6 +1396,7 @@ fn xml_escape(input : String) -> String {
   out.to_string()
 }
 
+///|
 fn classify_output(path : String) -> String {
   if path.has_suffix(".html") || path.has_suffix(".htm") {
     "html"
@@ -1296,6 +1407,7 @@ fn classify_output(path : String) -> String {
   }
 }
 
+///|
 fn route_for_page(page : DocPage) -> RouteEntry {
   let doc = parse_document(page.source)
   let title = match doc.front_matter.title {
@@ -1312,12 +1424,15 @@ fn route_for_page(page : DocPage) -> RouteEntry {
   }
 }
 
+///|
 fn render_theme_style(theme : SiteTheme) -> String {
   let sidebar_width = positive_or_default(theme.sidebar_width_px, 240)
   let content_width = positive_or_default(theme.content_width_px, 820)
   let main_margin = sidebar_width + 60
   let out = StringBuilder()
-  out.write_string("<style>body{margin:0;font:16px/1.6 system-ui,sans-serif;color:")
+  out.write_string(
+    "<style>body{margin:0;font:16px/1.6 system-ui,sans-serif;color:",
+  )
   out.write_string(theme.text)
   out.write_string(";background:")
   out.write_string(theme.background)
@@ -1333,22 +1448,34 @@ fn render_theme_style(theme : SiteTheme) -> String {
   out.write_string(content_width.to_string())
   out.write_string("px;margin-left:")
   out.write_string(main_margin.to_string())
-  out.write_string("px;padding:42px 32px}.toc{padding:16px 18px;margin:0 0 28px;border:1px solid ")
+  out.write_string(
+    "px;padding:42px 32px}.toc{padding:16px 18px;margin:0 0 28px;border:1px solid ",
+  )
   out.write_string(theme.border)
   out.write_string(";background:")
   out.write_string(theme.surface)
-  out.write_string("}.toc-title{font-weight:700;margin-bottom:8px}.toc a{display:block}.toc .level-2{padding-left:16px}pre{padding:16px;background:")
+  out.write_string(
+    "}.toc-title{font-weight:700;margin-bottom:8px}.toc a{display:block}.toc .level-2{padding-left:16px}pre{padding:16px;background:",
+  )
   out.write_string(theme.code_background)
   out.write_string(";color:")
   out.write_string(theme.code_text)
-  out.write_string(";overflow:auto}code{font-family:ui-monospace,monospace}</style>\n")
+  out.write_string(
+    ";overflow:auto}code{font-family:ui-monospace,monospace}</style>\n",
+  )
   out.to_string()
 }
 
+///|
 fn positive_or_default(value : Int, fallback : Int) -> Int {
-  if value > 0 { value } else { fallback }
+  if value > 0 {
+    value
+  } else {
+    fallback
+  }
 }
 
+///|
 fn safe_language(language : String) -> String {
   let value = language.trim().to_owned()
   if value == "" {
@@ -1363,12 +1490,15 @@ fn safe_language(language : String) -> String {
   value
 }
 
+///|
 fn render_toc(items : Array[TocItem]) -> String {
   if items.length() == 0 {
     return ""
   }
   let out = StringBuilder()
-  out.write_string("<section class=\"toc\"><div class=\"toc-title\">On this page</div>\n")
+  out.write_string(
+    "<section class=\"toc\"><div class=\"toc-title\">On this page</div>\n",
+  )
   for item in items {
     out.write_string("<a class=\"level-")
     out.write_string(item.level.to_string())

@@ -14,3 +14,15 @@ The example uses front matter fields supported by the library:
 - `title`
 - `order`
 - `tags`
+
+Build the source pages through the MoonBit CLI:
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/site \
+  --output dist-cli-example \
+  --title "MoonDocKit CLI Example"
+```
+
+This exercises the MoonBit parser, renderer, quality gate, manifest, and the
+JavaScript backend filesystem adapter end to end.

@@ -37,6 +37,8 @@ Repository mirrors:
 - Document and site metrics for headings, code blocks, word counts, and
   estimated reading time.
 - Quality gate evaluation for publish-readiness checks and scoring.
+- MoonBit CLI for reading a Markdown directory and writing a complete static
+  documentation site.
 - Site summary metadata for demos and validation.
 - Site validation diagnostics for empty sites, empty titles, empty source
   pages, and duplicate output routes.
@@ -61,6 +63,19 @@ python tools/verify_project.py
 The demo prints generated output files, summary metadata, and validation
 diagnostics for an in-memory documentation site.
 
+Build the included Markdown example with the MoonBit CLI:
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/site \
+  --output dist-cli-example \
+  --title "MoonDocKit CLI Example" \
+  --site-url https://example.com/moondockit-cli
+```
+
+The CLI reads every `.md` file, evaluates the quality gate, and writes HTML
+pages, `search-index.json`, `sitemap.xml`, and `robots.txt`.
+
 ## Reviewer Path
 
 For competition review, start with:
@@ -83,20 +98,17 @@ For competition review, start with:
 - Benchmark notes: `docs/benchmark-notes.md`
 - Example site sources: `examples/site`
 - Generated example site: `dist-example`
+- MoonBit CLI generated site: `dist-cli-example`
 
 ## Project Direction
 
-MoonDocKit will grow into a practical documentation toolkit for the MoonBit
-ecosystem:
+MoonDocKit is now an end-to-end documentation toolkit for the MoonBit
+ecosystem. The next milestones focus on release quality:
 
-- Expand the block-level AST with inline nodes and source spans.
-- Add a CLI writer for static output manifests.
-- Generate search indexes.
-- Report validation diagnostics before publishing.
-- Support front matter for page title, order, tags, and layout.
-- Provide templates for package docs, tutorials, examples, and changelogs.
-- Expand theme presets for package, tutorial, and API reference sites.
-- Publish as a reusable package on mooncakes.io.
+- Add source spans and richer inline nodes to the Markdown AST.
+- Add more theme presets for package, tutorial, and API reference sites.
+- Improve CLI error reporting and integration tests.
+- Publish the reusable package on mooncakes.io.
 
 ## Competition Fit
 

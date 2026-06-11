@@ -21,6 +21,7 @@ python tools/build_example_site.py
 moon check
 moon test
 moon run cmd/main
+moon run --target js cmd/moondockit --source examples/site --output dist-cli-example
 ```
 
 ## Current Verification Result
@@ -28,8 +29,9 @@ moon run cmd/main
 As of the current baseline:
 
 - `moon check` passes
-- `moon test` passes with 21 tests
+- `moon test` passes with 29 tests
 - `moon run cmd/main` prints generated file counts and validation status
+- The MoonBit JavaScript CLI builds 3 Markdown pages into 6 output files
 - `tools/build_example_site.py` writes 6 files to `dist-example`
 - The generated example site includes inline code, strong text, safe links,
   description metadata, footer content, sitemap output, and robots.txt output

@@ -4,6 +4,7 @@
 - [x] Apache-2.0 license selected.
 - [x] README explains goal, usage, examples, and competition fit.
 - [x] Runnable demo package exists at `cmd/main`.
+- [x] End-to-end MoonBit CLI exists at `cmd/moondockit`.
 - [x] Core behavior has blackbox tests.
 - [x] GitHub Actions CI added.
 - [x] Heading extraction and TOC rendering implemented.
@@ -43,5 +44,6 @@
 - [x] mooncakes.io publishing plan documented.
 - [x] Final submission notes added.
 - [x] One-shot verification works with ordinary Python environments.
+- [x] CI and verification script exercise the JavaScript target and MoonBit CLI.
 - [ ] mooncakes.io package published.
 - [ ] Final acceptance material prepared.

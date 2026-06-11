@@ -17,6 +17,7 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - Site validation diagnostics with severity, code, message, and optional page
   metadata.
 - Theme configuration APIs for generated page colors and layout widths.
+- End-to-end MoonBit CLI for Markdown directory input and static site output.
 - Runnable demo package with `moon run cmd/main`.
 - Example documentation site and generated HTML outputs.
 
@@ -26,19 +27,22 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 moon check
 moon test
 moon run cmd/main
+moon check --target js
+moon run --target js cmd/moondockit --source examples/site --output dist-cli-example
 python tools/build_example_site.py
 ```
 
 Expected current result:
 
-- `moon test` passes 17 tests.
-- The example site writes 4 files to `dist-example`.
+- `moon test` passes 29 tests.
+- Both example builders write 6 generated files.
 
 ### Known Scope Limits
 
 - Markdown support is intentionally scoped to the first competition milestone.
-- Inline Markdown nodes are not implemented yet.
-- The current filesystem writer is provided as a Python example script; the
-  MoonBit package itself returns an output manifest without writing files.
+- The current inline renderer intentionally supports code spans, strong text,
+  and safe links rather than the complete CommonMark specification.
+- The MoonBit CLI filesystem adapter currently targets Node.js through the
+  JavaScript backend; the reusable library remains backend-neutral.
 - mooncakes.io publishing is documented and will be completed when account
   access is available.

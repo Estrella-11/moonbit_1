@@ -1,7 +1,7 @@
 # Final Submission Notes
 
-MoonDocKit is ready for the declaration-stage submission of the 2026 MoonBit
-open-source competition.
+MoonDocKit is ready for final acceptance of the 2026 MoonBit open-source
+competition.
 
 ## Repository Links
 
@@ -16,6 +16,8 @@ open-source competition.
 - Release notes: `docs/release.md`
 - Example source pages: `examples/site`
 - Generated example site: `dist-example`
+- MoonBit CLI package: `cmd/moondockit`
+- MoonBit CLI generated site: `dist-cli-example`
 
 ## Verification Commands
 
@@ -23,16 +25,20 @@ open-source competition.
 moon check
 moon test
 moon run cmd/main
+moon check --target js
+moon run --target js cmd/moondockit --source examples/site --output dist-cli-example --title "MoonDocKit CLI Example"
 python tools/verify_project.py
 ```
 
 Expected result:
 
 - `moon check` completes without errors.
-- `moon test` reports 17 passing tests.
+- `moon test` reports 29 passing tests.
 - `moon run cmd/main` prints generated files, summary metadata, and validation
   diagnostics.
-- `python tools/verify_project.py` rebuilds the example site and prints
+- The JavaScript-targeted MoonBit CLI reads Markdown files and writes a
+  complete static site.
+- `python tools/verify_project.py` rebuilds both examples and prints
   `Project verification passed.`
 
 ## Implemented Highlights
@@ -40,9 +46,11 @@ Expected result:
 - Block-level Markdown AST and reusable HTML renderer.
 - Stable route planning, page-unique anchors, and generated table of contents.
 - Front matter parsing for title, order, tags, and custom fields.
-- Static output manifests for HTML pages and JSON search index.
-- Site summary and validation diagnostics for pre-publish checks.
+- Static output manifests for HTML pages, search index, sitemap, and robots
+  policy.
+- Site metrics, validation diagnostics, and a scored quality gate.
 - Theme configuration APIs for colors and layout widths.
+- End-to-end MoonBit CLI with a small Node.js filesystem adapter.
 - Example documentation site, generated output, CI workflow, release notes,
   publishing plan, and acceptance checklist.
 
@@ -50,6 +58,6 @@ Expected result:
 
 - GitHub and Gitlink repositories are synchronized.
 - Required competition PDF proposal exists.
-- Core behavior is covered by blackbox tests.
-- mooncakes.io publishing is documented and remains the final post-review
-  release step.
+- Core behavior is covered by 29 blackbox tests.
+- CI checks both the default backend and JavaScript CLI target.
+- mooncakes.io publishing is documented and remains the final release step.

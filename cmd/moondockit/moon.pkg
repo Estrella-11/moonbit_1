@@ -1,0 +1,15 @@
+import {
+  "moonbit-community/moondockit" @lib,
+  "moonbitlang/core/argparse",
+}
+
+warnings = "-unused_package"
+
+options(
+  "is-main": true,
+  targets: {
+    "main_js.mbt": [ "js" ],
+    "main_nonjs.mbt": [ "not", "js" ],
+    "fs_js.mbt": [ "js" ],
+  },
+)

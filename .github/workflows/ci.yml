@@ -28,3 +28,14 @@ jobs:
 
       - name: Run demo
         run: moon run cmd/main
+
+      - name: Check JavaScript target
+        run: moon check --target js
+
+      - name: Build example site with MoonBit CLI
+        run: >
+          moon run --target js cmd/moondockit
+          --source examples/site
+          --output dist-cli-example
+          --title "MoonDocKit CLI Example"
+          --site-url https://example.com/moondockit-cli

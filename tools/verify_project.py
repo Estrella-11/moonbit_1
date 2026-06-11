@@ -53,11 +53,41 @@ def verify_example_site() -> None:
         require(path)
 
 
+def verify_moonbit_cli() -> None:
+    run(
+        [
+            str(MOON),
+            "run",
+            "--target",
+            "js",
+            "cmd/moondockit",
+            "--source",
+            "examples/site",
+            "--output",
+            "dist-cli-example",
+            "--title",
+            "MoonDocKit CLI Example",
+            "--site-url",
+            "https://example.com/moondockit-cli",
+        ]
+    )
+    for path in [
+        "dist-cli-example/quick-start.html",
+        "dist-cli-example/api.html",
+        "dist-cli-example/changelog.html",
+        "dist-cli-example/robots.txt",
+        "dist-cli-example/search-index.json",
+        "dist-cli-example/sitemap.xml",
+    ]:
+        require(path)
+
+
 def main() -> None:
     for path in [
         "README.md",
         "LICENSE",
         "moon.mod",
+        "cmd/moondockit/moon.pkg",
         "docs/acceptance-guide.md",
         "docs/final-submission.md",
         "docs/release.md",
@@ -67,7 +97,9 @@ def main() -> None:
         require(path)
     verify_pdf()
     verify_example_site()
+    verify_moonbit_cli()
     run([str(MOON), "check"])
+    run([str(MOON), "check", "--target", "js"])
     run([str(MOON), "test"])
     run([str(MOON), "run", "cmd/main"])
     print("Project verification passed.")

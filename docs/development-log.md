@@ -94,8 +94,13 @@ Repository setup:
   output information.
 - Added quality gate evaluation for publish-readiness checks, combining
   validation, content metrics, output manifest shape, and readability scoring.
+- Added an end-to-end MoonBit CLI using the JavaScript backend: it reads a
+  Markdown directory, runs the quality gate, builds the site manifest, and
+  writes the generated static site through a small Node.js filesystem adapter.
+- Added JavaScript target and CLI smoke checks to CI and the one-shot
+  verification script.
 
 Next engineering target:
 
-- Continue toward final acceptance by improving real documentation generation,
-  examples, tests, README clarity, and mooncakes.io publishing readiness.
+- Harden the MoonBit CLI, expand integration coverage, improve generated site
+  presentation, and complete mooncakes.io publishing readiness.
