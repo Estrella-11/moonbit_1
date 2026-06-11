@@ -93,6 +93,7 @@ For competition review, start with:
 - Acceptance guide: `docs/acceptance-guide.md`
 - Final submission notes: `docs/final-submission.md`
 - Release notes: `docs/release.md`
+- Architecture and design decisions: `docs/architecture.md`
 - Mooncakes publishing plan: `docs/mooncakes-publishing.md`
 - Development log: `docs/development-log.md`
 - Benchmark notes: `docs/benchmark-notes.md`

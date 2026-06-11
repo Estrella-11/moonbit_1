@@ -30,6 +30,8 @@ As of the current baseline:
 
 - `moon check` passes
 - `moon test` passes with 29 tests
+- `moon coverage analyze` reports 39 uncovered lines across the reusable
+  library and executable entry points
 - `moon run cmd/main` prints generated file counts and validation status
 - The MoonBit JavaScript CLI builds 3 Markdown pages into 6 output files
 - `tools/build_example_site.py` writes 6 files to `dist-example`

@@ -45,5 +45,9 @@
 - [x] Final submission notes added.
 - [x] One-shot verification works with ordinary Python environments.
 - [x] CI and verification script exercise the JavaScript target and MoonBit CLI.
+- [x] Coverage baseline measured and recorded.
+- [x] Architecture, implementation boundaries, and AI assistance documented.
 - [ ] mooncakes.io package published.
+- [ ] Public showcase site deployed.
+- [ ] Final demo script and architecture diagram prepared.
 - [ ] Final acceptance material prepared.

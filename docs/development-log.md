@@ -99,8 +99,10 @@ Repository setup:
   writes the generated static site through a small Node.js filesystem adapter.
 - Added JavaScript target and CLI smoke checks to CI and the one-shot
   verification script.
+- Measured the post-CLI coverage baseline: `moon coverage analyze` reports 39
+  uncovered lines, primarily defensive branches and executable entry points.
 
 Next engineering target:
 
-- Harden the MoonBit CLI, expand integration coverage, improve generated site
-  presentation, and complete mooncakes.io publishing readiness.
+- Publish to mooncakes.io, deploy a polished public showcase site, harden CLI
+  failure behavior, and reduce uncovered defensive branches.
