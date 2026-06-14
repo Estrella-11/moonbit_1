@@ -30,6 +30,7 @@ jobs:
         run: >
           moon run --target js cmd/moondockit
           --source examples/site
+          --api pkg.generated.mbti
           --output dist-showcase
           --title "MoonDocKit"
           --site-url "https://estrella-11.github.io/moonbit_1"

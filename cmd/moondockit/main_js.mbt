@@ -20,7 +20,7 @@ fn stem(filename : String) -> String {
 }
 
 ///|
-fn load_pages(directory : String) -> Array[@lib.DocPage] {
+fn load_pages(directory : String, api_file : String) -> Array[@lib.DocPage] {
   let raw = read_markdown_directory(directory)
   let pages : Array[@lib.DocPage] = []
   let mut i = 0
@@ -29,6 +29,9 @@ fn load_pages(directory : String) -> Array[@lib.DocPage] {
     let page_stem = stem(name)
     pages.push({ title: page_stem, slug: page_stem, source: raw[i + 1] })
     i = i + 2
+  }
+  if api_file.trim().to_owned() != "" {
+    pages.push(@lib.mbti_to_page(read_text_file(api_file)))
   }
   pages
 }
@@ -70,6 +73,11 @@ fn main {
         about="Optional public base URL for canonical metadata.",
         default_values=[""],
       ),
+      @argparse.OptionArg(
+        "api",
+        about="Optional generated .mbti file to include as API documentation.",
+        default_values=[""],
+      ),
     ],
   )
   let matches = command.parse(argv=cli_arguments()) catch {
@@ -82,7 +90,8 @@ fn main {
   let output = first_value(matches, "output", "dist")
   let title = first_value(matches, "title", "MoonDocKit Site")
   let site_url = first_value(matches, "site-url", "")
-  let site : @lib.DocSite = { title, pages: load_pages(source) }
+  let api_file = first_value(matches, "api", "")
+  let site : @lib.DocSite = { title, pages: load_pages(source, api_file) }
   let quality = @lib.evaluate_quality(site)
   if !quality.passed {
     println("MoonDocKit quality gate failed: \{quality.score}")

@@ -56,7 +56,7 @@ Capture or link:
 - public showcase URL;
 - mooncakes.io package page;
 - GitHub and Gitlink repository heads;
-- 38 passing tests and the 20-line uncovered baseline;
+- passing tests and the current coverage baseline;
 - `docs/demo-script.md` and `docs/architecture.md`.
 
 Only mark the final acceptance checklist complete after every public URL works

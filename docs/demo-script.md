@@ -20,12 +20,13 @@ Show the three Markdown files under `examples/site`, then run:
 ```bash
 moon run --target js cmd/moondockit \
   --source examples/site \
+  --api pkg.generated.mbti \
   --output dist-demo \
   --title "MoonDocKit Demo"
 ```
 
-The CLI reports a quality score and writes seven static files, including the
-root page, documentation pages, search index, sitemap, and robots policy.
+The CLI reports a quality score and writes eight static files, including a
+MoonBit API reference parsed from the package interface.
 
 ## Engineering: 40-65 seconds
 
@@ -39,8 +40,8 @@ python tools/verify_project.py
 
 Current evidence:
 
-- 38 blackbox tests pass;
-- only 20 lines remain uncovered, including executable entry points;
+- 41 blackbox tests pass;
+- coverage analysis records the remaining defensive and executable branches;
 - default and JavaScript MoonBit targets pass;
 - the one-shot verifier rebuilds both example sites;
 - the publish quality gate scores the example at 100.

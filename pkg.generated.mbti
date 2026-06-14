@@ -42,6 +42,8 @@ pub fn html_escape(String) -> String
 
 pub fn inspect_manifest(Array[OutputFile]) -> BuildReport
 
+pub fn mbti_to_page(String) -> DocPage
+
 pub fn measure_blocks(Array[MarkdownBlock]) -> DocumentMetrics
 
 pub fn measure_document(String) -> DocumentMetrics
@@ -51,6 +53,8 @@ pub fn measure_site(DocSite) -> SiteMetrics
 pub fn parse_blocks(String) -> Array[MarkdownBlock]
 
 pub fn parse_document(String) -> ParsedDocument
+
+pub fn parse_mbti(String) -> ApiReference
 
 pub fn plan_routes(DocSite) -> Array[RouteEntry]
 
@@ -83,6 +87,17 @@ pub(all) struct AnchoredHeading {
   level : Int
   title : String
   anchor : String
+}
+
+pub(all) struct ApiReference {
+  package_name : String
+  symbols : Array[ApiSymbol]
+}
+
+pub(all) struct ApiSymbol {
+  kind : String
+  name : String
+  signature : String
 }
 
 pub(all) struct BuildReport {

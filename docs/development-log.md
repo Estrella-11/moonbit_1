@@ -111,6 +111,10 @@ Repository setup:
 - Verified `moon package` produces the 0.1.0 publication archive.
 - Added an official GitHub Pages artifact workflow and a 90-second reviewer
   demonstration script.
+- Added `.mbti` public-interface parsing and API reference page generation for
+  functions, structs, enums, and traits, with optional CLI integration.
+- Enabled self-hosting: CI, verification, and the public showcase now generate
+  MoonDocKit's own 64-declaration API reference from `pkg.generated.mbti`.
 
 Next engineering target:
 

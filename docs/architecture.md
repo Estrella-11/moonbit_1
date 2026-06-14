@@ -5,6 +5,8 @@
 ```mermaid
 flowchart LR
   A["Markdown files"] --> B["Front matter and block parser"]
+  I["moon info .mbti"] --> J["Public API parser"]
+  J --> C
   B --> C["Document AST"]
   C --> D["Routes, navigation, TOC, and metrics"]
   D --> E["Quality gate"]
@@ -56,7 +58,7 @@ MoonBit checks, tests, and reproducible example builds pass.
 The current acceptance path verifies:
 
 - default and JavaScript MoonBit targets;
-- 38 blackbox tests;
+- 41 blackbox tests;
 - a runnable in-memory demo;
 - a real Markdown-directory CLI build;
 - required output files and project documents;

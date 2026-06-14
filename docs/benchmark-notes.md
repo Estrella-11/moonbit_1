@@ -21,7 +21,7 @@ python tools/build_example_site.py
 moon check
 moon test
 moon run cmd/main
-moon run --target js cmd/moondockit --source examples/site --output dist-cli-example
+moon run --target js cmd/moondockit --source examples/site --api pkg.generated.mbti --output dist-cli-example
 ```
 
 ## Current Verification Result
@@ -29,11 +29,12 @@ moon run --target js cmd/moondockit --source examples/site --output dist-cli-exa
 As of the current baseline:
 
 - `moon check` passes
-- `moon test` passes with 38 tests
-- `moon coverage analyze` reports 20 uncovered lines across the reusable
+- `moon test` passes with 41 tests
+- `moon coverage analyze` reports 21 uncovered lines across the reusable
   library and executable entry points
 - `moon run cmd/main` prints generated file counts and validation status
-- The MoonBit JavaScript CLI builds 3 Markdown pages into 7 output files
+- The MoonBit JavaScript CLI combines 3 Markdown pages and the package `.mbti`
+  interface into 8 output files
 - `tools/build_example_site.py` writes 7 files to `dist-example`
 - The generated example site includes inline code, strong text, safe links,
   description metadata, footer content, sitemap output, and robots.txt output

@@ -18,7 +18,7 @@ moon check
 moon test
 moon run cmd/main
 moon check --target js
-moon run --target js cmd/moondockit --source examples/site --output dist-cli-example --title "MoonDocKit CLI Example"
+moon run --target js cmd/moondockit --source examples/site --api pkg.generated.mbti --output dist-cli-example --title "MoonDocKit CLI Example"
 python tools/verify_project.py
 moon package
 ```
@@ -26,9 +26,10 @@ moon package
 Also verify:
 
 - README describes usage and competition fit.
+- `README.mbt.md` provides package-level examples for the mooncakes.io page.
 - `docs/acceptance-guide.md` is current.
 - `docs/release.md` is current.
-- The MoonBit CLI produces the seven expected static-site files.
+- The MoonBit CLI produces eight files with generated API documentation.
 - GitHub and Gitlink are synchronized.
 - No generated private credentials or local-only files are included.
 

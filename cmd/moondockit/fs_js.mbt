@@ -24,6 +24,14 @@ extern "js" fn read_markdown_directory(path : String) -> Array[String] =
   #| }
 
 ///|
+/// Read one UTF-8 text file.
+extern "js" fn read_text_file(path : String) -> String =
+  #| function(path) {
+  #|   const fs = require("node:fs");
+  #|   return fs.readFileSync(path, "utf8");
+  #| }
+
+///|
 /// Write a generated output manifest to a directory.
 extern "js" fn write_output_directory(
   directory : String,

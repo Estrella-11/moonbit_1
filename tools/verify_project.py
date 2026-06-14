@@ -63,6 +63,8 @@ def verify_moonbit_cli() -> None:
             "cmd/moondockit",
             "--source",
             "examples/site",
+            "--api",
+            "pkg.generated.mbti",
             "--output",
             "dist-cli-example",
             "--title",
@@ -73,6 +75,7 @@ def verify_moonbit_cli() -> None:
     )
     for path in [
         "dist-cli-example/index.html",
+        "dist-cli-example/api-reference.html",
         "dist-cli-example/quick-start.html",
         "dist-cli-example/api.html",
         "dist-cli-example/changelog.html",

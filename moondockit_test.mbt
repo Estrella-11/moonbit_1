@@ -706,3 +706,52 @@ test "index page points to the first planned route" {
     Some(_) => fail("expected no index page")
   }
 }
+
+///|
+test "parse_mbti extracts package functions and public types" {
+  let api = @moondockit.parse_mbti(
+    "// Generated\npackage \"acme/widgets\"\n\n// Values\npub fn build(String) -> Int\npub fn empty() -> Unit\n\n// Types and methods\npub(all) struct Config {\n  name : String\n}\n\npub(all) enum Mode {\n  Fast\n  Safe\n}\n\n// Traits\npub trait Render {\n  render(Self) -> String\n}\n",
+  )
+  inspect(api.package_name, content="acme/widgets")
+  inspect(api.symbols.length(), content="5")
+  inspect(api.symbols[0].kind, content="function")
+  inspect(api.symbols[0].name, content="build")
+  inspect(api.symbols[2].kind, content="struct")
+  inspect(api.symbols[2].name, content="Config")
+  assert_true(api.symbols[2].signature.contains("name : String"))
+  inspect(api.symbols[3].kind, content="enum")
+  inspect(api.symbols[4].kind, content="trait")
+}
+
+///|
+test "mbti_to_page creates searchable api documentation" {
+  let page = @moondockit.mbti_to_page(
+    "package \"acme/widgets\"\n\n// Values\npub fn build(String) -> Int\n\n// Types and methods\npub(all) struct Config {\n  name : String\n}\n",
+  )
+  inspect(page.slug, content="api-reference")
+  assert_true(page.source.contains("# MoonBit API"))
+  assert_true(page.source.contains("Package `acme/widgets` exposes 2"))
+  assert_true(page.source.contains("## Functions"))
+  assert_true(page.source.contains("**build**"))
+  assert_true(page.source.contains("pub fn build(String) -> Int"))
+  assert_true(page.source.contains("## Structs"))
+  let html = @moondockit.render_markdown(page.source)
+  assert_true(html.contains("class=\"language-mbt\""))
+}
+
+///|
+test "mbti parser handles empty and truncated interfaces" {
+  let empty = @moondockit.parse_mbti("")
+  inspect(empty.package_name, content="")
+  inspect(empty.symbols.length(), content="0")
+  let empty_page = @moondockit.mbti_to_page("")
+  inspect(empty_page.title, content="MoonBit API")
+  assert_true(empty_page.source.contains("# MoonBit API"))
+
+  let truncated = @moondockit.parse_mbti(
+    "package \"acme/truncated\"\npub(all) struct Config {\n  value : Int",
+  )
+  inspect(truncated.symbols.length(), content="1")
+  inspect(truncated.symbols[0].name, content="Config")
+  assert_true(truncated.symbols[0].signature.contains("value : Int"))
+}

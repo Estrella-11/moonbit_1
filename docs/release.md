@@ -20,6 +20,8 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - End-to-end MoonBit CLI for Markdown directory input and static site output.
 - Responsive generated pages with active and accessible navigation.
 - Root `index.html` entry point for static hosting.
+- `.mbti` public API extraction for functions, structs, enums, and traits.
+- Package-focused mooncakes.io README with library and API-generation examples.
 - Runnable demo package with `moon run cmd/main`.
 - Example documentation site and generated HTML outputs.
 
@@ -30,14 +32,14 @@ moon check
 moon test
 moon run cmd/main
 moon check --target js
-moon run --target js cmd/moondockit --source examples/site --output dist-cli-example
+moon run --target js cmd/moondockit --source examples/site --api pkg.generated.mbti --output dist-cli-example
 python tools/build_example_site.py
 ```
 
 Expected current result:
 
-- `moon test` passes 38 tests.
-- Both example builders write 7 generated files, including a root `index.html`.
+- `moon test` passes 41 tests.
+- The MoonBit CLI writes 8 files when generated API documentation is enabled.
 
 ### Known Scope Limits
 

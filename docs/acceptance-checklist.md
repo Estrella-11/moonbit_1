@@ -50,6 +50,7 @@
 - [x] `moon package` pre-publish build succeeds.
 - [x] GitHub Pages showcase deployment workflow added.
 - [x] Deployment and release runbook prepared.
+- [x] `.mbti` public API reference generation implemented.
 - [ ] mooncakes.io package published.
 - [ ] Public showcase site deployed.
 - [x] Final demo script and architecture diagram prepared.

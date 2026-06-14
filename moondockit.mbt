@@ -64,6 +64,21 @@ pub(all) struct SearchEntry {
 }
 
 ///|
+/// One public declaration extracted from a generated MoonBit interface.
+pub(all) struct ApiSymbol {
+  kind : String
+  name : String
+  signature : String
+}
+
+///|
+/// Public package information extracted from a `.mbti` interface.
+pub(all) struct ApiReference {
+  package_name : String
+  symbols : Array[ApiSymbol]
+}
+
+///|
 /// Aggregate metadata for a documentation site.
 pub(all) struct SiteSummary {
   page_count : Int
@@ -194,6 +209,138 @@ pub(all) enum MarkdownBlock {
 /// Return empty front matter metadata.
 pub fn empty_front_matter() -> FrontMatter {
   { title: None, order: None, tags: [], fields: [] }
+}
+
+///|
+/// Parse a generated MoonBit interface into public API declarations.
+pub fn parse_mbti(source : String) -> ApiReference {
+  let symbols : Array[ApiSymbol] = []
+  let mut package_name = ""
+  let lines = source.split("\n").collect()
+  let mut i = 0
+  while i < lines.length() {
+    let line = lines[i].to_owned().trim().to_owned()
+    if line.has_prefix("package \"") && line.has_suffix("\"") {
+      package_name = line[9:line.length() - 1].to_owned()
+    } else if line.has_prefix("pub fn ") {
+      symbols.push({
+        kind: "function",
+        name: declaration_name(line, "pub fn "),
+        signature: line,
+      })
+    } else if line.has_prefix("pub(all) struct ") {
+      let captured = capture_interface_block(lines, i)
+      symbols.push({
+        kind: "struct",
+        name: declaration_name(line, "pub(all) struct "),
+        signature: captured.0,
+      })
+      i = captured.1
+    } else if line.has_prefix("pub(all) enum ") {
+      let captured = capture_interface_block(lines, i)
+      symbols.push({
+        kind: "enum",
+        name: declaration_name(line, "pub(all) enum "),
+        signature: captured.0,
+      })
+      i = captured.1
+    } else if line.has_prefix("pub trait ") {
+      let captured = capture_interface_block(lines, i)
+      symbols.push({
+        kind: "trait",
+        name: declaration_name(line, "pub trait "),
+        signature: captured.0,
+      })
+      i = captured.1
+    }
+    i = i + 1
+  }
+  { package_name, symbols }
+}
+
+///|
+/// Convert a generated MoonBit interface into a documentation page.
+pub fn mbti_to_page(source : String) -> DocPage {
+  let api = parse_mbti(source)
+  let title = if api.package_name == "" {
+    "MoonBit API"
+  } else {
+    api.package_name + " API"
+  }
+  let out = StringBuilder()
+  out.write_string(
+    "---\ntitle: MoonBit API\norder: 900\ntags: [api, moonbit]\n---\n",
+  )
+  out.write_string("# MoonBit API\n\n")
+  if api.package_name != "" {
+    out.write_string("Package `")
+    out.write_string(api.package_name)
+    out.write_string("` exposes ")
+    out.write_string(api.symbols.length().to_string())
+    out.write_string(" public declarations.\n\n")
+  }
+  let kinds = ["function", "struct", "enum", "trait"]
+  for kind in kinds {
+    let matching = api.symbols.filter(symbol => symbol.kind == kind)
+    if matching.length() > 0 {
+      out.write_string("## ")
+      out.write_string(api_section_title(kind))
+      out.write_string("\n\n")
+      for symbol in matching {
+        out.write_string("**")
+        out.write_string(symbol.name)
+        out.write_string("**\n\n```mbt\n")
+        out.write_string(symbol.signature)
+        out.write_string("\n```\n\n")
+      }
+    }
+  }
+  { title, slug: "api-reference", source: out.to_string() }
+}
+
+///|
+fn declaration_name(line : String, prefix : String) -> String {
+  let rest = line[prefix.length():].to_owned()
+  let mut end = rest.length()
+  for index, ch in rest {
+    if ch == '(' || ch == '[' || ch == ' ' || ch == '{' {
+      end = index
+      break
+    }
+  }
+  rest[0:end].to_owned()
+}
+
+///|
+fn capture_interface_block(
+  lines : Array[StringView],
+  start : Int,
+) -> (String, Int) {
+  let out = StringBuilder()
+  let mut i = start
+  while i < lines.length() {
+    let line = lines[i].to_owned()
+    if i > start {
+      out.write_char('\n')
+    }
+    out.write_string(line)
+    if line.trim().to_owned() == "}" {
+      return (out.to_string(), i)
+    }
+    i = i + 1
+  }
+  (out.to_string(), i - 1)
+}
+
+///|
+fn api_section_title(kind : String) -> String {
+  match kind {
+    "function" => "Functions"
+    "struct" => "Structs"
+    "enum" => "Enums"
+    "trait" => "Traits"
+    _ => "Declarations"
+  }
 }
 
 ///|

@@ -33,6 +33,7 @@ Public showcase: <https://estrella-11.github.io/moonbit_1/>
 - Heading extraction and automatic on-page table of contents.
 - Page-unique heading anchors for duplicate section titles.
 - Front matter parsing for page title, order, tags, and custom fields.
+- MoonBit `.mbti` public API extraction and reference-page generation.
 - Route planning for multi-page sites using page slug and front matter order.
 - Static output manifest generation for rendered HTML files.
 - JSON search index generation.
@@ -83,6 +84,21 @@ moon run --target js cmd/moondockit \
 The CLI reads every `.md` file, evaluates the quality gate, and writes a root
 `index.html`, documentation pages, `search-index.json`, `sitemap.xml`, and
 `robots.txt`.
+
+Include generated MoonBit package API documentation:
+
+```bash
+moon info
+moon run --target js cmd/moondockit \
+  --source examples/site \
+  --api pkg.generated.mbti \
+  --output dist-api \
+  --title "MoonDocKit"
+```
+
+The `.mbti` parser extracts public functions, structs, enums, and traits into a
+searchable API reference page. This keeps the generated documentation aligned
+with the package interface produced by the MoonBit toolchain.
 
 ## Reviewer Path
 

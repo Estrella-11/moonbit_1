@@ -9,17 +9,18 @@ moon check
 moon test
 moon run cmd/main
 moon check --target js
-moon run --target js cmd/moondockit --source examples/site --output dist-cli-example --title "MoonDocKit CLI Example"
+moon run --target js cmd/moondockit --source examples/site --api pkg.generated.mbti --output dist-cli-example --title "MoonDocKit CLI Example"
 ```
 
 Expected result:
 
 - `moon check` completes successfully.
-- `moon test` reports 38 passing tests.
+- `moon test` reports 41 passing tests.
 - `moon check --target js` verifies the Node.js CLI target.
 - `moon run cmd/main` prints a MoonDocKit demo summary with generated files,
   site statistics, and validation diagnostics.
 - The MoonBit CLI writes a complete static site to `dist-cli-example`.
+- `api-reference.html` documents the package's generated MoonBit interface.
 
 ## Example Site
 
