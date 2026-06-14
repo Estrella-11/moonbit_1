@@ -152,14 +152,16 @@ test "build_site_manifest returns deterministic output files" {
   }
   let site : @moondockit.DocSite = { title: "Docs", pages: [intro, api] }
   let files = @moondockit.build_site_manifest(site)
-  inspect(files.length(), content="5")
+  inspect(files.length(), content="6")
   inspect(files[0].path, content="api.html")
-  inspect(files[1].path, content="intro.html")
-  inspect(files[2].path, content="robots.txt")
-  inspect(files[3].path, content="sitemap.xml")
-  inspect(files[4].path, content="search-index.json")
-  assert_true(files[1].content.contains("<title>Intro - Docs</title>"))
-  assert_true(files[1].content.contains("<a href=\"api.html\">API</a>"))
+  inspect(files[1].path, content="index.html")
+  inspect(files[2].path, content="intro.html")
+  inspect(files[3].path, content="robots.txt")
+  inspect(files[4].path, content="sitemap.xml")
+  inspect(files[5].path, content="search-index.json")
+  assert_true(files[2].content.contains("<title>Intro - Docs</title>"))
+  assert_true(files[2].content.contains("<a href=\"api.html\">API</a>"))
+  assert_true(files[1].content.contains("url=api.html"))
 }
 
 ///|
@@ -343,8 +345,8 @@ test "build_site_report summarizes default manifest outputs" {
     source: "# Guide\n\nShip docs.",
   }
   let report = @moondockit.build_site_report({ title: "Docs", pages: [page] })
-  inspect(report.file_count, content="4")
-  inspect(report.html_count, content="1")
+  inspect(report.file_count, content="5")
+  inspect(report.html_count, content="2")
   inspect(report.data_count, content="2")
   assert_true(report.total_bytes > 0)
 }
@@ -419,7 +421,7 @@ test "summarize_site counts pages outputs search and tags" {
   }
   let summary = @moondockit.summarize_site({ title: "Docs", pages: [a, b] })
   inspect(summary.page_count, content="2")
-  inspect(summary.output_count, content="5")
+  inspect(summary.output_count, content="6")
   inspect(summary.search_entry_count, content="2")
   inspect(summary.tag_count, content="2")
 }
@@ -528,7 +530,179 @@ test "render_site emits deterministic html pages" {
   inspect(output.length(), content="1")
   inspect(output[0].path, content="guide.html")
   assert_true(output[0].html.contains("<title>Guide - MoonDocKit</title>"))
-  assert_true(output[0].html.contains("<a href=\"guide.html\">Guide</a>"))
+  assert_true(
+    output[0].html.contains(
+      "<a href=\"guide.html\" class=\"active\" aria-current=\"page\">Guide</a>",
+    ),
+  )
   assert_true(output[0].html.contains("<section class=\"toc\">"))
   assert_true(output[0].html.contains("href=\"#install\""))
+}
+
+///|
+test "rendered pages expose responsive and accessible navigation" {
+  let intro : @moondockit.DocPage = {
+    title: "Intro",
+    slug: "intro",
+    source: "# Intro",
+  }
+  let api : @moondockit.DocPage = { title: "API", slug: "api", source: "# API" }
+  let rendered = @moondockit.render_page(
+    { title: "MoonDocKit", pages: [intro, api] },
+    api,
+  )
+  assert_true(rendered.html.contains("<nav aria-label=\"Documentation\">"))
+  assert_true(
+    rendered.html.contains(
+      "href=\"api.html\" class=\"active\" aria-current=\"page\"",
+    ),
+  )
+  assert_true(rendered.html.contains("class=\"brand-mark\">M</span>"))
+  assert_true(rendered.html.contains("@media(max-width:760px)"))
+  assert_true(rendered.html.contains("@media(prefers-reduced-motion:reduce)"))
+}
+
+///|
+test "parser preserves malformed inline markers as safe text" {
+  let html = @moondockit.render_markdown(
+    "Keep `open, **strong, [label], [link](open and <safe>.",
+  )
+  assert_true(html.contains("Keep `open, **strong, [label], [link](open"))
+  assert_true(html.contains("&lt;safe&gt;"))
+  assert_false(html.contains("<a href="))
+}
+
+///|
+test "parser closes lists and unclosed code blocks at end of input" {
+  let blocks = @moondockit.parse_blocks(
+    "- first\ncontinued paragraph\n\n```mbt\nlet value = 1",
+  )
+  inspect(blocks.length(), content="3")
+  match blocks[0] {
+    UnorderedList(items) => inspect(items.length(), content="1")
+    _ => fail("expected list")
+  }
+  match blocks[2] {
+    CodeBlock(language, code) => {
+      inspect(language, content="mbt")
+      assert_true(code.contains("let value = 1"))
+    }
+    _ => fail("expected code block")
+  }
+}
+
+///|
+test "front matter tolerates comments invalid lines and invalid values" {
+  let doc = @moondockit.parse_document(
+    "---\n# comment\ninvalid line\norder: soon\ntags: docs\n---\n# Guide",
+  )
+  match doc.front_matter.order {
+    None => ()
+    Some(_) => fail("expected invalid order to be ignored")
+  }
+  inspect(doc.front_matter.tags.length(), content="1")
+  inspect(doc.front_matter.tags[0], content="docs")
+}
+
+///|
+test "default rendering handles pages without headings" {
+  let page : @moondockit.DocPage = {
+    title: "Note",
+    slug: "note",
+    source: "A short note without a heading.",
+  }
+  let rendered = @moondockit.render_page({ title: "Docs", pages: [page] }, page)
+  assert_false(rendered.html.contains("<section class=\"toc\">"))
+  assert_true(rendered.html.contains("<p>A short note without a heading.</p>"))
+}
+
+///|
+test "theme dimensions and language fall back to safe defaults" {
+  let page : @moondockit.DocPage = {
+    title: "Guide",
+    slug: "guide",
+    source: "# Guide",
+  }
+  let theme : @moondockit.SiteTheme = {
+    background: "#ffffff",
+    surface: "#f8fafc",
+    text: "#111827",
+    accent: "#047857",
+    border: "#d1d5db",
+    code_background: "#111827",
+    code_text: "#ffffff",
+    sidebar_width_px: 0,
+    content_width_px: -1,
+  }
+  let options : @moondockit.SiteOptions = {
+    language: "",
+    description: "",
+    site_url: "https://docs.example/base",
+    footer: "",
+  }
+  let rendered = @moondockit.render_page_with_options(
+    { title: "Docs", pages: [page] },
+    page,
+    theme,
+    options,
+  )
+  assert_true(rendered.html.contains("<html lang=\"en\">"))
+  assert_true(rendered.html.contains("width:240px"))
+  assert_true(rendered.html.contains("max-width:820px"))
+  assert_true(
+    rendered.html.contains("href=\"https://docs.example/base/guide.html\""),
+  )
+}
+
+///|
+test "search and sitemap escape structured output characters" {
+  let page : @moondockit.DocPage = {
+    title: "API & SDK",
+    slug: "api&sdk",
+    source: "# API\n\nUse C:\\docs.",
+  }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [page] }
+  let search = @moondockit.build_search_index(site)
+  let sitemap = @moondockit.build_sitemap(site)
+  assert_true(search.contains("C:\\\\docs"))
+  assert_true(sitemap.contains("<loc>api&amp;sdk.html</loc>"))
+}
+
+///|
+test "validation reports empty page titles and routes" {
+  let page : @moondockit.DocPage = { title: "", slug: "", source: "# Content" }
+  let report = @moondockit.validate_site({ title: "Docs", pages: [page] })
+  let text = @moondockit.diagnostics_to_text(report)
+  assert_true(text.contains("error empty-page-title"))
+  assert_true(text.contains("error empty-route"))
+}
+
+///|
+test "index page points to the first planned route" {
+  let later : @moondockit.DocPage = {
+    title: "Later",
+    slug: "later",
+    source: "---\norder: 2\n---\n# Later",
+  }
+  let first : @moondockit.DocPage = {
+    title: "First",
+    slug: "first",
+    source: "---\norder: 1\n---\n# First",
+  }
+  match
+    @moondockit.build_index_page({
+      title: "Docs & Tools",
+      pages: [later, first],
+    }) {
+    Some(html) => {
+      assert_true(html.contains("url=first.html"))
+      assert_true(html.contains("href=\"first.html\""))
+      assert_true(html.contains("<title>Docs &amp; Tools</title>"))
+    }
+    None => fail("expected index page")
+  }
+  match @moondockit.build_index_page({ title: "Empty", pages: [] }) {
+    None => ()
+    Some(_) => fail("expected no index page")
+  }
 }

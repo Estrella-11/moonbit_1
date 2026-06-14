@@ -56,7 +56,7 @@ MoonBit checks, tests, and reproducible example builds pass.
 The current acceptance path verifies:
 
 - default and JavaScript MoonBit targets;
-- 29 blackbox tests;
+- 38 blackbox tests;
 - a runnable in-memory demo;
 - a real Markdown-directory CLI build;
 - required output files and project documents;

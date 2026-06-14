@@ -821,17 +821,27 @@ pub fn render_page_with_options(
   out.write_string("</title>\n")
   write_social_metadata(out, site, route, options)
   out.write_string(render_theme_style(theme))
-  out.write_string("</head><body><aside><strong>")
+  out.write_string("</head><body><aside><a class=\"brand\" href=\"")
+  if routes.length() > 0 {
+    out.write_string(html_escape(routes[0].path))
+  } else {
+    out.write_string("#")
+  }
+  out.write_string("\"><span class=\"brand-mark\">M</span><span>")
   out.write_string(html_escape(site.title))
-  out.write_string("</strong><nav>")
+  out.write_string("</span></a><nav aria-label=\"Documentation\">")
   for item in routes {
     out.write_string("<a href=\"")
     out.write_string(html_escape(item.path))
-    out.write_string("\">")
+    if item.path == route.path {
+      out.write_string("\" class=\"active\" aria-current=\"page\">")
+    } else {
+      out.write_string("\">")
+    }
     out.write_string(html_escape(item.title))
     out.write_string("</a>")
   }
-  out.write_string("</nav></aside><main>\n")
+  out.write_string("</nav></aside><main><div class=\"content\">\n")
   out.write_string(toc)
   out.write_string(body)
   if options.footer.trim().to_owned() != "" {
@@ -839,7 +849,7 @@ pub fn render_page_with_options(
     out.write_string(render_inline(options.footer.trim().to_owned()))
     out.write_string("</footer>\n")
   }
-  out.write_string("</main></body></html>\n")
+  out.write_string("</div></main></body></html>\n")
   { path: route.path, html: out.to_string() }
 }
 
@@ -942,11 +952,40 @@ pub fn build_site_manifest_with_options(
     let rendered = render_page_with_options(site, page, theme, options)
     files.push({ path: rendered.path, content: rendered.html })
   }
+  match build_index_page(site) {
+    Some(content) => files.push({ path: "index.html", content })
+    None => ()
+  }
   files.push({ path: "search-index.json", content: build_search_index(site) })
   files.push({ path: "sitemap.xml", content: build_sitemap(site) })
   files.push({ path: "robots.txt", content: build_robots_txt() })
   files.sort_by((left, right) => left.path.compare(right.path))
   files
+}
+
+///|
+/// Build a lightweight root page that directs visitors to the first route.
+pub fn build_index_page(site : DocSite) -> String? {
+  let routes = plan_routes(site)
+  if routes.length() == 0 {
+    return None
+  }
+  let first = routes[0]
+  let title = html_escape(site.title)
+  let path = html_escape(first.path)
+  Some(
+    "<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\">\n" +
+    "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+    "<meta http-equiv=\"refresh\" content=\"0; url=" +
+    path +
+    "\">\n<title>" +
+    title +
+    "</title></head><body>\n<p>Open <a href=\"" +
+    path +
+    "\">" +
+    title +
+    "</a>.</p>\n</body></html>\n",
+  )
 }
 
 ///|
@@ -1033,8 +1072,9 @@ pub fn evaluate_quality(site : DocSite) -> QualityGate {
   })
   checks.push({
     name: "outputs",
-    passed: build.html_count == metrics.page_count && build.data_count >= 2,
-    message: if build.html_count == metrics.page_count && build.data_count >= 2 {
+    passed: build.html_count == metrics.page_count + 1 && build.data_count >= 2,
+    message: if build.html_count == metrics.page_count + 1 &&
+      build.data_count >= 2 {
       "manifest includes html pages and data outputs"
     } else {
       "manifest output mix is incomplete"
@@ -1431,37 +1471,83 @@ fn render_theme_style(theme : SiteTheme) -> String {
   let main_margin = sidebar_width + 60
   let out = StringBuilder()
   out.write_string(
-    "<style>body{margin:0;font:16px/1.6 system-ui,sans-serif;color:",
+    "<style>:root{color-scheme:light}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font:16px/1.7 system-ui,-apple-system,\"Segoe UI\",sans-serif;color:",
   )
   out.write_string(theme.text)
   out.write_string(";background:")
   out.write_string(theme.background)
-  out.write_string("}aside{position:fixed;inset:0 auto 0 0;width:")
+  out.write_string("}aside{position:fixed;z-index:2;inset:0 auto 0 0;width:")
   out.write_string(sidebar_width.to_string())
-  out.write_string("px;padding:28px;background:")
+  out.write_string("px;padding:28px 20px;background:")
   out.write_string(theme.surface)
   out.write_string(";border-right:1px solid ")
   out.write_string(theme.border)
-  out.write_string("}nav{display:grid;gap:8px;margin-top:20px}a{color:")
-  out.write_string(theme.accent)
-  out.write_string(";text-decoration:none}main{max-width:")
-  out.write_string(content_width.to_string())
-  out.write_string("px;margin-left:")
-  out.write_string(main_margin.to_string())
   out.write_string(
-    "px;padding:42px 32px}.toc{padding:16px 18px;margin:0 0 28px;border:1px solid ",
+    "}.brand{display:flex;align-items:center;gap:10px;padding:0 10px;color:",
   )
+  out.write_string(theme.text)
+  out.write_string(
+    ";font-weight:750;font-size:17px}.brand-mark{display:grid;place-items:center;width:30px;height:30px;border-radius:7px;background:",
+  )
+  out.write_string(theme.accent)
+  out.write_string(";color:")
+  out.write_string(theme.surface)
+  out.write_string(
+    "}nav{display:grid;gap:4px;margin-top:28px}nav a{padding:8px 10px;border-radius:6px;color:",
+  )
+  out.write_string(theme.text)
+  out.write_string("}nav a:hover{background:")
+  out.write_string(theme.background)
+  out.write_string("}nav a.active{background:")
+  out.write_string(theme.background)
+  out.write_string(";color:")
+  out.write_string(theme.accent)
+  out.write_string(";font-weight:650}a{color:")
+  out.write_string(theme.accent)
+  out.write_string(
+    ";text-decoration:none}a:hover{text-decoration:underline}main{min-height:100vh;margin-left:",
+  )
+  out.write_string(sidebar_width.to_string())
+  out.write_string("px}.content{max-width:")
+  out.write_string(content_width.to_string())
+  out.write_string(
+    "px;margin:0 auto;padding:52px 36px 72px}h1,h2{line-height:1.25;letter-spacing:0}h1{font-size:36px;margin:0 0 22px}h2{font-size:24px;margin:42px 0 14px;padding-top:10px;border-top:1px solid ",
+  )
+  out.write_string(theme.border)
+  out.write_string(
+    "}p,ul,blockquote{margin:0 0 18px}blockquote{padding:10px 18px;border-left:3px solid ",
+  )
+  out.write_string(theme.accent)
+  out.write_string(";background:")
+  out.write_string(theme.surface)
+  out.write_string("}.toc{padding:16px 18px;margin:0 0 34px;border:1px solid ")
   out.write_string(theme.border)
   out.write_string(";background:")
   out.write_string(theme.surface)
   out.write_string(
-    "}.toc-title{font-weight:700;margin-bottom:8px}.toc a{display:block}.toc .level-2{padding-left:16px}pre{padding:16px;background:",
+    ";border-radius:7px}.toc-title{font-weight:700;margin-bottom:8px}.toc a{display:block;padding:2px 0}.toc .level-2{padding-left:16px}pre{padding:18px 20px;border-radius:7px;background:",
   )
   out.write_string(theme.code_background)
   out.write_string(";color:")
   out.write_string(theme.code_text)
   out.write_string(
-    ";overflow:auto}code{font-family:ui-monospace,monospace}</style>\n",
+    ";overflow:auto}code{font-family:ui-monospace,\"Cascadia Code\",monospace}p code,li code,footer code{padding:2px 5px;border:1px solid ",
+  )
+  out.write_string(theme.border)
+  out.write_string(";border-radius:4px;background:")
+  out.write_string(theme.surface)
+  out.write_string(
+    "}footer{margin-top:52px;padding-top:20px;border-top:1px solid ",
+  )
+  out.write_string(theme.border)
+  out.write_string(";font-size:14px;opacity:.75}@media(max-width:")
+  out.write_string((main_margin + content_width).to_string())
+  out.write_string(
+    "px){.content{margin:0;padding-left:32px;padding-right:32px}}@media(max-width:760px){aside{position:relative;width:auto;padding:18px 20px;border-right:0;border-bottom:1px solid ",
+  )
+  out.write_string(theme.border)
+  out.write_string(
+    "}.brand{padding:0}nav{display:flex;gap:6px;margin-top:16px;overflow-x:auto}nav a{white-space:nowrap}main{margin-left:0}.content{padding:32px 20px 56px}h1{font-size:30px}h2{font-size:22px}.toc{margin-bottom:28px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>\n",
   )
   out.to_string()
 }

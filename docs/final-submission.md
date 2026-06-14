@@ -34,7 +34,7 @@ python tools/verify_project.py
 Expected result:
 
 - `moon check` completes without errors.
-- `moon test` reports 29 passing tests.
+- `moon test` reports 38 passing tests.
 - `moon run cmd/main` prints generated files, summary metadata, and validation
   diagnostics.
 - The JavaScript-targeted MoonBit CLI reads Markdown files and writes a
@@ -59,6 +59,6 @@ Expected result:
 
 - GitHub and Gitlink repositories are synchronized.
 - Required competition PDF proposal exists.
-- Core behavior is covered by 29 blackbox tests.
+- Core behavior is covered by 38 blackbox tests.
 - CI checks both the default backend and JavaScript CLI target.
 - mooncakes.io publishing is documented and remains the final release step.

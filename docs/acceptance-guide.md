@@ -15,7 +15,7 @@ moon run --target js cmd/moondockit --source examples/site --output dist-cli-exa
 Expected result:
 
 - `moon check` completes successfully.
-- `moon test` reports 29 passing tests.
+- `moon test` reports 38 passing tests.
 - `moon check --target js` verifies the Node.js CLI target.
 - `moon run cmd/main` prints a MoonDocKit demo summary with generated files,
   site statistics, and validation diagnostics.
@@ -31,6 +31,7 @@ python tools/build_example_site.py
 
 Expected generated files:
 
+- `dist-example/index.html`
 - `dist-example/quick-start.html`
 - `dist-example/api.html`
 - `dist-example/changelog.html`

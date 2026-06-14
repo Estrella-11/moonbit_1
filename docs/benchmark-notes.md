@@ -9,7 +9,7 @@ performance claims.
 The current example site contains:
 
 - 3 source Markdown pages
-- 6 generated output files
+- 7 generated output files
 - 1 search index
 - 1 sitemap
 - 1 robots.txt
@@ -29,12 +29,12 @@ moon run --target js cmd/moondockit --source examples/site --output dist-cli-exa
 As of the current baseline:
 
 - `moon check` passes
-- `moon test` passes with 29 tests
-- `moon coverage analyze` reports 39 uncovered lines across the reusable
+- `moon test` passes with 38 tests
+- `moon coverage analyze` reports 20 uncovered lines across the reusable
   library and executable entry points
 - `moon run cmd/main` prints generated file counts and validation status
-- The MoonBit JavaScript CLI builds 3 Markdown pages into 6 output files
-- `tools/build_example_site.py` writes 6 files to `dist-example`
+- The MoonBit JavaScript CLI builds 3 Markdown pages into 7 output files
+- `tools/build_example_site.py` writes 7 files to `dist-example`
 - The generated example site includes inline code, strong text, safe links,
   description metadata, footer content, sitemap output, and robots.txt output
 

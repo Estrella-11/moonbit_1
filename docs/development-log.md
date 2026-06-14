@@ -101,6 +101,13 @@ Repository setup:
   verification script.
 - Measured the post-CLI coverage baseline: `moon coverage analyze` reports 39
   uncovered lines, primarily defensive branches and executable entry points.
+- Added a responsive documentation shell with active navigation, mobile
+  layout, accessible navigation labels, and reduced-motion support.
+- Expanded blackbox coverage from 29 to 37 tests and reduced uncovered lines
+  from 39 to 21 by exercising malformed Markdown, front matter, escaping,
+  validation, theme fallbacks, and generated navigation.
+- Added a generated root `index.html` for static hosting, bringing the suite to
+  38 tests and reducing the current uncovered baseline to 20 lines.
 
 Next engineering target:
 

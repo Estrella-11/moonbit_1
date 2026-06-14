@@ -18,6 +18,8 @@ MoonDocKit 0.1.0 is the first competition baseline release.
   metadata.
 - Theme configuration APIs for generated page colors and layout widths.
 - End-to-end MoonBit CLI for Markdown directory input and static site output.
+- Responsive generated pages with active and accessible navigation.
+- Root `index.html` entry point for static hosting.
 - Runnable demo package with `moon run cmd/main`.
 - Example documentation site and generated HTML outputs.
 
@@ -34,8 +36,8 @@ python tools/build_example_site.py
 
 Expected current result:
 
-- `moon test` passes 29 tests.
-- Both example builders write 6 generated files.
+- `moon test` passes 38 tests.
+- Both example builders write 7 generated files, including a root `index.html`.
 
 ### Known Scope Limits
 

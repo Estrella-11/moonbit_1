@@ -176,6 +176,18 @@ def main() -> None:
         html = page_shell(title, slug, nav, render_markdown(body))
         (OUT / f"{slug}.html").write_text(html, encoding="utf-8")
         search_entries.append({"title": title, "path": f"{slug}.html", "text": body.replace("\n", " ")})
+    if pages:
+        first_slug = pages[0][2]
+        (OUT / "index.html").write_text(
+            '<!doctype html>\n'
+            '<html lang="en"><head><meta charset="utf-8">\n'
+            '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+            f'<meta http-equiv="refresh" content="0; url={first_slug}.html">\n'
+            '<title>MoonDocKit Example</title></head><body>\n'
+            f'<p>Open <a href="{first_slug}.html">MoonDocKit Example</a>.</p>\n'
+            '</body></html>\n',
+            encoding="utf-8",
+        )
     index = "[\n" + ",\n".join(
         f'  {{"title":"{escape(item["title"])}","path":"{item["path"]}","text":"{escape(item["text"])}"}}'
         for item in search_entries
@@ -192,7 +204,7 @@ def main() -> None:
         "User-agent: *\nAllow: /\nSitemap: sitemap.xml\n",
         encoding="utf-8",
     )
-    print(f"Wrote {len(pages) + 3} files to {OUT}")
+    print(f"Wrote {len(pages) + 4} files to {OUT}")
 
 
 if __name__ == "__main__":

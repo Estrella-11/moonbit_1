@@ -39,6 +39,8 @@ Repository mirrors:
 - Quality gate evaluation for publish-readiness checks and scoring.
 - MoonBit CLI for reading a Markdown directory and writing a complete static
   documentation site.
+- Responsive documentation layout with active navigation and mobile support.
+- Root `index.html` generation for direct static-host deployment.
 - Site summary metadata for demos and validation.
 - Site validation diagnostics for empty sites, empty titles, empty source
   pages, and duplicate output routes.
@@ -73,8 +75,9 @@ moon run --target js cmd/moondockit \
   --site-url https://example.com/moondockit-cli
 ```
 
-The CLI reads every `.md` file, evaluates the quality gate, and writes HTML
-pages, `search-index.json`, `sitemap.xml`, and `robots.txt`.
+The CLI reads every `.md` file, evaluates the quality gate, and writes a root
+`index.html`, documentation pages, `search-index.json`, `sitemap.xml`, and
+`robots.txt`.
 
 ## Reviewer Path
 

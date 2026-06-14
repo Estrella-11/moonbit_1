@@ -28,7 +28,7 @@ Also verify:
 - README describes usage and competition fit.
 - `docs/acceptance-guide.md` is current.
 - `docs/release.md` is current.
-- The MoonBit CLI produces the six expected static-site files.
+- The MoonBit CLI produces the seven expected static-site files.
 - GitHub and Gitlink are synchronized.
 - No generated private credentials or local-only files are included.
 
