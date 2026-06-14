@@ -41,7 +41,7 @@ Generated MoonBit API:
 - MoonBit `.mbti` public API extraction and reference-page generation.
 - Route planning for multi-page sites using page slug and front matter order.
 - Static output manifest generation for rendered HTML files.
-- JSON search index generation.
+- JSON search index generation with a built-in interactive search interface.
 - XML sitemap generation.
 - robots.txt generation for generated static sites.
 - Build report generation for output file counts, file kinds, and byte totals.
@@ -87,8 +87,8 @@ moon run --target js cmd/moondockit \
 ```
 
 The CLI reads every `.md` file, evaluates the quality gate, and writes a root
-`index.html`, documentation pages, `search-index.json`, `sitemap.xml`, and
-`robots.txt`.
+`index.html`, documentation pages, an interactive search experience backed by
+`search-index.json`, `sitemap.xml`, and `robots.txt`.
 
 Include generated MoonBit package API documentation:
 
@@ -113,6 +113,7 @@ For competition review, start with:
 - `docs/acceptance-guide.md`
 - `docs/release.md`
 - `dist-example`
+- `dist-cli-example/overview.html`
 - `dist-cli-example/api-reference.html`
 
 ## Competition Materials
@@ -136,7 +137,7 @@ For competition review, start with:
 ## Project Direction
 
 MoonDocKit is now an end-to-end documentation toolkit for the MoonBit
-ecosystem. The next milestones focus on release quality:
+ecosystem. The next milestones focus on adoption and release quality:
 
 - Add source spans and richer inline nodes to the Markdown AST.
 - Add more theme presets for package, tutorial, and API reference sites.

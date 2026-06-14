@@ -43,8 +43,11 @@ def verify_pdf() -> None:
 def verify_example_site() -> None:
     run([PYTHON, "tools/build_example_site.py"])
     for path in [
+        "dist-example/overview.html",
         "dist-example/quick-start.html",
         "dist-example/api.html",
+        "dist-example/quality.html",
+        "dist-example/deployment.html",
         "dist-example/changelog.html",
         "dist-example/robots.txt",
         "dist-example/search-index.json",
@@ -76,14 +79,21 @@ def verify_moonbit_cli() -> None:
     for path in [
         "dist-cli-example/index.html",
         "dist-cli-example/api-reference.html",
+        "dist-cli-example/overview.html",
         "dist-cli-example/quick-start.html",
         "dist-cli-example/api.html",
+        "dist-cli-example/quality.html",
+        "dist-cli-example/deployment.html",
         "dist-cli-example/changelog.html",
         "dist-cli-example/robots.txt",
         "dist-cli-example/search-index.json",
         "dist-cli-example/sitemap.xml",
     ]:
         require(path)
+    overview = require("dist-cli-example/overview.html").read_text(encoding="utf-8")
+    for marker in ["data-search-input", "data-search-results", "search-index.json"]:
+        if marker not in overview:
+            raise SystemExit(f"interactive search marker not found: {marker}")
 
 
 def main() -> None:

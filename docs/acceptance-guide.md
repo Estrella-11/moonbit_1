@@ -15,7 +15,7 @@ moon run --target js cmd/moondockit --source examples/site --api pkg.generated.m
 Expected result:
 
 - `moon check` completes successfully.
-- `moon test` reports 41 passing tests.
+- `moon test` reports 42 passing tests.
 - `moon check --target js` verifies the Node.js CLI target.
 - `moon run cmd/main` prints a MoonDocKit demo summary with generated files,
   site statistics, and validation diagnostics.
@@ -33,8 +33,11 @@ python tools/build_example_site.py
 Expected generated files:
 
 - `dist-example/index.html`
+- `dist-example/overview.html`
 - `dist-example/quick-start.html`
 - `dist-example/api.html`
+- `dist-example/quality.html`
+- `dist-example/deployment.html`
 - `dist-example/changelog.html`
 - `dist-example/search-index.json`
 - `dist-example/sitemap.xml`
@@ -64,6 +67,7 @@ Before final submission, confirm:
 - README documents project goal and usage.
 - CI covers check, test, and demo run.
 - Core functionality has tests.
+- The public showcase search returns documentation and API results.
 - One-page project proposal PDF exists.
 - `docs/final-submission.md` is current.
 - mooncakes.io publishing is completed or documented.

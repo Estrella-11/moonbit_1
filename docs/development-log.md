@@ -119,8 +119,14 @@ Repository setup:
   summary that lists every uploaded site file.
 - Confirmed the public GitHub Pages showcase displays the self-generated
   64-declaration MoonBit API reference.
+- Added an interactive static search interface backed by the generated search
+  index, using safe DOM construction without injecting result HTML.
+- Expanded the showcase from three to six source pages with dedicated project
+  overview, quality-gate, and deployment documentation.
+- Expanded the blackbox suite to 42 tests and kept the measured uncovered
+  baseline at 21 lines.
 
 Next engineering target:
 
-- Publish to mooncakes.io, deploy a polished public showcase site, harden CLI
-  failure behavior, and reduce uncovered defensive branches.
+- Publish to mooncakes.io, gather external usage evidence, harden CLI failure
+  behavior, and reduce uncovered defensive branches.

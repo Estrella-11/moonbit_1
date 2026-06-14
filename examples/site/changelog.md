@@ -1,6 +1,6 @@
 ---
 title: Changelog
-order: 3
+order: 5
 tags: [release]
 ---
 # Changelog
@@ -14,3 +14,6 @@ Initial competition baseline:
 - table of contents generation
 - static output manifest
 - search index generation
+- responsive navigation and interactive search
+- `.mbti` MoonBit API generation
+- GitHub Pages deployment

@@ -976,7 +976,9 @@ pub fn render_page_with_options(
   }
   out.write_string("\"><span class=\"brand-mark\">M</span><span>")
   out.write_string(html_escape(site.title))
-  out.write_string("</span></a><nav aria-label=\"Documentation\">")
+  out.write_string(
+    "</span></a><div class=\"search\"><label for=\"site-search\">Search documentation</label><input id=\"site-search\" data-search-input type=\"search\" placeholder=\"Search docs\" autocomplete=\"off\"><div class=\"search-results\" data-search-results aria-live=\"polite\" hidden></div></div><nav aria-label=\"Documentation\">",
+  )
   for item in routes {
     out.write_string("<a href=\"")
     out.write_string(html_escape(item.path))
@@ -996,7 +998,9 @@ pub fn render_page_with_options(
     out.write_string(render_inline(options.footer.trim().to_owned()))
     out.write_string("</footer>\n")
   }
-  out.write_string("</div></main></body></html>\n")
+  out.write_string("</div></main>")
+  out.write_string(render_search_script())
+  out.write_string("</body></html>\n")
   { path: route.path, html: out.to_string() }
 }
 
@@ -1045,6 +1049,51 @@ fn canonical_url(site_url : String, path : String) -> String? {
   }
   let clean_path = if path.has_prefix("/") { path[1:].to_owned() } else { path }
   Some(clean_base + "/" + clean_path)
+}
+
+///|
+fn render_search_script() -> String {
+  (
+    #|<script>
+    #|(() => {
+    #|  const input = document.querySelector("[data-search-input]");
+    #|  const results = document.querySelector("[data-search-results]");
+    #|  let entries = [];
+    #|  fetch("search-index.json")
+    #|    .then(response => response.json())
+    #|    .then(value => { entries = value; })
+    #|    .catch(() => {});
+    #|  input.addEventListener("input", () => {
+    #|    const query = input.value.trim().toLowerCase();
+    #|    results.replaceChildren();
+    #|    if (query.length < 2) {
+    #|      results.hidden = true;
+    #|      return;
+    #|    }
+    #|    const matches = entries.filter(item =>
+    #|      `${item.title} ${item.text} ${(item.tags || []).join(" ")}`.toLowerCase().includes(query)
+    #|    ).slice(0, 8);
+    #|    for (const item of matches) {
+    #|      const link = document.createElement("a");
+    #|      const title = document.createElement("strong");
+    #|      const excerpt = document.createElement("span");
+    #|      link.href = item.path;
+    #|      title.textContent = item.title;
+    #|      excerpt.textContent = item.text.slice(0, 96);
+    #|      link.append(title, excerpt);
+    #|      results.append(link);
+    #|    }
+    #|    if (matches.length === 0) {
+    #|      const empty = document.createElement("span");
+    #|      empty.textContent = "No matching pages";
+    #|      results.append(empty);
+    #|    }
+    #|    results.hidden = false;
+    #|  });
+    #|})();
+    #|</script>
+    #|
+  )
 }
 
 ///|
@@ -1625,7 +1674,7 @@ fn render_theme_style(theme : SiteTheme) -> String {
   out.write_string(theme.background)
   out.write_string("}aside{position:fixed;z-index:2;inset:0 auto 0 0;width:")
   out.write_string(sidebar_width.to_string())
-  out.write_string("px;padding:28px 20px;background:")
+  out.write_string("px;padding:28px 20px;overflow-y:auto;background:")
   out.write_string(theme.surface)
   out.write_string(";border-right:1px solid ")
   out.write_string(theme.border)
@@ -1640,7 +1689,29 @@ fn render_theme_style(theme : SiteTheme) -> String {
   out.write_string(";color:")
   out.write_string(theme.surface)
   out.write_string(
-    "}nav{display:grid;gap:4px;margin-top:28px}nav a{padding:8px 10px;border-radius:6px;color:",
+    "}.search{position:relative;margin:24px 0 12px}.search label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.search input{width:100%;padding:9px 10px;border:1px solid ",
+  )
+  out.write_string(theme.border)
+  out.write_string(";border-radius:6px;background:")
+  out.write_string(theme.background)
+  out.write_string(";color:")
+  out.write_string(theme.text)
+  out.write_string("}.search input:focus{outline:2px solid ")
+  out.write_string(theme.accent)
+  out.write_string(
+    ";outline-offset:1px}.search-results{display:grid;position:absolute;z-index:3;top:44px;left:0;right:0;max-height:320px;overflow:auto;padding:6px;border:1px solid ",
+  )
+  out.write_string(theme.border)
+  out.write_string(";border-radius:7px;background:")
+  out.write_string(theme.surface)
+  out.write_string(
+    ";box-shadow:0 12px 30px rgba(23,32,51,.14)}.search-results[hidden]{display:none}.search-results a{display:grid;gap:2px;padding:8px;border-radius:5px;color:",
+  )
+  out.write_string(theme.text)
+  out.write_string("}.search-results a:hover{background:")
+  out.write_string(theme.background)
+  out.write_string(
+    ";text-decoration:none}.search-results span{padding:8px;font-size:13px;line-height:1.35;opacity:.72}.search-results a span{padding:0}nav{display:grid;gap:4px;margin-top:16px}nav a{padding:8px 10px;border-radius:6px;color:",
   )
   out.write_string(theme.text)
   out.write_string("}nav a:hover{background:")
@@ -1694,7 +1765,7 @@ fn render_theme_style(theme : SiteTheme) -> String {
   )
   out.write_string(theme.border)
   out.write_string(
-    "}.brand{padding:0}nav{display:flex;gap:6px;margin-top:16px;overflow-x:auto}nav a{white-space:nowrap}main{margin-left:0}.content{padding:32px 20px 56px}h1{font-size:30px}h2{font-size:22px}.toc{margin-bottom:28px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>\n",
+    "}.brand{padding:0}.search{margin:16px 0 10px}.search-results{position:relative;top:6px}nav{display:flex;gap:6px;margin-top:14px;overflow-x:auto}nav a{white-space:nowrap}main{margin-left:0}.content{padding:32px 20px 56px}h1{font-size:30px}h2{font-size:22px}.toc{margin-bottom:28px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>\n",
   )
   out.to_string()
 }

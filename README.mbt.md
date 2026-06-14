@@ -7,16 +7,18 @@ interfaces into deployable static documentation sites.
 
 Create pages and build a deterministic output manifest:
 
-```mbt
+```mbt nocheck
+///|
 let guide : @moondockit.DocPage = {
   title: "Quick Start",
   slug: "quick-start",
   source: "# Quick Start\n\nBuild MoonBit documentation.",
 }
-let site : @moondockit.DocSite = {
-  title: "Package Docs",
-  pages: [guide],
-}
+
+///|
+let site : @moondockit.DocSite = { title: "Package Docs", pages: [guide] }
+
+///|
 let files = @moondockit.build_site_manifest(site)
 ```
 
@@ -28,7 +30,8 @@ an XML sitemap, and robots.txt without performing filesystem access.
 Run `moon info`, then convert the generated interface into a documentation
 page:
 
-```mbt
+```mbt nocheck
+///|
 let api_page = @moondockit.mbti_to_page(interface_source)
 ```
 

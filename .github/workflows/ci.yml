@@ -41,8 +41,13 @@ jobs:
           --title "MoonDocKit CLI Example"
           --site-url https://example.com/moondockit-cli
 
-      - name: Verify generated MoonBit API
+      - name: Verify generated showcase
         run: |
           test -f dist-cli-example/api-reference.html
+          test -f dist-cli-example/overview.html
+          test -f dist-cli-example/quality.html
+          test -f dist-cli-example/deployment.html
           grep -q "MoonBit API" dist-cli-example/api-reference.html
           grep -q "parse_mbti" dist-cli-example/api-reference.html
+          grep -q "data-search-input" dist-cli-example/overview.html
+          grep -q "search-index.json" dist-cli-example/overview.html

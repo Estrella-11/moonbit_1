@@ -12,7 +12,7 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - Page-unique heading anchors and TOC generation.
 - Multi-page route planning.
 - Static output manifest generation.
-- JSON search index generation.
+- JSON search index generation and built-in interactive static search.
 - Site summary metadata for demo and validation.
 - Site validation diagnostics with severity, code, message, and optional page
   metadata.
@@ -24,6 +24,8 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - Package-focused mooncakes.io README with library and API-generation examples.
 - Runnable demo package with `moon run cmd/main`.
 - Example documentation site and generated HTML outputs.
+- Expanded showcase content covering project value, quality gates, deployment,
+  library usage, and release history.
 
 ### Verification
 
@@ -38,8 +40,8 @@ python tools/build_example_site.py
 
 Expected current result:
 
-- `moon test` passes 41 tests.
-- The MoonBit CLI writes 8 files when generated API documentation is enabled.
+- `moon test` passes 42 tests.
+- The MoonBit CLI writes 11 files when generated API documentation is enabled.
 
 ### Known Scope Limits
 

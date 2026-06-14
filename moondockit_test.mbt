@@ -563,6 +563,22 @@ test "rendered pages expose responsive and accessible navigation" {
 }
 
 ///|
+test "rendered pages include safe interactive search" {
+  let page : @moondockit.DocPage = {
+    title: "Guide",
+    slug: "guide",
+    source: "# Guide\n\nSearch the documentation.",
+  }
+  let rendered = @moondockit.render_page({ title: "Docs", pages: [page] }, page)
+  assert_true(rendered.html.contains("data-search-input"))
+  assert_true(rendered.html.contains("data-search-results"))
+  assert_true(rendered.html.contains("fetch(\"search-index.json\")"))
+  assert_true(rendered.html.contains("title.textContent = item.title"))
+  assert_true(rendered.html.contains("excerpt.textContent = item.text"))
+  assert_false(rendered.html.contains("innerHTML"))
+}
+
+///|
 test "parser preserves malformed inline markers as safe text" {
   let html = @moondockit.render_markdown(
     "Keep `open, **strong, [label], [link](open and <safe>.",

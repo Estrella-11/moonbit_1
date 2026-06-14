@@ -25,6 +25,7 @@
 - [x] Duplicate heading anchors handled.
 - [x] Multi-page static output manifest implemented.
 - [x] Search index implemented.
+- [x] Interactive static search implemented with safe DOM construction.
 - [x] Sitemap generation implemented.
 - [x] robots.txt generation implemented.
 - [x] Build report generation implemented.
@@ -37,6 +38,7 @@
 - [x] Canonical link and Open Graph metadata generation implemented.
 - [x] CLI demo prints manifest and summary.
 - [x] Example documentation site added.
+- [x] Showcase expanded to six source pages covering value, usage, quality, deployment, and releases.
 - [x] Example site output demonstrates inline rendering, template metadata, sitemap output, and robots.txt output.
 - [x] Benchmark notes added.
 - [x] Acceptance guide added.

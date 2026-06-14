@@ -10,12 +10,13 @@ Open the public showcase:
 
 https://estrella-11.github.io/moonbit_1/
 
-Point out the responsive navigation, table of contents, page metadata, and
-mobile layout.
+Point out the responsive navigation, table of contents, page metadata, mobile
+layout, and interactive search. Search for `parse_mbti` to jump directly from
+the documentation shell to the generated MoonBit API.
 
 ## Build: 15-40 seconds
 
-Show the three Markdown files under `examples/site`, then run:
+Show the six Markdown files under `examples/site`, then run:
 
 ```bash
 moon run --target js cmd/moondockit \
@@ -25,7 +26,7 @@ moon run --target js cmd/moondockit \
   --title "MoonDocKit Demo"
 ```
 
-The CLI reports a quality score and writes eight static files, including a
+The CLI reports a quality score and writes eleven static files, including a
 MoonBit API reference parsed from the package interface.
 
 ## Engineering: 40-65 seconds
@@ -40,7 +41,7 @@ python tools/verify_project.py
 
 Current evidence:
 
-- 41 blackbox tests pass;
+- 42 blackbox tests pass;
 - coverage analysis records the remaining defensive and executable branches;
 - default and JavaScript MoonBit targets pass;
 - the one-shot verifier rebuilds both example sites;

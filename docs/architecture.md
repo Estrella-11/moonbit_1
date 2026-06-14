@@ -15,9 +15,10 @@ flowchart LR
   G --> H["Static documentation site"]
 ```
 
-The reusable package owns parsing, validation, rendering, search data, sitemap
-generation, metrics, and quality evaluation. Filesystem access is isolated in
-the CLI package, so the core library remains deterministic and backend-neutral.
+The reusable package owns parsing, validation, rendering, search data,
+interactive search delivery, sitemap generation, metrics, and quality
+evaluation. Filesystem access is isolated in the CLI package, so the core
+library remains deterministic and backend-neutral.
 
 ## Key Decisions
 
@@ -58,7 +59,7 @@ MoonBit checks, tests, and reproducible example builds pass.
 The current acceptance path verifies:
 
 - default and JavaScript MoonBit targets;
-- 41 blackbox tests;
+- 42 blackbox tests;
 - a runnable in-memory demo;
 - a real Markdown-directory CLI build;
 - required output files and project documents;

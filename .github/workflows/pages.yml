@@ -35,12 +35,17 @@ jobs:
           --title "MoonDocKit"
           --site-url "https://estrella-11.github.io/moonbit_1"
 
-      - name: Verify generated MoonBit API
+      - name: Verify generated showcase
         run: |
           test -f dist-showcase/api-reference.html
+          test -f dist-showcase/overview.html
+          test -f dist-showcase/quality.html
+          test -f dist-showcase/deployment.html
           grep -q "MoonBit API" dist-showcase/api-reference.html
           grep -q "parse_mbti" dist-showcase/api-reference.html
           grep -q "api-reference.html" dist-showcase/search-index.json
+          grep -q "data-search-input" dist-showcase/overview.html
+          grep -q "search-index.json" dist-showcase/overview.html
           {
             echo "## MoonDocKit showcase"
             echo

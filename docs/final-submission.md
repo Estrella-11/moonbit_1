@@ -37,7 +37,7 @@ python tools/verify_project.py
 Expected result:
 
 - `moon check` completes without errors.
-- `moon test` reports 41 passing tests.
+- `moon test` reports 42 passing tests.
 - `moon run cmd/main` prints generated files, summary metadata, and validation
   diagnostics.
 - The JavaScript-targeted MoonBit CLI reads Markdown files and writes a
@@ -52,6 +52,7 @@ Expected result:
 - Front matter parsing for title, order, tags, and custom fields.
 - Static output manifests for HTML pages, search index, sitemap, and robots
   policy.
+- Interactive static search across guides and generated MoonBit API entries.
 - Site metrics, validation diagnostics, and a scored quality gate.
 - Theme configuration APIs for colors and layout widths.
 - End-to-end MoonBit CLI with a small Node.js filesystem adapter.
@@ -63,7 +64,7 @@ Expected result:
 
 - GitHub and Gitlink repositories are synchronized.
 - Required competition PDF proposal exists.
-- Core behavior is covered by 41 blackbox tests.
+- Core behavior is covered by 42 blackbox tests.
 - CI checks both the default backend and JavaScript CLI target.
 - `moon package` creates the 0.1.0 publishing archive successfully.
 - GitHub Pages deployment is automated from the MoonBit CLI output.

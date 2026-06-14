@@ -7,6 +7,9 @@ Current pages:
 
 - `quick-start.md`
 - `api.md`
+- `overview.md`
+- `quality.md`
+- `deployment.md`
 - `changelog.md`
 
 The example uses front matter fields supported by the library:
@@ -24,5 +27,5 @@ moon run --target js cmd/moondockit \
   --title "MoonDocKit CLI Example"
 ```
 
-This exercises the MoonBit parser, renderer, quality gate, manifest, and the
-JavaScript backend filesystem adapter end to end.
+This exercises the MoonBit parser, renderer, quality gate, interactive search,
+manifest, and the JavaScript backend filesystem adapter end to end.
