@@ -16,6 +16,7 @@ This document records the intended release path.
 ```bash
 moon check
 moon test
+python tools/test_cli.py
 moon run cmd/main
 moon check --target js
 moon run --target js cmd/moondockit --source examples/site --api pkg.generated.mbti --output dist-cli-example --title "MoonDocKit CLI Example"

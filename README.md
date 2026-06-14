@@ -60,6 +60,8 @@ Generated MoonBit API:
   footer content.
 - Canonical links and Open Graph metadata for generated pages.
 - Runnable demo that prints generated files and site statistics.
+- Four-scenario compiled CLI integration suite covering real builds, generated
+  API output, invalid arguments, empty sites, and missing source directories.
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.
 - Blackbox tests for public behavior.
@@ -69,6 +71,7 @@ Generated MoonBit API:
 ```bash
 moon check
 moon test
+python tools/test_cli.py
 moon run cmd/main
 python tools/verify_project.py
 ```
@@ -148,7 +151,7 @@ ecosystem. The next milestones focus on adoption and release quality:
 
 - Add source spans and richer inline nodes to the Markdown AST.
 - Add more theme presets for package, tutorial, and API reference sites.
-- Improve CLI error reporting and integration tests.
+- Improve filesystem diagnostics and add more real-package adoption examples.
 - Publish the reusable package on mooncakes.io.
 
 ## Competition Fit

@@ -30,12 +30,15 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - Example documentation site and generated HTML outputs.
 - Expanded showcase content covering project value, quality gates, deployment,
   library usage, and release history.
+- Cross-platform compiled CLI integration tests for successful generation and
+  expected failure paths.
 
 ### Verification
 
 ```bash
 moon check
 moon test
+python tools/test_cli.py
 moon run cmd/main
 moon check --target js
 moon run --target js cmd/moondockit --source examples/site --api pkg.generated.mbti --output dist-cli-example
@@ -45,6 +48,7 @@ python tools/build_example_site.py
 Expected current result:
 
 - `moon test` passes 42 tests.
+- The compiled CLI passes 4 integration scenarios.
 - The MoonBit CLI writes 11 files when generated API documentation is enabled.
 
 ### Known Scope Limits

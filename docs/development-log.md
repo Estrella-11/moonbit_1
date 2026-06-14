@@ -128,6 +128,9 @@ Repository setup:
 - Exposed language, description, footer, site URL, and `.mbti` inputs through
   the CLI, and added non-zero process exit codes to the compiled Node.js output
   for argument and quality failures.
+- Added a cross-platform compiled CLI integration suite covering a real
+  two-page build with generated API documentation, invalid arguments, an empty
+  site, and a missing source directory.
 
 Next engineering target:
 

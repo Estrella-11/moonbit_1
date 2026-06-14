@@ -30,6 +30,7 @@ As of the current baseline:
 
 - `moon check` passes
 - `moon test` passes with 42 tests
+- `python tools/test_cli.py` passes 4 compiled CLI integration scenarios
 - `moon coverage analyze` reports 21 uncovered lines across the reusable
   library and executable entry points
 - `moon run cmd/main` prints generated file counts and validation status

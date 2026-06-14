@@ -108,21 +108,6 @@ def verify_moonbit_cli() -> None:
             raise SystemExit(f"interactive search marker not found: {marker}")
 
 
-def verify_cli_failure_status() -> None:
-    run([str(MOON), "build", "--target", "js"])
-    cli = require("_build/js/debug/build/cmd/moondockit/moondockit.js")
-    result = subprocess.run(
-        ["node", str(cli), "--unknown-option"],
-        cwd=ROOT,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        text=True,
-    )
-    if result.returncode == 0:
-        raise SystemExit("compiled CLI must fail for invalid arguments")
-    print(f"Compiled CLI invalid-argument exit code: {result.returncode}")
-
-
 def main() -> None:
     for path in [
         "README.md",
@@ -136,13 +121,14 @@ def main() -> None:
         "docs/final-submission.md",
         "docs/release.md",
         "docs/mooncakes-publishing.md",
+        "tools/test_cli.py",
         ".github/workflows/ci.yml",
     ]:
         require(path)
     verify_pdf()
     verify_example_site()
     verify_moonbit_cli()
-    verify_cli_failure_status()
+    run([PYTHON, "tools/test_cli.py"])
     run([str(MOON), "check"])
     run([str(MOON), "check", "--target", "js"])
     run([str(MOON), "test"])

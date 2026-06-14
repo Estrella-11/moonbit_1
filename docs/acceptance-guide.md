@@ -7,6 +7,7 @@ This guide is the quick verification path for project reviewers.
 ```bash
 moon check
 moon test
+python tools/test_cli.py
 moon run cmd/main
 moon check --target js
 moon run --target js cmd/moondockit --source examples/site --api pkg.generated.mbti --output dist-cli-example --title "MoonDocKit CLI Example"
@@ -16,6 +17,7 @@ Expected result:
 
 - `moon check` completes successfully.
 - `moon test` reports 42 passing tests.
+- `python tools/test_cli.py` passes four compiled CLI integration scenarios.
 - `moon check --target js` verifies the Node.js CLI target.
 - `moon run cmd/main` prints a MoonDocKit demo summary with generated files,
   site statistics, and validation diagnostics.
@@ -52,8 +54,8 @@ python tools/verify_project.py
 ```
 
 The script checks required files, validates the one-page proposal PDF, rebuilds
-both example sites, and runs the MoonBit check/test/demo and JavaScript CLI
-commands.
+both example sites, runs the four CLI integration scenarios, and executes the
+MoonBit check/test/demo and JavaScript CLI commands.
 
 If the local Python environment does not provide `pypdf`, the script prints a
 warning and skips strict PDF page-count validation while keeping the rest of the

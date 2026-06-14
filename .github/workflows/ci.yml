@@ -32,6 +32,9 @@ jobs:
       - name: Check JavaScript target
         run: moon check --target js
 
+      - name: Test compiled CLI
+        run: python tools/test_cli.py
+
       - name: Build example site with MoonBit CLI
         run: >
           moon run --target js cmd/moondockit
