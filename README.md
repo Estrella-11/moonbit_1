@@ -1,5 +1,8 @@
 # MoonDocKit
 
+[![CI](https://github.com/Estrella-11/moonbit_1/actions/workflows/ci.yml/badge.svg)](https://github.com/Estrella-11/moonbit_1/actions/workflows/ci.yml)
+[![Showcase](https://github.com/Estrella-11/moonbit_1/actions/workflows/pages.yml/badge.svg)](https://estrella-11.github.io/moonbit_1/)
+
 MoonDocKit is a MoonBit-first documentation site toolkit for package authors.
 It turns package notes and guides into small static HTML documentation sites
 with safe HTML escaping, stable anchors, navigation, and testable rendering
@@ -15,6 +18,8 @@ Repository mirrors:
 
 - GitHub: <https://github.com/Estrella-11/moonbit_1>
 - Gitlink: <https://gitlink.org.cn/Estrella/moonbit>
+
+Public showcase: <https://estrella-11.github.io/moonbit_1/>
 
 ## Current Features
 
@@ -97,6 +102,8 @@ For competition review, start with:
 - Final submission notes: `docs/final-submission.md`
 - Release notes: `docs/release.md`
 - Architecture and design decisions: `docs/architecture.md`
+- 90-second reviewer demo: `docs/demo-script.md`
+- Deployment and release runbook: `docs/deployment-runbook.md`
 - Mooncakes publishing plan: `docs/mooncakes-publishing.md`
 - Development log: `docs/development-log.md`
 - Benchmark notes: `docs/benchmark-notes.md`

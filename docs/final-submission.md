@@ -15,6 +15,9 @@ competition.
 - Acceptance guide: `docs/acceptance-guide.md`
 - Release notes: `docs/release.md`
 - Architecture and design decisions: `docs/architecture.md`
+- 90-second reviewer demo: `docs/demo-script.md`
+- Deployment and release runbook: `docs/deployment-runbook.md`
+- Public showcase: https://estrella-11.github.io/moonbit_1/
 - Example source pages: `examples/site`
 - Generated example site: `dist-example`
 - MoonBit CLI package: `cmd/moondockit`
@@ -61,4 +64,6 @@ Expected result:
 - Required competition PDF proposal exists.
 - Core behavior is covered by 38 blackbox tests.
 - CI checks both the default backend and JavaScript CLI target.
+- `moon package` creates the 0.1.0 publishing archive successfully.
+- GitHub Pages deployment is automated from the MoonBit CLI output.
 - mooncakes.io publishing is documented and remains the final release step.

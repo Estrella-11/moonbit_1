@@ -108,6 +108,9 @@ Repository setup:
   validation, theme fallbacks, and generated navigation.
 - Added a generated root `index.html` for static hosting, bringing the suite to
   38 tests and reducing the current uncovered baseline to 20 lines.
+- Verified `moon package` produces the 0.1.0 publication archive.
+- Added an official GitHub Pages artifact workflow and a 90-second reviewer
+  demonstration script.
 
 Next engineering target:
 

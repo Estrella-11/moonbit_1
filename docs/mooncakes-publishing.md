@@ -32,6 +32,12 @@ Also verify:
 - GitHub and Gitlink are synchronized.
 - No generated private credentials or local-only files are included.
 
+The 0.1.0 package dry run succeeds and creates:
+
+```text
+_build/publish/moonbit-community-moondockit-0.1.0.zip
+```
+
 ## Publish Command
 
 The final publish step requires a mooncakes.io account:
@@ -40,6 +46,9 @@ The final publish step requires a mooncakes.io account:
 moon login
 moon publish
 ```
+
+The current MoonBit CLI also requires credentials for `moon publish --dry-run`.
+Use `moon package` as the unauthenticated package-build check.
 
 If publishing is not possible before a checkpoint because account approval is
 pending, include this document and a screenshot/log of `moon package` in the

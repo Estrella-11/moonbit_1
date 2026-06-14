@@ -16,7 +16,7 @@
 - [x] Block AST data model implemented.
 - [x] Block parser handles paragraph folding and fenced code languages.
 - [x] Inline Markdown renderer handles code spans, strong text, and safe links.
-- [ ] 10-20 meaningful declaration-stage commits completed.
+- [x] Meaningful declaration-stage commit history completed.
 - [x] Project proposal exported as one-page PDF.
 - [x] Block AST parser implemented.
 - [x] Front matter parser implemented.
@@ -47,7 +47,10 @@
 - [x] CI and verification script exercise the JavaScript target and MoonBit CLI.
 - [x] Coverage baseline measured and recorded.
 - [x] Architecture, implementation boundaries, and AI assistance documented.
+- [x] `moon package` pre-publish build succeeds.
+- [x] GitHub Pages showcase deployment workflow added.
+- [x] Deployment and release runbook prepared.
 - [ ] mooncakes.io package published.
 - [ ] Public showcase site deployed.
-- [ ] Final demo script and architecture diagram prepared.
+- [x] Final demo script and architecture diagram prepared.
 - [ ] Final acceptance material prepared.
