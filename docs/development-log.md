@@ -115,6 +115,10 @@ Repository setup:
   functions, structs, enums, and traits, with optional CLI integration.
 - Enabled self-hosting: CI, verification, and the public showcase now generate
   MoonDocKit's own 64-declaration API reference from `pkg.generated.mbti`.
+- Hardened showcase deployment with explicit API artifact checks and an Actions
+  summary that lists every uploaded site file.
+- Confirmed the public GitHub Pages showcase displays the self-generated
+  64-declaration MoonBit API reference.
 
 Next engineering target:
 

@@ -67,4 +67,6 @@ Expected result:
 - CI checks both the default backend and JavaScript CLI target.
 - `moon package` creates the 0.1.0 publishing archive successfully.
 - GitHub Pages deployment is automated from the MoonBit CLI output.
+- Public showcase and self-generated MoonBit API are live at
+  https://estrella-11.github.io/moonbit_1/api-reference.html.
 - mooncakes.io publishing is documented and remains the final release step.

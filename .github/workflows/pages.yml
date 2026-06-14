@@ -35,6 +35,23 @@ jobs:
           --title "MoonDocKit"
           --site-url "https://estrella-11.github.io/moonbit_1"
 
+      - name: Verify generated MoonBit API
+        run: |
+          test -f dist-showcase/api-reference.html
+          grep -q "MoonBit API" dist-showcase/api-reference.html
+          grep -q "parse_mbti" dist-showcase/api-reference.html
+          grep -q "api-reference.html" dist-showcase/search-index.json
+          {
+            echo "## MoonDocKit showcase"
+            echo
+            echo "- Generated files: $(find dist-showcase -maxdepth 1 -type f | wc -l)"
+            echo "- MoonBit API: \`api-reference.html\`"
+            echo "- Source interface: \`pkg.generated.mbti\`"
+            echo
+            echo "### Artifact contents"
+            find dist-showcase -maxdepth 1 -type f -printf '%f\n' | sort | sed 's/^/- /'
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 

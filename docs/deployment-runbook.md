@@ -11,9 +11,19 @@ After pushing `.github/workflows/pages.yml`:
    it automatically.
 5. Verify:
    https://estrella-11.github.io/moonbit_1/
+6. Open the generated API directly:
+   https://estrella-11.github.io/moonbit_1/api-reference.html
+
+Current status: the public showcase and MoonBit API page are deployed and
+accessible.
 
 The workflow builds the site from `examples/site` with the MoonBit CLI. It does
 not publish the checked-in generated directory.
+
+The Actions run page is only a build and deployment record. The generated site
+is opened through the `github-pages` environment link or the public URLs above.
+The build summary lists every uploaded file and fails if `api-reference.html`
+or its `parse_mbti` declaration is missing.
 
 ## 2. Publish to mooncakes.io
 
