@@ -21,6 +21,11 @@ Repository mirrors:
 
 Public showcase: <https://estrella-11.github.io/moonbit_1/>
 
+Generated MoonBit API:
+
+- Public showcase: <https://estrella-11.github.io/moonbit_1/api-reference.html>
+- Repository artifact: `dist-cli-example/api-reference.html`
+
 ## Current Features
 
 - Safe HTML escaping for generated pages.
@@ -108,6 +113,7 @@ For competition review, start with:
 - `docs/acceptance-guide.md`
 - `docs/release.md`
 - `dist-example`
+- `dist-cli-example/api-reference.html`
 
 ## Competition Materials
 
