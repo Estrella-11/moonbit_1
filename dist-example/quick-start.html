@@ -40,9 +40,12 @@
 <h2 id="generate">Generate</h2>
 <p>Generate the project interface and build a site:</p>
 <pre><code>moon info
-moon run --target js cmd/moondockit --source docs --api pkg.generated.mbti --output dist</code></pre>
+moon run --target js cmd/moondockit --source docs --api pkg.generated.mbti --output dist --language en --description &quot;Package documentation&quot;</code></pre>
 <p>The CLI validates the site, reports its quality score, and writes a root page,</p>
 <p>HTML documentation, search data, sitemap, and crawler policy.</p>
+<p>Use <code>--footer</code> and <code>--site-url</code> to add release attribution and canonical</p>
+<p>metadata. Invalid arguments or a failed quality gate produce a non-zero exit</p>
+<p>code in the compiled Node.js CLI.</p>
 <h2 id="embed">Embed</h2>
 <p>Use the library API to build an output manifest, then write every <code>OutputFile</code></p>
 <p>through your preferred backend. See the <a href="https://www.moonbitlang.com">MoonBit website</a></p>

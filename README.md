@@ -83,12 +83,19 @@ moon run --target js cmd/moondockit \
   --source examples/site \
   --output dist-cli-example \
   --title "MoonDocKit CLI Example" \
-  --site-url https://example.com/moondockit-cli
+  --site-url https://example.com/moondockit-cli \
+  --language en \
+  --description "MoonDocKit CLI documentation" \
+  --footer "Built with `MoonDocKit`"
 ```
 
 The CLI reads every `.md` file, evaluates the quality gate, and writes a root
 `index.html`, documentation pages, an interactive search experience backed by
 `search-index.json`, `sitemap.xml`, and `robots.txt`.
+
+The CLI exposes language, description, footer, canonical URL, and optional
+`.mbti` API inputs. The compiled Node.js CLI returns non-zero process exit
+codes for invalid arguments and failed quality gates.
 
 Include generated MoonBit package API documentation:
 

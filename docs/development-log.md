@@ -125,6 +125,9 @@ Repository setup:
   overview, quality-gate, and deployment documentation.
 - Expanded the blackbox suite to 42 tests and kept the measured uncovered
   baseline at 21 lines.
+- Exposed language, description, footer, site URL, and `.mbti` inputs through
+  the CLI, and added non-zero process exit codes to the compiled Node.js output
+  for argument and quality failures.
 
 Next engineering target:
 

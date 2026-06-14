@@ -23,11 +23,15 @@ Generate the project interface and build a site:
 
 ```text
 moon info
-moon run --target js cmd/moondockit --source docs --api pkg.generated.mbti --output dist
+moon run --target js cmd/moondockit --source docs --api pkg.generated.mbti --output dist --language en --description "Package documentation"
 ```
 
 The CLI validates the site, reports its quality score, and writes a root page,
 HTML documentation, search data, sitemap, and crawler policy.
+
+Use `--footer` and `--site-url` to add release attribution and canonical
+metadata. Invalid arguments or a failed quality gate produce a non-zero exit
+code in the compiled Node.js CLI.
 
 ## Embed
 

@@ -40,6 +40,9 @@ jobs:
           --output dist-cli-example
           --title "MoonDocKit CLI Example"
           --site-url https://example.com/moondockit-cli
+          --language en
+          --description "MoonDocKit end-to-end CLI example"
+          --footer 'Built and verified by `MoonDocKit`'
 
       - name: Verify generated showcase
         run: |
@@ -51,3 +54,5 @@ jobs:
           grep -q "parse_mbti" dist-cli-example/api-reference.html
           grep -q "data-search-input" dist-cli-example/overview.html
           grep -q "search-index.json" dist-cli-example/overview.html
+          grep -q 'name="description" content="MoonDocKit end-to-end CLI example"' dist-cli-example/overview.html
+          grep -q "Built and verified by" dist-cli-example/overview.html

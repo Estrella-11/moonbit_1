@@ -5,6 +5,7 @@
 - [x] README explains goal, usage, examples, and competition fit.
 - [x] Runnable demo package exists at `cmd/main`.
 - [x] End-to-end MoonBit CLI exists at `cmd/moondockit`.
+- [x] CLI exposes metadata options and its compiled Node.js output returns failure exit codes.
 - [x] Core behavior has blackbox tests.
 - [x] GitHub Actions CI added.
 - [x] Heading extraction and TOC rendering implemented.

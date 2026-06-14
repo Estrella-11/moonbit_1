@@ -34,6 +34,9 @@ jobs:
           --output dist-showcase
           --title "MoonDocKit"
           --site-url "https://estrella-11.github.io/moonbit_1"
+          --language en
+          --description "MoonBit-first documentation site toolkit"
+          --footer 'Built with `MoonDocKit`'
 
       - name: Verify generated showcase
         run: |
@@ -46,6 +49,7 @@ jobs:
           grep -q "api-reference.html" dist-showcase/search-index.json
           grep -q "data-search-input" dist-showcase/overview.html
           grep -q "search-index.json" dist-showcase/overview.html
+          grep -q 'name="description" content="MoonBit-first documentation site toolkit"' dist-showcase/overview.html
           {
             echo "## MoonDocKit showcase"
             echo

@@ -29,7 +29,7 @@ Also verify:
 - `README.mbt.md` provides package-level examples for the mooncakes.io page.
 - `docs/acceptance-guide.md` is current.
 - `docs/release.md` is current.
-- The MoonBit CLI produces eight files with generated API documentation.
+- The MoonBit CLI produces eleven files with generated API documentation.
 - GitHub and Gitlink are synchronized.
 - No generated private credentials or local-only files are included.
 

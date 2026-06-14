@@ -74,6 +74,12 @@ def verify_moonbit_cli() -> None:
             "MoonDocKit CLI Example",
             "--site-url",
             "https://example.com/moondockit-cli",
+            "--language",
+            "en",
+            "--description",
+            "MoonDocKit verification site",
+            "--footer",
+            "Verified by `MoonDocKit`",
         ]
     )
     for path in [
@@ -91,9 +97,30 @@ def verify_moonbit_cli() -> None:
     ]:
         require(path)
     overview = require("dist-cli-example/overview.html").read_text(encoding="utf-8")
-    for marker in ["data-search-input", "data-search-results", "search-index.json"]:
+    for marker in [
+        "data-search-input",
+        "data-search-results",
+        "search-index.json",
+        'name="description" content="MoonDocKit verification site"',
+        "Verified by",
+    ]:
         if marker not in overview:
             raise SystemExit(f"interactive search marker not found: {marker}")
+
+
+def verify_cli_failure_status() -> None:
+    run([str(MOON), "build", "--target", "js"])
+    cli = require("_build/js/debug/build/cmd/moondockit/moondockit.js")
+    result = subprocess.run(
+        ["node", str(cli), "--unknown-option"],
+        cwd=ROOT,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+    )
+    if result.returncode == 0:
+        raise SystemExit("compiled CLI must fail for invalid arguments")
+    print(f"Compiled CLI invalid-argument exit code: {result.returncode}")
 
 
 def main() -> None:
@@ -115,6 +142,7 @@ def main() -> None:
     verify_pdf()
     verify_example_site()
     verify_moonbit_cli()
+    verify_cli_failure_status()
     run([str(MOON), "check"])
     run([str(MOON), "check", "--target", "js"])
     run([str(MOON), "test"])

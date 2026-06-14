@@ -39,6 +39,10 @@ let api_page = @moondockit.mbti_to_page(interface_source)
 JavaScript-targeted CLI accepts `--api pkg.generated.mbti` to combine generated
 API documentation with handwritten Markdown guides.
 
+The CLI also accepts `--language`, `--description`, `--footer`, and
+`--site-url` so package authors can configure generated metadata without
+editing renderer code.
+
 ## Quality and Validation
 
 - `validate_site` reports route and content diagnostics.

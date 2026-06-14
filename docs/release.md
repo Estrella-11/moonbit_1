@@ -18,6 +18,10 @@ MoonDocKit 0.1.0 is the first competition baseline release.
   metadata.
 - Theme configuration APIs for generated page colors and layout widths.
 - End-to-end MoonBit CLI for Markdown directory input and static site output.
+- CLI options for page language, metadata description, footer content, public
+  site URL, and generated `.mbti` API input.
+- Non-zero compiled Node.js CLI exit status for invalid arguments and failed
+  quality gates.
 - Responsive generated pages with active and accessible navigation.
 - Root `index.html` entry point for static hosting.
 - `.mbti` public API extraction for functions, structs, enums, and traits.

@@ -6,6 +6,15 @@ extern "js" fn cli_arguments() -> Array[String] =
   #| }
 
 ///|
+/// Stop the Node.js CLI with a failure status.
+extern "js" fn exit_failure(code : Int) -> Unit =
+  #| function(code) {
+  #|   if (typeof process !== "undefined") {
+  #|     process.exit(code);
+  #|   }
+  #| }
+
+///|
 /// Read sorted Markdown files as alternating name/content values.
 extern "js" fn read_markdown_directory(path : String) -> Array[String] =
   #| function(path) {
