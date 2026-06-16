@@ -517,9 +517,9 @@ test "validate_site reports empty and duplicate routes" {
 ///|
 test "parse_blocks builds stable block ast" {
   let blocks = @moondockit.parse_blocks(
-    "# Guide\n\nIntro\ncontinued\n\n- one\n- two\n\n> note\n\n```mbt\n# code\n```",
+    "# Guide\n\n### Detail\n\nIntro\ncontinued\n\n- one\n- two\n\n> note\n\n```mbt\n# code\n```",
   )
-  inspect(blocks.length(), content="5")
+  inspect(blocks.length(), content="6")
   match blocks[0] {
     Heading(level, title) => {
       inspect(level, content="1")
@@ -527,21 +527,28 @@ test "parse_blocks builds stable block ast" {
     }
     _ => fail("expected heading")
   }
-  match blocks[2] {
+  match blocks[1] {
+    Heading(level, title) => {
+      inspect(level, content="3")
+      inspect(title, content="Detail")
+    }
+    _ => fail("expected detail heading")
+  }
+  match blocks[3] {
     UnorderedList(items) => {
       inspect(items.length(), content="2")
       inspect(items[1], content="two")
     }
     _ => fail("expected list")
   }
-  match blocks[4] {
+  match blocks[5] {
     CodeBlock(language, code) => {
       inspect(language, content="mbt")
       assert_true(code.contains("# code"))
     }
     _ => fail("expected code block")
   }
-  match blocks[1] {
+  match blocks[2] {
     Paragraph(text) => inspect(text, content="Intro continued")
     _ => fail("expected merged paragraph")
   }
@@ -802,13 +809,14 @@ test "mbti_to_page creates searchable api documentation" {
   assert_true(page.source.contains("- Functions: 1"))
   assert_true(page.source.contains("- Structs: 1"))
   assert_true(page.source.contains("## Functions"))
-  assert_true(page.source.contains("**build**"))
+  assert_true(page.source.contains("### build"))
   assert_true(page.source.contains("- Parameters: 1"))
   assert_true(page.source.contains("- Returns: `Int`"))
   assert_true(page.source.contains("pub fn build(String) -> Int"))
   assert_true(page.source.contains("## Structs"))
   let html = @moondockit.render_markdown(page.source)
   assert_true(html.contains("class=\"language-mbt\""))
+  assert_true(html.contains("<h3 id=\"build\">build</h3>"))
 }
 
 ///|

@@ -13,8 +13,72 @@
 <a class="level-1" href="#moonbit-api">MoonBit API</a>
 <a class="level-2" href="#api-summary">API Summary</a>
 <a class="level-2" href="#functions">Functions</a>
+<a class="level-3" href="#blocks-to-toc">blocks_to_toc</a>
+<a class="level-3" href="#build-index-page">build_index_page</a>
+<a class="level-3" href="#build-robots-txt">build_robots_txt</a>
+<a class="level-3" href="#build-search-index">build_search_index</a>
+<a class="level-3" href="#build-site-manifest">build_site_manifest</a>
+<a class="level-3" href="#build-site-manifest-with-options">build_site_manifest_with_options</a>
+<a class="level-3" href="#build-site-manifest-with-theme">build_site_manifest_with_theme</a>
+<a class="level-3" href="#build-site-report">build_site_report</a>
+<a class="level-3" href="#build-sitemap">build_sitemap</a>
+<a class="level-3" href="#collect-search-entries">collect_search_entries</a>
+<a class="level-3" href="#default-site-options">default_site_options</a>
+<a class="level-3" href="#default-theme">default_theme</a>
+<a class="level-3" href="#diagnostics-to-text">diagnostics_to_text</a>
+<a class="level-3" href="#empty-front-matter">empty_front_matter</a>
+<a class="level-3" href="#evaluate-quality">evaluate_quality</a>
+<a class="level-3" href="#extract-headings">extract_headings</a>
+<a class="level-3" href="#extract-toc">extract_toc</a>
+<a class="level-3" href="#has-validation-errors">has_validation_errors</a>
+<a class="level-3" href="#html-escape">html_escape</a>
+<a class="level-3" href="#inspect-manifest">inspect_manifest</a>
+<a class="level-3" href="#mbti-to-page">mbti_to_page</a>
+<a class="level-3" href="#measure-blocks">measure_blocks</a>
+<a class="level-3" href="#measure-document">measure_document</a>
+<a class="level-3" href="#measure-site">measure_site</a>
+<a class="level-3" href="#parse-blocks">parse_blocks</a>
+<a class="level-3" href="#parse-document">parse_document</a>
+<a class="level-3" href="#parse-mbti">parse_mbti</a>
+<a class="level-3" href="#plan-routes">plan_routes</a>
+<a class="level-3" href="#render-blocks">render_blocks</a>
+<a class="level-3" href="#render-markdown">render_markdown</a>
+<a class="level-3" href="#render-page">render_page</a>
+<a class="level-3" href="#render-page-with-options">render_page_with_options</a>
+<a class="level-3" href="#render-page-with-theme">render_page_with_theme</a>
+<a class="level-3" href="#render-site">render_site</a>
+<a class="level-3" href="#render-site-with-options">render_site_with_options</a>
+<a class="level-3" href="#render-site-with-theme">render_site_with_theme</a>
+<a class="level-3" href="#slugify">slugify</a>
+<a class="level-3" href="#summarize-site">summarize_site</a>
+<a class="level-3" href="#validate-site">validate_site</a>
 <a class="level-2" href="#structs">Structs</a>
+<a class="level-3" href="#anchoredheading">AnchoredHeading</a>
+<a class="level-3" href="#apireference">ApiReference</a>
+<a class="level-3" href="#apisymbol">ApiSymbol</a>
+<a class="level-3" href="#buildreport">BuildReport</a>
+<a class="level-3" href="#docpage">DocPage</a>
+<a class="level-3" href="#docsite">DocSite</a>
+<a class="level-3" href="#documentmetrics">DocumentMetrics</a>
+<a class="level-3" href="#frontmatter">FrontMatter</a>
+<a class="level-3" href="#outputfile">OutputFile</a>
+<a class="level-3" href="#outputfileinfo">OutputFileInfo</a>
+<a class="level-3" href="#parseddocument">ParsedDocument</a>
+<a class="level-3" href="#qualitycheck">QualityCheck</a>
+<a class="level-3" href="#qualitygate">QualityGate</a>
+<a class="level-3" href="#renderedpage">RenderedPage</a>
+<a class="level-3" href="#routeentry">RouteEntry</a>
+<a class="level-3" href="#searchentry">SearchEntry</a>
+<a class="level-3" href="#sitediagnostic">SiteDiagnostic</a>
+<a class="level-3" href="#sitemetrics">SiteMetrics</a>
+<a class="level-3" href="#siteoptions">SiteOptions</a>
+<a class="level-3" href="#sitesummary">SiteSummary</a>
+<a class="level-3" href="#sitetheme">SiteTheme</a>
+<a class="level-3" href="#tocitem">TocItem</a>
+<a class="level-3" href="#validationreport">ValidationReport</a>
 <a class="level-2" href="#enums">Enums</a>
+<a class="level-3" href="#diagnosticlevel">DiagnosticLevel</a>
+<a class="level-3" href="#markdownblock">MarkdownBlock</a>
 </section>
 <h1 id="moonbit-api">MoonBit API</h1>
 <p>Package <code>moonbit-community/moondockit</code> exposes 64 public declarations.</p>
@@ -25,273 +89,273 @@
 <li>Enums: 2</li>
 </ul>
 <h2 id="functions">Functions</h2>
-<p><strong>blocks_to_toc</strong></p>
+<h3 id="blocks-to-toc">blocks_to_toc</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>Array[TocItem]</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn blocks_to_toc(Array[MarkdownBlock]) -&gt; Array[TocItem]
 </code></pre>
-<p><strong>build_index_page</strong></p>
+<h3 id="build-index-page">build_index_page</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>String?</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn build_index_page(DocSite) -&gt; String?
 </code></pre>
-<p><strong>build_robots_txt</strong></p>
+<h3 id="build-robots-txt">build_robots_txt</h3>
 <ul>
 <li>Parameters: 0</li>
 <li>Returns: <code>String</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn build_robots_txt() -&gt; String
 </code></pre>
-<p><strong>build_search_index</strong></p>
+<h3 id="build-search-index">build_search_index</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>String</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn build_search_index(DocSite) -&gt; String
 </code></pre>
-<p><strong>build_site_manifest</strong></p>
+<h3 id="build-site-manifest">build_site_manifest</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>Array[OutputFile]</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn build_site_manifest(DocSite) -&gt; Array[OutputFile]
 </code></pre>
-<p><strong>build_site_manifest_with_options</strong></p>
+<h3 id="build-site-manifest-with-options">build_site_manifest_with_options</h3>
 <ul>
 <li>Parameters: 3</li>
 <li>Returns: <code>Array[OutputFile]</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn build_site_manifest_with_options(DocSite, SiteTheme, SiteOptions) -&gt; Array[OutputFile]
 </code></pre>
-<p><strong>build_site_manifest_with_theme</strong></p>
+<h3 id="build-site-manifest-with-theme">build_site_manifest_with_theme</h3>
 <ul>
 <li>Parameters: 2</li>
 <li>Returns: <code>Array[OutputFile]</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn build_site_manifest_with_theme(DocSite, SiteTheme) -&gt; Array[OutputFile]
 </code></pre>
-<p><strong>build_site_report</strong></p>
+<h3 id="build-site-report">build_site_report</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>BuildReport</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn build_site_report(DocSite) -&gt; BuildReport
 </code></pre>
-<p><strong>build_sitemap</strong></p>
+<h3 id="build-sitemap">build_sitemap</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>String</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn build_sitemap(DocSite) -&gt; String
 </code></pre>
-<p><strong>collect_search_entries</strong></p>
+<h3 id="collect-search-entries">collect_search_entries</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>Array[SearchEntry]</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn collect_search_entries(DocSite) -&gt; Array[SearchEntry]
 </code></pre>
-<p><strong>default_site_options</strong></p>
+<h3 id="default-site-options">default_site_options</h3>
 <ul>
 <li>Parameters: 0</li>
 <li>Returns: <code>SiteOptions</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn default_site_options() -&gt; SiteOptions
 </code></pre>
-<p><strong>default_theme</strong></p>
+<h3 id="default-theme">default_theme</h3>
 <ul>
 <li>Parameters: 0</li>
 <li>Returns: <code>SiteTheme</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn default_theme() -&gt; SiteTheme
 </code></pre>
-<p><strong>diagnostics_to_text</strong></p>
+<h3 id="diagnostics-to-text">diagnostics_to_text</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>String</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn diagnostics_to_text(ValidationReport) -&gt; String
 </code></pre>
-<p><strong>empty_front_matter</strong></p>
+<h3 id="empty-front-matter">empty_front_matter</h3>
 <ul>
 <li>Parameters: 0</li>
 <li>Returns: <code>FrontMatter</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn empty_front_matter() -&gt; FrontMatter
 </code></pre>
-<p><strong>evaluate_quality</strong></p>
+<h3 id="evaluate-quality">evaluate_quality</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>QualityGate</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn evaluate_quality(DocSite) -&gt; QualityGate
 </code></pre>
-<p><strong>extract_headings</strong></p>
+<h3 id="extract-headings">extract_headings</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>Array[AnchoredHeading]</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn extract_headings(Array[MarkdownBlock]) -&gt; Array[AnchoredHeading]
 </code></pre>
-<p><strong>extract_toc</strong></p>
+<h3 id="extract-toc">extract_toc</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>Array[TocItem]</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn extract_toc(String) -&gt; Array[TocItem]
 </code></pre>
-<p><strong>has_validation_errors</strong></p>
+<h3 id="has-validation-errors">has_validation_errors</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>Bool</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn has_validation_errors(ValidationReport) -&gt; Bool
 </code></pre>
-<p><strong>html_escape</strong></p>
+<h3 id="html-escape">html_escape</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>String</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn html_escape(String) -&gt; String
 </code></pre>
-<p><strong>inspect_manifest</strong></p>
+<h3 id="inspect-manifest">inspect_manifest</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>BuildReport</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn inspect_manifest(Array[OutputFile]) -&gt; BuildReport
 </code></pre>
-<p><strong>mbti_to_page</strong></p>
+<h3 id="mbti-to-page">mbti_to_page</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>DocPage</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn mbti_to_page(String) -&gt; DocPage
 </code></pre>
-<p><strong>measure_blocks</strong></p>
+<h3 id="measure-blocks">measure_blocks</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>DocumentMetrics</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn measure_blocks(Array[MarkdownBlock]) -&gt; DocumentMetrics
 </code></pre>
-<p><strong>measure_document</strong></p>
+<h3 id="measure-document">measure_document</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>DocumentMetrics</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn measure_document(String) -&gt; DocumentMetrics
 </code></pre>
-<p><strong>measure_site</strong></p>
+<h3 id="measure-site">measure_site</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>SiteMetrics</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn measure_site(DocSite) -&gt; SiteMetrics
 </code></pre>
-<p><strong>parse_blocks</strong></p>
+<h3 id="parse-blocks">parse_blocks</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>Array[MarkdownBlock]</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn parse_blocks(String) -&gt; Array[MarkdownBlock]
 </code></pre>
-<p><strong>parse_document</strong></p>
+<h3 id="parse-document">parse_document</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>ParsedDocument</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn parse_document(String) -&gt; ParsedDocument
 </code></pre>
-<p><strong>parse_mbti</strong></p>
+<h3 id="parse-mbti">parse_mbti</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>ApiReference</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn parse_mbti(String) -&gt; ApiReference
 </code></pre>
-<p><strong>plan_routes</strong></p>
+<h3 id="plan-routes">plan_routes</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>Array[RouteEntry]</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn plan_routes(DocSite) -&gt; Array[RouteEntry]
 </code></pre>
-<p><strong>render_blocks</strong></p>
+<h3 id="render-blocks">render_blocks</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>String</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn render_blocks(Array[MarkdownBlock]) -&gt; String
 </code></pre>
-<p><strong>render_markdown</strong></p>
+<h3 id="render-markdown">render_markdown</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>String</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn render_markdown(String) -&gt; String
 </code></pre>
-<p><strong>render_page</strong></p>
+<h3 id="render-page">render_page</h3>
 <ul>
 <li>Parameters: 2</li>
 <li>Returns: <code>RenderedPage</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn render_page(DocSite, DocPage) -&gt; RenderedPage
 </code></pre>
-<p><strong>render_page_with_options</strong></p>
+<h3 id="render-page-with-options">render_page_with_options</h3>
 <ul>
 <li>Parameters: 4</li>
 <li>Returns: <code>RenderedPage</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn render_page_with_options(DocSite, DocPage, SiteTheme, SiteOptions) -&gt; RenderedPage
 </code></pre>
-<p><strong>render_page_with_theme</strong></p>
+<h3 id="render-page-with-theme">render_page_with_theme</h3>
 <ul>
 <li>Parameters: 3</li>
 <li>Returns: <code>RenderedPage</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn render_page_with_theme(DocSite, DocPage, SiteTheme) -&gt; RenderedPage
 </code></pre>
-<p><strong>render_site</strong></p>
+<h3 id="render-site">render_site</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>Array[RenderedPage]</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn render_site(DocSite) -&gt; Array[RenderedPage]
 </code></pre>
-<p><strong>render_site_with_options</strong></p>
+<h3 id="render-site-with-options">render_site_with_options</h3>
 <ul>
 <li>Parameters: 3</li>
 <li>Returns: <code>Array[RenderedPage]</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn render_site_with_options(DocSite, SiteTheme, SiteOptions) -&gt; Array[RenderedPage]
 </code></pre>
-<p><strong>render_site_with_theme</strong></p>
+<h3 id="render-site-with-theme">render_site_with_theme</h3>
 <ul>
 <li>Parameters: 2</li>
 <li>Returns: <code>Array[RenderedPage]</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn render_site_with_theme(DocSite, SiteTheme) -&gt; Array[RenderedPage]
 </code></pre>
-<p><strong>slugify</strong></p>
+<h3 id="slugify">slugify</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>String</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn slugify(String) -&gt; String
 </code></pre>
-<p><strong>summarize_site</strong></p>
+<h3 id="summarize-site">summarize_site</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>SiteSummary</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn summarize_site(DocSite) -&gt; SiteSummary
 </code></pre>
-<p><strong>validate_site</strong></p>
+<h3 id="validate-site">validate_site</h3>
 <ul>
 <li>Parameters: 1</li>
 <li>Returns: <code>ValidationReport</code></li>
@@ -299,20 +363,20 @@
 <pre><code class="language-mbt">pub fn validate_site(DocSite) -&gt; ValidationReport
 </code></pre>
 <h2 id="structs">Structs</h2>
-<p><strong>AnchoredHeading</strong></p>
+<h3 id="anchoredheading">AnchoredHeading</h3>
 <pre><code class="language-mbt">pub(all) struct AnchoredHeading {
   level : Int
   title : String
   anchor : String
 }
 </code></pre>
-<p><strong>ApiReference</strong></p>
+<h3 id="apireference">ApiReference</h3>
 <pre><code class="language-mbt">pub(all) struct ApiReference {
   package_name : String
   symbols : Array[ApiSymbol]
 }
 </code></pre>
-<p><strong>ApiSymbol</strong></p>
+<h3 id="apisymbol">ApiSymbol</h3>
 <pre><code class="language-mbt">pub(all) struct ApiSymbol {
   kind : String
   name : String
@@ -321,7 +385,7 @@
   return_type : String
 }
 </code></pre>
-<p><strong>BuildReport</strong></p>
+<h3 id="buildreport">BuildReport</h3>
 <pre><code class="language-mbt">pub(all) struct BuildReport {
   file_count : Int
   html_count : Int
@@ -330,20 +394,20 @@
   files : Array[OutputFileInfo]
 }
 </code></pre>
-<p><strong>DocPage</strong></p>
+<h3 id="docpage">DocPage</h3>
 <pre><code class="language-mbt">pub(all) struct DocPage {
   title : String
   slug : String
   source : String
 }
 </code></pre>
-<p><strong>DocSite</strong></p>
+<h3 id="docsite">DocSite</h3>
 <pre><code class="language-mbt">pub(all) struct DocSite {
   title : String
   pages : Array[DocPage]
 }
 </code></pre>
-<p><strong>DocumentMetrics</strong></p>
+<h3 id="documentmetrics">DocumentMetrics</h3>
 <pre><code class="language-mbt">pub(all) struct DocumentMetrics {
   heading_count : Int
   paragraph_count : Int
@@ -353,7 +417,7 @@
   reading_minutes : Int
 }
 </code></pre>
-<p><strong>FrontMatter</strong></p>
+<h3 id="frontmatter">FrontMatter</h3>
 <pre><code class="language-mbt">pub(all) struct FrontMatter {
   title : String?
   order : Int?
@@ -361,46 +425,46 @@
   fields : Array[(String, String)]
 }
 </code></pre>
-<p><strong>OutputFile</strong></p>
+<h3 id="outputfile">OutputFile</h3>
 <pre><code class="language-mbt">pub(all) struct OutputFile {
   path : String
   content : String
 }
 </code></pre>
-<p><strong>OutputFileInfo</strong></p>
+<h3 id="outputfileinfo">OutputFileInfo</h3>
 <pre><code class="language-mbt">pub(all) struct OutputFileInfo {
   path : String
   kind : String
   byte_count : Int
 }
 </code></pre>
-<p><strong>ParsedDocument</strong></p>
+<h3 id="parseddocument">ParsedDocument</h3>
 <pre><code class="language-mbt">pub(all) struct ParsedDocument {
   front_matter : FrontMatter
   blocks : Array[MarkdownBlock]
 }
 </code></pre>
-<p><strong>QualityCheck</strong></p>
+<h3 id="qualitycheck">QualityCheck</h3>
 <pre><code class="language-mbt">pub(all) struct QualityCheck {
   name : String
   passed : Bool
   message : String
 }
 </code></pre>
-<p><strong>QualityGate</strong></p>
+<h3 id="qualitygate">QualityGate</h3>
 <pre><code class="language-mbt">pub(all) struct QualityGate {
   passed : Bool
   score : Int
   checks : Array[QualityCheck]
 }
 </code></pre>
-<p><strong>RenderedPage</strong></p>
+<h3 id="renderedpage">RenderedPage</h3>
 <pre><code class="language-mbt">pub(all) struct RenderedPage {
   path : String
   html : String
 }
 </code></pre>
-<p><strong>RouteEntry</strong></p>
+<h3 id="routeentry">RouteEntry</h3>
 <pre><code class="language-mbt">pub(all) struct RouteEntry {
   title : String
   slug : String
@@ -409,7 +473,7 @@
   tags : Array[String]
 }
 </code></pre>
-<p><strong>SearchEntry</strong></p>
+<h3 id="searchentry">SearchEntry</h3>
 <pre><code class="language-mbt">pub(all) struct SearchEntry {
   title : String
   path : String
@@ -417,7 +481,7 @@
   tags : Array[String]
 }
 </code></pre>
-<p><strong>SiteDiagnostic</strong></p>
+<h3 id="sitediagnostic">SiteDiagnostic</h3>
 <pre><code class="language-mbt">pub(all) struct SiteDiagnostic {
   level : DiagnosticLevel
   code : String
@@ -425,7 +489,7 @@
   page : String?
 }
 </code></pre>
-<p><strong>SiteMetrics</strong></p>
+<h3 id="sitemetrics">SiteMetrics</h3>
 <pre><code class="language-mbt">pub(all) struct SiteMetrics {
   page_count : Int
   heading_count : Int
@@ -434,7 +498,7 @@
   reading_minutes : Int
 }
 </code></pre>
-<p><strong>SiteOptions</strong></p>
+<h3 id="siteoptions">SiteOptions</h3>
 <pre><code class="language-mbt">pub(all) struct SiteOptions {
   language : String
   description : String
@@ -442,7 +506,7 @@
   footer : String
 }
 </code></pre>
-<p><strong>SiteSummary</strong></p>
+<h3 id="sitesummary">SiteSummary</h3>
 <pre><code class="language-mbt">pub(all) struct SiteSummary {
   page_count : Int
   output_count : Int
@@ -450,7 +514,7 @@
   tag_count : Int
 }
 </code></pre>
-<p><strong>SiteTheme</strong></p>
+<h3 id="sitetheme">SiteTheme</h3>
 <pre><code class="language-mbt">pub(all) struct SiteTheme {
   background : String
   surface : String
@@ -463,26 +527,26 @@
   content_width_px : Int
 }
 </code></pre>
-<p><strong>TocItem</strong></p>
+<h3 id="tocitem">TocItem</h3>
 <pre><code class="language-mbt">pub(all) struct TocItem {
   level : Int
   title : String
   anchor : String
 }
 </code></pre>
-<p><strong>ValidationReport</strong></p>
+<h3 id="validationreport">ValidationReport</h3>
 <pre><code class="language-mbt">pub(all) struct ValidationReport {
   diagnostics : Array[SiteDiagnostic]
 }
 </code></pre>
 <h2 id="enums">Enums</h2>
-<p><strong>DiagnosticLevel</strong></p>
+<h3 id="diagnosticlevel">DiagnosticLevel</h3>
 <pre><code class="language-mbt">pub(all) enum DiagnosticLevel {
   DiagError
   DiagWarning
 }
 </code></pre>
-<p><strong>MarkdownBlock</strong></p>
+<h3 id="markdownblock">MarkdownBlock</h3>
 <pre><code class="language-mbt">pub(all) enum MarkdownBlock {
   Heading(Int, String)
   Paragraph(String)

@@ -312,11 +312,10 @@ pub fn mbti_to_page(source : String) -> DocPage {
       out.write_string(api_section_title(kind))
       out.write_string("\n\n")
       for symbol in matching {
-        out.write_string("**")
+        out.write_string("### ")
         out.write_string(symbol.name)
-        out.write_string("**")
+        out.write_string("\n\n")
         if symbol.kind == "function" {
-          out.write_string("\n\n")
           out.write_string("- Parameters: ")
           out.write_string(symbol.arity.to_string())
           if symbol.return_type != "" {
@@ -788,6 +787,11 @@ fn parse_body_blocks(markdown : String) -> Array[MarkdownBlock] {
       close_pending_list(blocks, list_items, in_list)
       in_list = false
       blocks.push(Heading(2, trimmed[3:].to_owned()))
+    } else if trimmed.has_prefix("### ") {
+      close_pending_paragraph(blocks, paragraph)
+      close_pending_list(blocks, list_items, in_list)
+      in_list = false
+      blocks.push(Heading(3, trimmed[4:].to_owned()))
     } else if trimmed.has_prefix("- ") {
       close_pending_paragraph(blocks, paragraph)
       in_list = true

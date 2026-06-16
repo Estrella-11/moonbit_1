@@ -144,6 +144,8 @@ Repository setup:
   results for 10, 100, and 500 page synthetic documentation sites.
 - Enriched generated MoonBit API pages with declaration summaries, function
   parameter counts, and return type extraction from `.mbti` signatures.
+- Upgraded generated API declarations to per-symbol headings so the reference
+  page exposes stable anchors for direct links to individual declarations.
 
 Next engineering target:
 

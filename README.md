@@ -30,7 +30,7 @@ Generated MoonBit API:
 
 - Safe HTML escaping for generated pages.
 - Stable ASCII slug generation for headings and page routes.
-- Block-level Markdown AST for headings, paragraphs, lists, block quotes, and
+- Block-level Markdown AST for H1-H3 headings, paragraphs, lists, block quotes, and
   fenced code blocks.
 - Inline Markdown rendering for code spans, strong text, and safe links.
 - Paragraph line folding and fenced code language labels.
@@ -41,6 +41,8 @@ Generated MoonBit API:
 - MoonBit `.mbti` public API extraction and reference-page generation.
 - API reference summaries with declaration counts, function arity, and return
   type extraction from MoonBit signatures.
+- Per-symbol API anchors so generated reference pages can deep-link directly to
+  individual functions, structs, enums, and traits.
 - Route planning for multi-page sites using page slug and front matter order.
 - Static output manifest generation for rendered HTML files.
 - JSON search index generation with a built-in interactive search interface.
@@ -128,10 +130,10 @@ moon run --target js cmd/moondockit \
 
 The `.mbti` parser extracts public functions, structs, enums, and traits into a
 searchable API reference page. It also derives a compact API summary, function
-parameter counts, and return types from signatures so the generated reference is
-useful during review instead of being only a raw declaration dump. This keeps
-the generated documentation aligned with the package interface produced by the
-MoonBit toolchain.
+parameter counts, return types, and per-symbol anchors from signatures so the
+generated reference is useful during review instead of being only a raw
+declaration dump. This keeps the generated documentation aligned with the
+package interface produced by the MoonBit toolchain.
 
 ## Reviewer Path
 
