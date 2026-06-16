@@ -133,6 +133,8 @@ Repository setup:
   site, and a missing source directory.
 - Hardened CLI input validation with friendly source, API file, and output path
   diagnostics before filesystem reads and writes.
+- Added JSON config-file support for repeatable CLI builds, with command-line
+  options overriding config values and integration coverage for both paths.
 - Added a deterministic CLI scale benchmark script and adjusted the quality
   gate so large multi-page sites are evaluated by per-page readability instead
   of total site reading time.

@@ -1,0 +1,10 @@
+{
+  "source": "examples/site",
+  "output": "dist-cli-example",
+  "api": "pkg.generated.mbti",
+  "title": "MoonDocKit CLI Example",
+  "site_url": "https://example.com/moondockit-cli",
+  "language": "en",
+  "description": "MoonDocKit documentation generated from a config file",
+  "footer": "Built with `MoonDocKit`"
+}

@@ -175,6 +175,77 @@ def test_output_path_must_be_directory(workspace: Path) -> None:
         raise AssertionError("output-path diagnostic was not printed")
 
 
+def test_config_file_build(workspace: Path) -> None:
+    source = workspace / "config-site"
+    output = workspace / "config-dist"
+    source.mkdir()
+    (source / "intro.md").write_text(
+        "---\ntitle: Config Intro\norder: 1\n---\n"
+        "# Config Intro\n\nConfigured documentation.\n",
+        encoding="utf-8",
+    )
+    interface = workspace / "config-api.mbti"
+    interface.write_text(
+        'package "acme/config"\n\n// Values\npub fn configured() -> Unit\n',
+        encoding="utf-8",
+    )
+    config = workspace / "moondockit.json"
+    config.write_text(
+        json.dumps(
+            {
+                "source": str(source),
+                "output": str(output),
+                "api": str(interface),
+                "title": "Configured Docs",
+                "site_url": "https://example.com/configured",
+                "language": "en-US",
+                "description": "Configured MoonDocKit site",
+                "footer": "Configured with `MoonDocKit`",
+            }
+        ),
+        encoding="utf-8",
+    )
+    run(["node", str(CLI), "--config", str(config)])
+    require_text(
+        output / "intro.html",
+        '<html lang="en-US">',
+        "Configured Docs",
+        'name="description" content="Configured MoonDocKit site"',
+        "Configured with <code>MoonDocKit</code>",
+    )
+    require_text(output / "api-reference.html", "acme/config", "configured")
+
+
+def test_cli_overrides_config(workspace: Path) -> None:
+    source = workspace / "override-site"
+    output = workspace / "override-dist"
+    configured_output = workspace / "configured-output"
+    source.mkdir()
+    (source / "guide.md").write_text("# Guide\n\nOverride content.\n", encoding="utf-8")
+    config = workspace / "override.json"
+    config.write_text(
+        json.dumps({
+            "source": str(source),
+            "output": str(configured_output),
+            "title": "Configured Title",
+        }),
+        encoding="utf-8",
+    )
+    run([
+        "node",
+        str(CLI),
+        "--config",
+        str(config),
+        "--output",
+        str(output),
+        "--title",
+        "CLI Title",
+    ])
+    require_text(output / "guide.html", "CLI Title")
+    if configured_output.exists():
+        raise AssertionError("CLI output option did not override config output")
+
+
 def main() -> None:
     build_cli()
     workspace = ROOT / "_build" / f"cli-integration-{os.getpid()}"
@@ -187,9 +258,11 @@ def main() -> None:
         test_empty_site(workspace)
         test_missing_source(workspace)
         test_output_path_must_be_directory(workspace)
+        test_config_file_build(workspace)
+        test_cli_overrides_config(workspace)
     finally:
         shutil.rmtree(workspace, ignore_errors=True)
-    print("CLI integration tests passed: 5 scenarios.")
+    print("CLI integration tests passed: 7 scenarios.")
 
 
 if __name__ == "__main__":

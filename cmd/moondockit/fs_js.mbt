@@ -47,6 +47,32 @@ extern "js" fn is_file(path : String) -> Bool =
   #| }
 
 ///|
+/// Read a string-like field from a JSON configuration file.
+extern "js" fn read_config_value(path : String, key : String) -> String =
+  #| function(path, key) {
+  #|   if (!path) {
+  #|     return "";
+  #|   }
+  #|   const fs = require("node:fs");
+  #|   try {
+  #|     const config = JSON.parse(fs.readFileSync(path, "utf8"));
+  #|     const value = config[key];
+  #|     if (value === undefined || value === null) {
+  #|       return "";
+  #|     }
+  #|     if (typeof value === "string") {
+  #|       return value;
+  #|     }
+  #|     if (typeof value === "number" || typeof value === "boolean") {
+  #|       return String(value);
+  #|     }
+  #|     return "";
+  #|   } catch (error) {
+  #|     return "__MOONDOC_CONFIG_ERROR__" + error.message;
+  #|   }
+  #| }
+
+///|
 /// Read sorted Markdown files as alternating name/content values.
 extern "js" fn read_markdown_directory(path : String) -> Array[String] =
   #| function(path) {

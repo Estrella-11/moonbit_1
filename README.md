@@ -60,9 +60,9 @@ Generated MoonBit API:
   footer content.
 - Canonical links and Open Graph metadata for generated pages.
 - Runnable demo that prints generated files and site statistics.
-- Five-scenario compiled CLI integration suite covering real builds, generated
+- Seven-scenario compiled CLI integration suite covering real builds, generated
   API output, invalid arguments, empty sites, missing source directories, and
-  output path conflicts.
+  output path conflicts, plus config-file builds and CLI overrides.
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.
 - Blackbox tests for public behavior.
@@ -98,9 +98,16 @@ The CLI reads every `.md` file, evaluates the quality gate, and writes a root
 `index.html`, documentation pages, an interactive search experience backed by
 `search-index.json`, `sitemap.xml`, and `robots.txt`.
 
-The CLI exposes language, description, footer, canonical URL, and optional
-`.mbti` API inputs. The compiled Node.js CLI returns non-zero process exit
-codes for invalid arguments and failed quality gates.
+For repeatable project builds, put the same fields in JSON and pass `--config`:
+
+```bash
+moon run --target js cmd/moondockit --config examples/moondockit.json
+```
+
+The CLI exposes source, output, language, description, footer, canonical URL,
+and optional `.mbti` API inputs. Command-line options override config-file
+values. The compiled Node.js CLI returns non-zero process exit codes for
+invalid arguments and failed quality gates.
 
 Include generated MoonBit package API documentation:
 
