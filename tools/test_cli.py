@@ -157,8 +157,22 @@ def test_missing_source(workspace: Path) -> None:
         ],
         expected=1,
     )
-    if "ENOENT" not in result.stdout:
-        raise AssertionError("missing-source filesystem diagnostic was not printed")
+    if "source directory not found" not in result.stdout:
+        raise AssertionError("missing-source diagnostic was not printed")
+
+
+def test_output_path_must_be_directory(workspace: Path) -> None:
+    source = workspace / "output-conflict-source"
+    source.mkdir()
+    (source / "guide.md").write_text("# Guide\n\nValid content.\n", encoding="utf-8")
+    output = workspace / "output-file"
+    output.write_text("not a directory", encoding="utf-8")
+    result = run(
+        ["node", str(CLI), "--source", str(source), "--output", str(output)],
+        expected=1,
+    )
+    if "output path exists and is not a directory" not in result.stdout:
+        raise AssertionError("output-path diagnostic was not printed")
 
 
 def main() -> None:
@@ -172,9 +186,10 @@ def main() -> None:
         test_invalid_arguments()
         test_empty_site(workspace)
         test_missing_source(workspace)
+        test_output_path_must_be_directory(workspace)
     finally:
         shutil.rmtree(workspace, ignore_errors=True)
-    print("CLI integration tests passed: 4 scenarios.")
+    print("CLI integration tests passed: 5 scenarios.")
 
 
 if __name__ == "__main__":

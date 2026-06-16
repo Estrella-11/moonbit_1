@@ -15,6 +15,38 @@ extern "js" fn exit_failure(code : Int) -> Unit =
   #| }
 
 ///|
+/// Return true when a path exists.
+extern "js" fn path_exists(path : String) -> Bool =
+  #| function(path) {
+  #|   const fs = require("node:fs");
+  #|   return fs.existsSync(path);
+  #| }
+
+///|
+/// Return true when a path exists and is a directory.
+extern "js" fn is_directory(path : String) -> Bool =
+  #| function(path) {
+  #|   const fs = require("node:fs");
+  #|   try {
+  #|     return fs.statSync(path).isDirectory();
+  #|   } catch (_) {
+  #|     return false;
+  #|   }
+  #| }
+
+///|
+/// Return true when a path exists and is a file.
+extern "js" fn is_file(path : String) -> Bool =
+  #| function(path) {
+  #|   const fs = require("node:fs");
+  #|   try {
+  #|     return fs.statSync(path).isFile();
+  #|   } catch (_) {
+  #|     return false;
+  #|   }
+  #| }
+
+///|
 /// Read sorted Markdown files as alternating name/content values.
 extern "js" fn read_markdown_directory(path : String) -> Array[String] =
   #| function(path) {

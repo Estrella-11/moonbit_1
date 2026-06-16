@@ -60,8 +60,9 @@ Generated MoonBit API:
   footer content.
 - Canonical links and Open Graph metadata for generated pages.
 - Runnable demo that prints generated files and site statistics.
-- Four-scenario compiled CLI integration suite covering real builds, generated
-  API output, invalid arguments, empty sites, and missing source directories.
+- Five-scenario compiled CLI integration suite covering real builds, generated
+  API output, invalid arguments, empty sites, missing source directories, and
+  output path conflicts.
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.
 - Blackbox tests for public behavior.

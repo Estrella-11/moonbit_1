@@ -131,6 +131,8 @@ Repository setup:
 - Added a cross-platform compiled CLI integration suite covering a real
   two-page build with generated API documentation, invalid arguments, an empty
   site, and a missing source directory.
+- Hardened CLI input validation with friendly source, API file, and output path
+  diagnostics before filesystem reads and writes.
 - Added a deterministic CLI scale benchmark script and adjusted the quality
   gate so large multi-page sites are evaluated by per-page readability instead
   of total site reading time.
