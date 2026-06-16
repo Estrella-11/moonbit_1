@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/moondockit.schema.json",
+  "title": "MoonDocKit CLI configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "source": {
+      "type": "string",
+      "description": "Directory containing Markdown source files."
+    },
+    "output": {
+      "type": "string",
+      "description": "Directory where generated static files are written."
+    },
+    "api": {
+      "type": "string",
+      "description": "Optional generated .mbti file to include as MoonBit API documentation."
+    },
+    "title": {
+      "type": "string",
+      "description": "Generated documentation site title."
+    },
+    "site_url": {
+      "type": "string",
+      "description": "Optional public base URL for canonical and Open Graph metadata."
+    },
+    "language": {
+      "type": "string",
+      "description": "HTML language code for generated pages."
+    },
+    "description": {
+      "type": "string",
+      "description": "Site description used in metadata."
+    },
+    "footer": {
+      "type": "string",
+      "description": "Markdown-style inline footer content."
+    }
+  }
+}

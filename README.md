@@ -104,6 +104,10 @@ For repeatable project builds, put the same fields in JSON and pass `--config`:
 moon run --target js cmd/moondockit --config examples/moondockit.json
 ```
 
+The example configuration is documented in `docs/configuration.md`, and
+`examples/moondockit.schema.json` describes the supported fields for editor
+hints and review.
+
 The CLI exposes source, output, language, description, footer, canonical URL,
 and optional `.mbti` API inputs. Command-line options override config-file
 values. The compiled Node.js CLI returns non-zero process exit codes for
@@ -146,6 +150,7 @@ For competition review, start with:
 - Architecture and design decisions: `docs/architecture.md`
 - 90-second reviewer demo: `docs/demo-script.md`
 - Deployment and release runbook: `docs/deployment-runbook.md`
+- Configuration guide: `docs/configuration.md`
 - Mooncakes publishing plan: `docs/mooncakes-publishing.md`
 - Development log: `docs/development-log.md`
 - Benchmark notes: `docs/benchmark-notes.md`

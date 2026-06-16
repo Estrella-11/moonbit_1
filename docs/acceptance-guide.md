@@ -47,6 +47,8 @@ Expected generated files:
 - `dist-example/search-index.json`
 - `dist-example/sitemap.xml`
 - `dist-example/robots.txt`
+- `examples/moondockit.json`
+- `examples/moondockit.schema.json`
 
 ## One-Shot Verification
 
@@ -70,6 +72,7 @@ Before final submission, confirm:
 
 - GitHub and Gitlink repositories are synchronized.
 - README documents project goal and usage.
+- Configuration guide and example config are current.
 - CI covers check, test, and demo run.
 - Core functionality has tests.
 - The public showcase search returns documentation and API results.

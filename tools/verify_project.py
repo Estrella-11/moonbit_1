@@ -1,5 +1,6 @@
 import subprocess
 import sys
+import json
 from pathlib import Path
 
 try:
@@ -108,6 +109,20 @@ def verify_moonbit_cli() -> None:
             raise SystemExit(f"interactive search marker not found: {marker}")
 
 
+def verify_config_files() -> None:
+    config = require("examples/moondockit.json")
+    schema = require("examples/moondockit.schema.json")
+    guide = require("docs/configuration.md")
+    json.loads(config.read_text(encoding="utf-8"))
+    schema_data = json.loads(schema.read_text(encoding="utf-8"))
+    if schema_data.get("title") != "MoonDocKit CLI configuration":
+        raise SystemExit("configuration schema title is not correct")
+    text = guide.read_text(encoding="utf-8")
+    for marker in ["--config examples/moondockit.json", "site_url", "footer"]:
+        if marker not in text:
+            raise SystemExit(f"configuration guide marker not found: {marker}")
+
+
 def main() -> None:
     for path in [
         "README.md",
@@ -118,6 +133,7 @@ def main() -> None:
         "docs/architecture.md",
         "docs/demo-script.md",
         "docs/deployment-runbook.md",
+        "docs/configuration.md",
         "docs/final-submission.md",
         "docs/release.md",
         "docs/mooncakes-publishing.md",
@@ -126,6 +142,7 @@ def main() -> None:
     ]:
         require(path)
     verify_pdf()
+    verify_config_files()
     verify_example_site()
     verify_moonbit_cli()
     run([PYTHON, "tools/test_cli.py"])

@@ -15,6 +15,7 @@ competition.
 - Acceptance guide: `docs/acceptance-guide.md`
 - Release notes: `docs/release.md`
 - Architecture and design decisions: `docs/architecture.md`
+- Configuration guide: `docs/configuration.md`
 - 90-second reviewer demo: `docs/demo-script.md`
 - Deployment and release runbook: `docs/deployment-runbook.md`
 - Public showcase: https://estrella-11.github.io/moonbit_1/
@@ -60,7 +61,7 @@ Expected result:
 - End-to-end MoonBit CLI with a small Node.js filesystem adapter.
 - Self-hosted MoonBit API reference generated from `pkg.generated.mbti`.
 - Example documentation site, generated output, CI workflow, release notes,
-  publishing plan, and acceptance checklist.
+  configuration guide, publishing plan, and acceptance checklist.
 
 ## Submission Status
 
