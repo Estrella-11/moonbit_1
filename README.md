@@ -50,6 +50,8 @@ Generated MoonBit API:
 - JSON search index generation with a built-in interactive search interface.
 - XML sitemap generation.
 - robots.txt generation for generated static sites.
+- Machine-readable `site-manifest.json` generation for deploy and acceptance
+  checks.
 - Build report generation for output file counts, file kinds, and byte totals.
 - Document and site metrics for headings, code blocks, word counts, and
   estimated reading time.
@@ -102,7 +104,8 @@ moon run --target js cmd/moondockit \
 
 The CLI reads every `.md` file, evaluates the quality gate, and writes a root
 `index.html`, documentation pages, an interactive search experience backed by
-`search-index.json`, `sitemap.xml`, and `robots.txt`.
+`search-index.json`, plus `sitemap.xml`, `robots.txt`, and
+`site-manifest.json`.
 
 For repeatable project builds, put the same fields in JSON and pass `--config`:
 

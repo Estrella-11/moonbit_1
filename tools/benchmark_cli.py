@@ -38,6 +38,10 @@ def find_cli() -> Path:
     )
 
 
+def build_release_cli() -> None:
+    run([str(MOON), "build", "--target", "js", "--release", "cmd/moondockit"])
+
+
 def command_version(command: list[str]) -> str:
     try:
         return run(command).stdout.splitlines()[0]
@@ -105,7 +109,7 @@ def benchmark_case(cli: Path, page_count: int, rounds: int) -> dict[str, object]
 
     search = json.loads((final_output / "search-index.json").read_text(encoding="utf-8"))
     file_count = sum(1 for path in final_output.iterdir() if path.is_file())
-    expected_files = page_count + 4
+    expected_files = page_count + 5
     if file_count != expected_files:
         raise AssertionError(f"expected {expected_files} files, got {file_count}")
     if len(search) != page_count:
@@ -139,6 +143,7 @@ def main() -> None:
     if args.rounds <= 0:
         parser.error("--rounds must be positive")
 
+    build_release_cli()
     cli = find_cli()
     if WORKSPACE.exists():
         shutil.rmtree(WORKSPACE)

@@ -12,6 +12,7 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - Page-unique heading anchors and TOC generation.
 - Multi-page route planning.
 - Static output manifest generation.
+- Machine-readable `site-manifest.json` output for generated file metadata.
 - JSON search index generation and built-in interactive static search.
 - Site summary metadata for demo and validation.
 - Site validation diagnostics with severity, code, message, and optional page

@@ -1285,6 +1285,10 @@ pub fn build_site_manifest_with_options(
   files.push({ path: "search-index.json", content: build_search_index(site) })
   files.push({ path: "sitemap.xml", content: build_sitemap(site) })
   files.push({ path: "robots.txt", content: build_robots_txt() })
+  files.push({
+    path: "site-manifest.json",
+    content: build_output_manifest_json(files),
+  })
   files.sort_by((left, right) => left.path.compare(right.path))
   files
 }
@@ -1318,6 +1322,38 @@ pub fn build_index_page(site : DocSite) -> String? {
 /// Build a robots.txt file that points crawlers to the generated sitemap.
 pub fn build_robots_txt() -> String {
   "User-agent: *\nAllow: /\nSitemap: sitemap.xml\n"
+}
+
+///|
+/// Build a machine-readable manifest for generated output files.
+pub fn build_output_manifest_json(files : Array[OutputFile]) -> String {
+  let report = inspect_manifest(files)
+  let out = StringBuilder()
+  out.write_string("{\n")
+  out.write_string("  \"file_count\": ")
+  out.write_string(report.file_count.to_string())
+  out.write_string(",\n  \"html_count\": ")
+  out.write_string(report.html_count.to_string())
+  out.write_string(",\n  \"data_count\": ")
+  out.write_string(report.data_count.to_string())
+  out.write_string(",\n  \"total_bytes\": ")
+  out.write_string(report.total_bytes.to_string())
+  out.write_string(",\n  \"files\": [\n")
+  for i, file in report.files {
+    out.write_string("    {\"path\":\"")
+    out.write_string(json_escape(file.path))
+    out.write_string("\",\"kind\":\"")
+    out.write_string(json_escape(file.kind))
+    out.write_string("\",\"bytes\":")
+    out.write_string(file.byte_count.to_string())
+    out.write_string("}")
+    if i + 1 < report.files.length() {
+      out.write_string(",")
+    }
+    out.write_string("\n")
+  }
+  out.write_string("  ]\n}\n")
+  out.to_string()
 }
 
 ///|

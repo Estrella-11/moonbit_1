@@ -148,6 +148,9 @@ Repository setup:
   page exposes stable anchors for direct links to individual declarations.
 - Added grouped symbol index links to generated API pages so reviewers and
   package users can jump directly from the summary to specific declarations.
+- Added machine-readable `site-manifest.json` output so generated sites expose
+  file paths, kinds, byte counts, and aggregate build metadata for deployment
+  and acceptance automation.
 
 Next engineering target:
 

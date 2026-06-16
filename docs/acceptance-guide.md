@@ -45,6 +45,7 @@ Expected generated files:
 - `dist-example/deployment.html`
 - `dist-example/changelog.html`
 - `dist-example/search-index.json`
+- `dist-example/site-manifest.json`
 - `dist-example/sitemap.xml`
 - `dist-example/robots.txt`
 - `examples/moondockit.json`

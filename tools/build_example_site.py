@@ -1,3 +1,4 @@
+import json
 from html import escape
 from pathlib import Path
 
@@ -204,7 +205,31 @@ def main() -> None:
         "User-agent: *\nAllow: /\nSitemap: sitemap.xml\n",
         encoding="utf-8",
     )
-    print(f"Wrote {len(pages) + 4} files to {OUT}")
+    files = sorted(path for path in OUT.iterdir() if path.is_file())
+    manifest_files = [
+        {
+            "path": path.name,
+            "kind": "html"
+            if path.suffix == ".html"
+            else "data"
+            if path.suffix in {".json", ".xml"}
+            else "asset",
+            "bytes": path.stat().st_size,
+        }
+        for path in files
+    ]
+    manifest = {
+        "file_count": len(manifest_files),
+        "html_count": sum(1 for item in manifest_files if item["kind"] == "html"),
+        "data_count": sum(1 for item in manifest_files if item["kind"] == "data"),
+        "total_bytes": sum(item["bytes"] for item in manifest_files),
+        "files": manifest_files,
+    }
+    (OUT / "site-manifest.json").write_text(
+        json.dumps(manifest, indent=2, ensure_ascii=True) + "\n",
+        encoding="utf-8",
+    )
+    print(f"Wrote {len(pages) + 5} files to {OUT}")
 
 
 if __name__ == "__main__":

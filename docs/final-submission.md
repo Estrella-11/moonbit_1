@@ -53,8 +53,8 @@ Expected result:
 - Block-level Markdown AST and reusable HTML renderer.
 - Stable route planning, page-unique anchors, and generated table of contents.
 - Front matter parsing for title, order, tags, and custom fields.
-- Static output manifests for HTML pages, search index, sitemap, and robots
-  policy.
+- Static output manifests for HTML pages, search index, sitemap, robots policy,
+  and machine-readable `site-manifest.json` metadata.
 - Interactive static search across guides and generated MoonBit API entries.
 - Site metrics, validation diagnostics, and a scored quality gate.
 - Theme configuration APIs for colors and layout widths.

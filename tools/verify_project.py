@@ -52,6 +52,7 @@ def verify_example_site() -> None:
         "dist-example/changelog.html",
         "dist-example/robots.txt",
         "dist-example/search-index.json",
+        "dist-example/site-manifest.json",
         "dist-example/sitemap.xml",
     ]:
         require(path)
@@ -94,9 +95,17 @@ def verify_moonbit_cli() -> None:
         "dist-cli-example/changelog.html",
         "dist-cli-example/robots.txt",
         "dist-cli-example/search-index.json",
+        "dist-cli-example/site-manifest.json",
         "dist-cli-example/sitemap.xml",
     ]:
         require(path)
+    manifest = json.loads(
+        require("dist-cli-example/site-manifest.json").read_text(encoding="utf-8")
+    )
+    paths = {entry["path"] for entry in manifest["files"]}
+    for expected in ["api-reference.html", "search-index.json", "sitemap.xml"]:
+        if expected not in paths:
+            raise SystemExit(f"site manifest is missing {expected}")
     overview = require("dist-cli-example/overview.html").read_text(encoding="utf-8")
     for marker in [
         "data-search-input",

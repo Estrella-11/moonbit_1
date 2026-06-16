@@ -30,6 +30,7 @@
 - [x] Interactive static search implemented with safe DOM construction.
 - [x] Sitemap generation implemented.
 - [x] robots.txt generation implemented.
+- [x] Machine-readable site-manifest.json generation implemented.
 - [x] Build report generation implemented.
 - [x] Document and site metrics implemented.
 - [x] Quality gate evaluation implemented.

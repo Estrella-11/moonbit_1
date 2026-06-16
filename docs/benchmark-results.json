@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-16",
+  "date": "2026-06-17",
   "platform": "Windows-11-10.0.26200-SP0",
   "python": "3.13.5",
   "node": "v24.14.1",
@@ -8,32 +8,32 @@
   "results": [
     {
       "pages": 10,
-      "rounds": 3,
-      "median_ms": 101.29,
-      "min_ms": 98.2,
-      "max_ms": 105.11,
-      "output_files": 14,
-      "output_bytes": 67708,
+      "rounds": 2,
+      "median_ms": 98.81,
+      "min_ms": 91.37,
+      "max_ms": 106.25,
+      "output_files": 15,
+      "output_bytes": 68612,
       "search_entries": 10
     },
     {
       "pages": 100,
-      "rounds": 3,
-      "median_ms": 387.69,
-      "min_ms": 353.42,
-      "max_ms": 404.59,
-      "output_files": 104,
-      "output_bytes": 1007110,
+      "rounds": 2,
+      "median_ms": 436.93,
+      "min_ms": 434.76,
+      "max_ms": 439.1,
+      "output_files": 105,
+      "output_bytes": 1013240,
       "search_entries": 100
     },
     {
       "pages": 500,
-      "rounds": 3,
-      "median_ms": 7227.18,
-      "min_ms": 7052.54,
-      "max_ms": 7284.03,
-      "output_files": 504,
-      "output_bytes": 12637910,
+      "rounds": 2,
+      "median_ms": 8005.9,
+      "min_ms": 7727.62,
+      "max_ms": 8284.19,
+      "output_files": 505,
+      "output_bytes": 12667743,
       "search_entries": 500
     }
   ]
