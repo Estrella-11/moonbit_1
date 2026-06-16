@@ -69,6 +69,8 @@ pub(all) struct ApiSymbol {
   kind : String
   name : String
   signature : String
+  arity : Int
+  return_type : String
 }
 
 ///|
@@ -227,6 +229,8 @@ pub fn parse_mbti(source : String) -> ApiReference {
         kind: "function",
         name: declaration_name(line, "pub fn "),
         signature: line,
+        arity: function_arity(line),
+        return_type: return_type(line),
       })
     } else if line.has_prefix("pub(all) struct ") {
       let captured = capture_interface_block(lines, i)
@@ -234,6 +238,8 @@ pub fn parse_mbti(source : String) -> ApiReference {
         kind: "struct",
         name: declaration_name(line, "pub(all) struct "),
         signature: captured.0,
+        arity: 0,
+        return_type: "",
       })
       i = captured.1
     } else if line.has_prefix("pub(all) enum ") {
@@ -242,6 +248,8 @@ pub fn parse_mbti(source : String) -> ApiReference {
         kind: "enum",
         name: declaration_name(line, "pub(all) enum "),
         signature: captured.0,
+        arity: 0,
+        return_type: "",
       })
       i = captured.1
     } else if line.has_prefix("pub trait ") {
@@ -250,6 +258,8 @@ pub fn parse_mbti(source : String) -> ApiReference {
         kind: "trait",
         name: declaration_name(line, "pub trait "),
         signature: captured.0,
+        arity: 0,
+        return_type: "",
       })
       i = captured.1
     }
@@ -279,6 +289,21 @@ pub fn mbti_to_page(source : String) -> DocPage {
     out.write_string(api.symbols.length().to_string())
     out.write_string(" public declarations.\n\n")
   }
+  if api.symbols.length() > 0 {
+    out.write_string("## API Summary\n\n")
+    let kinds = ["function", "struct", "enum", "trait"]
+    for kind in kinds {
+      let count = api.symbols.filter(symbol => symbol.kind == kind).length()
+      if count > 0 {
+        out.write_string("- ")
+        out.write_string(api_section_title(kind))
+        out.write_string(": ")
+        out.write_string(count.to_string())
+        out.write_string("\n")
+      }
+    }
+    out.write_string("\n")
+  }
   let kinds = ["function", "struct", "enum", "trait"]
   for kind in kinds {
     let matching = api.symbols.filter(symbol => symbol.kind == kind)
@@ -289,7 +314,18 @@ pub fn mbti_to_page(source : String) -> DocPage {
       for symbol in matching {
         out.write_string("**")
         out.write_string(symbol.name)
-        out.write_string("**\n\n```mbt\n")
+        out.write_string("**")
+        if symbol.kind == "function" {
+          out.write_string("\n\n")
+          out.write_string("- Parameters: ")
+          out.write_string(symbol.arity.to_string())
+          if symbol.return_type != "" {
+            out.write_string("\n- Returns: `")
+            out.write_string(symbol.return_type)
+            out.write_string("`")
+          }
+        }
+        out.write_string("\n\n```mbt\n")
         out.write_string(symbol.signature)
         out.write_string("\n```\n\n")
       }
@@ -309,6 +345,79 @@ fn declaration_name(line : String, prefix : String) -> String {
     }
   }
   rest[0:end].to_owned()
+}
+
+///|
+fn function_arity(signature : String) -> Int {
+  let start = find_char(signature, '(')
+  let finish = find_matching_paren(signature, start)
+  if start < 0 || finish <= start + 1 {
+    return 0
+  }
+  let args = signature[start + 1:finish].to_owned().trim().to_owned()
+  if args == "" {
+    0
+  } else {
+    count_top_level_commas(args) + 1
+  }
+}
+
+///|
+fn return_type(signature : String) -> String {
+  match signature.split_once(" -> ") {
+    Some((_, result)) => result.trim().to_owned()
+    None => ""
+  }
+}
+
+///|
+fn find_char(input : String, target : Char) -> Int {
+  for index, ch in input {
+    if ch == target {
+      return index
+    }
+  }
+  -1
+}
+
+///|
+fn find_matching_paren(input : String, start : Int) -> Int {
+  if start < 0 {
+    return -1
+  }
+  let mut depth = 0
+  for index, ch in input {
+    if index < start {
+      continue
+    }
+    if ch == '(' {
+      depth = depth + 1
+    } else if ch == ')' {
+      depth = depth - 1
+      if depth == 0 {
+        return index
+      }
+    }
+  }
+  -1
+}
+
+///|
+fn count_top_level_commas(input : String) -> Int {
+  let mut count = 0
+  let mut depth = 0
+  for _, ch in input {
+    if ch == '(' || ch == '[' || ch == '{' {
+      depth = depth + 1
+    } else if ch == ')' || ch == ']' || ch == '}' {
+      if depth > 0 {
+        depth = depth - 1
+      }
+    } else if ch == ',' && depth == 0 {
+      count = count + 1
+    }
+  }
+  count
 }
 
 ///|

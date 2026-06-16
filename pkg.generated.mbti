@@ -98,6 +98,8 @@ pub(all) struct ApiSymbol {
   kind : String
   name : String
   signature : String
+  arity : Int
+  return_type : String
 }
 
 pub(all) struct BuildReport {

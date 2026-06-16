@@ -142,6 +142,8 @@ Repository setup:
   of total site reading time.
 - Expanded the blackbox suite to 44 tests and recorded release-build CLI scale
   results for 10, 100, and 500 page synthetic documentation sites.
+- Enriched generated MoonBit API pages with declaration summaries, function
+  parameter counts, and return type extraction from `.mbti` signatures.
 
 Next engineering target:
 

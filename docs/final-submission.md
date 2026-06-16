@@ -60,6 +60,8 @@ Expected result:
 - Theme configuration APIs for colors and layout widths.
 - End-to-end MoonBit CLI with a small Node.js filesystem adapter.
 - Self-hosted MoonBit API reference generated from `pkg.generated.mbti`.
+- API reference summary with declaration counts, parameter counts, and return
+  types extracted from MoonBit signatures.
 - Example documentation site, generated output, CI workflow, release notes,
   configuration guide, publishing plan, and acceptance checklist.
 

@@ -26,6 +26,8 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - Responsive generated pages with active and accessible navigation.
 - Root `index.html` entry point for static hosting.
 - `.mbti` public API extraction for functions, structs, enums, and traits.
+- API reference summaries with declaration counts, function arity, and return
+  type extraction from MoonBit signatures.
 - Package-focused mooncakes.io README with library and API-generation examples.
 - Runnable demo package with `moon run cmd/main`.
 - Example documentation site and generated HTML outputs.

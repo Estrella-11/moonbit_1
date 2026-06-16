@@ -39,6 +39,8 @@ Generated MoonBit API:
 - Page-unique heading anchors for duplicate section titles.
 - Front matter parsing for page title, order, tags, and custom fields.
 - MoonBit `.mbti` public API extraction and reference-page generation.
+- API reference summaries with declaration counts, function arity, and return
+  type extraction from MoonBit signatures.
 - Route planning for multi-page sites using page slug and front matter order.
 - Static output manifest generation for rendered HTML files.
 - JSON search index generation with a built-in interactive search interface.
@@ -125,8 +127,11 @@ moon run --target js cmd/moondockit \
 ```
 
 The `.mbti` parser extracts public functions, structs, enums, and traits into a
-searchable API reference page. This keeps the generated documentation aligned
-with the package interface produced by the MoonBit toolchain.
+searchable API reference page. It also derives a compact API summary, function
+parameter counts, and return types from signatures so the generated reference is
+useful during review instead of being only a raw declaration dump. This keeps
+the generated documentation aligned with the package interface produced by the
+MoonBit toolchain.
 
 ## Reviewer Path
 

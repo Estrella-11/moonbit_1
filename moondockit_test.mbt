@@ -772,17 +772,22 @@ test "index page points to the first planned route" {
 ///|
 test "parse_mbti extracts package functions and public types" {
   let api = @moondockit.parse_mbti(
-    "// Generated\npackage \"acme/widgets\"\n\n// Values\npub fn build(String) -> Int\npub fn empty() -> Unit\n\n// Types and methods\npub(all) struct Config {\n  name : String\n}\n\npub(all) enum Mode {\n  Fast\n  Safe\n}\n\n// Traits\npub trait Render {\n  render(Self) -> String\n}\n",
+    "// Generated\npackage \"acme/widgets\"\n\n// Values\npub fn build(String) -> Int\npub fn empty() -> Unit\npub fn merge(Array[(String, String)], Map[String, Int]) -> Result[String, Error]\n\n// Types and methods\npub(all) struct Config {\n  name : String\n}\n\npub(all) enum Mode {\n  Fast\n  Safe\n}\n\n// Traits\npub trait Render {\n  render(Self) -> String\n}\n",
   )
   inspect(api.package_name, content="acme/widgets")
-  inspect(api.symbols.length(), content="5")
+  inspect(api.symbols.length(), content="6")
   inspect(api.symbols[0].kind, content="function")
   inspect(api.symbols[0].name, content="build")
-  inspect(api.symbols[2].kind, content="struct")
-  inspect(api.symbols[2].name, content="Config")
-  assert_true(api.symbols[2].signature.contains("name : String"))
-  inspect(api.symbols[3].kind, content="enum")
-  inspect(api.symbols[4].kind, content="trait")
+  inspect(api.symbols[0].arity, content="1")
+  inspect(api.symbols[0].return_type, content="Int")
+  inspect(api.symbols[2].name, content="merge")
+  inspect(api.symbols[2].arity, content="2")
+  inspect(api.symbols[2].return_type, content="Result[String, Error]")
+  inspect(api.symbols[3].kind, content="struct")
+  inspect(api.symbols[3].name, content="Config")
+  assert_true(api.symbols[3].signature.contains("name : String"))
+  inspect(api.symbols[4].kind, content="enum")
+  inspect(api.symbols[5].kind, content="trait")
 }
 
 ///|
@@ -793,8 +798,13 @@ test "mbti_to_page creates searchable api documentation" {
   inspect(page.slug, content="api-reference")
   assert_true(page.source.contains("# MoonBit API"))
   assert_true(page.source.contains("Package `acme/widgets` exposes 2"))
+  assert_true(page.source.contains("## API Summary"))
+  assert_true(page.source.contains("- Functions: 1"))
+  assert_true(page.source.contains("- Structs: 1"))
   assert_true(page.source.contains("## Functions"))
   assert_true(page.source.contains("**build**"))
+  assert_true(page.source.contains("- Parameters: 1"))
+  assert_true(page.source.contains("- Returns: `Int`"))
   assert_true(page.source.contains("pub fn build(String) -> Int"))
   assert_true(page.source.contains("## Structs"))
   let html = @moondockit.render_markdown(page.source)

@@ -57,6 +57,7 @@
 - [x] GitHub Pages showcase deployment workflow added.
 - [x] Deployment and release runbook prepared.
 - [x] `.mbti` public API reference generation implemented.
+- [x] API reference derives declaration summary, function arity, and return types from signatures.
 - [x] Pages and CI assert that the generated MoonBit API artifact exists.
 - [ ] mooncakes.io package published.
 - [x] Public showcase site deployed.
