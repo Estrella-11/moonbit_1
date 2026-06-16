@@ -43,6 +43,8 @@ Generated MoonBit API:
   type extraction from MoonBit signatures.
 - Per-symbol API anchors so generated reference pages can deep-link directly to
   individual functions, structs, enums, and traits.
+- Grouped API symbol index links for fast navigation across large generated
+  reference pages.
 - Route planning for multi-page sites using page slug and front matter order.
 - Static output manifest generation for rendered HTML files.
 - JSON search index generation with a built-in interactive search interface.
@@ -130,10 +132,10 @@ moon run --target js cmd/moondockit \
 
 The `.mbti` parser extracts public functions, structs, enums, and traits into a
 searchable API reference page. It also derives a compact API summary, function
-parameter counts, return types, and per-symbol anchors from signatures so the
-generated reference is useful during review instead of being only a raw
-declaration dump. This keeps the generated documentation aligned with the
-package interface produced by the MoonBit toolchain.
+parameter counts, return types, per-symbol anchors, and a grouped symbol index
+from signatures so the generated reference is useful during review instead of
+being only a raw declaration dump. This keeps the generated documentation
+aligned with the package interface produced by the MoonBit toolchain.
 
 ## Reviewer Path
 

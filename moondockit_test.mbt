@@ -808,6 +808,9 @@ test "mbti_to_page creates searchable api documentation" {
   assert_true(page.source.contains("## API Summary"))
   assert_true(page.source.contains("- Functions: 1"))
   assert_true(page.source.contains("- Structs: 1"))
+  assert_true(page.source.contains("## Symbol Index"))
+  assert_true(page.source.contains("- [build](#build)"))
+  assert_true(page.source.contains("- [Config](#config)"))
   assert_true(page.source.contains("## Functions"))
   assert_true(page.source.contains("### build"))
   assert_true(page.source.contains("- Parameters: 1"))
@@ -816,6 +819,7 @@ test "mbti_to_page creates searchable api documentation" {
   assert_true(page.source.contains("## Structs"))
   let html = @moondockit.render_markdown(page.source)
   assert_true(html.contains("class=\"language-mbt\""))
+  assert_true(html.contains("<a href=\"#build\">build</a>"))
   assert_true(html.contains("<h3 id=\"build\">build</h3>"))
 }
 

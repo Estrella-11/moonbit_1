@@ -59,6 +59,7 @@
 - [x] `.mbti` public API reference generation implemented.
 - [x] API reference derives declaration summary, function arity, and return types from signatures.
 - [x] API reference exposes per-symbol anchors for direct links to generated declarations.
+- [x] API reference includes grouped symbol index links for fast navigation.
 - [x] Pages and CI assert that the generated MoonBit API artifact exists.
 - [ ] mooncakes.io package published.
 - [x] Public showcase site deployed.

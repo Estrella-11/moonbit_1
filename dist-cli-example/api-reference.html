@@ -12,7 +12,11 @@
 <section class="toc"><div class="toc-title">On this page</div>
 <a class="level-1" href="#moonbit-api">MoonBit API</a>
 <a class="level-2" href="#api-summary">API Summary</a>
-<a class="level-2" href="#functions">Functions</a>
+<a class="level-2" href="#symbol-index">Symbol Index</a>
+<a class="level-3" href="#functions">Functions</a>
+<a class="level-3" href="#structs">Structs</a>
+<a class="level-3" href="#enums">Enums</a>
+<a class="level-2" href="#functions-2">Functions</a>
 <a class="level-3" href="#blocks-to-toc">blocks_to_toc</a>
 <a class="level-3" href="#build-index-page">build_index_page</a>
 <a class="level-3" href="#build-robots-txt">build_robots_txt</a>
@@ -52,7 +56,7 @@
 <a class="level-3" href="#slugify">slugify</a>
 <a class="level-3" href="#summarize-site">summarize_site</a>
 <a class="level-3" href="#validate-site">validate_site</a>
-<a class="level-2" href="#structs">Structs</a>
+<a class="level-2" href="#structs-2">Structs</a>
 <a class="level-3" href="#anchoredheading">AnchoredHeading</a>
 <a class="level-3" href="#apireference">ApiReference</a>
 <a class="level-3" href="#apisymbol">ApiSymbol</a>
@@ -76,7 +80,7 @@
 <a class="level-3" href="#sitetheme">SiteTheme</a>
 <a class="level-3" href="#tocitem">TocItem</a>
 <a class="level-3" href="#validationreport">ValidationReport</a>
-<a class="level-2" href="#enums">Enums</a>
+<a class="level-2" href="#enums-2">Enums</a>
 <a class="level-3" href="#diagnosticlevel">DiagnosticLevel</a>
 <a class="level-3" href="#markdownblock">MarkdownBlock</a>
 </section>
@@ -88,7 +92,81 @@
 <li>Structs: 23</li>
 <li>Enums: 2</li>
 </ul>
-<h2 id="functions">Functions</h2>
+<h2 id="symbol-index">Symbol Index</h2>
+<h3 id="functions">Functions</h3>
+<ul>
+<li><a href="#blocks-to-toc">blocks_to_toc</a></li>
+<li><a href="#build-index-page">build_index_page</a></li>
+<li><a href="#build-robots-txt">build_robots_txt</a></li>
+<li><a href="#build-search-index">build_search_index</a></li>
+<li><a href="#build-site-manifest">build_site_manifest</a></li>
+<li><a href="#build-site-manifest-with-options">build_site_manifest_with_options</a></li>
+<li><a href="#build-site-manifest-with-theme">build_site_manifest_with_theme</a></li>
+<li><a href="#build-site-report">build_site_report</a></li>
+<li><a href="#build-sitemap">build_sitemap</a></li>
+<li><a href="#collect-search-entries">collect_search_entries</a></li>
+<li><a href="#default-site-options">default_site_options</a></li>
+<li><a href="#default-theme">default_theme</a></li>
+<li><a href="#diagnostics-to-text">diagnostics_to_text</a></li>
+<li><a href="#empty-front-matter">empty_front_matter</a></li>
+<li><a href="#evaluate-quality">evaluate_quality</a></li>
+<li><a href="#extract-headings">extract_headings</a></li>
+<li><a href="#extract-toc">extract_toc</a></li>
+<li><a href="#has-validation-errors">has_validation_errors</a></li>
+<li><a href="#html-escape">html_escape</a></li>
+<li><a href="#inspect-manifest">inspect_manifest</a></li>
+<li><a href="#mbti-to-page">mbti_to_page</a></li>
+<li><a href="#measure-blocks">measure_blocks</a></li>
+<li><a href="#measure-document">measure_document</a></li>
+<li><a href="#measure-site">measure_site</a></li>
+<li><a href="#parse-blocks">parse_blocks</a></li>
+<li><a href="#parse-document">parse_document</a></li>
+<li><a href="#parse-mbti">parse_mbti</a></li>
+<li><a href="#plan-routes">plan_routes</a></li>
+<li><a href="#render-blocks">render_blocks</a></li>
+<li><a href="#render-markdown">render_markdown</a></li>
+<li><a href="#render-page">render_page</a></li>
+<li><a href="#render-page-with-options">render_page_with_options</a></li>
+<li><a href="#render-page-with-theme">render_page_with_theme</a></li>
+<li><a href="#render-site">render_site</a></li>
+<li><a href="#render-site-with-options">render_site_with_options</a></li>
+<li><a href="#render-site-with-theme">render_site_with_theme</a></li>
+<li><a href="#slugify">slugify</a></li>
+<li><a href="#summarize-site">summarize_site</a></li>
+<li><a href="#validate-site">validate_site</a></li>
+</ul>
+<h3 id="structs">Structs</h3>
+<ul>
+<li><a href="#anchoredheading">AnchoredHeading</a></li>
+<li><a href="#apireference">ApiReference</a></li>
+<li><a href="#apisymbol">ApiSymbol</a></li>
+<li><a href="#buildreport">BuildReport</a></li>
+<li><a href="#docpage">DocPage</a></li>
+<li><a href="#docsite">DocSite</a></li>
+<li><a href="#documentmetrics">DocumentMetrics</a></li>
+<li><a href="#frontmatter">FrontMatter</a></li>
+<li><a href="#outputfile">OutputFile</a></li>
+<li><a href="#outputfileinfo">OutputFileInfo</a></li>
+<li><a href="#parseddocument">ParsedDocument</a></li>
+<li><a href="#qualitycheck">QualityCheck</a></li>
+<li><a href="#qualitygate">QualityGate</a></li>
+<li><a href="#renderedpage">RenderedPage</a></li>
+<li><a href="#routeentry">RouteEntry</a></li>
+<li><a href="#searchentry">SearchEntry</a></li>
+<li><a href="#sitediagnostic">SiteDiagnostic</a></li>
+<li><a href="#sitemetrics">SiteMetrics</a></li>
+<li><a href="#siteoptions">SiteOptions</a></li>
+<li><a href="#sitesummary">SiteSummary</a></li>
+<li><a href="#sitetheme">SiteTheme</a></li>
+<li><a href="#tocitem">TocItem</a></li>
+<li><a href="#validationreport">ValidationReport</a></li>
+</ul>
+<h3 id="enums">Enums</h3>
+<ul>
+<li><a href="#diagnosticlevel">DiagnosticLevel</a></li>
+<li><a href="#markdownblock">MarkdownBlock</a></li>
+</ul>
+<h2 id="functions-2">Functions</h2>
 <h3 id="blocks-to-toc">blocks_to_toc</h3>
 <ul>
 <li>Parameters: 1</li>
@@ -362,7 +440,7 @@
 </ul>
 <pre><code class="language-mbt">pub fn validate_site(DocSite) -&gt; ValidationReport
 </code></pre>
-<h2 id="structs">Structs</h2>
+<h2 id="structs-2">Structs</h2>
 <h3 id="anchoredheading">AnchoredHeading</h3>
 <pre><code class="language-mbt">pub(all) struct AnchoredHeading {
   level : Int
@@ -539,7 +617,7 @@
   diagnostics : Array[SiteDiagnostic]
 }
 </code></pre>
-<h2 id="enums">Enums</h2>
+<h2 id="enums-2">Enums</h2>
 <h3 id="diagnosticlevel">DiagnosticLevel</h3>
 <pre><code class="language-mbt">pub(all) enum DiagnosticLevel {
   DiagError

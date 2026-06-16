@@ -303,6 +303,23 @@ pub fn mbti_to_page(source : String) -> DocPage {
       }
     }
     out.write_string("\n")
+    out.write_string("## Symbol Index\n\n")
+    for kind in kinds {
+      let matching = api.symbols.filter(symbol => symbol.kind == kind)
+      if matching.length() > 0 {
+        out.write_string("### ")
+        out.write_string(api_section_title(kind))
+        out.write_string("\n\n")
+        for symbol in matching {
+          out.write_string("- [")
+          out.write_string(symbol.name)
+          out.write_string("](#")
+          out.write_string(slugify(symbol.name))
+          out.write_string(")\n")
+        }
+        out.write_string("\n")
+      }
+    }
   }
   let kinds = ["function", "struct", "enum", "trait"]
   for kind in kinds {

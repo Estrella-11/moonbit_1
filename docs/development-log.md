@@ -146,6 +146,8 @@ Repository setup:
   parameter counts, and return type extraction from `.mbti` signatures.
 - Upgraded generated API declarations to per-symbol headings so the reference
   page exposes stable anchors for direct links to individual declarations.
+- Added grouped symbol index links to generated API pages so reviewers and
+  package users can jump directly from the summary to specific declarations.
 
 Next engineering target:
 
