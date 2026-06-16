@@ -1,4 +1,5 @@
 import json
+import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -162,7 +163,7 @@ def test_missing_source(workspace: Path) -> None:
 
 def main() -> None:
     build_cli()
-    workspace = ROOT / "_build" / "cli-integration"
+    workspace = ROOT / "_build" / f"cli-integration-{os.getpid()}"
     if workspace.exists():
         shutil.rmtree(workspace)
     workspace.mkdir(parents=True)

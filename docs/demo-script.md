@@ -42,7 +42,7 @@ python tools/verify_project.py
 
 Current evidence:
 
-- 42 blackbox tests pass;
+- 44 blackbox tests pass;
 - four compiled CLI integration scenarios pass;
 - coverage analysis records the remaining defensive and executable branches;
 - default and JavaScript MoonBit targets pass;

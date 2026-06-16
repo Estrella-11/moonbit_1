@@ -72,6 +72,7 @@ Generated MoonBit API:
 moon check
 moon test
 python tools/test_cli.py
+python tools/benchmark_cli.py --pages 10,100 --rounds 2
 moon run cmd/main
 python tools/verify_project.py
 ```

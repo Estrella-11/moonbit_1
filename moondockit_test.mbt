@@ -408,6 +408,52 @@ test "evaluate_quality fails empty sites" {
 }
 
 ///|
+test "evaluate_quality scales across many readable pages" {
+  let pages : Array[@moondockit.DocPage] = []
+  let mut index = 0
+  while index < 40 {
+    let source = StringBuilder()
+    source.write_string("# Guide\n\n")
+    let mut word = 0
+    while word < 201 {
+      source.write_string("content ")
+      word = word + 1
+    }
+    pages.push({
+      title: "Guide \{index}",
+      slug: "guide-\{index}",
+      source: source.to_string(),
+    })
+    index = index + 1
+  }
+  let gate = @moondockit.evaluate_quality({ title: "Large Docs", pages })
+  assert_true(gate.passed)
+  assert_true(
+    @moondockit.measure_site({ title: "Large Docs", pages }).reading_minutes >
+    30,
+  )
+}
+
+///|
+test "evaluate_quality flags one oversized page" {
+  let source = StringBuilder()
+  source.write_string("# Long Guide\n\n")
+  let mut word = 0
+  while word < 6201 {
+    source.write_string("content ")
+    word = word + 1
+  }
+  let gate = @moondockit.evaluate_quality({
+    title: "Docs",
+    pages: [
+      { title: "Long Guide", slug: "long-guide", source: source.to_string() },
+    ],
+  })
+  assert_false(gate.passed)
+  assert_false(gate.checks[3].passed)
+}
+
+///|
 test "summarize_site counts pages outputs search and tags" {
   let a : @moondockit.DocPage = {
     title: "A",

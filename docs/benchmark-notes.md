@@ -20,6 +20,8 @@ Command:
 python tools/build_example_site.py
 moon check
 moon test
+python tools/test_cli.py
+python tools/benchmark_cli.py --write docs/benchmark-results.json
 moon run cmd/main
 moon run --target js cmd/moondockit --source examples/site --api pkg.generated.mbti --output dist-cli-example
 ```
@@ -29,7 +31,7 @@ moon run --target js cmd/moondockit --source examples/site --api pkg.generated.m
 As of the current baseline:
 
 - `moon check` passes
-- `moon test` passes with 42 tests
+- `moon test` passes with 44 tests
 - `python tools/test_cli.py` passes 4 compiled CLI integration scenarios
 - `moon coverage analyze` reports 21 uncovered lines across the reusable
   library and executable entry points
@@ -41,6 +43,35 @@ As of the current baseline:
   description metadata, footer content, sitemap output, and robots.txt output
 - The MoonBit-generated site exposes client-side search without requiring a
   server or external search service
+
+## CLI Scale Benchmark
+
+`tools/benchmark_cli.py` creates deterministic synthetic documentation corpora
+and runs the compiled JavaScript CLI against 10, 100, and 500 page sites. It
+records median, minimum, and maximum wall-clock time across repeated runs,
+output file count, output byte size, and search-index entry count.
+
+The benchmark is intentionally framed as a regression signal rather than a
+hard performance claim: different machines, Node.js versions, and MoonBit build
+modes will produce different absolute timings. A healthy run should preserve
+these invariants:
+
+- generated file count is `page_count + 4`;
+- search entry count equals `page_count`;
+- every generated corpus passes the quality gate;
+- no external service or browser runtime is required.
+
+The quality gate evaluates readability per page rather than by total site
+reading time, so large collections of individually readable pages are accepted
+while a single oversized page is still flagged for splitting.
+
+Current release-build benchmark results are recorded in
+`docs/benchmark-results.json`. On the Windows 11 validation machine used for
+this checkpoint, the compiled CLI generated:
+
+- 10 pages in 101.29 ms median time, producing 14 files;
+- 100 pages in 387.69 ms median time, producing 104 files;
+- 500 pages in 7227.18 ms median time, producing 504 files.
 
 ## Future Benchmark Targets
 

@@ -131,6 +131,11 @@ Repository setup:
 - Added a cross-platform compiled CLI integration suite covering a real
   two-page build with generated API documentation, invalid arguments, an empty
   site, and a missing source directory.
+- Added a deterministic CLI scale benchmark script and adjusted the quality
+  gate so large multi-page sites are evaluated by per-page readability instead
+  of total site reading time.
+- Expanded the blackbox suite to 44 tests and recorded release-build CLI scale
+  results for 10, 100, and 500 page synthetic documentation sites.
 
 Next engineering target:
 

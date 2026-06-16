@@ -1,0 +1,40 @@
+{
+  "date": "2026-06-16",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.5",
+  "node": "v24.14.1",
+  "moon": "moon 0.1.20260529 (3e1c753 2026-05-29)",
+  "cli_build": "release",
+  "results": [
+    {
+      "pages": 10,
+      "rounds": 3,
+      "median_ms": 101.29,
+      "min_ms": 98.2,
+      "max_ms": 105.11,
+      "output_files": 14,
+      "output_bytes": 67708,
+      "search_entries": 10
+    },
+    {
+      "pages": 100,
+      "rounds": 3,
+      "median_ms": 387.69,
+      "min_ms": 353.42,
+      "max_ms": 404.59,
+      "output_files": 104,
+      "output_bytes": 1007110,
+      "search_entries": 100
+    },
+    {
+      "pages": 500,
+      "rounds": 3,
+      "median_ms": 7227.18,
+      "min_ms": 7052.54,
+      "max_ms": 7284.03,
+      "output_files": 504,
+      "output_bytes": 12637910,
+      "search_entries": 500
+    }
+  ]
+}

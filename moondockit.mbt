@@ -1248,6 +1248,7 @@ pub fn evaluate_quality(site : DocSite) -> QualityGate {
   let validation = validate_site(site)
   let metrics = measure_site(site)
   let build = build_site_report(site)
+  let max_page_reading_minutes = max_page_reading_minutes(site)
   checks.push({
     name: "validation",
     passed: !has_validation_errors(validation),
@@ -1278,11 +1279,11 @@ pub fn evaluate_quality(site : DocSite) -> QualityGate {
   })
   checks.push({
     name: "readability",
-    passed: metrics.reading_minutes <= 30,
-    message: if metrics.reading_minutes <= 30 {
-      "site reading time is within the baseline threshold"
+    passed: max_page_reading_minutes <= 30,
+    message: if max_page_reading_minutes <= 30 {
+      "every page is within the baseline reading threshold"
     } else {
-      "site may need splitting into smaller pages"
+      "one or more pages may need splitting into smaller pages"
     },
   })
   let mut passed_count = 0
@@ -1300,6 +1301,18 @@ pub fn evaluate_quality(site : DocSite) -> QualityGate {
     },
     checks,
   }
+}
+
+///|
+fn max_page_reading_minutes(site : DocSite) -> Int {
+  let mut maximum = 0
+  for page in site.pages {
+    let minutes = measure_document(page.source).reading_minutes
+    if minutes > maximum {
+      maximum = minutes
+    }
+  }
+  maximum
 }
 
 ///|

@@ -8,6 +8,7 @@ This guide is the quick verification path for project reviewers.
 moon check
 moon test
 python tools/test_cli.py
+python tools/benchmark_cli.py --pages 10,100 --rounds 2
 moon run cmd/main
 moon check --target js
 moon run --target js cmd/moondockit --source examples/site --api pkg.generated.mbti --output dist-cli-example --title "MoonDocKit CLI Example"
@@ -16,8 +17,10 @@ moon run --target js cmd/moondockit --source examples/site --api pkg.generated.m
 Expected result:
 
 - `moon check` completes successfully.
-- `moon test` reports 42 passing tests.
+- `moon test` reports 44 passing tests.
 - `python tools/test_cli.py` passes four compiled CLI integration scenarios.
+- `python tools/benchmark_cli.py --pages 10,100 --rounds 2` records a small
+  reproducible scale check for the compiled CLI.
 - `moon check --target js` verifies the Node.js CLI target.
 - `moon run cmd/main` prints a MoonDocKit demo summary with generated files,
   site statistics, and validation diagnostics.
