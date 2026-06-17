@@ -158,7 +158,9 @@ Repository setup:
   proves planned output reports can be generated without creating the output
   directory.
 - Prepared final acceptance evidence and aligned reviewer-facing material with
-  the current 45-test suite and nine compiled CLI integration scenarios.
+  the current 46-test suite and nine compiled CLI integration scenarios.
+- Added inline emphasis rendering for `*text*`, including nested emphasis inside
+  strong text, and expanded the blackbox suite to 46 tests.
 
 Next engineering target:
 

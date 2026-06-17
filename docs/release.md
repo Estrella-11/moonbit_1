@@ -59,15 +59,16 @@ python tools/build_example_site.py
 
 Expected current result:
 
-- `moon test` passes 45 tests.
+- `moon test` passes 46 tests.
 - The compiled CLI passes 9 integration scenarios.
 - The MoonBit CLI writes 12 files when generated API documentation is enabled.
 
 ### Known Scope Limits
 
 - Markdown support is intentionally scoped to the first competition milestone.
-- The current inline renderer intentionally supports code spans, strong text,
-  and safe links rather than the complete CommonMark specification.
+- The current inline renderer intentionally supports code spans, emphasis,
+  strong text, and safe links rather than the complete CommonMark
+  specification.
 - The MoonBit CLI filesystem adapter currently targets Node.js through the
   JavaScript backend; the reusable library remains backend-neutral.
 - mooncakes.io publishing is documented and will be completed when account

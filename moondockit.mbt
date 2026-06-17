@@ -960,6 +960,19 @@ fn render_inline(input : String) -> String {
           i = i + 2
         }
       }
+    } else if starts_with_at(input, i, "*") {
+      match find_char_from(input, i + 1, '*') {
+        Some(close) => {
+          out.write_string("<em>")
+          out.write_string(render_inline(input[i + 1:close].to_owned()))
+          out.write_string("</em>")
+          i = close + 1
+        }
+        None => {
+          out.write_string("*")
+          i = i + 1
+        }
+      }
     } else if input[i] == '[' {
       match parse_link(input, i) {
         Some((close, label, href)) => {

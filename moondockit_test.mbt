@@ -40,6 +40,15 @@ test "render_markdown supports inline code strong and links" {
 }
 
 ///|
+test "render_markdown supports emphasis inside inline content" {
+  let html = @moondockit.render_markdown(
+    "Write *focused docs* and **ship *reviewable* pages**.",
+  )
+  assert_true(html.contains("<em>focused docs</em>"))
+  assert_true(html.contains("<strong>ship <em>reviewable</em> pages</strong>"))
+}
+
+///|
 test "render_markdown escapes inline text and blocks unsafe links" {
   let html = @moondockit.render_markdown(
     "Click [bad <link>](javascript:alert(1)) and keep `<raw>` safe.",

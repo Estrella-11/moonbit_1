@@ -20,6 +20,8 @@
 - [x] Block AST data model implemented.
 - [x] Block parser handles paragraph folding and fenced code languages.
 - [x] Inline Markdown renderer handles code spans, strong text, and safe links.
+- [x] Inline Markdown renderer handles emphasis and nested emphasis inside
+      strong text.
 - [x] Meaningful declaration-stage commit history completed.
 - [x] Project proposal exported as one-page PDF.
 - [x] Block AST parser implemented.
