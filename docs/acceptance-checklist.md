@@ -22,6 +22,8 @@
 - [x] Inline Markdown renderer handles code spans, strong text, and safe links.
 - [x] Inline Markdown renderer handles emphasis and nested emphasis inside
       strong text.
+- [x] Inline Markdown renderer handles image syntax with escaped alt text and
+      safe image sources.
 - [x] Meaningful declaration-stage commit history completed.
 - [x] Project proposal exported as one-page PDF.
 - [x] Block AST parser implemented.

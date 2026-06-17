@@ -49,6 +49,17 @@ test "render_markdown supports emphasis inside inline content" {
 }
 
 ///|
+test "render_markdown supports safe image syntax" {
+  let html = @moondockit.render_markdown(
+    "Preview ![MoonBit <logo>](./assets/logo.png) and block ![bad](javascript:alert(1)).",
+  )
+  assert_true(
+    html.contains("<img src=\"./assets/logo.png\" alt=\"MoonBit &lt;logo&gt;\">"),
+  )
+  assert_true(html.contains("<img src=\"#\" alt=\"bad\">"))
+}
+
+///|
 test "render_markdown escapes inline text and blocks unsafe links" {
   let html = @moondockit.render_markdown(
     "Click [bad <link>](javascript:alert(1)) and keep `<raw>` safe.",

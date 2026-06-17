@@ -973,6 +973,21 @@ fn render_inline(input : String) -> String {
           i = i + 1
         }
       }
+    } else if starts_with_at(input, i, "![") {
+      match parse_link(input, i + 1) {
+        Some((close, label, src)) => {
+          out.write_string("<img src=\"")
+          out.write_string(html_escape(safe_href(src)))
+          out.write_string("\" alt=\"")
+          out.write_string(html_escape(label))
+          out.write_string("\">")
+          i = close + 1
+        }
+        None => {
+          out.write_string("!")
+          i = i + 1
+        }
+      }
     } else if input[i] == '[' {
       match parse_link(input, i) {
         Some((close, label, href)) => {
