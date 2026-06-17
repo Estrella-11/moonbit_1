@@ -58,4 +58,14 @@ adapter.
 
 Repository: https://github.com/Estrella-11/moonbit_1
 
+Mirror: https://gitlink.org.cn/Estrella/moonbit
+
+Public docs: https://estrella-11.github.io/moonbit_1/
+
+Generated API reference: https://estrella-11.github.io/moonbit_1/api-reference.html
+
+Adoption guide: `docs/adoption-playbook.md`
+
+Ecosystem impact: `docs/ecosystem-impact.md`
+
 License: Apache-2.0

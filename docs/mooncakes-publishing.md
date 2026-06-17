@@ -28,6 +28,7 @@ Also verify:
 
 - README describes usage and competition fit.
 - `README.mbt.md` provides package-level examples for the mooncakes.io page.
+- `docs/ecosystem-impact.md` explains ecosystem value and differentiation.
 - `docs/acceptance-guide.md` is current.
 - `docs/release.md` is current.
 - The MoonBit CLI produces 12 files with generated API documentation.

@@ -34,6 +34,7 @@ evidence.
 
 ## MoonBit Ecosystem Relevance
 
+- Ecosystem impact summary: `docs/ecosystem-impact.md`
 - `.mbti` API extraction and generated MoonBit API reference.
 - MoonBit-first data models for routes, pages, diagnostics, metrics, and output
   files.

@@ -173,6 +173,7 @@ For competition review, start with:
 - Deployment and release runbook: `docs/deployment-runbook.md`
 - Configuration guide: `docs/configuration.md`
 - Adoption playbook: `docs/adoption-playbook.md`
+- Ecosystem impact: `docs/ecosystem-impact.md`
 - Mooncakes publishing plan: `docs/mooncakes-publishing.md`
 - Development log: `docs/development-log.md`
 - Benchmark notes: `docs/benchmark-notes.md`
@@ -197,6 +198,9 @@ maintainable, and valuable to the MoonBit open-source ecosystem. MoonDocKit
 targets a common ecosystem gap: package authors need a simple way to turn
 MoonBit project documentation into browsable static sites without leaving the
 MoonBit toolchain.
+
+See `docs/ecosystem-impact.md` for the award-oriented ecosystem contribution
+summary.
 
 ## License
 

@@ -142,6 +142,7 @@ def main() -> None:
         "docs/architecture.md",
         "docs/adoption-playbook.md",
         "docs/demo-script.md",
+        "docs/ecosystem-impact.md",
         "docs/deployment-runbook.md",
         "docs/configuration.md",
         "docs/final-acceptance.md",

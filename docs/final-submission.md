@@ -16,6 +16,7 @@ competition.
 - Release notes: `docs/release.md`
 - Final acceptance evidence: `docs/final-acceptance.md`
 - Architecture and design decisions: `docs/architecture.md`
+- Ecosystem impact: `docs/ecosystem-impact.md`
 - Configuration guide: `docs/configuration.md`
 - Adoption playbook: `docs/adoption-playbook.md`
 - 90-second reviewer demo: `docs/demo-script.md`
