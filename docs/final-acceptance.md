@@ -21,6 +21,7 @@ Start with these files:
 - `docs/reviewer-scorecard.md`
 - `docs/reviewer-faq.md`
 - `docs/architecture.md`
+- `docs/security-model.md`
 - `docs/maintenance-plan.md`
 - `docs/change-impact-matrix.md`
 - `docs/ecosystem-impact.md`

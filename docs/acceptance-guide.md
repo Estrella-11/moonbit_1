@@ -85,6 +85,7 @@ Before final submission, confirm:
 - One-page project proposal PDF exists.
 - `docs/final-submission.md` is current.
 - `docs/reviewer-faq.md` answers likely defense questions.
+- `docs/security-model.md` documents renderer and CLI safety boundaries.
 - `docs/maintenance-plan.md` documents post-competition maintenance.
 - `docs/change-impact-matrix.md` documents which checks and generated evidence
   belong to each kind of change.

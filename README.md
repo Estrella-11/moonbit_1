@@ -171,6 +171,7 @@ For competition review, start with:
 - Final submission notes: `docs/final-submission.md`
 - Release notes: `docs/release.md`
 - Architecture and design decisions: `docs/architecture.md`
+- Security model: `docs/security-model.md`
 - Maintenance plan: `docs/maintenance-plan.md`
 - Change impact matrix: `docs/change-impact-matrix.md`
 - 90-second reviewer demo: `docs/demo-script.md`

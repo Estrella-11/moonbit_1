@@ -18,6 +18,7 @@ evidence.
 - Reusable MoonBit library APIs: `moondockit.mbt`
 - Generated public interface: `pkg.generated.mbti`
 - Blackbox tests: `moondockit_test.mbt`
+- Security model and escaping boundaries: `docs/security-model.md`
 - Compiled CLI integration suite: `tools/test_cli.py`
 - One-shot verification script: `tools/verify_project.py`
 - Benchmark script and recorded results: `tools/benchmark_cli.py`,

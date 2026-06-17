@@ -151,6 +151,7 @@ def main() -> None:
         "docs/release.md",
         "docs/reviewer-faq.md",
         "docs/reviewer-scorecard.md",
+        "docs/security-model.md",
         "docs/maintenance-plan.md",
         "docs/mooncakes-publishing.md",
         "docs/windows-toolchain-troubleshooting.md",

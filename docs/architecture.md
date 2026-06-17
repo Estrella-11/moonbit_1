@@ -40,6 +40,10 @@ MoonDocKit implements the subset needed by package documentation and treats
 site generation as its primary value. Unsupported syntax remains plain text
 instead of producing unsafe or unpredictable HTML.
 
+The security model is documented separately in `docs/security-model.md`,
+including escaping rules, safe link handling, search UI construction, and the
+CLI filesystem boundary.
+
 ### Publish-time quality gate
 
 Validation, content metrics, and manifest checks are combined into an

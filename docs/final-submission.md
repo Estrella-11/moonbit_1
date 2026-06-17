@@ -17,6 +17,7 @@ competition.
 - Final acceptance evidence: `docs/final-acceptance.md`
 - Reviewer FAQ: `docs/reviewer-faq.md`
 - Architecture and design decisions: `docs/architecture.md`
+- Security model: `docs/security-model.md`
 - Maintenance plan: `docs/maintenance-plan.md`
 - Change impact matrix: `docs/change-impact-matrix.md`
 - Ecosystem impact: `docs/ecosystem-impact.md`
