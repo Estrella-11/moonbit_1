@@ -26,6 +26,7 @@ Start with these files:
 - `docs/feature-evidence-map.md`
 - `docs/reviewer-faq.md`
 - `docs/architecture.md`
+- `docs/accessibility-notes.md`
 - `docs/security-model.md`
 - `docs/maintenance-plan.md`
 - `docs/change-impact-matrix.md`

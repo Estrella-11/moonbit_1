@@ -143,6 +143,7 @@ def main() -> None:
         "moon.mod",
         "cmd/moondockit/moon.pkg",
         "docs/acceptance-guide.md",
+        "docs/accessibility-notes.md",
         "docs/architecture.md",
         "docs/adoption-playbook.md",
         "docs/change-impact-matrix.md",

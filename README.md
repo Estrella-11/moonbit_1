@@ -172,6 +172,7 @@ For competition review, start with:
 - Final submission notes: `docs/final-submission.md`
 - Release notes: `docs/release.md`
 - Architecture and design decisions: `docs/architecture.md`
+- Accessibility notes: `docs/accessibility-notes.md`
 - Security model: `docs/security-model.md`
 - Security policy: `SECURITY.md`
 - Maintenance plan: `docs/maintenance-plan.md`

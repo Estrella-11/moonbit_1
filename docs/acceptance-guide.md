@@ -86,6 +86,7 @@ Before final submission, confirm:
 - `docs/final-submission.md` is current.
 - `docs/feature-evidence-map.md` maps features to tests and generated evidence.
 - `docs/reviewer-faq.md` answers likely defense questions.
+- `docs/accessibility-notes.md` documents generated page accessibility choices.
 - `docs/security-model.md` documents renderer and CLI safety boundaries.
 - `docs/maintenance-plan.md` documents post-competition maintenance.
 - `docs/change-impact-matrix.md` documents which checks and generated evidence
