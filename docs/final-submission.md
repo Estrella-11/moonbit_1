@@ -18,6 +18,7 @@ competition.
 - Reviewer FAQ: `docs/reviewer-faq.md`
 - Architecture and design decisions: `docs/architecture.md`
 - Maintenance plan: `docs/maintenance-plan.md`
+- Change impact matrix: `docs/change-impact-matrix.md`
 - Ecosystem impact: `docs/ecosystem-impact.md`
 - Configuration guide: `docs/configuration.md`
 - Adoption playbook: `docs/adoption-playbook.md`

@@ -32,6 +32,9 @@ Every meaningful change should answer four questions:
 
 If the answer is yes, update tests and the relevant docs in the same change.
 
+Use `docs/change-impact-matrix.md` to choose the required checks and evidence
+updates for each change area.
+
 ## Required Checks
 
 Before a release or final acceptance update, run:
@@ -86,6 +89,7 @@ Each release should keep these files current:
 - `docs/acceptance-guide.md`
 - `docs/final-acceptance.md`
 - `docs/reviewer-scorecard.md`
+- `docs/change-impact-matrix.md`
 - `docs/ecosystem-impact.md`
 - `docs/windows-toolchain-troubleshooting.md`
 - `dist-cli-example/site-manifest.json`

@@ -86,6 +86,8 @@ Before final submission, confirm:
 - `docs/final-submission.md` is current.
 - `docs/reviewer-faq.md` answers likely defense questions.
 - `docs/maintenance-plan.md` documents post-competition maintenance.
+- `docs/change-impact-matrix.md` documents which checks and generated evidence
+  belong to each kind of change.
 - `docs/windows-toolchain-troubleshooting.md` documents Windows policy
   failures that can block local MoonBit commands.
 - mooncakes.io publishing is completed or documented.

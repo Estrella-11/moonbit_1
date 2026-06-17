@@ -22,6 +22,7 @@ Start with these files:
 - `docs/reviewer-faq.md`
 - `docs/architecture.md`
 - `docs/maintenance-plan.md`
+- `docs/change-impact-matrix.md`
 - `docs/ecosystem-impact.md`
 - `docs/adoption-playbook.md`
 - `docs/demo-script.md`

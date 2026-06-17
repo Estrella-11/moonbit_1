@@ -23,6 +23,7 @@ evidence.
 - Benchmark script and recorded results: `tools/benchmark_cli.py`,
   `docs/benchmark-results.json`
 - Maintenance policy and release checks: `docs/maintenance-plan.md`
+- Change-to-check mapping: `docs/change-impact-matrix.md`
 
 ## Open Source Compliance
 
