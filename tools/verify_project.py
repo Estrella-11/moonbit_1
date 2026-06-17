@@ -135,6 +135,7 @@ def verify_config_files() -> None:
 def main() -> None:
     for path in [
         "README.md",
+        "CONTRIBUTING.md",
         "LICENSE",
         "moon.mod",
         "cmd/moondockit/moon.pkg",
@@ -157,6 +158,9 @@ def main() -> None:
         "docs/mooncakes-publishing.md",
         "docs/windows-toolchain-troubleshooting.md",
         "tools/test_cli.py",
+        ".github/PULL_REQUEST_TEMPLATE.md",
+        ".github/ISSUE_TEMPLATE/bug_report.md",
+        ".github/ISSUE_TEMPLATE/feature_request.md",
         ".github/workflows/ci.yml",
     ]:
         require(path)

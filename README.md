@@ -175,6 +175,7 @@ For competition review, start with:
 - Security model: `docs/security-model.md`
 - Maintenance plan: `docs/maintenance-plan.md`
 - Change impact matrix: `docs/change-impact-matrix.md`
+- Contributing guide: `CONTRIBUTING.md`
 - 90-second reviewer demo: `docs/demo-script.md`
 - Deployment and release runbook: `docs/deployment-runbook.md`
 - Configuration guide: `docs/configuration.md`

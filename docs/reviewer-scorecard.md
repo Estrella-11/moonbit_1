@@ -30,6 +30,7 @@ evidence.
 ## Open Source Compliance
 
 - License: `LICENSE`
+- Contributing guide and GitHub templates: `CONTRIBUTING.md`, `.github`
 - Repository metadata: `moon.mod`
 - Package README for mooncakes.io: `README.mbt.md`
 - Release notes: `docs/release.md`

@@ -15,6 +15,7 @@ searching across the repository.
 Start with these files:
 
 - `README.md`
+- `CONTRIBUTING.md`
 - `docs/final-submission.md`
 - `docs/acceptance-guide.md`
 - `docs/release.md`

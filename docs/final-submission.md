@@ -20,6 +20,7 @@ competition.
 - Architecture and design decisions: `docs/architecture.md`
 - Security model: `docs/security-model.md`
 - Maintenance plan: `docs/maintenance-plan.md`
+- Contributing guide: `CONTRIBUTING.md`
 - Change impact matrix: `docs/change-impact-matrix.md`
 - Ecosystem impact: `docs/ecosystem-impact.md`
 - Configuration guide: `docs/configuration.md`

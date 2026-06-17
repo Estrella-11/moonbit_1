@@ -90,6 +90,8 @@ Before final submission, confirm:
 - `docs/maintenance-plan.md` documents post-competition maintenance.
 - `docs/change-impact-matrix.md` documents which checks and generated evidence
   belong to each kind of change.
+- `CONTRIBUTING.md` and `.github` templates document open-source collaboration
+  expectations.
 - `docs/windows-toolchain-troubleshooting.md` documents Windows policy
   failures that can block local MoonBit commands.
 - mooncakes.io publishing is completed or documented.
