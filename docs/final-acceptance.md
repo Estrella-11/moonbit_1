@@ -19,6 +19,7 @@ Start with these files:
 - `docs/acceptance-guide.md`
 - `docs/release.md`
 - `docs/reviewer-scorecard.md`
+- `docs/feature-evidence-map.md`
 - `docs/reviewer-faq.md`
 - `docs/architecture.md`
 - `docs/security-model.md`

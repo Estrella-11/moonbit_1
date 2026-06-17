@@ -148,6 +148,7 @@ def main() -> None:
         "docs/configuration.md",
         "docs/final-acceptance.md",
         "docs/final-submission.md",
+        "docs/feature-evidence-map.md",
         "docs/release.md",
         "docs/reviewer-faq.md",
         "docs/reviewer-scorecard.md",

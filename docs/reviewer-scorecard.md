@@ -11,6 +11,7 @@ evidence.
 - Public API page: `dist-cli-example/api-reference.html`
 - Machine-readable output manifest: `dist-cli-example/site-manifest.json`
 - Final acceptance index: `docs/final-acceptance.md`
+- Feature evidence map: `docs/feature-evidence-map.md`
 - Defense FAQ: `docs/reviewer-faq.md`
 
 ## Code Quality

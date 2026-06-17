@@ -84,6 +84,7 @@ Before final submission, confirm:
 - The public showcase search returns documentation and API results.
 - One-page project proposal PDF exists.
 - `docs/final-submission.md` is current.
+- `docs/feature-evidence-map.md` maps features to tests and generated evidence.
 - `docs/reviewer-faq.md` answers likely defense questions.
 - `docs/security-model.md` documents renderer and CLI safety boundaries.
 - `docs/maintenance-plan.md` documents post-competition maintenance.
