@@ -36,6 +36,8 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - Stable per-symbol API anchors for deep links into generated declarations.
 - Grouped API symbol index links for faster large-reference navigation.
 - Package-focused mooncakes.io README with library and API-generation examples.
+- Maintenance plan for versioning, release checks, issue triage, and
+  compatibility boundaries.
 - Runnable demo package with `moon run cmd/main`.
 - Example documentation site and generated HTML outputs.
 - Expanded showcase content covering project value, quality gates, deployment,

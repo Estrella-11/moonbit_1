@@ -81,4 +81,5 @@ Before final submission, confirm:
 - One-page project proposal PDF exists.
 - `docs/final-submission.md` is current.
 - `docs/reviewer-faq.md` answers likely defense questions.
+- `docs/maintenance-plan.md` documents post-competition maintenance.
 - mooncakes.io publishing is completed or documented.

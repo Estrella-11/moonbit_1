@@ -21,6 +21,7 @@ Start with these files:
 - `docs/reviewer-scorecard.md`
 - `docs/reviewer-faq.md`
 - `docs/architecture.md`
+- `docs/maintenance-plan.md`
 - `docs/ecosystem-impact.md`
 - `docs/adoption-playbook.md`
 - `docs/demo-script.md`

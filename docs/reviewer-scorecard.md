@@ -22,6 +22,7 @@ evidence.
 - One-shot verification script: `tools/verify_project.py`
 - Benchmark script and recorded results: `tools/benchmark_cli.py`,
   `docs/benchmark-results.json`
+- Maintenance policy and release checks: `docs/maintenance-plan.md`
 
 ## Open Source Compliance
 

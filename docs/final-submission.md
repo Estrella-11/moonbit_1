@@ -17,6 +17,7 @@ competition.
 - Final acceptance evidence: `docs/final-acceptance.md`
 - Reviewer FAQ: `docs/reviewer-faq.md`
 - Architecture and design decisions: `docs/architecture.md`
+- Maintenance plan: `docs/maintenance-plan.md`
 - Ecosystem impact: `docs/ecosystem-impact.md`
 - Configuration guide: `docs/configuration.md`
 - Adoption playbook: `docs/adoption-playbook.md`

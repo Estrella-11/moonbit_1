@@ -170,6 +170,7 @@ For competition review, start with:
 - Final submission notes: `docs/final-submission.md`
 - Release notes: `docs/release.md`
 - Architecture and design decisions: `docs/architecture.md`
+- Maintenance plan: `docs/maintenance-plan.md`
 - 90-second reviewer demo: `docs/demo-script.md`
 - Deployment and release runbook: `docs/deployment-runbook.md`
 - Configuration guide: `docs/configuration.md`
