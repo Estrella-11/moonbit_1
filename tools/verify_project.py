@@ -140,6 +140,7 @@ def main() -> None:
         "cmd/moondockit/moon.pkg",
         "docs/acceptance-guide.md",
         "docs/architecture.md",
+        "docs/adoption-playbook.md",
         "docs/demo-script.md",
         "docs/deployment-runbook.md",
         "docs/configuration.md",

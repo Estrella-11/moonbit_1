@@ -172,6 +172,7 @@ For competition review, start with:
 - 90-second reviewer demo: `docs/demo-script.md`
 - Deployment and release runbook: `docs/deployment-runbook.md`
 - Configuration guide: `docs/configuration.md`
+- Adoption playbook: `docs/adoption-playbook.md`
 - Mooncakes publishing plan: `docs/mooncakes-publishing.md`
 - Development log: `docs/development-log.md`
 - Benchmark notes: `docs/benchmark-notes.md`

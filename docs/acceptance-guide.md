@@ -74,6 +74,7 @@ Before final submission, confirm:
 - GitHub and Gitlink repositories are synchronized.
 - README documents project goal and usage.
 - Configuration guide and example config are current.
+- Adoption playbook explains how another MoonBit package can reuse the tool.
 - CI covers check, test, and demo run.
 - Core functionality has tests.
 - The public showcase search returns documentation and API results.

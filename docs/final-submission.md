@@ -17,6 +17,7 @@ competition.
 - Final acceptance evidence: `docs/final-acceptance.md`
 - Architecture and design decisions: `docs/architecture.md`
 - Configuration guide: `docs/configuration.md`
+- Adoption playbook: `docs/adoption-playbook.md`
 - 90-second reviewer demo: `docs/demo-script.md`
 - Deployment and release runbook: `docs/deployment-runbook.md`
 - Public showcase: https://estrella-11.github.io/moonbit_1/

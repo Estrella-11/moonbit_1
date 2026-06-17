@@ -29,6 +29,7 @@ evidence.
 - Package README for mooncakes.io: `README.mbt.md`
 - Release notes: `docs/release.md`
 - Publishing plan: `docs/mooncakes-publishing.md`
+- Adoption path for downstream MoonBit packages: `docs/adoption-playbook.md`
 - AI assistance and design boundaries: `docs/architecture.md`
 
 ## MoonBit Ecosystem Relevance
@@ -40,6 +41,8 @@ evidence.
   `moon test`, and `moon package`.
 - Config files, JSON schema, strict mode, dry-run mode, and deployment-ready
   static outputs for package authors.
+- Adoption guidance that explains how other MoonBit packages can add source
+  docs, generated API pages, CI gates, and static hosting.
 
 ## Reviewer Short Path
 
