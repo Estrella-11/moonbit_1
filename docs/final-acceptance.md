@@ -16,6 +16,9 @@ Start with these files:
 
 - `README.md`
 - `CONTRIBUTING.md`
+- `CODE_OF_CONDUCT.md`
+- `SUPPORT.md`
+- `SECURITY.md`
 - `docs/final-submission.md`
 - `docs/acceptance-guide.md`
 - `docs/release.md`

@@ -173,9 +173,12 @@ For competition review, start with:
 - Release notes: `docs/release.md`
 - Architecture and design decisions: `docs/architecture.md`
 - Security model: `docs/security-model.md`
+- Security policy: `SECURITY.md`
 - Maintenance plan: `docs/maintenance-plan.md`
 - Change impact matrix: `docs/change-impact-matrix.md`
 - Contributing guide: `CONTRIBUTING.md`
+- Code of conduct: `CODE_OF_CONDUCT.md`
+- Support guide: `SUPPORT.md`
 - 90-second reviewer demo: `docs/demo-script.md`
 - Deployment and release runbook: `docs/deployment-runbook.md`
 - Configuration guide: `docs/configuration.md`

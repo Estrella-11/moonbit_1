@@ -92,6 +92,8 @@ Before final submission, confirm:
   belong to each kind of change.
 - `CONTRIBUTING.md` and `.github` templates document open-source collaboration
   expectations.
+- `CODE_OF_CONDUCT.md`, `SUPPORT.md`, and `SECURITY.md` document community
+  health and reporting paths.
 - `docs/windows-toolchain-troubleshooting.md` documents Windows policy
   failures that can block local MoonBit commands.
 - mooncakes.io publishing is completed or documented.

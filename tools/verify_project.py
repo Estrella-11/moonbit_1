@@ -136,6 +136,9 @@ def main() -> None:
     for path in [
         "README.md",
         "CONTRIBUTING.md",
+        "CODE_OF_CONDUCT.md",
+        "SUPPORT.md",
+        "SECURITY.md",
         "LICENSE",
         "moon.mod",
         "cmd/moondockit/moon.pkg",

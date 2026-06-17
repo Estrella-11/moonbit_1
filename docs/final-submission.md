@@ -19,8 +19,11 @@ competition.
 - Reviewer FAQ: `docs/reviewer-faq.md`
 - Architecture and design decisions: `docs/architecture.md`
 - Security model: `docs/security-model.md`
+- Security policy: `SECURITY.md`
 - Maintenance plan: `docs/maintenance-plan.md`
 - Contributing guide: `CONTRIBUTING.md`
+- Code of conduct: `CODE_OF_CONDUCT.md`
+- Support guide: `SUPPORT.md`
 - Change impact matrix: `docs/change-impact-matrix.md`
 - Ecosystem impact: `docs/ecosystem-impact.md`
 - Configuration guide: `docs/configuration.md`

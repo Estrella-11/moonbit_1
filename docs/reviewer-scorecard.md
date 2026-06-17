@@ -31,6 +31,7 @@ evidence.
 
 - License: `LICENSE`
 - Contributing guide and GitHub templates: `CONTRIBUTING.md`, `.github`
+- Community health files: `CODE_OF_CONDUCT.md`, `SUPPORT.md`, `SECURITY.md`
 - Repository metadata: `moon.mod`
 - Package README for mooncakes.io: `README.mbt.md`
 - Release notes: `docs/release.md`
