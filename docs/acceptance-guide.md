@@ -80,4 +80,5 @@ Before final submission, confirm:
 - The public showcase search returns documentation and API results.
 - One-page project proposal PDF exists.
 - `docs/final-submission.md` is current.
+- `docs/reviewer-faq.md` answers likely defense questions.
 - mooncakes.io publishing is completed or documented.

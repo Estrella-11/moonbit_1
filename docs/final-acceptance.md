@@ -19,6 +19,7 @@ Start with these files:
 - `docs/acceptance-guide.md`
 - `docs/release.md`
 - `docs/reviewer-scorecard.md`
+- `docs/reviewer-faq.md`
 - `docs/architecture.md`
 - `docs/ecosystem-impact.md`
 - `docs/adoption-playbook.md`

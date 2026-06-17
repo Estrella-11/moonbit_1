@@ -62,6 +62,9 @@ Explain the architecture:
 Finish by opening `docs/architecture.md` and the mooncakes.io package page after
 publication.
 
+If the reviewer asks for a written defense summary, open
+`docs/reviewer-faq.md`.
+
 ## Likely Reviewer Questions
 
 **Why not use an existing Markdown parser?**

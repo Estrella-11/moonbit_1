@@ -15,6 +15,7 @@ competition.
 - Acceptance guide: `docs/acceptance-guide.md`
 - Release notes: `docs/release.md`
 - Final acceptance evidence: `docs/final-acceptance.md`
+- Reviewer FAQ: `docs/reviewer-faq.md`
 - Architecture and design decisions: `docs/architecture.md`
 - Ecosystem impact: `docs/ecosystem-impact.md`
 - Configuration guide: `docs/configuration.md`
