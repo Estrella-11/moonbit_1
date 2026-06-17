@@ -26,7 +26,7 @@ moon run --target js cmd/moondockit \
   --title "MoonDocKit Demo"
 ```
 
-The CLI reports a quality score and writes eleven static files, including a
+The CLI reports a quality score and writes twelve static files, including a
 MoonBit API reference parsed from the package interface.
 
 ## Engineering: 40-65 seconds
@@ -42,7 +42,7 @@ python tools/verify_project.py
 
 Current evidence:
 
-- 44 blackbox tests pass;
+- 45 blackbox tests pass;
 - nine compiled CLI integration scenarios pass;
 - coverage analysis records the remaining defensive and executable branches;
 - default and JavaScript MoonBit targets pass;

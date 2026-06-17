@@ -157,6 +157,8 @@ Repository setup:
 - Added CLI `--dry-run` preview mode; the ninth compiled integration scenario
   proves planned output reports can be generated without creating the output
   directory.
+- Prepared final acceptance evidence and aligned reviewer-facing material with
+  the current 45-test suite and nine compiled CLI integration scenarios.
 
 Next engineering target:
 

@@ -32,7 +32,7 @@ moon run --target js cmd/moondockit --source examples/site --api pkg.generated.m
 As of the current baseline:
 
 - `moon check` passes
-- `moon test` passes with 44 tests
+- `moon test` passes with 45 tests
 - `python tools/test_cli.py` passes 9 compiled CLI integration scenarios
 - `moon coverage analyze` reports 21 uncovered lines across the reusable
   library and executable entry points

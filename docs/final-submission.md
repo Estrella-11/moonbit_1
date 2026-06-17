@@ -14,6 +14,7 @@ competition.
 - One-page proposal PDF: `docs/MoonDocKit-项目申报书-附录二模板版.pdf`
 - Acceptance guide: `docs/acceptance-guide.md`
 - Release notes: `docs/release.md`
+- Final acceptance evidence: `docs/final-acceptance.md`
 - Architecture and design decisions: `docs/architecture.md`
 - Configuration guide: `docs/configuration.md`
 - 90-second reviewer demo: `docs/demo-script.md`
@@ -39,7 +40,7 @@ python tools/verify_project.py
 Expected result:
 
 - `moon check` completes without errors.
-- `moon test` reports 44 passing tests.
+- `moon test` reports 45 passing tests.
 - The compiled CLI integration suite passes nine success and failure scenarios.
 - `moon run cmd/main` prints generated files, summary metadata, and validation
   diagnostics.
@@ -69,7 +70,7 @@ Expected result:
 
 - GitHub and Gitlink repositories are synchronized.
 - Required competition PDF proposal exists.
-- Core behavior is covered by 44 blackbox tests.
+- Core behavior is covered by 45 blackbox tests.
 - CLI behavior is covered by nine filesystem-level integration scenarios,
   including strict validation failure and dry-run preview without output writes.
 - CI checks both the default backend and JavaScript CLI target.

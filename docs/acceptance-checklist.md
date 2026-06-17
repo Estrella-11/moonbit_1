@@ -67,4 +67,4 @@
 - [ ] mooncakes.io package published.
 - [x] Public showcase site deployed.
 - [x] Final demo script and architecture diagram prepared.
-- [ ] Final acceptance material prepared.
+- [x] Final acceptance material prepared.

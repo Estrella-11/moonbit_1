@@ -143,6 +143,7 @@ def main() -> None:
         "docs/demo-script.md",
         "docs/deployment-runbook.md",
         "docs/configuration.md",
+        "docs/final-acceptance.md",
         "docs/final-submission.md",
         "docs/release.md",
         "docs/mooncakes-publishing.md",
