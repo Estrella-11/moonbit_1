@@ -1157,7 +1157,9 @@ pub fn render_page_with_options(
   out.write_string("</title>\n")
   write_social_metadata(out, site, route, options)
   out.write_string(render_theme_style(theme))
-  out.write_string("</head><body><aside><a class=\"brand\" href=\"")
+  out.write_string(
+    "</head><body><a class=\"skip-link\" href=\"#content\">Skip to content</a><aside><a class=\"brand\" href=\"",
+  )
   if routes.length() > 0 {
     out.write_string(html_escape(routes[0].path))
   } else {
@@ -1179,7 +1181,7 @@ pub fn render_page_with_options(
     out.write_string(html_escape(item.title))
     out.write_string("</a>")
   }
-  out.write_string("</nav></aside><main><div class=\"content\">\n")
+  out.write_string("</nav></aside><main id=\"content\"><div class=\"content\">\n")
   out.write_string(toc)
   out.write_string(body)
   if options.footer.trim().to_owned() != "" {
@@ -1917,7 +1919,17 @@ fn render_theme_style(theme : SiteTheme) -> String {
   out.write_string(";border-right:1px solid ")
   out.write_string(theme.border)
   out.write_string(
-    "}.brand{display:flex;align-items:center;gap:10px;padding:0 10px;color:",
+    "}.skip-link{position:absolute;left:12px;top:12px;z-index:4;transform:translateY(-160%);padding:8px 10px;border-radius:6px;background:",
+  )
+  out.write_string(theme.accent)
+  out.write_string(";color:")
+  out.write_string(theme.surface)
+  out.write_string(
+    ";font-weight:700}.skip-link:focus{transform:translateY(0);outline:2px solid ",
+  )
+  out.write_string(theme.text)
+  out.write_string(
+    ";outline-offset:2px}.brand{display:flex;align-items:center;gap:10px;padding:0 10px;color:",
   )
   out.write_string(theme.text)
   out.write_string(

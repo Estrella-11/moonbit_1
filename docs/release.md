@@ -59,7 +59,7 @@ python tools/build_example_site.py
 
 Expected current result:
 
-- `moon test` passes 48 tests.
+- `moon test` passes 49 tests.
 - The compiled CLI passes 9 integration scenarios.
 - The MoonBit CLI writes 12 files when generated API documentation is enabled.
 

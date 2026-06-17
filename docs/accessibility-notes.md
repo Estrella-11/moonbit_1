@@ -7,6 +7,7 @@ remaining improvement areas.
 ## Implemented
 
 - Navigation uses `nav aria-label="Documentation"`.
+- Pages include a `Skip to content` link targeting the main content region.
 - The active page link uses `aria-current="page"`.
 - The search input has a real label associated with `for="site-search"`.
 - Search results use `aria-live="polite"` so updates can be announced without
@@ -39,6 +40,5 @@ Package authors should:
 ## Future Improvements
 
 - Add automated checks for heading order and missing image alt text.
-- Add optional skip links for large documentation sites.
 - Add a high-contrast theme preset.
 - Add more keyboard-focused tests for search and navigation.

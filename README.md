@@ -59,7 +59,8 @@ Generated MoonBit API:
 - Quality gate evaluation for publish-readiness checks and scoring.
 - MoonBit CLI for reading a Markdown directory and writing a complete static
   documentation site.
-- Responsive documentation layout with active navigation and mobile support.
+- Responsive documentation layout with active navigation, skip links, and
+  mobile support.
 - Root `index.html` generation for direct static-host deployment.
 - Site summary metadata for demos and validation.
 - Site validation diagnostics for empty sites, empty titles, empty source

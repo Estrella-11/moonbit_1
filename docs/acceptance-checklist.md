@@ -35,6 +35,7 @@
 - [x] Multi-page static output manifest implemented.
 - [x] Search index implemented.
 - [x] Interactive static search implemented with safe DOM construction.
+- [x] Generated pages include keyboard-accessible skip links to main content.
 - [x] Sitemap generation implemented.
 - [x] robots.txt generation implemented.
 - [x] Machine-readable site-manifest.json generation implemented.

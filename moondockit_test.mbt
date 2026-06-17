@@ -662,6 +662,12 @@ test "rendered pages expose responsive and accessible navigation" {
   assert_true(rendered.html.contains("<nav aria-label=\"Documentation\">"))
   assert_true(
     rendered.html.contains(
+      "<a class=\"skip-link\" href=\"#content\">Skip to content</a>",
+    ),
+  )
+  assert_true(rendered.html.contains("<main id=\"content\">"))
+  assert_true(
+    rendered.html.contains(
       "href=\"api.html\" class=\"active\" aria-current=\"page\"",
     ),
   )
