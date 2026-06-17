@@ -261,7 +261,10 @@ def test_strict_mode_fails_on_validation_warnings(workspace: Path) -> None:
     (source / "guide.md").write_text("# Guide\n\nUseful content.\n", encoding="utf-8")
     (source / "empty.md").write_text("", encoding="utf-8")
 
-    run(["node", str(CLI), "--source", str(source), "--output", str(output)])
+    result = run(["node", str(CLI), "--source", str(source), "--output", str(output)])
+    for marker in ["diagnostics:", "warning empty-source"]:
+        if marker not in result.stdout:
+            raise AssertionError(f"{marker!r} not found in non-strict diagnostic")
     require_text(output / "guide.html", "Useful content")
 
     result = run(

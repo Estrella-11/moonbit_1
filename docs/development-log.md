@@ -151,9 +151,9 @@ Repository setup:
 - Added machine-readable `site-manifest.json` output so generated sites expose
   file paths, kinds, byte counts, and aggregate build metadata for deployment
   and acceptance automation.
-- Added CLI `--strict` validation mode and an eighth compiled integration
-  scenario that proves warning-level diagnostics can fail CI before output is
-  written.
+- Added CLI warning diagnostics on successful builds plus `--strict`
+  validation mode; the eighth compiled integration scenario proves warnings are
+  visible by default and can fail CI before output is written.
 
 Next engineering target:
 

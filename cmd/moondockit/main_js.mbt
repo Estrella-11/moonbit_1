@@ -222,16 +222,17 @@ fn main {
   }
   let site : @lib.DocSite = { title, pages: load_pages(source, api_file) }
   let validation = @lib.validate_site(site)
+  let diagnostics = @lib.diagnostics_to_text(validation)
   let quality = @lib.evaluate_quality(site)
   if !quality.passed {
     println("MoonDocKit quality gate failed: \{quality.score}")
-    println(@lib.diagnostics_to_text(validation))
+    println(diagnostics)
     exit_failure(1)
     return
   }
-  if strict && @lib.diagnostics_to_text(validation) != "ok" {
+  if strict && diagnostics != "ok" {
     println("MoonDocKit strict validation failed")
-    println(@lib.diagnostics_to_text(validation))
+    println(diagnostics)
     exit_failure(1)
     return
   }
@@ -256,5 +257,9 @@ fn main {
   println("source: \{source}")
   println("output: \{output}")
   println("quality: \{quality.score}")
+  if diagnostics != "ok" {
+    println("diagnostics:")
+    println(diagnostics)
+  }
   println("files: \{written}, bytes: \{report.total_bytes}")
 }

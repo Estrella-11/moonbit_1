@@ -122,7 +122,8 @@ The CLI exposes source, output, language, description, footer, canonical URL,
 and optional `.mbti` API inputs. Command-line options override config-file
 values. The compiled Node.js CLI returns non-zero process exit codes for
 invalid arguments and failed quality gates. Add `--strict` when CI should fail
-on validation warnings before any output is written.
+on validation warnings before any output is written; without `--strict`, warning
+diagnostics are printed while successful builds still complete.
 
 Include generated MoonBit package API documentation:
 
