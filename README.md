@@ -151,6 +151,7 @@ For competition review, start with:
 
 - `docs/final-submission.md`
 - `docs/final-acceptance.md`
+- `docs/reviewer-scorecard.md`
 - `docs/acceptance-guide.md`
 - `docs/release.md`
 - `dist-example`
@@ -164,6 +165,7 @@ For competition review, start with:
 - Acceptance checklist: `docs/acceptance-checklist.md`
 - Acceptance guide: `docs/acceptance-guide.md`
 - Final acceptance evidence: `docs/final-acceptance.md`
+- Reviewer scorecard: `docs/reviewer-scorecard.md`
 - Final submission notes: `docs/final-submission.md`
 - Release notes: `docs/release.md`
 - Architecture and design decisions: `docs/architecture.md`

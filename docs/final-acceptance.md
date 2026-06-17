@@ -18,6 +18,7 @@ Start with these files:
 - `docs/final-submission.md`
 - `docs/acceptance-guide.md`
 - `docs/release.md`
+- `docs/reviewer-scorecard.md`
 - `docs/architecture.md`
 - `docs/demo-script.md`
 - `docs/deployment-runbook.md`

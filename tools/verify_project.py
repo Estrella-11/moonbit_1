@@ -146,6 +146,7 @@ def main() -> None:
         "docs/final-acceptance.md",
         "docs/final-submission.md",
         "docs/release.md",
+        "docs/reviewer-scorecard.md",
         "docs/mooncakes-publishing.md",
         "tools/test_cli.py",
         ".github/workflows/ci.yml",

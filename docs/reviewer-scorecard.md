@@ -1,0 +1,50 @@
+# Reviewer Scorecard
+
+This scorecard maps the competition review dimensions to concrete repository
+evidence.
+
+## Completion
+
+- End-to-end CLI: `cmd/moondockit`
+- Example source site: `examples/site`
+- Generated showcase output: `dist-cli-example`
+- Public API page: `dist-cli-example/api-reference.html`
+- Machine-readable output manifest: `dist-cli-example/site-manifest.json`
+- Final acceptance index: `docs/final-acceptance.md`
+
+## Code Quality
+
+- Reusable MoonBit library APIs: `moondockit.mbt`
+- Generated public interface: `pkg.generated.mbti`
+- Blackbox tests: `moondockit_test.mbt`
+- Compiled CLI integration suite: `tools/test_cli.py`
+- One-shot verification script: `tools/verify_project.py`
+- Benchmark script and recorded results: `tools/benchmark_cli.py`,
+  `docs/benchmark-results.json`
+
+## Open Source Compliance
+
+- License: `LICENSE`
+- Repository metadata: `moon.mod`
+- Package README for mooncakes.io: `README.mbt.md`
+- Release notes: `docs/release.md`
+- Publishing plan: `docs/mooncakes-publishing.md`
+- AI assistance and design boundaries: `docs/architecture.md`
+
+## MoonBit Ecosystem Relevance
+
+- `.mbti` API extraction and generated MoonBit API reference.
+- MoonBit-first data models for routes, pages, diagnostics, metrics, and output
+  files.
+- CLI workflow that keeps documentation generation close to `moon check`,
+  `moon test`, and `moon package`.
+- Config files, JSON schema, strict mode, dry-run mode, and deployment-ready
+  static outputs for package authors.
+
+## Reviewer Short Path
+
+1. Open `README.md`.
+2. Open `docs/final-acceptance.md`.
+3. Run `python tools/verify_project.py`.
+4. Inspect `dist-cli-example/api-reference.html`.
+5. Inspect `dist-cli-example/site-manifest.json`.
