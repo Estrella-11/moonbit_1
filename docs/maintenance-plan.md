@@ -87,6 +87,7 @@ Each release should keep these files current:
 - `docs/final-acceptance.md`
 - `docs/reviewer-scorecard.md`
 - `docs/ecosystem-impact.md`
+- `docs/windows-toolchain-troubleshooting.md`
 - `dist-cli-example/site-manifest.json`
 - `dist-cli-example/api-reference.html`
 

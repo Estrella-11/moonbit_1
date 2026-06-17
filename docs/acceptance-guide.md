@@ -67,6 +67,10 @@ If the local Python environment does not provide `pypdf`, the script prints a
 warning and skips strict PDF page-count validation while keeping the rest of the
 checks active.
 
+On Windows, if `moon.exe` is blocked by Device Guard or organization policy,
+see `docs/windows-toolchain-troubleshooting.md`. That failure means the
+operating system blocked the MoonBit toolchain before project checks started.
+
 ## Competition Checklist
 
 Before final submission, confirm:
@@ -82,4 +86,6 @@ Before final submission, confirm:
 - `docs/final-submission.md` is current.
 - `docs/reviewer-faq.md` answers likely defense questions.
 - `docs/maintenance-plan.md` documents post-competition maintenance.
+- `docs/windows-toolchain-troubleshooting.md` documents Windows policy
+  failures that can block local MoonBit commands.
 - mooncakes.io publishing is completed or documented.

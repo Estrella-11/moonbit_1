@@ -23,6 +23,7 @@ competition.
 - Adoption playbook: `docs/adoption-playbook.md`
 - 90-second reviewer demo: `docs/demo-script.md`
 - Deployment and release runbook: `docs/deployment-runbook.md`
+- Windows toolchain troubleshooting: `docs/windows-toolchain-troubleshooting.md`
 - Public showcase: https://estrella-11.github.io/moonbit_1/
 - Example source pages: `examples/site`
 - Generated example site: `dist-example`

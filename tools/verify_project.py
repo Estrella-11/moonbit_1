@@ -152,6 +152,7 @@ def main() -> None:
         "docs/reviewer-scorecard.md",
         "docs/maintenance-plan.md",
         "docs/mooncakes-publishing.md",
+        "docs/windows-toolchain-troubleshooting.md",
         "tools/test_cli.py",
         ".github/workflows/ci.yml",
     ]:

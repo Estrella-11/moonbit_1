@@ -93,3 +93,9 @@ in `docs/mooncakes-publishing.md`.
 
 Future engineering work can add richer Markdown syntax, source spans, more
 theme presets, and adoption examples from real MoonBit packages.
+
+## What if Windows blocks `moon.exe`?
+
+That is an operating-system policy failure, not a MoonDocKit failure. See
+`docs/windows-toolchain-troubleshooting.md` for the exact symptom and the
+recommended verification alternatives.

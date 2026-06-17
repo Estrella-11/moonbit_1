@@ -27,6 +27,7 @@ Start with these files:
 - `docs/demo-script.md`
 - `docs/deployment-runbook.md`
 - `docs/mooncakes-publishing.md`
+- `docs/windows-toolchain-troubleshooting.md`
 
 Then inspect these generated artifacts:
 
@@ -53,6 +54,10 @@ Expected evidence:
 - `python tools/verify_project.py` prints `Project verification passed.`
 - The CLI writes 12 files for the example site with generated API docs.
 - `site-manifest.json` lists generated paths, file kinds, and byte counts.
+
+If local Windows policy blocks `moon.exe`, use
+`docs/windows-toolchain-troubleshooting.md` to distinguish OS policy failures
+from project check failures.
 
 ## Implemented Scope
 

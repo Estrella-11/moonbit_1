@@ -177,6 +177,7 @@ For competition review, start with:
 - Configuration guide: `docs/configuration.md`
 - Adoption playbook: `docs/adoption-playbook.md`
 - Ecosystem impact: `docs/ecosystem-impact.md`
+- Windows toolchain troubleshooting: `docs/windows-toolchain-troubleshooting.md`
 - Mooncakes publishing plan: `docs/mooncakes-publishing.md`
 - Development log: `docs/development-log.md`
 - Benchmark notes: `docs/benchmark-notes.md`
