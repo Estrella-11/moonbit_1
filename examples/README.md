@@ -29,3 +29,6 @@ moon run --target js cmd/moondockit \
 
 This exercises the MoonBit parser, renderer, quality gate, interactive search,
 manifest, and the JavaScript backend filesystem adapter end to end.
+
+The example content demonstrates inline code, strong text, emphasis, safe
+links, safe autolinks, and safe image syntax.

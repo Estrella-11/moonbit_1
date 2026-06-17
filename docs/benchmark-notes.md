@@ -40,8 +40,9 @@ As of the current baseline:
 - The MoonBit JavaScript CLI combines 6 Markdown pages and the package `.mbti`
   interface into 12 output files
 - `tools/build_example_site.py` writes 11 files to `dist-example`
-- The generated example site includes inline code, strong text, safe links,
-  description metadata, footer content, sitemap output, and robots.txt output
+- The generated example site includes inline code, strong text, emphasis, safe
+  links, autolinks, safe images, description metadata, footer content, sitemap
+  output, and robots.txt output
 - The MoonBit-generated site exposes client-side search without requiring a
   server or external search service
 

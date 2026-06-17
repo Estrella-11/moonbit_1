@@ -5,7 +5,7 @@ tags: [guide, moonbit]
 ---
 # Quick Start
 
-MoonDocKit turns MoonBit package notes into a **small static documentation site**.
+MoonDocKit turns MoonBit package notes into a **small *reviewable* documentation site**.
 
 - parse front matter
 - render `HTML` pages
@@ -36,5 +36,10 @@ code in the compiled Node.js CLI.
 ## Embed
 
 Use the library API to build an output manifest, then write every `OutputFile`
-through your preferred backend. See the [MoonBit website](https://www.moonbitlang.com)
-for language documentation.
+through your preferred backend. See <https://www.moonbitlang.com> for language
+documentation.
+
+## Media
+
+Markdown image syntax is supported with escaped alt text and safe source URLs:
+![MoonDocKit example](./assets/moondockit-example.png)

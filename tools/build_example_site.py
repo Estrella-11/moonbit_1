@@ -67,6 +67,36 @@ def render_inline(text: str) -> str:
                 parts.append(f"<strong>{render_inline(text[i + 2:close])}</strong>")
                 i = close + 2
                 continue
+        if text.startswith("*", i):
+            close = text.find("*", i + 1)
+            if close != -1:
+                parts.append(f"<em>{render_inline(text[i + 1:close])}</em>")
+                i = close + 1
+                continue
+        if text.startswith("![", i):
+            label_end = text.find("]", i + 2)
+            if (
+                label_end != -1
+                and label_end + 1 < len(text)
+                and text[label_end + 1] == "("
+            ):
+                href_end = text.find(")", label_end + 2)
+                if href_end != -1:
+                    alt = escape(text[i + 2:label_end], quote=True)
+                    src = escape(safe_href(text[label_end + 2:href_end]), quote=True)
+                    parts.append(f'<img src="{src}" alt="{alt}">')
+                    i = href_end + 1
+                    continue
+        if text.startswith("<http://", i) or text.startswith("<https://", i):
+            close = text.find(">", i + 1)
+            if close != -1:
+                href = text[i + 1:close].strip()
+                safe = safe_href(href)
+                if safe == href and href.startswith(("http://", "https://")):
+                    escaped = escape(href, quote=True)
+                    parts.append(f'<a href="{escaped}">{escaped}</a>')
+                    i = close + 1
+                    continue
         if text[i] == "[":
             label_end = text.find("]", i + 1)
             if label_end != -1 and label_end + 1 < len(text) and text[label_end + 1] == "(":

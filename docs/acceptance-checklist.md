@@ -50,7 +50,8 @@
 - [x] CLI demo prints manifest and summary.
 - [x] Example documentation site added.
 - [x] Showcase expanded to six source pages covering value, usage, quality, deployment, and releases.
-- [x] Example site output demonstrates inline rendering, template metadata, sitemap output, and robots.txt output.
+- [x] Example site output demonstrates inline rendering, emphasis, autolinks,
+      safe images, template metadata, sitemap output, and robots.txt output.
 - [x] Benchmark notes added.
 - [x] Acceptance guide added.
 - [x] Release notes added.

@@ -41,7 +41,7 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - Runnable demo package with `moon run cmd/main`.
 - Example documentation site and generated HTML outputs.
 - Expanded showcase content covering project value, quality gates, deployment,
-  library usage, and release history.
+  library usage, inline rendering, safe images, autolinks, and release history.
 - Cross-platform compiled CLI integration tests for successful generation and
   expected failure paths.
 
