@@ -35,7 +35,7 @@ Package authors should:
   tested.
 - The search result list does not yet expose keyboard shortcut hints.
 - The static Python example site is intentionally simpler than the MoonBit CLI
-  generated site.
+  generated site, but it mirrors the same skip-link pattern.
 
 ## Future Improvements
 

@@ -2,22 +2,22 @@
   "file_count": 11,
   "html_count": 7,
   "data_count": 3,
-  "total_bytes": 22542,
+  "total_bytes": 24762,
   "files": [
     {
       "path": "api.html",
       "kind": "html",
-      "bytes": 2840
+      "bytes": 3210
     },
     {
       "path": "changelog.html",
       "kind": "html",
-      "bytes": 2025
+      "bytes": 2395
     },
     {
       "path": "deployment.html",
       "kind": "html",
-      "bytes": 2379
+      "bytes": 2749
     },
     {
       "path": "index.html",
@@ -27,17 +27,17 @@
     {
       "path": "overview.html",
       "kind": "html",
-      "bytes": 2714
+      "bytes": 3084
     },
     {
       "path": "quality.html",
       "kind": "html",
-      "bytes": 2563
+      "bytes": 2933
     },
     {
       "path": "quick-start.html",
       "kind": "html",
-      "bytes": 3201
+      "bytes": 3571
     },
     {
       "path": "robots.txt",

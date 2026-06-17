@@ -11,6 +11,8 @@
   <meta property="og:url" content="https://example.com/moondockit/quick-start.html">
   <style>
     body { margin: 0; font: 16px/1.6 system-ui, sans-serif; color: #172033; }
+    .skip-link { position: absolute; left: 12px; top: 12px; z-index: 4; transform: translateY(-160%); padding: 8px 10px; border-radius: 6px; background: #2457c5; color: #fff; font-weight: 700; }
+    .skip-link:focus { transform: translateY(0); outline: 2px solid #172033; outline-offset: 2px; }
     aside { position: fixed; inset: 0 auto 0 0; width: 240px; padding: 28px; background: #f6f8fc; border-right: 1px solid #dde3ee; }
     nav { display: grid; gap: 8px; margin-top: 18px; }
     main { max-width: 820px; margin-left: 300px; padding: 42px 32px; }
@@ -20,13 +22,14 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#content">Skip to content</a>
   <aside><strong>MoonDocKit Example</strong><nav><a href="overview.html">Why MoonDocKit</a>
 <a href="quick-start.html">Quick Start</a>
 <a href="api.html">Library Guide</a>
 <a href="quality.html">Quality Gate</a>
 <a href="deployment.html">Deployment</a>
 <a href="changelog.html">Changelog</a></nav></aside>
-  <main><h1 id="quick-start">Quick Start</h1>
+  <main id="content"><h1 id="quick-start">Quick Start</h1>
 <p>MoonDocKit turns MoonBit package notes into a <strong>small <em>reviewable</em> documentation site</strong>.</p>
 <ul>
 <li>parse front matter</li>
