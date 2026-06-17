@@ -60,7 +60,7 @@ The current acceptance path verifies:
 
 - default and JavaScript MoonBit targets;
 - 44 blackbox tests;
-- seven compiled CLI integration scenarios;
+- eight compiled CLI integration scenarios;
 - a runnable in-memory demo;
 - a real Markdown-directory CLI build;
 - required output files and project documents;

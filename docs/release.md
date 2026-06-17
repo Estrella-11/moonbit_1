@@ -24,6 +24,7 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - JSON config-file support with a documented example and schema.
 - Non-zero compiled Node.js CLI exit status for invalid arguments and failed
   quality gates.
+- `--strict` CLI mode that fails on validation warnings before writing output.
 - Responsive generated pages with active and accessible navigation.
 - Root `index.html` entry point for static hosting.
 - `.mbti` public API extraction for functions, structs, enums, and traits.

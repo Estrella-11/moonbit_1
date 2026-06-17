@@ -253,6 +253,36 @@ def test_cli_overrides_config(workspace: Path) -> None:
         raise AssertionError("CLI output option did not override config output")
 
 
+def test_strict_mode_fails_on_validation_warnings(workspace: Path) -> None:
+    source = workspace / "strict-site"
+    output = workspace / "strict-dist"
+    strict_output = workspace / "strict-failed-dist"
+    source.mkdir()
+    (source / "guide.md").write_text("# Guide\n\nUseful content.\n", encoding="utf-8")
+    (source / "empty.md").write_text("", encoding="utf-8")
+
+    run(["node", str(CLI), "--source", str(source), "--output", str(output)])
+    require_text(output / "guide.html", "Useful content")
+
+    result = run(
+        [
+            "node",
+            str(CLI),
+            "--source",
+            str(source),
+            "--output",
+            str(strict_output),
+            "--strict",
+        ],
+        expected=1,
+    )
+    for marker in ["strict validation failed", "warning empty-source"]:
+        if marker not in result.stdout:
+            raise AssertionError(f"{marker!r} not found in strict diagnostic")
+    if strict_output.exists():
+        raise AssertionError("strict validation failure must not write output")
+
+
 def main() -> None:
     build_cli()
     workspace = ROOT / "_build" / f"cli-integration-{os.getpid()}"
@@ -267,9 +297,10 @@ def main() -> None:
         test_output_path_must_be_directory(workspace)
         test_config_file_build(workspace)
         test_cli_overrides_config(workspace)
+        test_strict_mode_fails_on_validation_warnings(workspace)
     finally:
         shutil.rmtree(workspace, ignore_errors=True)
-    print("CLI integration tests passed: 7 scenarios.")
+    print("CLI integration tests passed: 8 scenarios.")
 
 
 if __name__ == "__main__":

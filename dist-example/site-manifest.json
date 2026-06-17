@@ -2,7 +2,7 @@
   "file_count": 11,
   "html_count": 7,
   "data_count": 3,
-  "total_bytes": 22100,
+  "total_bytes": 22196,
   "files": [
     {
       "path": "api.html",
@@ -52,7 +52,7 @@
     {
       "path": "site-manifest.json",
       "kind": "data",
-      "bytes": 1013
+      "bytes": 1109
     },
     {
       "path": "sitemap.xml",
