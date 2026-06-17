@@ -68,10 +68,10 @@ Generated MoonBit API:
   footer content.
 - Canonical links and Open Graph metadata for generated pages.
 - Runnable demo that prints generated files and site statistics.
-- Eight-scenario compiled CLI integration suite covering real builds, generated
+- Nine-scenario compiled CLI integration suite covering real builds, generated
   API output, invalid arguments, empty sites, missing source directories, and
-  output path conflicts, plus config-file builds, CLI overrides, and strict
-  validation.
+  output path conflicts, plus config-file builds, CLI overrides, strict
+  validation, and dry-run previews.
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.
 - Blackbox tests for public behavior.
@@ -123,7 +123,9 @@ and optional `.mbti` API inputs. Command-line options override config-file
 values. The compiled Node.js CLI returns non-zero process exit codes for
 invalid arguments and failed quality gates. Add `--strict` when CI should fail
 on validation warnings before any output is written; without `--strict`, warning
-diagnostics are printed while successful builds still complete.
+diagnostics are printed while successful builds still complete. Add `--dry-run`
+to validate and report planned output files without writing the output
+directory.
 
 Include generated MoonBit package API documentation:
 

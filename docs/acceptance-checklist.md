@@ -7,6 +7,7 @@
 - [x] End-to-end MoonBit CLI exists at `cmd/moondockit`.
 - [x] CLI exposes metadata options and its compiled Node.js output returns failure exit codes.
 - [x] CLI strict mode fails on validation warnings before writing output.
+- [x] CLI dry-run mode reports planned outputs without writing files.
 - [x] Core behavior has blackbox tests.
 - [x] Compiled CLI has filesystem-level success and failure integration tests.
 - [x] GitHub Actions CI added.
@@ -52,7 +53,7 @@
 - [x] Final submission notes added.
 - [x] One-shot verification works with ordinary Python environments.
 - [x] CI and verification script exercise the JavaScript target and MoonBit CLI.
-- [x] CI runs the independent eight-scenario compiled CLI integration suite.
+- [x] CI runs the independent nine-scenario compiled CLI integration suite.
 - [x] Coverage baseline measured and recorded.
 - [x] Architecture, implementation boundaries, and AI assistance documented.
 - [x] `moon package` pre-publish build succeeds.

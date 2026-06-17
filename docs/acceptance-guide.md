@@ -18,7 +18,7 @@ Expected result:
 
 - `moon check` completes successfully.
 - `moon test` reports 44 passing tests.
-- `python tools/test_cli.py` passes eight compiled CLI integration scenarios.
+- `python tools/test_cli.py` passes nine compiled CLI integration scenarios.
 - `python tools/benchmark_cli.py --pages 10,100 --rounds 2` records a small
   reproducible scale check for the compiled CLI.
 - `moon check --target js` verifies the Node.js CLI target.
@@ -60,7 +60,7 @@ python tools/verify_project.py
 ```
 
 The script checks required files, validates the one-page proposal PDF, rebuilds
-both example sites, runs the eight CLI integration scenarios, and executes the
+both example sites, runs the nine CLI integration scenarios, and executes the
 MoonBit check/test/demo and JavaScript CLI commands.
 
 If the local Python environment does not provide `pypdf`, the script prints a

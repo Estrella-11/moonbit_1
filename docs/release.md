@@ -26,6 +26,8 @@ MoonDocKit 0.1.0 is the first competition baseline release.
   quality gates.
 - CLI validation diagnostics are printed on warning-level successful builds,
   while `--strict` fails on warnings before writing output.
+- `--dry-run` CLI mode reports planned output files and byte counts without
+  writing an output directory.
 - Responsive generated pages with active and accessible navigation.
 - Root `index.html` entry point for static hosting.
 - `.mbti` public API extraction for functions, structs, enums, and traits.

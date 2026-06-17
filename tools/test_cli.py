@@ -286,6 +286,28 @@ def test_strict_mode_fails_on_validation_warnings(workspace: Path) -> None:
         raise AssertionError("strict validation failure must not write output")
 
 
+def test_dry_run_reports_without_writing(workspace: Path) -> None:
+    source = workspace / "dry-run-site"
+    output = workspace / "dry-run-dist"
+    source.mkdir()
+    (source / "guide.md").write_text("# Guide\n\nPreview content.\n", encoding="utf-8")
+
+    result = run([
+        "node",
+        str(CLI),
+        "--source",
+        str(source),
+        "--output",
+        str(output),
+        "--dry-run",
+    ])
+    for marker in ["quality: 100", "dry-run: true", "files: 6"]:
+        if marker not in result.stdout:
+            raise AssertionError(f"{marker!r} not found in dry-run output")
+    if output.exists():
+        raise AssertionError("dry-run must not write an output directory")
+
+
 def main() -> None:
     build_cli()
     workspace = ROOT / "_build" / f"cli-integration-{os.getpid()}"
@@ -301,9 +323,10 @@ def main() -> None:
         test_config_file_build(workspace)
         test_cli_overrides_config(workspace)
         test_strict_mode_fails_on_validation_warnings(workspace)
+        test_dry_run_reports_without_writing(workspace)
     finally:
         shutil.rmtree(workspace, ignore_errors=True)
-    print("CLI integration tests passed: 8 scenarios.")
+    print("CLI integration tests passed: 9 scenarios.")
 
 
 if __name__ == "__main__":

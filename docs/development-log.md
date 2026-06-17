@@ -154,6 +154,9 @@ Repository setup:
 - Added CLI warning diagnostics on successful builds plus `--strict`
   validation mode; the eighth compiled integration scenario proves warnings are
   visible by default and can fail CI before output is written.
+- Added CLI `--dry-run` preview mode; the ninth compiled integration scenario
+  proves planned output reports can be generated without creating the output
+  directory.
 
 Next engineering target:
 
