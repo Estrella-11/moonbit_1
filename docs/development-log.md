@@ -158,11 +158,14 @@ Repository setup:
   proves planned output reports can be generated without creating the output
   directory.
 - Prepared final acceptance evidence and aligned reviewer-facing material with
-  the current 47-test suite and nine compiled CLI integration scenarios.
+  the current 48-test suite and nine compiled CLI integration scenarios.
 - Added inline emphasis rendering for `*text*`, including nested emphasis inside
   strong text, and expanded the blackbox suite to 46 tests.
 - Added safe image syntax rendering for `![alt](src)` with escaped alt text and
   sanitized image sources, expanding the blackbox suite to 47 tests.
+- Added safe HTTP and HTTPS autolink rendering for `<https://...>` while
+  preserving unsupported angle-bracket text as escaped content, expanding the
+  blackbox suite to 48 tests.
 
 Next engineering target:
 

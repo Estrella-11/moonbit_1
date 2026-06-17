@@ -60,6 +60,19 @@ test "render_markdown supports safe image syntax" {
 }
 
 ///|
+test "render_markdown supports safe autolinks" {
+  let html = @moondockit.render_markdown(
+    "Read <https://www.moonbitlang.com> and keep <unsafe tag> escaped.",
+  )
+  assert_true(
+    html.contains(
+      "<a href=\"https://www.moonbitlang.com\">https://www.moonbitlang.com</a>",
+    ),
+  )
+  assert_true(html.contains("&lt;unsafe tag&gt;"))
+}
+
+///|
 test "render_markdown escapes inline text and blocks unsafe links" {
   let html = @moondockit.render_markdown(
     "Click [bad <link>](javascript:alert(1)) and keep `<raw>` safe.",

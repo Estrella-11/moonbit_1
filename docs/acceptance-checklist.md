@@ -24,6 +24,7 @@
       strong text.
 - [x] Inline Markdown renderer handles image syntax with escaped alt text and
       safe image sources.
+- [x] Inline Markdown renderer handles safe HTTP and HTTPS autolinks.
 - [x] Meaningful declaration-stage commit history completed.
 - [x] Project proposal exported as one-page PDF.
 - [x] Block AST parser implemented.

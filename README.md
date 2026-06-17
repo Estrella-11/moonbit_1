@@ -33,7 +33,7 @@ Generated MoonBit API:
 - Block-level Markdown AST for H1-H3 headings, paragraphs, lists, block quotes, and
   fenced code blocks.
 - Inline Markdown rendering for code spans, emphasis, strong text, safe links,
-  and safe images.
+  autolinks, and safe images.
 - Paragraph line folding and fenced code language labels.
 - HTML rendering from parsed Markdown blocks.
 - Heading extraction and automatic on-page table of contents.

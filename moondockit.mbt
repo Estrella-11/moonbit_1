@@ -988,6 +988,21 @@ fn render_inline(input : String) -> String {
           i = i + 1
         }
       }
+    } else if input[i] == '<' {
+      match parse_autolink(input, i) {
+        Some((close, href)) => {
+          out.write_string("<a href=\"")
+          out.write_string(html_escape(href))
+          out.write_string("\">")
+          out.write_string(html_escape(href))
+          out.write_string("</a>")
+          i = close + 1
+        }
+        None => {
+          out.write_string("&lt;")
+          i = i + 1
+        }
+      }
     } else if input[i] == '[' {
       match parse_link(input, i) {
         Some((close, label, href)) => {
@@ -1060,6 +1075,22 @@ fn parse_link(input : String, start : Int) -> (Int, String, String)? {
       } else {
         None
       }
+    None => None
+  }
+}
+
+///|
+fn parse_autolink(input : String, start : Int) -> (Int, String)? {
+  match find_char_from(input, start + 1, '>') {
+    Some(close) => {
+      let href = input[start + 1:close].to_owned().trim().to_owned()
+      if (href.has_prefix("http://") || href.has_prefix("https://")) &&
+        safe_href(href) == href {
+        Some((close, href))
+      } else {
+        None
+      }
+    }
     None => None
   }
 }
