@@ -8,7 +8,7 @@ It turns package notes and guides into small static HTML documentation sites
 with safe HTML escaping, stable anchors, navigation, and testable rendering
 logic.
 
-This repository is being developed for the 2026 MoonBit 国产基础软件开源大赛.
+This repository is being developed for the 2026 MoonBit Open Source Competition.
 The project is intentionally scoped as an ecosystem tool rather than another
 standalone Markdown parser: the long-term goal is to help MoonBit package
 authors publish clear docs, examples, API guides, and release notes with a
@@ -162,7 +162,7 @@ For competition review, start with:
 
 ## Competition Materials
 
-- One-page project proposal: `docs/MoonDocKit-项目申报书-附录二模板版.pdf`
+- One-page project proposal: `docs/MoonDocKit-project-proposal-appendix-template.pdf`
 - Development plan: `docs/competition-plan.md`
 - Acceptance checklist: `docs/acceptance-checklist.md`
 - Acceptance guide: `docs/acceptance-guide.md`

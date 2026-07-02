@@ -9,7 +9,7 @@
 //   "moonbitlang/x@0.4.6",
 // }
 
-name = "moonbit-community/moondockit"
+name = "Estrella-11/moondockit"
 
 version = "0.1.0"
 

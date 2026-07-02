@@ -84,7 +84,7 @@ def render_inline(text: str) -> str:
                 if href_end != -1:
                     alt = escape(text[i + 2:label_end], quote=True)
                     src = escape(safe_href(text[label_end + 2:href_end]), quote=True)
-                    parts.append(f'<img src="{src}" alt="{alt}">')
+                    parts.append(f'<img src="{src}" alt="{alt}" loading="lazy">')
                     i = href_end + 1
                     continue
         if text.startswith("<http://", i) or text.startswith("<https://", i):

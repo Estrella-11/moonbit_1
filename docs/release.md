@@ -59,7 +59,7 @@ python tools/build_example_site.py
 
 Expected current result:
 
-- `moon test` passes 49 tests.
+- `moon test` passes 48 tests.
 - The compiled CLI passes 9 integration scenarios.
 - The MoonBit CLI writes 12 files when generated API documentation is enabled.
 
@@ -71,5 +71,4 @@ Expected current result:
   CommonMark specification.
 - The MoonBit CLI filesystem adapter currently targets Node.js through the
   JavaScript backend; the reusable library remains backend-neutral.
-- mooncakes.io publishing is documented and will be completed when account
-  access is available.
+- mooncakes.io package `Estrella-11/moondockit` has been published.

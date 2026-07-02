@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbit-community/moondockit/cmd/moondockit"
+package "Estrella-11/moondockit/cmd/moondockit"
 
 // Values
 
@@ -10,3 +10,4 @@ package "moonbit-community/moondockit/cmd/moondockit"
 // Type aliases
 
 // Traits
+

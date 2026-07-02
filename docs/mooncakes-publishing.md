@@ -1,11 +1,11 @@
-# Mooncakes Publishing Plan
+# Mooncakes Publishing
 
 The competition requires final accepted projects to publish to mooncakes.io.
-This document records the intended release path.
+This document records the package metadata and release path.
 
 ## Package Metadata
 
-- Package name: `moonbit-community/moondockit`
+- Package name: `Estrella-11/moondockit`
 - Version: `0.1.0`
 - License: `Apache-2.0`
 - Repository: `https://github.com/Estrella-11/moonbit_1`
@@ -38,12 +38,13 @@ Also verify:
 The 0.1.0 package dry run succeeds and creates:
 
 ```text
-_build/publish/moonbit-community-moondockit-0.1.0.zip
+_build/publish/Estrella-11-moondockit-0.1.0.zip
 ```
 
 ## Publish Command
 
-The final publish step requires a mooncakes.io account:
+The package has been published as `Estrella-11/moondockit`. The publish step
+requires a mooncakes.io account:
 
 ```bash
 moon login
@@ -52,7 +53,3 @@ moon publish
 
 The current MoonBit CLI also requires credentials for `moon publish --dry-run`.
 Use `moon package` as the unauthenticated package-build check.
-
-If publishing is not possible before a checkpoint because account approval is
-pending, include this document and a screenshot/log of `moon package` in the
-submission material, then publish as soon as account access is ready.

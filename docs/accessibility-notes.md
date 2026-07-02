@@ -18,6 +18,7 @@ remaining improvement areas.
 - `prefers-reduced-motion: reduce` disables smooth scrolling for users who
   request reduced motion.
 - Generated image syntax requires alt text from the Markdown source.
+- Generated images include `loading="lazy"` by default.
 
 ## Content Guidance
 

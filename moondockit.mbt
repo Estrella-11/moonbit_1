@@ -980,7 +980,7 @@ fn render_inline(input : String) -> String {
           out.write_string(html_escape(safe_href(src)))
           out.write_string("\" alt=\"")
           out.write_string(html_escape(label))
-          out.write_string("\">")
+          out.write_string("\" loading=\"lazy\">")
           i = close + 1
         }
         None => {
@@ -1181,7 +1181,9 @@ pub fn render_page_with_options(
     out.write_string(html_escape(item.title))
     out.write_string("</a>")
   }
-  out.write_string("</nav></aside><main id=\"content\"><div class=\"content\">\n")
+  out.write_string(
+    "</nav></aside><main id=\"content\"><div class=\"content\">\n",
+  )
   out.write_string(toc)
   out.write_string(body)
   if options.footer.trim().to_owned() != "" {

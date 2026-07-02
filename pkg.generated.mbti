@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbit-community/moondockit"
+package "Estrella-11/moondockit"
 
 // Values
 pub fn blocks_to_toc(Array[MarkdownBlock]) -> Array[TocItem]

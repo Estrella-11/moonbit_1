@@ -10,7 +10,7 @@ from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, Tabl
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "docs" / "MoonDocKit-项目申报书-附录二模板版.pdf"
+OUT = ROOT / "docs" / "MoonDocKit-project-proposal-appendix-template.pdf"
 FONT = Path(r"C:\Windows\Fonts\simsun.ttc")
 
 

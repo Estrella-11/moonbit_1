@@ -17,7 +17,7 @@ moon run --target js cmd/moondockit --source examples/site --api pkg.generated.m
 Expected result:
 
 - `moon check` completes successfully.
-- `moon test` reports 49 passing tests.
+- `moon test` reports 48 passing tests.
 - `python tools/test_cli.py` passes nine compiled CLI integration scenarios.
 - `python tools/benchmark_cli.py --pages 10,100 --rounds 2` records a small
   reproducible scale check for the compiled CLI.

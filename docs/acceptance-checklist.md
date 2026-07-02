@@ -24,6 +24,7 @@
       strong text.
 - [x] Inline Markdown renderer handles image syntax with escaped alt text and
       safe image sources.
+- [x] Inline Markdown renderer emits lazy-loaded image tags.
 - [x] Inline Markdown renderer handles safe HTTP and HTTPS autolinks.
 - [x] Meaningful declaration-stage commit history completed.
 - [x] Project proposal exported as one-page PDF.
@@ -71,7 +72,7 @@
 - [x] API reference exposes per-symbol anchors for direct links to generated declarations.
 - [x] API reference includes grouped symbol index links for fast navigation.
 - [x] Pages and CI assert that the generated MoonBit API artifact exists.
-- [ ] mooncakes.io package published.
+- [x] mooncakes.io package published as `Estrella-11/moondockit`.
 - [x] Public showcase site deployed.
 - [x] Final demo script and architecture diagram prepared.
 - [x] Final acceptance material prepared.

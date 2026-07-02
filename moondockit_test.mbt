@@ -54,9 +54,11 @@ test "render_markdown supports safe image syntax" {
     "Preview ![MoonBit <logo>](./assets/logo.png) and block ![bad](javascript:alert(1)).",
   )
   assert_true(
-    html.contains("<img src=\"./assets/logo.png\" alt=\"MoonBit &lt;logo&gt;\">"),
+    html.contains(
+      "<img src=\"./assets/logo.png\" alt=\"MoonBit &lt;logo&gt;\" loading=\"lazy\">",
+    ),
   )
-  assert_true(html.contains("<img src=\"#\" alt=\"bad\">"))
+  assert_true(html.contains("<img src=\"#\" alt=\"bad\" loading=\"lazy\">"))
 }
 
 ///|

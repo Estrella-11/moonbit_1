@@ -2,7 +2,7 @@
   "file_count": 11,
   "html_count": 7,
   "data_count": 3,
-  "total_bytes": 24762,
+  "total_bytes": 24765,
   "files": [
     {
       "path": "api.html",
@@ -37,7 +37,7 @@
     {
       "path": "quick-start.html",
       "kind": "html",
-      "bytes": 3571
+      "bytes": 3580
     },
     {
       "path": "robots.txt",
@@ -47,7 +47,7 @@
     {
       "path": "search-index.json",
       "kind": "data",
-      "bytes": 4999
+      "bytes": 4993
     },
     {
       "path": "site-manifest.json",

@@ -103,4 +103,5 @@ This keeps the repository useful for both users and competition reviewers.
 2. Add more API-reference fixtures from real MoonBit packages.
 3. Add additional theme presets for package, tutorial, and reference sites.
 4. Add richer Markdown nodes only when they improve package documentation.
-5. Complete mooncakes.io publication and link the package page from the README.
+5. Keep the published mooncakes.io package metadata aligned with repository
+   releases.

@@ -34,7 +34,7 @@ Repository setup:
   `gitlink/master`, so the default branch also displays the project.
 - Pushed the full project to GitHub `origin/main`.
 - Generated a one-page PDF project proposal at
-  `docs/MoonDocKit-项目申报书-附录二模板版.pdf`.
+  `docs/MoonDocKit-project-proposal-appendix-template.pdf`.
 - Added a block-level Markdown AST with `MarkdownBlock`, `parse_blocks`,
   `blocks_to_toc`, and `render_blocks`, then kept the public
   `render_markdown` API as a compatibility wrapper.
@@ -158,7 +158,7 @@ Repository setup:
   proves planned output reports can be generated without creating the output
   directory.
 - Prepared final acceptance evidence and aligned reviewer-facing material with
-  the current 49-test suite and nine compiled CLI integration scenarios.
+  the current 48-test suite and nine compiled CLI integration scenarios.
 - Added inline emphasis rendering for `*text*`, including nested emphasis inside
   strong text, and expanded the blackbox suite to 46 tests.
 - Added safe image syntax rendering for `![alt](src)` with escaped alt text and
@@ -166,10 +166,12 @@ Repository setup:
 - Added safe HTTP and HTTPS autolink rendering for `<https://...>` while
   preserving unsupported angle-bracket text as escaped content, expanding the
   blackbox suite to 48 tests.
-- Added generated-page skip links for keyboard users and expanded the blackbox
-  suite to 49 tests.
+- Added generated-page skip links for keyboard users and kept the blackbox
+  suite aligned with the current acceptance baseline.
+- Added lazy-loaded output for Markdown images and kept the blackbox suite
+  aligned with the current 48-test baseline.
 
 Next engineering target:
 
-- Publish to mooncakes.io, gather external usage evidence, harden CLI failure
-  behavior, and reduce uncovered defensive branches.
+- Gather external usage evidence, harden CLI failure behavior, and reduce
+  uncovered defensive branches.

@@ -15,7 +15,7 @@ MoonDocKit turns MoonBit package notes into a **small *reviewable* documentation
 
 ## Install
 
-After publication, add `moonbit-community/moondockit` from mooncakes.io.
+After publication, add `Estrella-11/moondockit` from mooncakes.io.
 
 ## Generate
 

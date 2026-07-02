@@ -92,4 +92,5 @@ python tools/verify_project.py
 ```
 
 The blackbox suite covers HTML escaping, unsafe links, safe image sources,
-autolinks, JSON/XML escaping, and search UI DOM construction.
+lazy image output, autolinks, JSON/XML escaping, and search UI DOM
+construction.

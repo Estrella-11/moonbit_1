@@ -9,6 +9,7 @@ searching across the repository.
 - Gitlink: https://gitlink.org.cn/Estrella/moonbit
 - Public showcase: https://estrella-11.github.io/moonbit_1/
 - Generated MoonBit API: https://estrella-11.github.io/moonbit_1/api-reference.html
+- mooncakes.io package: `Estrella-11/moondockit`
 
 ## Reviewer Path
 
@@ -57,7 +58,7 @@ python tools/benchmark_cli.py --pages 10,100 --rounds 2
 
 Expected evidence:
 
-- `moon test` reports 49 passing tests.
+- `moon test` reports 48 passing tests.
 - `python tools/test_cli.py` reports 9 compiled CLI integration scenarios.
 - `python tools/verify_project.py` prints `Project verification passed.`
 - The CLI writes 12 files for the example site with generated API docs.
@@ -80,9 +81,9 @@ from project check failures.
 - JavaScript-targeted CLI with config files, metadata options, strict mode,
   dry-run mode, diagnostics, and filesystem-level integration tests.
 
-## Remaining Release Step
+## Release Status
 
-The remaining external step is mooncakes.io publication. The repository already
-contains `README.mbt.md`, release notes, and `docs/mooncakes-publishing.md`.
-Publishing requires account credentials and should be completed before final
-award review if access is available.
+The mooncakes.io package has been published as `Estrella-11/moondockit`.
+The repository contains `README.mbt.md`, release notes, and
+`docs/mooncakes-publishing.md` for reviewers who want to inspect the package
+metadata and release flow.

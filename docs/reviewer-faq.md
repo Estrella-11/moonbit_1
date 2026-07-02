@@ -86,10 +86,9 @@ This is documented in `docs/architecture.md`.
 
 ## What remains after the current checkpoint?
 
-The remaining external release task is mooncakes.io publication. The repository
-already includes `README.mbt.md`, release notes, a publishing plan, and package
-metadata. Publication requires account credentials, so it is tracked separately
-in `docs/mooncakes-publishing.md`.
+The mooncakes.io package has been published as `Estrella-11/moondockit`. The
+repository includes `README.mbt.md`, release notes, package metadata in
+`moon.mod`, and release evidence in `docs/mooncakes-publishing.md`.
 
 Future engineering work can add richer Markdown syntax, source spans, more
 theme presets, and adoption examples from real MoonBit packages.
