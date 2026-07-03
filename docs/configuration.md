@@ -41,6 +41,8 @@ moon run --target js cmd/moondockit --config examples/moondockit.json --output d
 - `title`: generated documentation site title.
 - `site_url`: optional public base URL for canonical and Open Graph metadata.
 - `language`: HTML language code for generated pages.
+- `theme`: page theme preset. Supported values are `default`, `package`,
+  `api`, and `api-reference`.
 - `description`: site description used in generated metadata.
 - `footer`: Markdown-style inline footer content.
 

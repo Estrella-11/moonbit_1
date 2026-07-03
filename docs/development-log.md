@@ -158,7 +158,7 @@ Repository setup:
   proves planned output reports can be generated without creating the output
   directory.
 - Prepared final acceptance evidence and aligned reviewer-facing material with
-  the current 48-test suite and nine compiled CLI integration scenarios.
+  the current 49-test suite and ten compiled CLI integration scenarios.
 - Added inline emphasis rendering for `*text*`, including nested emphasis inside
   strong text, and expanded the blackbox suite to 46 tests.
 - Added safe image syntax rendering for `![alt](src)` with escaped alt text and
@@ -169,9 +169,12 @@ Repository setup:
 - Added generated-page skip links for keyboard users and kept the blackbox
   suite aligned with the current acceptance baseline.
 - Added lazy-loaded output for Markdown images and kept the blackbox suite
-  aligned with the current 48-test baseline.
+  aligned with the then-current 48-test baseline.
+- Added `package_theme` and `api_reference_theme` presets, exposed CLI/config
+  theme selection, and expanded verification to 49 blackbox tests and ten CLI
+  integration scenarios.
 
 Next engineering target:
 
-- Gather external usage evidence, harden CLI failure behavior, and reduce
+- Gather external usage evidence, polish API-reference navigation, and reduce
   uncovered defensive branches.

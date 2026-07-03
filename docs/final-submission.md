@@ -56,8 +56,8 @@ python tools/verify_project.py
 Expected result:
 
 - `moon check` completes without errors.
-- `moon test` reports 48 passing tests.
-- The compiled CLI integration suite passes nine success and failure scenarios.
+- `moon test` reports 49 passing tests.
+- The compiled CLI integration suite passes ten success and failure scenarios.
 - `moon run cmd/main` prints generated files, summary metadata, and validation
   diagnostics.
 - The JavaScript-targeted MoonBit CLI reads Markdown files and writes a
@@ -86,8 +86,8 @@ Expected result:
 
 - GitHub and Gitlink repositories are synchronized.
 - Required competition PDF proposal exists.
-- Core behavior is covered by 48 blackbox tests.
-- CLI behavior is covered by nine filesystem-level integration scenarios,
+- Core behavior is covered by 49 blackbox tests.
+- CLI behavior is covered by ten filesystem-level integration scenarios,
   including strict validation failure and dry-run preview without output writes.
 - CI checks both the default backend and JavaScript CLI target.
 - `moon package` creates the 0.1.0 publishing archive successfully.

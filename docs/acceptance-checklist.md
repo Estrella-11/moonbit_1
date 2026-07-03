@@ -46,6 +46,7 @@
 - [x] Site summary metadata implemented.
 - [x] Site validation diagnostics implemented.
 - [x] Theme configuration implemented.
+- [x] Package and API-reference theme presets implemented.
 - [x] Template options for language, description, and footer implemented.
 - [x] JSON CLI configuration file and schema documented.
 - [x] Canonical link and Open Graph metadata generation implemented.

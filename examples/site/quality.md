@@ -25,6 +25,6 @@ scores 100.
 
 ## Verification
 
-The repository runs default and JavaScript target checks, 48 blackbox tests,
-nine compiled CLI integration scenarios, API artifact assertions, and the
+The repository runs default and JavaScript target checks, 49 blackbox tests,
+ten compiled CLI integration scenarios, API artifact assertions, and the
 one-shot verification script.

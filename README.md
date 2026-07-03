@@ -207,7 +207,8 @@ The next milestones focus on award-level evidence and adoption quality:
 - Add a real MoonBit package adoption case with before/after documentation
   output.
 - Improve filesystem diagnostics for common CLI mistakes.
-- Add one or two focused theme presets for package and API reference sites.
+- Add additional focused theme presets after the package and API reference
+  presets.
 - Turn reviewer feedback into small, well-tested release increments.
 
 ## Competition Fit

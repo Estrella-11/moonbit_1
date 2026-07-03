@@ -5,6 +5,7 @@
   "title": "SampleStatKit Docs",
   "site_url": "https://example.com/sample-statkit",
   "language": "en",
+  "theme": "api",
   "description": "Adoption example for a small MoonBit statistics package",
   "footer": "Adoption example built with `MoonDocKit`"
 }

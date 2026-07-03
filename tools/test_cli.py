@@ -218,6 +218,7 @@ def test_config_file_build(workspace: Path) -> None:
                 "title": "Configured Docs",
                 "site_url": "https://example.com/configured",
                 "language": "en-US",
+                "theme": "package",
                 "description": "Configured MoonDocKit site",
                 "footer": "Configured with `MoonDocKit`",
             }
@@ -231,8 +232,36 @@ def test_config_file_build(workspace: Path) -> None:
         "Configured Docs",
         'name="description" content="Configured MoonDocKit site"',
         "Configured with <code>MoonDocKit</code>",
+        "color:#2f7d57",
     )
     require_text(output / "api-reference.html", "acme/config", "configured")
+
+
+def test_invalid_theme_reports_hint(workspace: Path) -> None:
+    source = workspace / "theme-site"
+    output = workspace / "theme-dist"
+    source.mkdir()
+    (source / "guide.md").write_text("# Guide\n\nTheme content.\n", encoding="utf-8")
+    result = run(
+        [
+            "node",
+            str(CLI),
+            "--source",
+            str(source),
+            "--output",
+            str(output),
+            "--theme",
+            "neon",
+        ],
+        expected=1,
+    )
+    for marker in [
+        "unknown theme preset: neon",
+        "expected default, package, or api",
+        "hint: run with --config examples/moondockit.json",
+    ]:
+        if marker not in result.stdout:
+            raise AssertionError(f"{marker!r} not found in invalid-theme diagnostic")
 
 
 def test_cli_overrides_config(workspace: Path) -> None:
@@ -337,12 +366,13 @@ def main() -> None:
         test_missing_source(workspace)
         test_output_path_must_be_directory(workspace)
         test_config_file_build(workspace)
+        test_invalid_theme_reports_hint(workspace)
         test_cli_overrides_config(workspace)
         test_strict_mode_fails_on_validation_warnings(workspace)
         test_dry_run_reports_without_writing(workspace)
     finally:
         shutil.rmtree(workspace, ignore_errors=True)
-    print("CLI integration tests passed: 9 scenarios.")
+    print("CLI integration tests passed: 10 scenarios.")
 
 
 if __name__ == "__main__":

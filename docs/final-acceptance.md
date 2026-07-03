@@ -61,8 +61,8 @@ python tools/benchmark_cli.py --pages 10,100 --rounds 2
 
 Expected evidence:
 
-- `moon test` reports 48 passing tests.
-- `python tools/test_cli.py` reports 9 compiled CLI integration scenarios.
+- `moon test` reports 49 passing tests.
+- `python tools/test_cli.py` reports 10 compiled CLI integration scenarios.
 - `python tools/verify_project.py` prints `Project verification passed.`
 - The CLI writes 12 files for the example site with generated API docs.
 - `site-manifest.json` lists generated paths, file kinds, and byte counts.

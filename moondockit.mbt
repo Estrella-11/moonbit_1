@@ -485,6 +485,38 @@ pub fn default_theme() -> SiteTheme {
 }
 
 ///|
+/// Return a warm documentation theme for package guide sites.
+pub fn package_theme() -> SiteTheme {
+  {
+    background: "#f8faf7",
+    surface: "#ffffff",
+    text: "#1b2a22",
+    accent: "#2f7d57",
+    border: "#d9e6dc",
+    code_background: "#18241d",
+    code_text: "#eef8f0",
+    sidebar_width_px: 248,
+    content_width_px: 840,
+  }
+}
+
+///|
+/// Return a compact theme tuned for API reference-heavy sites.
+pub fn api_reference_theme() -> SiteTheme {
+  {
+    background: "#f8fafc",
+    surface: "#ffffff",
+    text: "#142033",
+    accent: "#5b5f97",
+    border: "#dbe1ea",
+    code_background: "#111827",
+    code_text: "#edf2ff",
+    sidebar_width_px: 260,
+    content_width_px: 900,
+  }
+}
+
+///|
 /// Return default generated page metadata and footer options.
 pub fn default_site_options() -> SiteOptions {
   {

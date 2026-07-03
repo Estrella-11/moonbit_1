@@ -41,7 +41,8 @@ API documentation with handwritten Markdown guides.
 
 The CLI also accepts `--language`, `--description`, `--footer`, and
 `--site-url` so package authors can configure generated metadata without
-editing renderer code.
+editing renderer code. Use `--theme package` or `--theme api` for built-in
+package-guide and API-reference visual presets.
 
 ## Quality and Validation
 

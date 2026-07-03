@@ -2,18 +2,18 @@
   "file_count": 11,
   "html_count": 8,
   "data_count": 2,
-  "total_bytes": 89372,
+  "total_bytes": 90296,
   "files": [
     {"path":"api.html","kind":"html","bytes":7703},
     {"path":"index.html","kind":"html","bytes":319},
     {"path":"robots.txt","kind":"asset","bytes":44},
     {"path":"sitemap.xml","kind":"data","bytes":381},
-    {"path":"quality.html","kind":"html","bytes":7431},
+    {"path":"quality.html","kind":"html","bytes":7430},
     {"path":"overview.html","kind":"html","bytes":7571},
     {"path":"changelog.html","kind":"html","bytes":6771},
     {"path":"deployment.html","kind":"html","bytes":7232},
     {"path":"quick-start.html","kind":"html","bytes":8066},
-    {"path":"search-index.json","kind":"data","bytes":15018},
-    {"path":"api-reference.html","kind":"html","bytes":28836}
+    {"path":"search-index.json","kind":"data","bytes":15275},
+    {"path":"api-reference.html","kind":"html","bytes":29504}
   ]
 }

@@ -29,6 +29,11 @@
       "type": "string",
       "description": "HTML language code for generated pages."
     },
+    "theme": {
+      "type": "string",
+      "enum": ["default", "package", "api", "api-reference"],
+      "description": "Generated page theme preset."
+    },
     "description": {
       "type": "string",
       "description": "Site description used in metadata."

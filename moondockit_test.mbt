@@ -234,6 +234,30 @@ test "custom themes change generated page style" {
 }
 
 ///|
+test "theme presets provide distinct documented styles" {
+  let page : @moondockit.DocPage = {
+    title: "Guide",
+    slug: "guide",
+    source: "# Guide\n\nShip docs.",
+  }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [page] }
+  let package_page = @moondockit.render_page_with_theme(
+    site,
+    page,
+    @moondockit.package_theme(),
+  )
+  let api_page = @moondockit.render_page_with_theme(
+    site,
+    page,
+    @moondockit.api_reference_theme(),
+  )
+  assert_true(package_page.html.contains("background:#f8faf7"))
+  assert_true(package_page.html.contains("color:#2f7d57"))
+  assert_true(api_page.html.contains("color:#5b5f97"))
+  assert_true(api_page.html.contains("max-width:900px"))
+}
+
+///|
 test "site options add page metadata and footer" {
   let page : @moondockit.DocPage = {
     title: "guide",

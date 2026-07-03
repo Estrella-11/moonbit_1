@@ -18,6 +18,8 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - Site validation diagnostics with severity, code, message, and optional page
   metadata.
 - Theme configuration APIs for generated page colors and layout widths.
+- Package and API-reference theme presets exposed through library APIs, CLI
+  options, and JSON configuration.
 - End-to-end MoonBit CLI for Markdown directory input and static site output.
 - CLI options for page language, metadata description, footer content, public
   site URL, and generated `.mbti` API input.
@@ -61,8 +63,8 @@ python tools/build_example_site.py
 
 Expected current result:
 
-- `moon test` passes 48 tests.
-- The compiled CLI passes 9 integration scenarios.
+- `moon test` passes 49 tests.
+- The compiled CLI passes 10 integration scenarios.
 - The MoonBit CLI writes 12 files when generated API documentation is enabled.
 
 ### Known Scope Limits

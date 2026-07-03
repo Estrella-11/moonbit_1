@@ -5,6 +5,7 @@
   "title": "MoonDocKit CLI Example",
   "site_url": "https://example.com/moondockit-cli",
   "language": "en",
+  "theme": "package",
   "description": "MoonDocKit documentation generated from a config file",
   "footer": "Built with `MoonDocKit`"
 }

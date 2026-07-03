@@ -2,6 +2,8 @@
 package "Estrella-11/moondockit"
 
 // Values
+pub fn api_reference_theme() -> SiteTheme
+
 pub fn blocks_to_toc(Array[MarkdownBlock]) -> Array[TocItem]
 
 pub fn build_index_page(DocSite) -> String?
@@ -51,6 +53,8 @@ pub fn measure_blocks(Array[MarkdownBlock]) -> DocumentMetrics
 pub fn measure_document(String) -> DocumentMetrics
 
 pub fn measure_site(DocSite) -> SiteMetrics
+
+pub fn package_theme() -> SiteTheme
 
 pub fn parse_blocks(String) -> Array[MarkdownBlock]
 
