@@ -13,6 +13,7 @@ evidence.
 - Final acceptance index: `docs/final-acceptance.md`
 - Feature evidence map: `docs/feature-evidence-map.md`
 - Defense FAQ: `docs/reviewer-faq.md`
+- Award sprint plan: `docs/award-sprint.md`
 
 ## Code Quality
 

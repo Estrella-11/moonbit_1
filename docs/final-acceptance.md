@@ -26,6 +26,7 @@ Start with these files:
 - `docs/reviewer-scorecard.md`
 - `docs/feature-evidence-map.md`
 - `docs/reviewer-faq.md`
+- `docs/award-sprint.md`
 - `docs/architecture.md`
 - `docs/accessibility-notes.md`
 - `docs/security-model.md`

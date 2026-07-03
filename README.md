@@ -188,21 +188,25 @@ For competition review, start with:
 - Ecosystem impact: `docs/ecosystem-impact.md`
 - Windows toolchain troubleshooting: `docs/windows-toolchain-troubleshooting.md`
 - Mooncakes publishing plan: `docs/mooncakes-publishing.md`
+- Award sprint plan: `docs/award-sprint.md`
 - Development log: `docs/development-log.md`
 - Benchmark notes: `docs/benchmark-notes.md`
 - Example site sources: `examples/site`
 - Generated example site: `dist-example`
 - MoonBit CLI generated site: `dist-cli-example`
 
-## Project Direction
+## Award Sprint Direction
 
 MoonDocKit is now an end-to-end documentation toolkit for the MoonBit
-ecosystem. The next milestones focus on adoption and release quality:
+ecosystem and has been published to mooncakes.io as `Estrella-11/moondockit`.
+The next milestones focus on award-level evidence and adoption quality:
 
 - Add source spans and richer inline nodes to the Markdown AST.
-- Add more theme presets for package, tutorial, and API reference sites.
-- Improve filesystem diagnostics and add more real-package adoption examples.
-- Publish the reusable package on mooncakes.io.
+- Add a real MoonBit package adoption case with before/after documentation
+  output.
+- Improve filesystem diagnostics for common CLI mistakes.
+- Add one or two focused theme presets for package and API reference sites.
+- Turn reviewer feedback into small, well-tested release increments.
 
 ## Competition Fit
 

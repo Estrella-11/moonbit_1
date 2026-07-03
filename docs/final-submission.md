@@ -17,6 +17,7 @@ competition.
 - Final acceptance evidence: `docs/final-acceptance.md`
 - Feature evidence map: `docs/feature-evidence-map.md`
 - Reviewer FAQ: `docs/reviewer-faq.md`
+- Award sprint plan: `docs/award-sprint.md`
 - Architecture and design decisions: `docs/architecture.md`
 - Accessibility notes: `docs/accessibility-notes.md`
 - Security model: `docs/security-model.md`

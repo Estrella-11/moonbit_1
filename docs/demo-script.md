@@ -42,7 +42,7 @@ python tools/verify_project.py
 
 Current evidence:
 
-- 50 blackbox tests pass;
+- 48 blackbox tests pass;
 - nine compiled CLI integration scenarios pass;
 - coverage analysis records the remaining defensive and executable branches;
 - default and JavaScript MoonBit targets pass;
@@ -56,11 +56,11 @@ Explain the architecture:
 - the reusable MoonBit library returns a deterministic output manifest;
 - the Node.js adapter only performs filesystem input and output;
 - package authors can embed the library or use the bundled CLI;
-- Apache-2.0 licensing, CI, examples, release notes, and mooncakes.io metadata
-  make the project reusable beyond the competition.
+- Apache-2.0 licensing, CI, examples, release notes, and the published
+  mooncakes.io package make the project reusable beyond the competition.
 
-Finish by opening `docs/architecture.md` and the mooncakes.io package page after
-publication.
+Finish by opening `docs/architecture.md` and the published package identifier
+`Estrella-11/moondockit`.
 
 If the reviewer asks for a written defense summary, open
 `docs/reviewer-faq.md`.
