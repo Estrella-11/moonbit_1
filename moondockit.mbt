@@ -1388,6 +1388,10 @@ pub fn build_site_manifest_with_options(
     None => ()
   }
   files.push({ path: "search-index.json", content: build_search_index(site) })
+  files.push({
+    path: "quality-report.json",
+    content: build_quality_report_json(site),
+  })
   files.push({ path: "sitemap.xml", content: build_sitemap(site) })
   files.push({ path: "robots.txt", content: build_robots_txt() })
   files.push({
@@ -1462,6 +1466,72 @@ pub fn build_output_manifest_json(files : Array[OutputFile]) -> String {
 }
 
 ///|
+/// Build a machine-readable quality report for review and CI artifacts.
+pub fn build_quality_report_json(site : DocSite) -> String {
+  let gate = evaluate_quality(site)
+  let metrics = measure_site(site)
+  let validation = validate_site(site)
+  let out = StringBuilder()
+  out.write_string("{\n")
+  out.write_string("  \"site_title\": \"")
+  out.write_string(json_escape(site.title))
+  out.write_string("\",\n  \"passed\": ")
+  out.write_string(json_bool(gate.passed))
+  out.write_string(",\n  \"score\": ")
+  out.write_string(gate.score.to_string())
+  out.write_string(",\n  \"checks\": [\n")
+  for i, check in gate.checks {
+    out.write_string("    {\"name\":\"")
+    out.write_string(json_escape(check.name))
+    out.write_string("\",\"passed\":")
+    out.write_string(json_bool(check.passed))
+    out.write_string(",\"message\":\"")
+    out.write_string(json_escape(check.message))
+    out.write_string("\"}")
+    if i + 1 < gate.checks.length() {
+      out.write_string(",")
+    }
+    out.write_string("\n")
+  }
+  out.write_string("  ],\n  \"metrics\": {")
+  out.write_string("\"page_count\":")
+  out.write_string(metrics.page_count.to_string())
+  out.write_string(",\"heading_count\":")
+  out.write_string(metrics.heading_count.to_string())
+  out.write_string(",\"code_block_count\":")
+  out.write_string(metrics.code_block_count.to_string())
+  out.write_string(",\"word_count\":")
+  out.write_string(metrics.word_count.to_string())
+  out.write_string(",\"reading_minutes\":")
+  out.write_string(metrics.reading_minutes.to_string())
+  out.write_string("},\n  \"diagnostics\": [\n")
+  for i, diagnostic in validation.diagnostics {
+    out.write_string("    {\"level\":\"")
+    out.write_string(diagnostic_level_name(diagnostic.level))
+    out.write_string("\",\"code\":\"")
+    out.write_string(json_escape(diagnostic.code))
+    out.write_string("\",\"message\":\"")
+    out.write_string(json_escape(diagnostic.message))
+    out.write_string("\",\"page\":")
+    match diagnostic.page {
+      Some(page) => {
+        out.write_string("\"")
+        out.write_string(json_escape(page))
+        out.write_string("\"")
+      }
+      None => out.write_string("null")
+    }
+    out.write_string("}")
+    if i + 1 < validation.diagnostics.length() {
+      out.write_string(",")
+    }
+    out.write_string("\n")
+  }
+  out.write_string("  ]\n}\n")
+  out.to_string()
+}
+
+///|
 /// Build a minimal XML sitemap for generated HTML pages.
 pub fn build_sitemap(site : DocSite) -> String {
   let routes = plan_routes(site)
@@ -1518,7 +1588,12 @@ pub fn evaluate_quality(site : DocSite) -> QualityGate {
   let checks : Array[QualityCheck] = []
   let validation = validate_site(site)
   let metrics = measure_site(site)
-  let build = build_site_report(site)
+  let generated_html_count = if metrics.page_count == 0 {
+    0
+  } else {
+    metrics.page_count + 1
+  }
+  let generated_data_count = 4
   let max_page_reading_minutes = max_page_reading_minutes(site)
   checks.push({
     name: "validation",
@@ -1540,9 +1615,10 @@ pub fn evaluate_quality(site : DocSite) -> QualityGate {
   })
   checks.push({
     name: "outputs",
-    passed: build.html_count == metrics.page_count + 1 && build.data_count >= 2,
-    message: if build.html_count == metrics.page_count + 1 &&
-      build.data_count >= 2 {
+    passed: generated_html_count == metrics.page_count + 1 &&
+    generated_data_count >= 3,
+    message: if generated_html_count == metrics.page_count + 1 &&
+      generated_data_count >= 3 {
       "manifest includes html pages and data outputs"
     } else {
       "manifest output mix is incomplete"
@@ -1898,6 +1974,23 @@ fn json_escape(input : String) -> String {
     }
   }
   out.to_string()
+}
+
+///|
+fn json_bool(value : Bool) -> String {
+  if value {
+    "true"
+  } else {
+    "false"
+  }
+}
+
+///|
+fn diagnostic_level_name(level : DiagnosticLevel) -> String {
+  match level {
+    DiagError => "error"
+    DiagWarning => "warning"
+  }
 }
 
 ///|

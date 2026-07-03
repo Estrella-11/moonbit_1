@@ -13,6 +13,7 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - Multi-page route planning.
 - Static output manifest generation.
 - Machine-readable `site-manifest.json` output for generated file metadata.
+- Machine-readable `quality-report.json` output for release-gate evidence.
 - JSON search index generation and built-in interactive static search.
 - Site summary metadata for demo and validation.
 - Site validation diagnostics with severity, code, message, and optional page
@@ -65,9 +66,9 @@ python tools/build_example_site.py
 
 Expected current result:
 
-- `moon test` passes 49 tests.
+- `moon test` passes 50 tests.
 - The compiled CLI passes 10 integration scenarios.
-- The MoonBit CLI writes 12 files when generated API documentation is enabled.
+- The MoonBit CLI writes 13 files when generated API documentation is enabled.
 
 ### Known Scope Limits
 

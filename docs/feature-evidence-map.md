@@ -15,6 +15,7 @@ examples, and generated artifacts.
 | Sitemap and robots output | sitemap and robots builders | manifest/output tests | `sitemap.xml`, `robots.txt` |
 | Site validation diagnostics | `validate_site`, `diagnostics_to_text` | validation tests and CLI tests | strict-mode CLI behavior |
 | Quality gate | `evaluate_quality` | quality gate tests and benchmark checks | `docs/benchmark-notes.md` |
+| Quality report artifact | `build_quality_report_json` | report serialization and CLI tests | `quality-report.json` in generated sites |
 | `.mbti` API extraction | `parse_mbti`, API page builders | API parser tests | `dist-cli-example/api-reference.html` |
 | API review notes | `mbti_to_page` | API page tests | generated `Review Notes` section |
 | CLI generation | `cmd/moondockit` | `tools/test_cli.py` | compiled CLI build output |
@@ -30,7 +31,9 @@ For a quick technical review:
 3. Inspect `moondockit_test.mbt` for behavior coverage.
 4. Inspect `tools/test_cli.py` for filesystem-level CLI checks.
 5. Open `dist-cli-example/api-reference.html` for generated MoonBit API docs.
-6. Open `dist-example/quick-start.html` for the lightweight Python-built
+6. Inspect `dist-cli-example/quality-report.json` for structured release-gate
+   evidence.
+7. Open `dist-example/quick-start.html` for the lightweight Python-built
    example output.
 
 ## Why This Matters

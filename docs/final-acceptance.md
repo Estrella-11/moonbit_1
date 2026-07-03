@@ -42,10 +42,13 @@ Start with these files:
 Then inspect these generated artifacts:
 
 - `dist-cli-example/api-reference.html`
+- `dist-cli-example/quality-report.json`
 - `dist-cli-example/search-index.json`
 - `dist-cli-example/site-manifest.json`
 - `dist-adoption-example/api-reference.html`
+- `dist-adoption-example/quality-report.json`
 - `dist-adoption-example/site-manifest.json`
+- `dist-example/quality-report.json`
 - `dist-example/site-manifest.json`
 
 ## Verification Commands
@@ -61,11 +64,13 @@ python tools/benchmark_cli.py --pages 10,100 --rounds 2
 
 Expected evidence:
 
-- `moon test` reports 49 passing tests.
+- `moon test` reports 50 passing tests.
 - `python tools/test_cli.py` reports 10 compiled CLI integration scenarios.
 - `python tools/verify_project.py` prints `Project verification passed.`
-- The CLI writes 12 files for the example site with generated API docs.
+- The CLI writes 13 files for the example site with generated API docs.
 - `site-manifest.json` lists generated paths, file kinds, and byte counts.
+- `quality-report.json` records the release-gate score, checks, metrics, and
+  diagnostics in a machine-readable form.
 
 If local Windows policy blocks `moon.exe`, use
 `docs/windows-toolchain-troubleshooting.md` to distinguish OS policy failures

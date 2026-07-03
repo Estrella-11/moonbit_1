@@ -35,7 +35,7 @@ CLI remains a thin filesystem adapter for real projects and CI.
 | --- | --- |
 | Package authors | Generate browsable guides and API docs from existing repo files |
 | New MoonBit users | Read tutorials, API pages, and release notes in one static site |
-| Reviewers | Verify outputs through `site-manifest.json`, tests, and acceptance docs |
+| Reviewers | Verify outputs through `site-manifest.json`, `quality-report.json`, tests, and acceptance docs |
 | Ecosystem maintainers | Encourage repeatable release documentation and clearer package pages |
 
 ## Differentiation
@@ -47,6 +47,7 @@ is differentiated by:
 - MoonBit data models for pages, routes, metrics, diagnostics, and output files;
 - quality gates for publish-readiness, not only HTML rendering;
 - generated `site-manifest.json` for review and deployment checks;
+- generated `quality-report.json` for structured release-gate evidence;
 - documentation that explains how other MoonBit packages can adopt the tool.
 
 ## Adoption Readiness

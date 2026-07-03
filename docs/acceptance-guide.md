@@ -17,7 +17,7 @@ moon run --target js cmd/moondockit --source examples/site --api pkg.generated.m
 Expected result:
 
 - `moon check` completes successfully.
-- `moon test` reports 49 passing tests.
+- `moon test` reports 50 passing tests.
 - `python tools/test_cli.py` passes ten compiled CLI integration scenarios.
 - `python tools/benchmark_cli.py --pages 10,100 --rounds 2` records a small
   reproducible scale check for the compiled CLI.
@@ -44,6 +44,7 @@ Expected generated files:
 - `dist-example/quality.html`
 - `dist-example/deployment.html`
 - `dist-example/changelog.html`
+- `dist-example/quality-report.json`
 - `dist-example/search-index.json`
 - `dist-example/site-manifest.json`
 - `dist-example/sitemap.xml`
@@ -60,7 +61,7 @@ python tools/verify_project.py
 ```
 
 The script checks required files, validates the one-page proposal PDF, rebuilds
-both example sites, runs the nine CLI integration scenarios, and executes the
+both example sites, runs the ten CLI integration scenarios, and executes the
 MoonBit check/test/demo and JavaScript CLI commands.
 
 If the local Python environment does not provide `pypdf`, the script prints a

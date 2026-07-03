@@ -53,6 +53,7 @@ def verify_example_site() -> None:
         "dist-example/deployment.html",
         "dist-example/changelog.html",
         "dist-example/robots.txt",
+        "dist-example/quality-report.json",
         "dist-example/search-index.json",
         "dist-example/site-manifest.json",
         "dist-example/sitemap.xml",
@@ -96,6 +97,7 @@ def verify_moonbit_cli() -> None:
         "dist-cli-example/deployment.html",
         "dist-cli-example/changelog.html",
         "dist-cli-example/robots.txt",
+        "dist-cli-example/quality-report.json",
         "dist-cli-example/search-index.json",
         "dist-cli-example/site-manifest.json",
         "dist-cli-example/sitemap.xml",
@@ -105,9 +107,14 @@ def verify_moonbit_cli() -> None:
         require("dist-cli-example/site-manifest.json").read_text(encoding="utf-8")
     )
     paths = {entry["path"] for entry in manifest["files"]}
-    for expected in ["api-reference.html", "search-index.json", "sitemap.xml"]:
+    for expected in ["api-reference.html", "quality-report.json", "search-index.json", "sitemap.xml"]:
         if expected not in paths:
             raise SystemExit(f"site manifest is missing {expected}")
+    quality_report = json.loads(
+        require("dist-cli-example/quality-report.json").read_text(encoding="utf-8")
+    )
+    if quality_report.get("score") != 100 or quality_report.get("passed") is not True:
+        raise SystemExit("quality report did not record a passing release gate")
     overview = require("dist-cli-example/overview.html").read_text(encoding="utf-8")
     for marker in [
         "data-search-input",
@@ -139,6 +146,7 @@ def verify_adoption_example() -> None:
         "dist-adoption-example/overview.html",
         "dist-adoption-example/quick-start.html",
         "dist-adoption-example/changelog.html",
+        "dist-adoption-example/quality-report.json",
         "dist-adoption-example/search-index.json",
         "dist-adoption-example/site-manifest.json",
         "dist-adoption-example/sitemap.xml",

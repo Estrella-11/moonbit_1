@@ -12,6 +12,7 @@ evidence.
 - Generated adoption output: `dist-adoption-example`
 - Public API page: `dist-cli-example/api-reference.html`
 - Machine-readable output manifest: `dist-cli-example/site-manifest.json`
+- Machine-readable quality report: `dist-cli-example/quality-report.json`
 - Final acceptance index: `docs/final-acceptance.md`
 - Feature evidence map: `docs/feature-evidence-map.md`
 - Defense FAQ: `docs/reviewer-faq.md`
@@ -62,4 +63,5 @@ evidence.
 2. Open `docs/final-acceptance.md`.
 3. Run `python tools/verify_project.py`.
 4. Inspect `dist-cli-example/api-reference.html`.
-5. Inspect `dist-cli-example/site-manifest.json`.
+5. Inspect `dist-cli-example/quality-report.json`.
+6. Inspect `dist-cli-example/site-manifest.json`.

@@ -1,8 +1,8 @@
 {
-  "file_count": 11,
+  "file_count": 12,
   "html_count": 7,
-  "data_count": 3,
-  "total_bytes": 24763,
+  "data_count": 4,
+  "total_bytes": 25634,
   "files": [
     {
       "path": "api.html",
@@ -30,6 +30,11 @@
       "bytes": 3084
     },
     {
+      "path": "quality-report.json",
+      "kind": "data",
+      "bytes": 775
+    },
+    {
       "path": "quality.html",
       "kind": "html",
       "bytes": 2932
@@ -52,7 +57,7 @@
     {
       "path": "site-manifest.json",
       "kind": "data",
-      "bytes": 1109
+      "bytes": 1205
     },
     {
       "path": "sitemap.xml",

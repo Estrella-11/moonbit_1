@@ -158,7 +158,7 @@ Repository setup:
   proves planned output reports can be generated without creating the output
   directory.
 - Prepared final acceptance evidence and aligned reviewer-facing material with
-  the current 49-test suite and ten compiled CLI integration scenarios.
+  the current 50-test suite and ten compiled CLI integration scenarios.
 - Added inline emphasis rendering for `*text*`, including nested emphasis inside
   strong text, and expanded the blackbox suite to 46 tests.
 - Added safe image syntax rendering for `![alt](src)` with escaped alt text and
@@ -171,8 +171,10 @@ Repository setup:
 - Added lazy-loaded output for Markdown images and kept the blackbox suite
   aligned with the then-current 48-test baseline.
 - Added `package_theme` and `api_reference_theme` presets, exposed CLI/config
-  theme selection, and expanded verification to 49 blackbox tests and ten CLI
+  theme selection, and expanded verification to 50 blackbox tests and ten CLI
   integration scenarios.
+- Added `quality-report.json` generation for structured release-gate evidence
+  and expanded verification to cover the machine-readable report artifact.
 
 Next engineering target:
 

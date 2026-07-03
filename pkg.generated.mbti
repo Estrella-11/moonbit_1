@@ -10,6 +10,8 @@ pub fn build_index_page(DocSite) -> String?
 
 pub fn build_output_manifest_json(Array[OutputFile]) -> String
 
+pub fn build_quality_report_json(DocSite) -> String
+
 pub fn build_robots_txt() -> String
 
 pub fn build_search_index(DocSite) -> String

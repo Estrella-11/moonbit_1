@@ -31,7 +31,7 @@ Also verify:
 - `docs/ecosystem-impact.md` explains ecosystem value and differentiation.
 - `docs/acceptance-guide.md` is current.
 - `docs/release.md` is current.
-- The MoonBit CLI produces 12 files with generated API documentation.
+- The MoonBit CLI produces 13 files with generated API documentation.
 - GitHub and Gitlink are synchronized.
 - No generated private credentials or local-only files are included.
 

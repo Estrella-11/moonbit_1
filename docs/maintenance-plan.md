@@ -93,6 +93,7 @@ Each release should keep these files current:
 - `docs/ecosystem-impact.md`
 - `docs/windows-toolchain-troubleshooting.md`
 - `dist-cli-example/site-manifest.json`
+- `dist-cli-example/quality-report.json`
 - `dist-cli-example/api-reference.html`
 
 This keeps the repository useful for both users and competition reviewers.

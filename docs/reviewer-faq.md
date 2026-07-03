@@ -34,6 +34,7 @@ MoonDocKit should still be differentiated by its reviewable engineering surface:
 - `.mbti` API extraction with symbol grouping, anchors, arity, and return types;
 - validation diagnostics and publish-readiness quality score;
 - generated `site-manifest.json` for acceptance and deployment checks;
+- generated `quality-report.json` for machine-readable release-gate evidence;
 - config file, JSON schema, strict mode, dry-run mode, and CLI integration
   tests;
 - adoption and ecosystem-impact documents for downstream packages.
@@ -59,6 +60,7 @@ Reviewers can also inspect:
 - `examples/site` for source Markdown;
 - `pkg.generated.mbti` for source API declarations;
 - `dist-cli-example/api-reference.html` for generated API output;
+- `dist-cli-example/quality-report.json` for structured quality evidence;
 - `dist-cli-example/site-manifest.json` for machine-readable output metadata.
 
 ## How is code quality demonstrated?

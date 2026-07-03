@@ -1,8 +1,8 @@
 {
-  "file_count": 11,
+  "file_count": 12,
   "html_count": 8,
-  "data_count": 2,
-  "total_bytes": 90876,
+  "data_count": 3,
+  "total_bytes": 92042,
   "files": [
     {"path":"api.html","kind":"html","bytes":7703},
     {"path":"index.html","kind":"html","bytes":319},
@@ -13,7 +13,8 @@
     {"path":"changelog.html","kind":"html","bytes":6771},
     {"path":"deployment.html","kind":"html","bytes":7232},
     {"path":"quick-start.html","kind":"html","bytes":8066},
-    {"path":"search-index.json","kind":"data","bytes":15493},
-    {"path":"api-reference.html","kind":"html","bytes":29866}
+    {"path":"search-index.json","kind":"data","bytes":15659},
+    {"path":"api-reference.html","kind":"html","bytes":30264},
+    {"path":"quality-report.json","kind":"data","bytes":602}
   ]
 }

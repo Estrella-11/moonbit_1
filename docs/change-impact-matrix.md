@@ -13,7 +13,7 @@ code, generated evidence, tests, and competition materials aligned.
 | API reference generator | `.mbti` parsing, symbol grouping, signatures | `moon info`, `moon test`, CLI build with `--api` | `pkg.generated.mbti`, `dist-cli-example/api-reference.html` |
 | CLI behavior | Flags, config, exit codes, diagnostics | `moon check --target js`, `python tools/test_cli.py` | `docs/configuration.md`, `examples/moondockit.schema.json` |
 | Quality gate or validation | New diagnostics, scoring rules, strict mode | `moon test`, `python tools/test_cli.py`, `python tools/benchmark_cli.py` | `docs/acceptance-guide.md`, `docs/benchmark-notes.md` |
-| Generated metadata | sitemap, robots, search index, `site-manifest.json` | CLI build, `python tools/verify_project.py` | `dist-cli-example/site-manifest.json`, `docs/final-acceptance.md` |
+| Generated metadata | sitemap, robots, search index, `site-manifest.json`, `quality-report.json` | CLI build, `python tools/verify_project.py` | `dist-cli-example/site-manifest.json`, `dist-cli-example/quality-report.json`, `docs/final-acceptance.md` |
 | Release or review docs | Acceptance notes, FAQ, scorecard, runbooks | `python -m py_compile tools/verify_project.py` | `README.md`, `docs/final-submission.md`, `docs/reviewer-scorecard.md` |
 | Packaging | mooncakes metadata, package README, license | `moon package` | `README.mbt.md`, `docs/mooncakes-publishing.md`, `docs/release.md` |
 

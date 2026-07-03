@@ -131,6 +131,7 @@ link these files from the repository README:
 - generated site home page;
 - generated API reference page;
 - `site-manifest.json`;
+- `quality-report.json`;
 - source Markdown directory;
 - CI workflow or verification script;
 - release notes and publishing instructions.
@@ -167,4 +168,5 @@ An adopted package is in good shape when:
 - the generated API page reflects the current `.mbti` interface;
 - the search index contains guide pages and API entries;
 - `site-manifest.json` lists all published outputs;
+- `quality-report.json` records the publish-readiness score and checks;
 - CI or a local verification script catches broken documentation before release.

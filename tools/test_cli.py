@@ -84,7 +84,7 @@ def test_successful_build(workspace: Path) -> None:
             "Built with `MoonDocKit`",
         ]
     )
-    for marker in ["quality: 100", "files: 8"]:
+    for marker in ["quality: 100", "files: 9"]:
         if marker not in result.stdout:
             raise AssertionError(f"{marker!r} not found in CLI output")
 
@@ -92,6 +92,7 @@ def test_successful_build(workspace: Path) -> None:
         "api-reference.html",
         "guide.html",
         "index.html",
+        "quality-report.json",
         "reference.html",
         "robots.txt",
         "search-index.json",
@@ -124,11 +125,18 @@ def test_successful_build(workspace: Path) -> None:
     if paths != {"guide.html", "reference.html", "api-reference.html"}:
         raise AssertionError(f"unexpected search paths: {sorted(paths)}")
     manifest = json.loads((output / "site-manifest.json").read_text(encoding="utf-8"))
-    if manifest["file_count"] != 7:
+    if manifest["file_count"] != 8:
         raise AssertionError("site manifest should describe generated files before itself")
     manifest_paths = {entry["path"] for entry in manifest["files"]}
-    if "api-reference.html" not in manifest_paths or "search-index.json" not in manifest_paths:
+    if (
+        "api-reference.html" not in manifest_paths
+        or "search-index.json" not in manifest_paths
+        or "quality-report.json" not in manifest_paths
+    ):
         raise AssertionError(f"unexpected manifest paths: {sorted(manifest_paths)}")
+    quality_report = json.loads((output / "quality-report.json").read_text(encoding="utf-8"))
+    if quality_report["score"] != 100 or not quality_report["passed"]:
+        raise AssertionError("quality report should record the passing release gate")
 
 
 def test_invalid_arguments() -> None:
@@ -346,7 +354,7 @@ def test_dry_run_reports_without_writing(workspace: Path) -> None:
         str(output),
         "--dry-run",
     ])
-    for marker in ["quality: 100", "dry-run: true", "files: 6"]:
+    for marker in ["quality: 100", "dry-run: true", "files: 7"]:
         if marker not in result.stdout:
             raise AssertionError(f"{marker!r} not found in dry-run output")
     if output.exists():

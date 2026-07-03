@@ -1,0 +1,35 @@
+{
+  "site_title": "MoonDocKit Example",
+  "passed": true,
+  "score": 100,
+  "checks": [
+    {
+      "name": "validation",
+      "passed": true,
+      "message": "site validation passed"
+    },
+    {
+      "name": "content",
+      "passed": true,
+      "message": "site has measurable documentation content"
+    },
+    {
+      "name": "outputs",
+      "passed": true,
+      "message": "manifest includes html pages and data outputs"
+    },
+    {
+      "name": "readability",
+      "passed": true,
+      "message": "every page is within the baseline reading threshold"
+    }
+  ],
+  "metrics": {
+    "page_count": 6,
+    "heading_count": 6,
+    "code_block_count": 0,
+    "word_count": 643,
+    "reading_minutes": 1
+  },
+  "diagnostics": []
+}

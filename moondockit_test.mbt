@@ -187,11 +187,14 @@ test "build_site_manifest returns deterministic output files" {
   }
   let site : @moondockit.DocSite = { title: "Docs", pages: [intro, api] }
   let files = @moondockit.build_site_manifest(site)
-  inspect(files.length(), content="7")
+  inspect(files.length(), content="8")
   inspect(files[0].path, content="api.html")
   inspect(files[1].path, content="index.html")
   inspect(files[2].path, content="intro.html")
   inspect(files[3].path, content="robots.txt")
+  assert_true(
+    files.filter(file => file.path == "quality-report.json").length() == 1,
+  )
   assert_true(
     files.filter(file => file.path == "search-index.json").length() == 1,
   )
@@ -203,8 +206,10 @@ test "build_site_manifest returns deterministic output files" {
   assert_true(files[2].content.contains("<a href=\"api.html\">API</a>"))
   assert_true(files[1].content.contains("url=api.html"))
   let manifest = files.filter(file => file.path == "site-manifest.json")[0]
-  assert_true(manifest.content.contains("\"file_count\": 6"))
+  assert_true(manifest.content.contains("\"file_count\": 7"))
   assert_true(manifest.content.contains("\"path\":\"api.html\""))
+  let quality_report = files.filter(file => file.path == "quality-report.json")[0]
+  assert_true(quality_report.content.contains("\"score\": 100"))
 }
 
 ///|
@@ -426,9 +431,9 @@ test "build_site_report summarizes default manifest outputs" {
     source: "# Guide\n\nShip docs.",
   }
   let report = @moondockit.build_site_report({ title: "Docs", pages: [page] })
-  inspect(report.file_count, content="6")
+  inspect(report.file_count, content="7")
   inspect(report.html_count, content="2")
-  inspect(report.data_count, content="3")
+  inspect(report.data_count, content="4")
   assert_true(report.total_bytes > 0)
 }
 
@@ -477,6 +482,25 @@ test "evaluate_quality passes publishable sites" {
   inspect(gate.score, content="100")
   inspect(gate.checks.length(), content="4")
   inspect(gate.checks[0].name, content="validation")
+}
+
+///|
+test "build_quality_report_json serializes review evidence" {
+  let page : @moondockit.DocPage = {
+    title: "Guide",
+    slug: "guide",
+    source: "# Guide\n\nShip docs.",
+  }
+  let report = @moondockit.build_quality_report_json({
+    title: "Docs",
+    pages: [page],
+  })
+  assert_true(report.contains("\"site_title\": \"Docs\""))
+  assert_true(report.contains("\"passed\": true"))
+  assert_true(report.contains("\"score\": 100"))
+  assert_true(report.contains("\"name\":\"validation\""))
+  assert_true(report.contains("\"page_count\":1"))
+  assert_true(report.contains("\"diagnostics\": ["))
 }
 
 ///|
@@ -548,7 +572,7 @@ test "summarize_site counts pages outputs search and tags" {
   }
   let summary = @moondockit.summarize_site({ title: "Docs", pages: [a, b] })
   inspect(summary.page_count, content="2")
-  inspect(summary.output_count, content="7")
+  inspect(summary.output_count, content="8")
   inspect(summary.search_entry_count, content="2")
   inspect(summary.tag_count, content="2")
 }

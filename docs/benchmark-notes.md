@@ -32,14 +32,14 @@ moon run --target js cmd/moondockit --source examples/site --api pkg.generated.m
 As of the current baseline:
 
 - `moon check` passes
-- `moon test` passes with 49 tests
+- `moon test` passes with 50 tests
 - `python tools/test_cli.py` passes 10 compiled CLI integration scenarios
 - `moon coverage analyze` reports 21 uncovered lines across the reusable
   library and executable entry points
 - `moon run cmd/main` prints generated file counts and validation status
 - The MoonBit JavaScript CLI combines 6 Markdown pages and the package `.mbti`
   interface into 12 output files
-- `tools/build_example_site.py` writes 11 files to `dist-example`
+- `tools/build_example_site.py` writes 12 files to `dist-example`
 - The generated example site includes inline code, strong text, emphasis, safe
   links, autolinks, safe images, description metadata, footer content, sitemap
   output, and robots.txt output

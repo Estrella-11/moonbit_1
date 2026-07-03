@@ -40,6 +40,7 @@
 - [x] Sitemap generation implemented.
 - [x] robots.txt generation implemented.
 - [x] Machine-readable site-manifest.json generation implemented.
+- [x] Machine-readable quality-report.json release-gate evidence implemented.
 - [x] Build report generation implemented.
 - [x] Document and site metrics implemented.
 - [x] Quality gate evaluation implemented.

@@ -22,6 +22,7 @@
 <a class="level-3" href="#blocks-to-toc">blocks_to_toc</a>
 <a class="level-3" href="#build-index-page">build_index_page</a>
 <a class="level-3" href="#build-output-manifest-json">build_output_manifest_json</a>
+<a class="level-3" href="#build-quality-report-json">build_quality_report_json</a>
 <a class="level-3" href="#build-robots-txt">build_robots_txt</a>
 <a class="level-3" href="#build-search-index">build_search_index</a>
 <a class="level-3" href="#build-site-manifest">build_site_manifest</a>
@@ -89,10 +90,10 @@
 <a class="level-3" href="#markdownblock">MarkdownBlock</a>
 </section>
 <h1 id="moonbit-api">MoonBit API</h1>
-<p>Package <code>Estrella-11/moondockit</code> exposes 67 public declarations.</p>
+<p>Package <code>Estrella-11/moondockit</code> exposes 68 public declarations.</p>
 <h2 id="api-summary">API Summary</h2>
 <ul>
-<li>Functions: 42</li>
+<li>Functions: 43</li>
 <li>Structs: 23</li>
 <li>Enums: 2</li>
 </ul>
@@ -109,6 +110,7 @@
 <li><a href="#blocks-to-toc">blocks_to_toc</a></li>
 <li><a href="#build-index-page">build_index_page</a></li>
 <li><a href="#build-output-manifest-json">build_output_manifest_json</a></li>
+<li><a href="#build-quality-report-json">build_quality_report_json</a></li>
 <li><a href="#build-robots-txt">build_robots_txt</a></li>
 <li><a href="#build-search-index">build_search_index</a></li>
 <li><a href="#build-site-manifest">build_site_manifest</a></li>
@@ -207,6 +209,13 @@
 <li>Returns: <code>String</code></li>
 </ul>
 <pre><code class="language-mbt">pub fn build_output_manifest_json(Array[OutputFile]) -&gt; String
+</code></pre>
+<h3 id="build-quality-report-json">build_quality_report_json</h3>
+<ul>
+<li>Parameters: 1</li>
+<li>Returns: <code>String</code></li>
+</ul>
+<pre><code class="language-mbt">pub fn build_quality_report_json(DocSite) -&gt; String
 </code></pre>
 <h3 id="build-robots-txt">build_robots_txt</h3>
 <ul>

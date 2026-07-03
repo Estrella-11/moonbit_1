@@ -109,7 +109,7 @@ def benchmark_case(cli: Path, page_count: int, rounds: int) -> dict[str, object]
 
     search = json.loads((final_output / "search-index.json").read_text(encoding="utf-8"))
     file_count = sum(1 for path in final_output.iterdir() if path.is_file())
-    expected_files = page_count + 5
+    expected_files = page_count + 6
     if file_count != expected_files:
         raise AssertionError(f"expected {expected_files} files, got {file_count}")
     if len(search) != page_count:
