@@ -2,7 +2,7 @@
   "file_count": 8,
   "html_count": 5,
   "data_count": 2,
-  "total_bytes": 32581,
+  "total_bytes": 33161,
   "files": [
     {"path":"index.html","kind":"html","bytes":311},
     {"path":"robots.txt","kind":"asset","bytes":44},
@@ -10,7 +10,7 @@
     {"path":"overview.html","kind":"html","bytes":7025},
     {"path":"changelog.html","kind":"html","bytes":6498},
     {"path":"quick-start.html","kind":"html","bytes":7108},
-    {"path":"search-index.json","kind":"data","bytes":2572},
-    {"path":"api-reference.html","kind":"html","bytes":8752}
+    {"path":"search-index.json","kind":"data","bytes":2790},
+    {"path":"api-reference.html","kind":"html","bytes":9114}
   ]
 }

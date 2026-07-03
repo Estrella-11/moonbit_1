@@ -16,6 +16,7 @@ examples, and generated artifacts.
 | Site validation diagnostics | `validate_site`, `diagnostics_to_text` | validation tests and CLI tests | strict-mode CLI behavior |
 | Quality gate | `evaluate_quality` | quality gate tests and benchmark checks | `docs/benchmark-notes.md` |
 | `.mbti` API extraction | `parse_mbti`, API page builders | API parser tests | `dist-cli-example/api-reference.html` |
+| API review notes | `mbti_to_page` | API page tests | generated `Review Notes` section |
 | CLI generation | `cmd/moondockit` | `tools/test_cli.py` | compiled CLI build output |
 | Config file workflow | CLI config parsing and schema | CLI integration tests | `examples/moondockit.json`, schema |
 | Release readiness | release and acceptance docs | `tools/verify_project.py` | `docs/final-acceptance.md` |

@@ -303,6 +303,16 @@ pub fn mbti_to_page(source : String) -> DocPage {
       }
     }
     out.write_string("\n")
+    out.write_string("## Review Notes\n\n")
+    out.write_string(
+      "- Source: generated `.mbti` package interface from `moon info`.\n",
+    )
+    out.write_string(
+      "- Navigation: symbol index links point to each generated declaration.\n",
+    )
+    out.write_string(
+      "- Function entries include parameter counts and return types when available.\n\n",
+    )
     out.write_string("## Symbol Index\n\n")
     for kind in kinds {
       let matching = api.symbols.filter(symbol => symbol.kind == kind)

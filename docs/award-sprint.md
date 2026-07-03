@@ -29,8 +29,10 @@ Markdown guides, MoonBit interfaces, validation, search, and static publishing.
 3. Focused quality lift
 
 The CLI now prints actionable hints for missing inputs, failed quality gates,
-and strict validation warnings. Remaining focused improvements should keep the
-same shape: small, testable, and visible in demos.
+and strict validation warnings. API reference pages also include review notes
+that explain `.mbti` provenance, symbol navigation, and function metadata.
+Remaining focused improvements should keep the same shape: small, testable,
+and visible in demos.
 
 4. Evidence polish
 

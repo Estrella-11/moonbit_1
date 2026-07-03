@@ -37,6 +37,8 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - `.mbti` public API extraction for functions, structs, enums, and traits.
 - API reference summaries with declaration counts, function arity, and return
   type extraction from MoonBit signatures.
+- API reference review notes explain `.mbti` provenance, symbol navigation, and
+  function metadata for faster reviewer inspection.
 - Stable per-symbol API anchors for deep links into generated declarations.
 - Grouped API symbol index links for faster large-reference navigation.
 - Package-focused mooncakes.io README with library and API-generation examples.
