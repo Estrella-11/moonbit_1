@@ -194,6 +194,8 @@ For competition review, start with:
 - Example site sources: `examples/site`
 - Generated example site: `dist-example`
 - MoonBit CLI generated site: `dist-cli-example`
+- Downstream adoption fixture: `examples/adoption-package`
+- Generated adoption site: `dist-adoption-example`
 
 ## Award Sprint Direction
 

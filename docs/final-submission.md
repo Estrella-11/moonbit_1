@@ -36,6 +36,8 @@ competition.
 - Public showcase: https://estrella-11.github.io/moonbit_1/
 - Example source pages: `examples/site`
 - Generated example site: `dist-example`
+- Downstream adoption fixture: `examples/adoption-package`
+- Generated adoption site: `dist-adoption-example`
 - MoonBit CLI package: `cmd/moondockit`
 - MoonBit CLI generated site: `dist-cli-example`
 

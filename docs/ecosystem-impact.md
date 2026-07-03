@@ -57,6 +57,8 @@ The project includes materials that make reuse realistic:
 - `docs/adoption-playbook.md` for downstream package authors;
 - `examples/moondockit.json` and `examples/moondockit.schema.json` for
   repeatable configuration;
+- `examples/adoption-package` and `dist-adoption-example` as a concrete
+  downstream-package adoption case;
 - `tools/verify_project.py` for acceptance-style verification;
 - `dist-cli-example/api-reference.html` as a self-hosted API reference example.
 
@@ -70,6 +72,8 @@ For competition review, MoonDocKit demonstrates:
   tests;
 - generated public documentation, API reference, search index, sitemap, and
   output manifest;
+- a second-package adoption example that documents a small statistics package
+  from handwritten guides plus a `.mbti` API fixture;
 - open-source readiness through license, release notes, publishing plan, and
   adoption guidance.
 

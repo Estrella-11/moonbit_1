@@ -32,3 +32,16 @@ manifest, and the JavaScript backend filesystem adapter end to end.
 
 The example content demonstrates inline code, strong text, emphasis, safe
 links, safe autolinks, and safe image syntax.
+
+## Adoption Example
+
+The `adoption-package` directory is a small downstream-package fixture. It
+shows how a separate MoonBit package can keep its own guides plus a
+`pkg.generated.mbti` interface and build a complete documentation site:
+
+```bash
+moon run --target js cmd/moondockit --config examples/adoption-package/moondockit.json --strict
+```
+
+The generated output lives in `dist-adoption-example` and gives reviewers a
+concrete second-package adoption case.

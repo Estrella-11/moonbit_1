@@ -1,0 +1,25 @@
+// Example interface fixture for a downstream MoonBit package.
+package "example/sample-statkit"
+
+// Values
+pub fn mean(Array[Double]) -> Double
+
+pub fn median(Array[Double]) -> Double
+
+pub fn percentile(Array[Double], Double) -> Double
+
+pub fn summarize(Array[Double]) -> Summary
+
+// Types and methods
+pub(all) struct Summary {
+  count : Int
+  mean : Double
+  median : Double
+  min : Double
+  max : Double
+}
+
+pub(all) enum SampleError {
+  EmptySample
+  InvalidPercentile
+}

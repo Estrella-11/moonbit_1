@@ -120,6 +120,38 @@ def verify_moonbit_cli() -> None:
             raise SystemExit(f"interactive search marker not found: {marker}")
 
 
+def verify_adoption_example() -> None:
+    run(
+        [
+            str(MOON),
+            "run",
+            "--target",
+            "js",
+            "cmd/moondockit",
+            "--config",
+            "examples/adoption-package/moondockit.json",
+            "--strict",
+        ]
+    )
+    for path in [
+        "dist-adoption-example/index.html",
+        "dist-adoption-example/api-reference.html",
+        "dist-adoption-example/overview.html",
+        "dist-adoption-example/quick-start.html",
+        "dist-adoption-example/changelog.html",
+        "dist-adoption-example/search-index.json",
+        "dist-adoption-example/site-manifest.json",
+        "dist-adoption-example/sitemap.xml",
+    ]:
+        require(path)
+    api = require("dist-adoption-example/api-reference.html").read_text(
+        encoding="utf-8"
+    )
+    for marker in ["example/sample-statkit", "summarize", "SampleError"]:
+        if marker not in api:
+            raise SystemExit(f"adoption API marker not found: {marker}")
+
+
 def verify_config_files() -> None:
     config = require("examples/moondockit.json")
     schema = require("examples/moondockit.schema.json")
@@ -145,6 +177,7 @@ def main() -> None:
         "moon.mod",
         "cmd/moondockit/moon.pkg",
         "docs/acceptance-guide.md",
+        "docs/award-sprint.md",
         "docs/accessibility-notes.md",
         "docs/architecture.md",
         "docs/adoption-playbook.md",
@@ -174,6 +207,7 @@ def main() -> None:
     verify_config_files()
     verify_example_site()
     verify_moonbit_cli()
+    verify_adoption_example()
     run([PYTHON, "tools/test_cli.py"])
     run([str(MOON), "check"])
     run([str(MOON), "check", "--target", "js"])

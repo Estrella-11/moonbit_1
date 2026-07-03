@@ -15,9 +15,10 @@ can inspect in under two minutes.
 
 1. Real adoption evidence
 
-Add one small downstream MoonBit package example that uses MoonDocKit to produce
-guides plus `.mbti` API documentation. The best evidence is a short source
-directory, generated output, and a paragraph explaining what became easier.
+The repository now includes `examples/adoption-package`, a small downstream
+MoonBit package fixture that uses MoonDocKit to produce guides plus `.mbti` API
+documentation. The remaining lift is to add more real-world adoption evidence
+from public packages.
 
 2. Reviewer-first narrative
 
@@ -46,12 +47,11 @@ artifact is more damaging than a missing stretch feature.
 
 ## Suggested Next Commit
 
-Build a real-package adoption example and link it from:
+Add a focused quality improvement and link it from:
 
 - `README.md`
-- `docs/ecosystem-impact.md`
-- `docs/adoption-playbook.md`
+- `docs/demo-script.md`
 - `docs/reviewer-scorecard.md`
 
-The goal is to let reviewers say: this is already useful for another MoonBit
-package today.
+The goal is to let reviewers say: this project keeps converting feedback into
+small, verified release increments.

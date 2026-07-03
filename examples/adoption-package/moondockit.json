@@ -1,0 +1,10 @@
+{
+  "source": "examples/adoption-package/site",
+  "output": "dist-adoption-example",
+  "api": "examples/adoption-package/pkg.generated.mbti",
+  "title": "SampleStatKit Docs",
+  "site_url": "https://example.com/sample-statkit",
+  "language": "en",
+  "description": "Adoption example for a small MoonBit statistics package",
+  "footer": "Adoption example built with `MoonDocKit`"
+}

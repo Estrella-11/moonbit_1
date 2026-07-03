@@ -7,7 +7,9 @@ evidence.
 
 - End-to-end CLI: `cmd/moondockit`
 - Example source site: `examples/site`
+- Downstream adoption fixture: `examples/adoption-package`
 - Generated showcase output: `dist-cli-example`
+- Generated adoption output: `dist-adoption-example`
 - Public API page: `dist-cli-example/api-reference.html`
 - Machine-readable output manifest: `dist-cli-example/site-manifest.json`
 - Final acceptance index: `docs/final-acceptance.md`

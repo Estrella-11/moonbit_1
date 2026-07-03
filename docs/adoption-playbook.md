@@ -73,6 +73,19 @@ my-package/
 The source directory is versioned. The generated output may be versioned for
 review-heavy workflows or produced only in CI for release workflows.
 
+## Repository Example
+
+This repository includes a small downstream-package fixture at
+`examples/adoption-package`. It documents a sample statistics package from
+three guide pages plus `examples/adoption-package/pkg.generated.mbti`:
+
+```bash
+moon run --target js cmd/moondockit --config examples/adoption-package/moondockit.json --strict
+```
+
+The generated result is checked into `dist-adoption-example` so reviewers can
+inspect a concrete adoption case without creating another repository.
+
 ## Config File
 
 For repeatable builds, keep a JSON config in the repository:

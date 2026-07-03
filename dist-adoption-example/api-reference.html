@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Adoption example for a small MoonBit statistics package">
+<title>MoonBit API - SampleStatKit Docs</title>
+<meta property="og:title" content="MoonBit API - SampleStatKit Docs">
+<meta property="og:description" content="Adoption example for a small MoonBit statistics package">
+<link rel="canonical" href="https://example.com/sample-statkit/api-reference.html">
+<meta property="og:url" content="https://example.com/sample-statkit/api-reference.html">
+<style>:root{color-scheme:light}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif;color:#172033;background:#f7f8fb}aside{position:fixed;z-index:2;inset:0 auto 0 0;width:240px;padding:28px 20px;overflow-y:auto;background:#ffffff;border-right:1px solid #dde3ee}.skip-link{position:absolute;left:12px;top:12px;z-index:4;transform:translateY(-160%);padding:8px 10px;border-radius:6px;background:#2457c5;color:#ffffff;font-weight:700}.skip-link:focus{transform:translateY(0);outline:2px solid #172033;outline-offset:2px}.brand{display:flex;align-items:center;gap:10px;padding:0 10px;color:#172033;font-weight:750;font-size:17px}.brand-mark{display:grid;place-items:center;width:30px;height:30px;border-radius:7px;background:#2457c5;color:#ffffff}.search{position:relative;margin:24px 0 12px}.search label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.search input{width:100%;padding:9px 10px;border:1px solid #dde3ee;border-radius:6px;background:#f7f8fb;color:#172033}.search input:focus{outline:2px solid #2457c5;outline-offset:1px}.search-results{display:grid;position:absolute;z-index:3;top:44px;left:0;right:0;max-height:320px;overflow:auto;padding:6px;border:1px solid #dde3ee;border-radius:7px;background:#ffffff;box-shadow:0 12px 30px rgba(23,32,51,.14)}.search-results[hidden]{display:none}.search-results a{display:grid;gap:2px;padding:8px;border-radius:5px;color:#172033}.search-results a:hover{background:#f7f8fb;text-decoration:none}.search-results span{padding:8px;font-size:13px;line-height:1.35;opacity:.72}.search-results a span{padding:0}nav{display:grid;gap:4px;margin-top:16px}nav a{padding:8px 10px;border-radius:6px;color:#172033}nav a:hover{background:#f7f8fb}nav a.active{background:#f7f8fb;color:#2457c5;font-weight:650}a{color:#2457c5;text-decoration:none}a:hover{text-decoration:underline}main{min-height:100vh;margin-left:240px}.content{max-width:820px;margin:0 auto;padding:52px 36px 72px}h1,h2{line-height:1.25;letter-spacing:0}h1{font-size:36px;margin:0 0 22px}h2{font-size:24px;margin:42px 0 14px;padding-top:10px;border-top:1px solid #dde3ee}p,ul,blockquote{margin:0 0 18px}blockquote{padding:10px 18px;border-left:3px solid #2457c5;background:#ffffff}.toc{padding:16px 18px;margin:0 0 34px;border:1px solid #dde3ee;background:#ffffff;border-radius:7px}.toc-title{font-weight:700;margin-bottom:8px}.toc a{display:block;padding:2px 0}.toc .level-2{padding-left:16px}pre{padding:18px 20px;border-radius:7px;background:#101828;color:#eef4ff;overflow:auto}code{font-family:ui-monospace,"Cascadia Code",monospace}p code,li code,footer code{padding:2px 5px;border:1px solid #dde3ee;border-radius:4px;background:#ffffff}footer{margin-top:52px;padding-top:20px;border-top:1px solid #dde3ee;font-size:14px;opacity:.75}@media(max-width:1120px){.content{margin:0;padding-left:32px;padding-right:32px}}@media(max-width:760px){aside{position:relative;width:auto;padding:18px 20px;border-right:0;border-bottom:1px solid #dde3ee}.brand{padding:0}.search{margin:16px 0 10px}.search-results{position:relative;top:6px}nav{display:flex;gap:6px;margin-top:14px;overflow-x:auto}nav a{white-space:nowrap}main{margin-left:0}.content{padding:32px 20px 56px}h1{font-size:30px}h2{font-size:22px}.toc{margin-bottom:28px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>
+</head><body><a class="skip-link" href="#content">Skip to content</a><aside><a class="brand" href="overview.html"><span class="brand-mark">M</span><span>SampleStatKit Docs</span></a><div class="search"><label for="site-search">Search documentation</label><input id="site-search" data-search-input type="search" placeholder="Search docs" autocomplete="off"><div class="search-results" data-search-results aria-live="polite" hidden></div></div><nav aria-label="Documentation"><a href="overview.html">Overview</a><a href="quick-start.html">Quick Start</a><a href="changelog.html">Changelog</a><a href="api-reference.html" class="active" aria-current="page">MoonBit API</a></nav></aside><main id="content"><div class="content">
+<section class="toc"><div class="toc-title">On this page</div>
+<a class="level-1" href="#moonbit-api">MoonBit API</a>
+<a class="level-2" href="#api-summary">API Summary</a>
+<a class="level-2" href="#symbol-index">Symbol Index</a>
+<a class="level-3" href="#functions">Functions</a>
+<a class="level-3" href="#structs">Structs</a>
+<a class="level-3" href="#enums">Enums</a>
+<a class="level-2" href="#functions-2">Functions</a>
+<a class="level-3" href="#mean">mean</a>
+<a class="level-3" href="#median">median</a>
+<a class="level-3" href="#percentile">percentile</a>
+<a class="level-3" href="#summarize">summarize</a>
+<a class="level-2" href="#structs-2">Structs</a>
+<a class="level-3" href="#summary">Summary</a>
+<a class="level-2" href="#enums-2">Enums</a>
+<a class="level-3" href="#sampleerror">SampleError</a>
+</section>
+<h1 id="moonbit-api">MoonBit API</h1>
+<p>Package <code>example/sample-statkit</code> exposes 6 public declarations.</p>
+<h2 id="api-summary">API Summary</h2>
+<ul>
+<li>Functions: 4</li>
+<li>Structs: 1</li>
+<li>Enums: 1</li>
+</ul>
+<h2 id="symbol-index">Symbol Index</h2>
+<h3 id="functions">Functions</h3>
+<ul>
+<li><a href="#mean">mean</a></li>
+<li><a href="#median">median</a></li>
+<li><a href="#percentile">percentile</a></li>
+<li><a href="#summarize">summarize</a></li>
+</ul>
+<h3 id="structs">Structs</h3>
+<ul>
+<li><a href="#summary">Summary</a></li>
+</ul>
+<h3 id="enums">Enums</h3>
+<ul>
+<li><a href="#sampleerror">SampleError</a></li>
+</ul>
+<h2 id="functions-2">Functions</h2>
+<h3 id="mean">mean</h3>
+<ul>
+<li>Parameters: 1</li>
+<li>Returns: <code>Double</code></li>
+</ul>
+<pre><code class="language-mbt">pub fn mean(Array[Double]) -&gt; Double
+</code></pre>
+<h3 id="median">median</h3>
+<ul>
+<li>Parameters: 1</li>
+<li>Returns: <code>Double</code></li>
+</ul>
+<pre><code class="language-mbt">pub fn median(Array[Double]) -&gt; Double
+</code></pre>
+<h3 id="percentile">percentile</h3>
+<ul>
+<li>Parameters: 2</li>
+<li>Returns: <code>Double</code></li>
+</ul>
+<pre><code class="language-mbt">pub fn percentile(Array[Double], Double) -&gt; Double
+</code></pre>
+<h3 id="summarize">summarize</h3>
+<ul>
+<li>Parameters: 1</li>
+<li>Returns: <code>Summary</code></li>
+</ul>
+<pre><code class="language-mbt">pub fn summarize(Array[Double]) -&gt; Summary
+</code></pre>
+<h2 id="structs-2">Structs</h2>
+<h3 id="summary">Summary</h3>
+<pre><code class="language-mbt">pub(all) struct Summary {
+  count : Int
+  mean : Double
+  median : Double
+  min : Double
+  max : Double
+}
+</code></pre>
+<h2 id="enums-2">Enums</h2>
+<h3 id="sampleerror">SampleError</h3>
+<pre><code class="language-mbt">pub(all) enum SampleError {
+  EmptySample
+  InvalidPercentile
+}
+</code></pre>
+<footer>Adoption example built with <code>MoonDocKit</code></footer>
+</div></main><script>
+(() => {
+  const input = document.querySelector("[data-search-input]");
+  const results = document.querySelector("[data-search-results]");
+  let entries = [];
+  fetch("search-index.json")
+    .then(response => response.json())
+    .then(value => { entries = value; })
+    .catch(() => {});
+  input.addEventListener("input", () => {
+    const query = input.value.trim().toLowerCase();
+    results.replaceChildren();
+    if (query.length < 2) {
+      results.hidden = true;
+      return;
+    }
+    const matches = entries.filter(item =>
+      `${item.title} ${item.text} ${(item.tags || []).join(" ")}`.toLowerCase().includes(query)
+    ).slice(0, 8);
+    for (const item of matches) {
+      const link = document.createElement("a");
+      const title = document.createElement("strong");
+      const excerpt = document.createElement("span");
+      link.href = item.path;
+      title.textContent = item.title;
+      excerpt.textContent = item.text.slice(0, 96);
+      link.append(title, excerpt);
+      results.append(link);
+    }
+    if (matches.length === 0) {
+      const empty = document.createElement("span");
+      empty.textContent = "No matching pages";
+      results.append(empty);
+    }
+    results.hidden = false;
+  });
+})();
+</script>
+</body></html>

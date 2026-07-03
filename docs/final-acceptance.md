@@ -44,6 +44,8 @@ Then inspect these generated artifacts:
 - `dist-cli-example/api-reference.html`
 - `dist-cli-example/search-index.json`
 - `dist-cli-example/site-manifest.json`
+- `dist-adoption-example/api-reference.html`
+- `dist-adoption-example/site-manifest.json`
 - `dist-example/site-manifest.json`
 
 ## Verification Commands
