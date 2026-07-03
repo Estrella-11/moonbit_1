@@ -24,6 +24,8 @@ MoonDocKit 0.1.0 is the first competition baseline release.
 - JSON config-file support with a documented example and schema.
 - Non-zero compiled Node.js CLI exit status for invalid arguments and failed
   quality gates.
+- CLI failure paths print actionable hints for missing inputs, failed quality
+  gates, and strict validation warnings.
 - CLI validation diagnostics are printed on warning-level successful builds,
   while `--strict` fails on warnings before writing output.
 - `--dry-run` CLI mode reports planned output files and byte counts without

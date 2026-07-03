@@ -145,7 +145,11 @@ def test_empty_site(workspace: Path) -> None:
         ["node", str(CLI), "--source", str(source), "--output", str(output)],
         expected=1,
     )
-    for marker in ["quality gate failed", "empty-site"]:
+    for marker in [
+        "quality gate failed",
+        "empty-site",
+        "hint: fix validation errors before publishing documentation",
+    ]:
         if marker not in result.stdout:
             raise AssertionError(f"{marker!r} not found in empty-site diagnostic")
     if output.exists():
@@ -164,8 +168,12 @@ def test_missing_source(workspace: Path) -> None:
         ],
         expected=1,
     )
-    if "source directory not found" not in result.stdout:
-        raise AssertionError("missing-source diagnostic was not printed")
+    for marker in [
+        "source directory not found",
+        "hint: run with --config examples/moondockit.json",
+    ]:
+        if marker not in result.stdout:
+            raise AssertionError(f"{marker!r} not found in missing-source diagnostic")
 
 
 def test_output_path_must_be_directory(workspace: Path) -> None:
@@ -178,8 +186,12 @@ def test_output_path_must_be_directory(workspace: Path) -> None:
         ["node", str(CLI), "--source", str(source), "--output", str(output)],
         expected=1,
     )
-    if "output path exists and is not a directory" not in result.stdout:
-        raise AssertionError("output-path diagnostic was not printed")
+    for marker in [
+        "output path exists and is not a directory",
+        "hint: run with --config examples/moondockit.json",
+    ]:
+        if marker not in result.stdout:
+            raise AssertionError(f"{marker!r} not found in output-path diagnostic")
 
 
 def test_config_file_build(workspace: Path) -> None:
@@ -279,7 +291,11 @@ def test_strict_mode_fails_on_validation_warnings(workspace: Path) -> None:
         ],
         expected=1,
     )
-    for marker in ["strict validation failed", "warning empty-source"]:
+    for marker in [
+        "strict validation failed",
+        "warning empty-source",
+        "hint: remove warnings or run without --strict for local previews",
+    ]:
         if marker not in result.stdout:
             raise AssertionError(f"{marker!r} not found in strict diagnostic")
     if strict_output.exists():

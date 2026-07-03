@@ -28,9 +28,9 @@ Markdown guides, MoonBit interfaces, validation, search, and static publishing.
 
 3. Focused quality lift
 
-Prioritize improvements that make demos more convincing without destabilizing
-the parser: clearer CLI diagnostics, stronger API-reference grouping, or one
-well-designed theme preset.
+The CLI now prints actionable hints for missing inputs, failed quality gates,
+and strict validation warnings. Remaining focused improvements should keep the
+same shape: small, testable, and visible in demos.
 
 4. Evidence polish
 
@@ -47,7 +47,7 @@ artifact is more damaging than a missing stretch feature.
 
 ## Suggested Next Commit
 
-Add a focused quality improvement and link it from:
+Add another focused quality improvement and link it from:
 
 - `README.md`
 - `docs/demo-script.md`

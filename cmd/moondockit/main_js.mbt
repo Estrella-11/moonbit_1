@@ -87,6 +87,9 @@ fn write_manifest(directory : String, files : Array[@lib.OutputFile]) -> Int {
 ///|
 fn fail(message : String) -> Unit {
   println("MoonDocKit input error: \{message}")
+  println(
+    "hint: run with --config examples/moondockit.json or pass --source and --output explicitly",
+  )
   exit_failure(1)
 }
 
@@ -232,12 +235,14 @@ fn main {
   if !quality.passed {
     println("MoonDocKit quality gate failed: \{quality.score}")
     println(diagnostics)
+    println("hint: fix validation errors before publishing documentation")
     exit_failure(1)
     return
   }
   if strict && diagnostics != "ok" {
     println("MoonDocKit strict validation failed")
     println(diagnostics)
+    println("hint: remove warnings or run without --strict for local previews")
     exit_failure(1)
     return
   }

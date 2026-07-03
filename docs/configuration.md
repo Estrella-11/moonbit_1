@@ -46,3 +46,11 @@ moon run --target js cmd/moondockit --config examples/moondockit.json --output d
 
 The JSON schema for editor hints and review is available at
 `examples/moondockit.schema.json`.
+
+## Diagnostics
+
+When required inputs are missing or invalid, the CLI prints a stable
+`MoonDocKit input error` line plus a `hint:` line that points users toward
+`--config examples/moondockit.json` or explicit `--source` and `--output`
+arguments. Quality-gate and strict-mode failures also print next-step hints so
+CI logs explain how to recover.
