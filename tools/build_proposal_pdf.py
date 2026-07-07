@@ -1,25 +1,46 @@
+from __future__ import annotations
+
 from pathlib import Path
 
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
-from reportlab.lib.units import mm
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+try:
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+    from reportlab.lib.units import mm
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.cidfonts import UnicodeCIDFont
+    from reportlab.pdfbase.ttfonts import TTFont
+    from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+except ModuleNotFoundError:
+    REPORTLAB_AVAILABLE = False
+else:
+    REPORTLAB_AVAILABLE = True
 
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs" / "MoonDocKit-project-proposal-appendix-template.pdf"
-FONT = Path(r"C:\Windows\Fonts\simsun.ttc")
+FONT_CANDIDATES = [
+    Path(r"C:\Windows\Fonts\simsun.ttc"),
+    Path(r"C:\Windows\Fonts\msyh.ttc"),
+    Path("/System/Library/Fonts/STHeiti Light.ttc"),
+    Path("/System/Library/Fonts/PingFang.ttc"),
+    Path("/System/Library/Fonts/Supplemental/Songti.ttc"),
+    Path("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"),
+    Path("/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc"),
+]
 
 
 def register_font() -> str:
-    try:
-        pdfmetrics.registerFont(TTFont("SimSun", str(FONT), subfontIndex=0))
-    except TypeError:
-        pdfmetrics.registerFont(TTFont("SimSun", str(FONT)))
-    return "SimSun"
+    for font in FONT_CANDIDATES:
+        if not font.exists():
+            continue
+        try:
+            pdfmetrics.registerFont(TTFont("MoonDocKitCN", str(font), subfontIndex=0))
+        except TypeError:
+            pdfmetrics.registerFont(TTFont("MoonDocKitCN", str(font)))
+        return "MoonDocKitCN"
+    pdfmetrics.registerFont(UnicodeCIDFont("STSong-Light"))
+    return "STSong-Light"
 
 
 def p(text: str, style: ParagraphStyle) -> Paragraph:
@@ -27,10 +48,19 @@ def p(text: str, style: ParagraphStyle) -> Paragraph:
 
 
 def bullet(items: list[str]) -> str:
-    return "<br/>".join("• " + item for item in items)
+    return "<br/>".join("- " + item for item in items)
 
 
 def main() -> None:
+    if not REPORTLAB_AVAILABLE:
+        if OUT.exists():
+            print(
+                "warning: reportlab is not installed; kept existing proposal PDF."
+            )
+            return
+        raise SystemExit(
+            "reportlab is required to build the proposal PDF; install reportlab first"
+        )
     font = register_font()
     styles = getSampleStyleSheet()
     title = ParagraphStyle(
