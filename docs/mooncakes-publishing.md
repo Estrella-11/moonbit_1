@@ -15,8 +15,11 @@ This document records the package metadata and release path.
 
 ```bash
 moon check
-python tools/moon_hard_gate.py all
 moon test
+moon info
+git diff --exit-code
+moon fmt
+git diff --exit-code
 python tools/test_cli.py
 moon run cmd/main
 moon check --target js

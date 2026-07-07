@@ -82,11 +82,14 @@ Generated MoonBit API:
 
 ```bash
 moon check
-python tools/moon_hard_gate.py all
 moon test
+moon info
+git diff --exit-code
+moon fmt
+git diff --exit-code
+moon run cmd/main
 python tools/test_cli.py
 python tools/benchmark_cli.py --pages 10,100 --rounds 2
-moon run cmd/main
 python tools/verify_project.py
 ```
 

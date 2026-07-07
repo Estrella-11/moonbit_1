@@ -41,8 +41,9 @@ Before a release or final acceptance update, run:
 
 ```bash
 moon info
+git diff --exit-code
 moon fmt
-python tools/moon_hard_gate.py all
+git diff --exit-code
 moon check
 moon check --target js
 moon test

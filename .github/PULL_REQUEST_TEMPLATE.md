@@ -5,7 +5,9 @@
 ## Checks
 
 - [ ] `moon info`
+- [ ] `git diff --exit-code`
 - [ ] `moon fmt`
+- [ ] `git diff --exit-code`
 - [ ] `moon check`
 - [ ] `moon check --target js`
 - [ ] `moon test`

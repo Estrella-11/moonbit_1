@@ -25,17 +25,21 @@ jobs:
       - name: Show toolchain
         run: moon version
 
-      - name: Format hard gate
-        run: python tools/moon_hard_gate.py fmt
-
-      - name: Interface hard gate
-        run: python tools/moon_hard_gate.py info
-
       - name: Check
         run: moon check
 
       - name: Test
         run: moon test
+
+      - name: Interface output is current
+        run: |
+          moon info
+          git diff --exit-code
+
+      - name: Formatting is current
+        run: |
+          moon fmt
+          git diff --exit-code
 
       - name: Run demo
         run: moon run cmd/main

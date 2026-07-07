@@ -6,11 +6,14 @@ This guide is the quick verification path for project reviewers.
 
 ```bash
 moon check
-python tools/moon_hard_gate.py all
 moon test
+moon info
+git diff --exit-code
+moon fmt
+git diff --exit-code
+moon run cmd/main
 python tools/test_cli.py
 python tools/benchmark_cli.py --pages 10,100 --rounds 2
-moon run cmd/main
 moon check --target js
 moon run --target js cmd/moondockit --source examples/site --api pkg.generated.mbti --output dist-cli-example --title "MoonDocKit CLI Example"
 ```
@@ -18,16 +21,16 @@ moon run --target js cmd/moondockit --source examples/site --api pkg.generated.m
 Expected result:
 
 - `moon check` completes successfully.
-- `python tools/moon_hard_gate.py all` validates the required format and
-  interface gates, using compatible fallbacks when the installed `moon`
-  toolchain does not support `--deny-warn`.
 - `moon test` reports 50 passing tests.
+- `moon info` followed by `git diff --exit-code` confirms generated interface
+  files are committed and current.
+- `moon fmt` followed by `git diff --exit-code` confirms formatting is current.
+- `moon run cmd/main` prints a MoonDocKit demo summary with generated files,
+  site statistics, and validation diagnostics.
 - `python tools/test_cli.py` passes ten compiled CLI integration scenarios.
 - `python tools/benchmark_cli.py --pages 10,100 --rounds 2` records a small
   reproducible scale check for the compiled CLI.
 - `moon check --target js` verifies the Node.js CLI target.
-- `moon run cmd/main` prints a MoonDocKit demo summary with generated files,
-  site statistics, and validation diagnostics.
 - The MoonBit CLI writes a complete static site to `dist-cli-example`.
 - `api-reference.html` documents the package's generated MoonBit interface.
 
