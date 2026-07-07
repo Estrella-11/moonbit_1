@@ -17,8 +17,19 @@ jobs:
           curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
           echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
 
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
       - name: Show toolchain
         run: moon version
+
+      - name: Format hard gate
+        run: python tools/moon_hard_gate.py fmt
+
+      - name: Interface hard gate
+        run: python tools/moon_hard_gate.py info
 
       - name: Check
         run: moon check
@@ -34,6 +45,9 @@ jobs:
 
       - name: Test compiled CLI
         run: python tools/test_cli.py
+
+      - name: One-shot verification
+        run: python tools/verify_project.py
 
       - name: Build example site with MoonBit CLI
         run: >

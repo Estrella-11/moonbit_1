@@ -6,6 +6,7 @@ This guide is the quick verification path for project reviewers.
 
 ```bash
 moon check
+python tools/moon_hard_gate.py all
 moon test
 python tools/test_cli.py
 python tools/benchmark_cli.py --pages 10,100 --rounds 2
@@ -17,6 +18,9 @@ moon run --target js cmd/moondockit --source examples/site --api pkg.generated.m
 Expected result:
 
 - `moon check` completes successfully.
+- `python tools/moon_hard_gate.py all` validates the required format and
+  interface gates, using compatible fallbacks when the installed `moon`
+  toolchain does not support `--deny-warn`.
 - `moon test` reports 50 passing tests.
 - `python tools/test_cli.py` passes ten compiled CLI integration scenarios.
 - `python tools/benchmark_cli.py --pages 10,100 --rounds 2` records a small

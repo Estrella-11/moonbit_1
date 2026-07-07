@@ -42,6 +42,7 @@ Before a release or final acceptance update, run:
 ```bash
 moon info
 moon fmt
+python tools/moon_hard_gate.py all
 moon check
 moon check --target js
 moon test

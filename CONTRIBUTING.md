@@ -18,6 +18,7 @@ Install the MoonBit toolchain, then run:
 ```bash
 moon info
 moon fmt
+python tools/moon_hard_gate.py all
 moon check
 moon check --target js
 moon test

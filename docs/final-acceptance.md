@@ -56,6 +56,7 @@ Then inspect these generated artifacts:
 ```bash
 moon check
 moon check --target js
+python tools/moon_hard_gate.py all
 moon test
 python tools/test_cli.py
 python tools/verify_project.py
@@ -65,6 +66,8 @@ python tools/benchmark_cli.py --pages 10,100 --rounds 2
 Expected evidence:
 
 - `moon test` reports 50 passing tests.
+- `python tools/moon_hard_gate.py all` covers the required format and
+  interface validation commands with current-toolchain compatibility.
 - `python tools/test_cli.py` reports 10 compiled CLI integration scenarios.
 - `python tools/verify_project.py` prints `Project verification passed.`
 - The CLI writes 13 files for the example site with generated API docs.

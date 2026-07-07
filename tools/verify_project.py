@@ -3,6 +3,8 @@ import sys
 import json
 from pathlib import Path
 
+from moon_tools import find_moon
+
 try:
     from pypdf import PdfReader
 except ModuleNotFoundError:
@@ -11,7 +13,7 @@ except ModuleNotFoundError:
 
 ROOT = Path(__file__).resolve().parents[1]
 PYTHON = sys.executable
-MOON = Path.home() / ".moon" / "bin" / "moon.exe"
+MOON = find_moon()
 
 
 def run(command: list[str]) -> None:
@@ -205,6 +207,8 @@ def main() -> None:
         "docs/mooncakes-publishing.md",
         "docs/windows-toolchain-troubleshooting.md",
         "tools/test_cli.py",
+        "tools/moon_hard_gate.py",
+        "tools/moon_tools.py",
         ".github/PULL_REQUEST_TEMPLATE.md",
         ".github/ISSUE_TEMPLATE/bug_report.md",
         ".github/ISSUE_TEMPLATE/feature_request.md",
@@ -216,6 +220,7 @@ def main() -> None:
     verify_example_site()
     verify_moonbit_cli()
     verify_adoption_example()
+    run([PYTHON, "tools/moon_hard_gate.py", "all"])
     run([PYTHON, "tools/test_cli.py"])
     run([str(MOON), "check"])
     run([str(MOON), "check", "--target", "js"])

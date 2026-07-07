@@ -82,6 +82,7 @@ Generated MoonBit API:
 
 ```bash
 moon check
+python tools/moon_hard_gate.py all
 moon test
 python tools/test_cli.py
 python tools/benchmark_cli.py --pages 10,100 --rounds 2

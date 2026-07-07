@@ -45,6 +45,7 @@ competition.
 
 ```bash
 moon check
+python tools/moon_hard_gate.py all
 moon test
 python tools/test_cli.py
 moon run cmd/main
@@ -56,6 +57,8 @@ python tools/verify_project.py
 Expected result:
 
 - `moon check` completes without errors.
+- `python tools/moon_hard_gate.py all` validates format and interface gates
+  while handling current `moon` versions that do not expose `--deny-warn`.
 - `moon test` reports 50 passing tests.
 - The compiled CLI integration suite passes ten success and failure scenarios.
 - `moon run cmd/main` prints generated files, summary metadata, and validation

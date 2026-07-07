@@ -8,9 +8,11 @@ import time
 from datetime import date
 from pathlib import Path
 
+from moon_tools import find_moon
+
 
 ROOT = Path(__file__).resolve().parents[1]
-MOON = Path.home() / ".moon" / "bin" / ("moon.exe" if shutil.which("moon.exe") else "moon")
+MOON = find_moon()
 CLI_CANDIDATES = [
     ROOT / "_build" / "js" / "release" / "build" / "cmd" / "moondockit" / "moondockit.js",
     ROOT / "_build" / "js" / "debug" / "build" / "cmd" / "moondockit" / "moondockit.js",
