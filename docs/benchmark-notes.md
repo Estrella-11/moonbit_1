@@ -8,8 +8,8 @@ rather than unsupported performance claims.
 The current example site contains:
 
 - 6 source Markdown pages
-- 11 generated output files in the Python reference build
-- 12 generated output files in the MoonBit CLI build with API documentation
+- 12 generated output files in the Python reference build
+- 13 generated output files in the MoonBit CLI build with API documentation
 - 1 search index
 - 1 site manifest
 - 1 sitemap
@@ -38,7 +38,7 @@ As of the current baseline:
   library and executable entry points
 - `moon run cmd/main` prints generated file counts and validation status
 - The MoonBit JavaScript CLI combines 6 Markdown pages and the package `.mbti`
-  interface into 12 output files
+  interface into 13 output files
 - `tools/build_example_site.py` writes 12 files to `dist-example`
 - The generated example site includes inline code, strong text, emphasis, safe
   links, autolinks, safe images, description metadata, footer content, sitemap

@@ -63,7 +63,7 @@
 - [x] Final submission notes added.
 - [x] One-shot verification works with ordinary Python environments.
 - [x] CI and verification script exercise the JavaScript target and MoonBit CLI.
-- [x] CI runs the independent nine-scenario compiled CLI integration suite.
+- [x] CI runs the independent ten-scenario compiled CLI integration suite.
 - [x] Coverage baseline measured and recorded.
 - [x] Architecture, implementation boundaries, and AI assistance documented.
 - [x] `moon package` pre-publish build succeeds.
