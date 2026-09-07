@@ -11,7 +11,7 @@
 
 name = "Estrella-11/moondockit"
 
-version = "0.1.0"
+version = "0.2.0"
 
 readme = "README.mbt.md"
 
@@ -25,6 +25,15 @@ keywords = [
   "markdown",
   "moonbit",
   "mooncakes",
+  "ai",
+  "ai-docs",
+  "quality-assessment",
+  "content-summarization",
+  "cross-reference",
+  "coverage-analysis",
+  "consistency-checker",
+  "seo-metadata",
+  "content-recommendations",
 ]
 
-description = "A MoonBit-first documentation site toolkit for package authors."
+description = "A MoonBit-first documentation site toolkit with AI-enhanced docs, quality assessment, content summarization, cross-reference detection, coverage analysis, consistency checking, SEO metadata, content recommendations, and test generation."

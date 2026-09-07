@@ -6,3 +6,5 @@ target
 .moonagent/
 __pycache__/
 *.pyc
+dist-ai-example/
+dist-adoption-ai-example/
