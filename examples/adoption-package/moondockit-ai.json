@@ -1,0 +1,11 @@
+{
+  "source": "examples/adoption-package/site",
+  "output": "dist-adoption-ai-example",
+  "api": "examples/adoption-package/pkg.generated.mbti",
+  "title": "SampleStatKit AI Docs",
+  "site_url": "https://example.com/sample-statkit-ai",
+  "language": "en",
+  "theme": "api",
+  "description": "AI-enhanced adoption example for a small MoonBit statistics package",
+  "footer": "AI-enhanced adoption example built with MoonDocKit"
+}
