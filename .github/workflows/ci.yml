@@ -77,3 +77,43 @@ jobs:
           grep -q "search-index.json" dist-cli-example/overview.html
           grep -q 'name="description" content="MoonDocKit end-to-end CLI example"' dist-cli-example/overview.html
           grep -q "Built and verified by" dist-cli-example/overview.html
+
+      - name: Build with full AI suite
+        run: >
+          moon run --target js cmd/moondockit
+          --source examples/site
+          --api pkg.generated.mbti
+          --output dist-ai-example
+          --ai-doc
+          --ai-quality
+          --ai-summary
+          --ai-xref
+          --ai-coverage
+          --ai-consistency
+          --ai-seo
+          --ai-recommend
+          --ai-tests
+          --title "MoonDocKit AI Full"
+          --site-url https://example.com/moondockit-ai
+          --language en
+          --description "MoonDocKit with full AI suite"
+          --footer 'AI-enhanced by MoonDocKit'
+
+      - name: Verify AI output files
+        run: |
+          test -f dist-ai-example/ai-api-reference.html
+          test -f dist-ai-example/ai-quality-report.md
+          test -f dist-ai-example/ai-site-quality-report.md
+          test -f dist-ai-example/ai-site-summary.md
+          test -f dist-ai-example/ai-cross-reference.md
+          test -f dist-ai-example/ai-coverage-report.md
+          test -f dist-ai-example/ai-consistency-report.md
+          test -f dist-ai-example/ai-seo-report.md
+          test -f dist-ai-example/ai-recommendations.md
+          test -f dist-ai-example/ai-generated-test.mbt
+          grep -q "Quality Assessment" dist-ai-example/ai-quality-report.md
+          grep -q "Cross-Reference" dist-ai-example/ai-cross-reference.md
+          grep -q "Coverage" dist-ai-example/ai-coverage-report.md
+          grep -q "Consistency" dist-ai-example/ai-consistency-report.md
+          grep -q "SEO" dist-ai-example/ai-seo-report.md
+          grep -q "Recommendations" dist-ai-example/ai-recommendations.md
