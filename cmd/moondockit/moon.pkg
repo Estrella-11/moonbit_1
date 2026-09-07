@@ -1,5 +1,6 @@
 import {
   "Estrella-11/moondockit" @lib,
+  "Estrella-11/moondockit/ai",
   "moonbitlang/core/argparse",
 }
 

@@ -121,6 +121,42 @@ fn main {
         "strict",
         about="Fail when validation warnings are present.",
       ),
+      @argparse.FlagArg(
+        "ai-doc",
+        about="Generate AI-enhanced API documentation from .mbti file.",
+      ),
+      @argparse.FlagArg(
+        "ai-quality",
+        about="Run AI quality assessment on all pages.",
+      ),
+      @argparse.FlagArg(
+        "ai-tests",
+        about="Generate AI test stubs from .mbti file.",
+      ),
+      @argparse.FlagArg(
+        "ai-summary",
+        about="Generate AI content summaries for all pages.",
+      ),
+      @argparse.FlagArg(
+        "ai-xref",
+        about="Generate AI cross-reference map between pages.",
+      ),
+      @argparse.FlagArg(
+        "ai-coverage",
+        about="Analyze API documentation coverage gaps.",
+      ),
+      @argparse.FlagArg(
+        "ai-consistency",
+        about="Check documentation style and content consistency.",
+      ),
+      @argparse.FlagArg(
+        "ai-seo",
+        about="Generate SEO metadata and search optimization report.",
+      ),
+      @argparse.FlagArg(
+        "ai-recommend",
+        about="Generate content recommendations and learning paths.",
+      ),
     ],
     options=[
       @argparse.OptionArg("config", about="Optional JSON configuration file.", default_values=[
@@ -231,6 +267,15 @@ fn main {
   )
   let dry_run = flag_enabled(matches, "dry-run")
   let strict = flag_enabled(matches, "strict")
+  let ai_doc_enabled = flag_enabled(matches, "ai-doc")
+  let ai_quality_enabled = flag_enabled(matches, "ai-quality")
+  let ai_tests_enabled = flag_enabled(matches, "ai-tests")
+  let ai_summary_enabled = flag_enabled(matches, "ai-summary")
+  let ai_xref_enabled = flag_enabled(matches, "ai-xref")
+  let ai_coverage_enabled = flag_enabled(matches, "ai-coverage")
+  let ai_consistency_enabled = flag_enabled(matches, "ai-consistency")
+  let ai_seo_enabled = flag_enabled(matches, "ai-seo")
+  let ai_recommend_enabled = flag_enabled(matches, "ai-recommend")
   if source.trim().to_owned() == "" {
     fail("source directory is required; pass --source or set source in config")
     return
@@ -251,7 +296,23 @@ fn main {
     fail("output path exists and is not a directory: \{output}")
     return
   }
-  let site : @lib.DocSite = { title, pages: load_pages(source, api_file) }
+  let pages = load_pages(source, api_file)
+  if ai_doc_enabled && api_file.trim().to_owned() != "" {
+    let api_ref = @lib.parse_mbti(read_text_file(api_file))
+    let ai_config = @ai.default_ai_config()
+    let module_doc = @ai.generate_module_overview(ai_config, api_ref)
+    pages.push({
+      title: "AI Overview",
+      slug: "ai-overview",
+      source: @ai.module_overview_to_markdown(module_doc),
+    })
+    pages.push({
+      title: "AI API Reference",
+      slug: "ai-api-reference",
+      source: @ai.function_docs_to_markdown(module_doc.function_docs),
+    })
+  }
+  let site : @lib.DocSite = { title, pages }
   let validation = @lib.validate_site(site)
   let diagnostics = @lib.diagnostics_to_text(validation)
   let quality = @lib.evaluate_quality(site)
@@ -284,6 +345,75 @@ fn main {
     choose_theme(theme_name),
     options,
   )
+  if ai_quality_enabled {
+    let ai_config = @ai.default_ai_config()
+    let ai_options = @ai.default_quality_options()
+    let results = @ai.assess_site_quality(ai_config, site, ai_options)
+    let quality_report = StringBuilder()
+    quality_report.write_string("# AI Quality Report\n\n")
+    let mut idx = 0
+    while idx < results.length() {
+      let pair = results[idx]
+      let page_title = pair.0
+      let assessment = pair.1
+      quality_report.write_string("## ")
+      quality_report.write_string(page_title)
+      quality_report.write_string("\n\n")
+      quality_report.write_string(@ai.quality_to_markdown(assessment))
+      quality_report.write_string("\n\n")
+      idx = idx + 1
+    }
+    manifest.push({
+      path: "ai-quality-report.md",
+      content: quality_report.to_string(),
+    })
+  }
+  if ai_tests_enabled && api_file.trim().to_owned() != "" {
+    let api_ref = @lib.parse_mbti(read_text_file(api_file))
+    let ai_config = @ai.default_ai_config()
+    let suite = @ai.generate_symbol_tests(ai_config, api_ref)
+    let test_code = @ai.tests_to_moonbit(suite)
+    manifest.push({ path: "ai-generated-test.mbt", content: test_code })
+  }
+  if ai_summary_enabled {
+    let summaries = @ai.summarize_site(site)
+    let summary_md = @ai.site_summary_to_markdown(title, summaries)
+    manifest.push({ path: "ai-site-summary.md", content: summary_md })
+  }
+  if ai_quality_enabled {
+    let ai_config = @ai.default_ai_config()
+    let ai_options = @ai.default_quality_options()
+    let assessments = @ai.assess_site_quality(ai_config, site, ai_options)
+    let site_report = @ai.aggregate_site_quality(assessments)
+    let site_report_md = @ai.site_quality_to_markdown(site_report)
+    manifest.push({ path: "ai-site-quality-report.md", content: site_report_md })
+  }
+  if ai_xref_enabled {
+    let xref_report = @ai.detect_cross_references(site)
+    let xref_md = @ai.xref_to_markdown(xref_report)
+    manifest.push({ path: "ai-cross-reference.md", content: xref_md })
+  }
+  if ai_coverage_enabled && api_file.trim().to_owned() != "" {
+    let api_ref = @lib.parse_mbti(read_text_file(api_file))
+    let coverage = @ai.analyze_coverage(api_ref, site)
+    let coverage_md = @ai.coverage_to_markdown(coverage)
+    manifest.push({ path: "ai-coverage-report.md", content: coverage_md })
+  }
+  if ai_consistency_enabled {
+    let consistency = @ai.check_consistency(site)
+    let consistency_md = @ai.consistency_to_markdown(consistency)
+    manifest.push({ path: "ai-consistency-report.md", content: consistency_md })
+  }
+  if ai_seo_enabled {
+    let seo = @ai.generate_site_seo(site)
+    let seo_md = @ai.seo_to_markdown(seo)
+    manifest.push({ path: "ai-seo-report.md", content: seo_md })
+  }
+  if ai_recommend_enabled {
+    let recs = @ai.generate_recommendations(site)
+    let recs_md = @ai.recommendations_to_markdown(recs)
+    manifest.push({ path: "ai-recommendations.md", content: recs_md })
+  }
   let report = @lib.inspect_manifest(manifest)
   let written = if dry_run {
     manifest.length()
@@ -296,6 +426,33 @@ fn main {
   println("quality: \{quality.score}")
   if dry_run {
     println("dry-run: true")
+  }
+  if ai_doc_enabled {
+    println("ai-doc: enabled")
+  }
+  if ai_quality_enabled {
+    println("ai-quality: enabled")
+  }
+  if ai_tests_enabled {
+    println("ai-tests: enabled")
+  }
+  if ai_summary_enabled {
+    println("ai-summary: enabled")
+  }
+  if ai_xref_enabled {
+    println("ai-xref: enabled")
+  }
+  if ai_coverage_enabled {
+    println("ai-coverage: enabled")
+  }
+  if ai_consistency_enabled {
+    println("ai-consistency: enabled")
+  }
+  if ai_seo_enabled {
+    println("ai-seo: enabled")
+  }
+  if ai_recommend_enabled {
+    println("ai-recommend: enabled")
   }
   if diagnostics != "ok" {
     println("diagnostics:")
