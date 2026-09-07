@@ -1,5 +1,7 @@
 # MoonDocKit
 
+[English](README.md) | [中文](README_CN.md)
+
 [![CI](https://github.com/Estrella-11/moonbit_1/actions/workflows/ci.yml/badge.svg)](https://github.com/Estrella-11/moonbit_1/actions/workflows/ci.yml)
 [![Showcase](https://github.com/Estrella-11/moonbit_1/actions/workflows/pages.yml/badge.svg)](https://estrella-11.github.io/moonbit_1/)
 
@@ -77,6 +79,64 @@ Generated MoonBit API:
 - Site-level rendering with sidebar navigation.
 - Runnable demo package at `cmd/main`.
 - Blackbox tests for public behavior.
+- AI-enhanced documentation generation from `.mbti` interface files.
+- AI-driven quality assessment with completeness, readability, example
+  coverage, and structure scoring (heading hierarchy, title quality, code
+  language detection).
+- AI content summarization with keyword extraction, content type detection,
+  and audience estimation.
+- AI cross-reference detection between documentation pages based on shared
+  keywords and topic overlap.
+- AI documentation coverage analysis identifying undocumented API symbols and
+  missing documentation fields.
+- AI consistency checker detecting heading style mismatches, heading hierarchy
+  jumps, unlabeled code blocks, duplicate content, and content length outliers.
+- AI SEO metadata generator with meta descriptions, keyword density analysis,
+  search boost scoring, and optimization recommendations.
+- AI content recommendation engine generating learning paths, next-step
+  suggestions, related page links, and hub page identification.
+- Site-level quality aggregation report with distribution, best/worst pages,
+  and common suggestions.
+- AI test stub generation from API symbols for quick test bootstrapping.
+- Prompt template system with variable substitution for LLM integration.
+- OpenAI-compatible chat request JSON builder for external LLM calls.
+
+## Installation
+
+### Prerequisites
+
+Install the MoonBit toolchain:
+
+```bash
+# Linux / macOS
+curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+
+# Windows (PowerShell)
+irm https://cli.moonbitlang.com/install/powershell.ps1 | iex
+```
+
+Verify the installation:
+
+```bash
+moon version
+```
+
+### Use as a Dependency
+
+Add MoonDocKit to your MoonBit project:
+
+```bash
+moon add Estrella-11/moondockit
+```
+
+### Build from Source
+
+```bash
+git clone https://github.com/Estrella-11/moonbit_1.git
+cd moonbit_1
+moon check
+moon test
+```
 
 ## Quick Start
 
@@ -151,6 +211,233 @@ from signatures so the generated reference is useful during review instead of
 being only a raw declaration dump. This keeps the generated documentation
 aligned with the package interface produced by the MoonBit toolchain.
 
+## AI-Enhanced Documentation
+
+MoonDocKit now includes an AI module (`ai/`) that enhances documentation
+generation, quality assessment, and test bootstrapping. The AI features
+work without external API keys using rule-based baseline implementations,
+and are designed for future LLM integration via OpenAI-compatible APIs.
+
+### AI Documentation Generation
+
+Generate AI-enhanced API documentation from a `.mbti` file:
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/site \
+  --api pkg.generated.mbti \
+  --output dist-ai \
+  --ai-doc \
+  --title "MoonDocKit AI"
+```
+
+The `--ai-doc` flag generates two additional pages:
+- **AI Overview**: A module-level summary with symbol listings.
+- **AI API Reference**: Per-symbol documentation with descriptions, parameters,
+  return values, and usage examples.
+
+### AI Quality Assessment
+
+Run AI-driven quality assessment on all documentation pages:
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/site \
+  --output dist-ai \
+  --ai-quality \
+  --title "MoonDocKit AI"
+```
+
+The `--ai-quality` flag generates two files:
+- `ai-quality-report.md`: Per-page scores for completeness, readability, example
+  coverage, and structure (heading hierarchy, title quality, code language detection).
+  Each page includes identified strengths and actionable improvement suggestions.
+- `ai-site-quality-report.md`: Site-level aggregation with average score, quality
+  distribution (Excellent/Good/Fair/Poor), best and worst pages, and common
+  suggestions across all pages.
+
+### AI Content Summarization
+
+Generate AI content summaries for all documentation pages:
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/site \
+  --output dist-ai \
+  --ai-summary \
+  --title "MoonDocKit AI"
+```
+
+The `--ai-summary` flag generates an `ai-site-summary.md` file with:
+- Per-page summaries extracted from first paragraphs.
+- Top 5 keywords for each page.
+- Content type detection (tutorial, reference, guide, code-snippet).
+- Target audience estimation (beginner, intermediate, developer, advanced).
+- Key sections listing from H1-H2 headings.
+
+### AI Cross-Reference Detection
+
+Detect cross-references between documentation pages:
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/site \
+  --output dist-ai \
+  --ai-xref \
+  --title "MoonDocKit AI"
+```
+
+The `--ai-xref` flag generates an `ai-cross-reference.md` file with:
+- Detected page-to-page relationships based on shared keywords.
+- Relevance scores (0-100) for each cross-reference.
+- Orphan pages with no incoming references.
+- Most referenced pages ranking.
+- Shared keyword lists for each detected reference.
+
+### AI Documentation Coverage Analysis
+
+Analyze API documentation coverage gaps:
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/site \
+  --api pkg.generated.mbti \
+  --output dist-ai \
+  --ai-coverage \
+  --title "MoonDocKit AI"
+```
+
+The `--ai-coverage` flag generates an `ai-coverage-report.md` file with:
+- Total API symbols and how many are referenced in documentation.
+- Coverage percentage with documented vs. undocumented counts.
+- Per-kind breakdown (functions, structs, enums).
+- List of undocumented symbols with missing fields.
+- Actionable recommendations for improving coverage.
+
+### AI Test Generation
+
+Generate test stubs from API symbols:
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/site \
+  --api pkg.generated.mbti \
+  --output dist-ai \
+  --ai-tests \
+  --title "MoonDocKit AI"
+```
+
+The `--ai-tests` flag generates an `ai-generated-test.mbt` file with:
+- Test stubs for each public API symbol.
+- Test type classification (unit, construction, pattern-match, etc.).
+- Ready-to-run `assert_true` placeholders for quick bootstrapping.
+
+### AI Consistency Checker
+
+Check documentation style and content consistency:
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/site \
+  --output dist-ai \
+  --ai-consistency \
+  --title "MoonDocKit AI"
+```
+
+The `--ai-consistency` flag generates an `ai-consistency-report.md` file with:
+- Heading style consistency (H1 presence across pages).
+- Heading hierarchy violations (level jumps like H1 to H3).
+- Unlabeled code block detection.
+- Duplicate content detection across pages.
+- Content length outlier detection (too short or too long).
+- Site-level style score (0-100).
+
+### AI SEO Metadata
+
+Generate search optimization metadata:
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/site \
+  --output dist-ai \
+  --ai-seo \
+  --title "MoonDocKit AI"
+```
+
+The `--ai-seo` flag generates an `ai-seo-report.md` file with:
+- Per-page meta descriptions (auto-generated, max 160 chars).
+- Keyword density analysis (top 5 keywords per page).
+- Search boost scores (0-100) based on content quality signals.
+- OpenGraph type classification.
+- Pages with low search boost identification.
+- Optimization recommendations.
+
+### AI Content Recommendations
+
+Generate learning paths and related content suggestions:
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/site \
+  --output dist-ai \
+  --ai-recommend \
+  --title "MoonDocKit AI"
+```
+
+The `--ai-recommend` flag generates an `ai-recommendations.md` file with:
+- Structured learning paths from introductory to advanced pages.
+- Next-step recommendations with confidence scores.
+- Related page suggestions based on keyword overlap.
+- Hub page identification (most recommended destinations).
+- Difficulty estimation (beginner, intermediate, advanced).
+
+### Combined AI Build
+
+Run all AI features in a single build:
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/site \
+  --api pkg.generated.mbti \
+  --output dist-ai-full \
+  --ai-doc \
+  --ai-quality \
+  --ai-summary \
+  --ai-xref \
+  --ai-coverage \
+  --ai-consistency \
+  --ai-seo \
+  --ai-recommend \
+  --ai-tests \
+  --title "MoonDocKit AI Full"
+```
+
+This generates all AI-enhanced output files in one pass, providing a
+comprehensive AI-assisted documentation analysis suite.
+
+### AI Module Architecture
+
+The `ai/` package provides:
+
+| File | Purpose |
+|------|---------|
+| `ai_core.mbt` | AI config, chat messages, JSON request builder, JSON field parser, string utilities |
+| `ai_prompts.mbt` | Prompt templates with `{{variable}}` substitution |
+| `ai_doc_gen.mbt` | AI documentation generation with complexity and usage frequency analysis |
+| `ai_quality.mbt` | Rule-based quality assessment with structure scoring, heading hierarchy, title quality, and site-level aggregation |
+| `ai_summary.mbt` | AI content summarization with keyword extraction, content type detection, and audience estimation |
+| `ai_xref.mbt` | AI cross-reference detection with keyword overlap and orphan page identification |
+| `ai_coverage.mbt` | AI documentation coverage analysis with per-kind breakdown and recommendations |
+| `ai_consistency.mbt` | AI consistency checker detecting heading style, hierarchy, code labels, duplicates, and length outliers |
+| `ai_seo.mbt` | AI SEO metadata with meta descriptions, keyword density, search boost scoring, and recommendations |
+| `ai_recommend.mbt` | AI content recommendations with learning paths, next steps, related pages, and hub identification |
+| `ai_test_gen.mbt` | Test stub generation from API symbols |
+| `ai_test.mbt` | 118 blackbox tests covering all AI public functions |
+
+All AI functions accept an `AiConfig` parameter for future LLM provider
+configuration. The current baseline uses rule-based heuristics that produce
+meaningful results without requiring an API key.
+
 ## Reviewer Path
 
 For competition review, start with:
@@ -215,6 +502,12 @@ The next milestones focus on award-level evidence and adoption quality:
 - Add additional focused theme presets after the package and API reference
   presets.
 - Turn reviewer feedback into small, well-tested release increments.
+- Integrate real LLM API calls for AI documentation generation and quality
+  assessment.
+- Add AI-powered documentation suggestions during the build process.
+- Expand AI test generation with smarter assertions and edge case detection.
+- Enhance cross-reference detection with semantic similarity analysis.
+- Add multi-language documentation support and internationalization.
 
 ## Competition Fit
 
@@ -223,6 +516,21 @@ maintainable, and valuable to the MoonBit open-source ecosystem. MoonDocKit
 targets a common ecosystem gap: package authors need a simple way to turn
 MoonBit project documentation into browsable static sites without leaving the
 MoonBit toolchain.
+
+The project participates in the **季度优秀社区项目评选** direction,
+building on the existing MoonDocKit project with significant new contributions
+during the September competition cycle:
+
+- **11 AI modules** providing documentation generation, quality assessment,
+  content summarization, cross-reference detection, coverage analysis,
+  consistency checking, SEO metadata, content recommendations, and test
+  generation.
+- **118 tests** covering all AI public functions and edge cases.
+- **9 CLI AI flags** enabling comprehensive documentation analysis.
+- **CI pipeline** covering check, test, format, build, and full AI suite
+  verification.
+- **Published on mooncakes.io** at version 0.2.0.
+- **Apache-2.0 license**, OSI-approved.
 
 See `docs/ecosystem-impact.md` for the award-oriented ecosystem contribution
 summary.

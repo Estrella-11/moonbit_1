@@ -51,6 +51,34 @@ package-guide and API-reference visual presets.
 - `evaluate_quality` returns explainable publish-readiness checks and a score.
 - `inspect_manifest` summarizes generated file types and sizes.
 
+## AI Enhancement
+
+The `ai/` package adds AI-driven documentation tooling:
+
+- `generate_function_doc` creates structured docs from API symbols with
+  complexity and usage frequency analysis.
+- `assess_page_quality` scores completeness, readability, example coverage,
+  and structure (heading hierarchy, title quality, code language detection).
+- `aggregate_site_quality` generates site-level quality reports with
+  distribution and common suggestions.
+- `summarize_page` generates content summaries with keyword extraction,
+  content type detection, and audience estimation.
+- `detect_cross_references` finds page-to-page relationships based on
+  shared keywords and identifies orphan pages.
+- `analyze_coverage` detects undocumented API symbols and missing fields.
+- `check_consistency` detects heading style, hierarchy, code label, duplicate
+  content, and length outlier inconsistencies.
+- `generate_site_seo` produces SEO metadata with meta descriptions, keyword
+  density, and search boost scores.
+- `generate_recommendations` creates learning paths, next-step suggestions,
+  and related page recommendations.
+- `generate_symbol_tests` bootstraps test stubs from API references.
+- `build_chat_request_json` builds OpenAI-compatible request payloads.
+
+CLI flags: `--ai-doc`, `--ai-quality`, `--ai-summary`, `--ai-xref`,
+`--ai-coverage`, `--ai-consistency`, `--ai-seo`, `--ai-recommend`,
+`--ai-tests`.
+
 ## Safety and Portability
 
 Generated HTML escapes source text and sanitizes unsafe links. The reusable
