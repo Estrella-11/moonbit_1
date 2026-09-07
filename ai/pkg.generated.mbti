@@ -1,0 +1,274 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "Estrella-11/moondockit/ai"
+
+import {
+  "Estrella-11/moondockit",
+}
+
+// Values
+pub fn aggregate_site_quality(Array[(String, DocQualityAssessment)]) -> SiteQualityReport
+
+pub fn analyze_coverage(@moondockit.ApiReference, @moondockit.DocSite) -> CoverageReport
+
+pub fn assess_page_quality(AiConfig, String, String, AiQualityOptions) -> DocQualityAssessment
+
+pub fn assess_site_quality(AiConfig, @moondockit.DocSite, AiQualityOptions) -> Array[(String, DocQualityAssessment)]
+
+pub fn build_chat_request_json(AiConfig, Array[ChatMessage]) -> String
+
+pub fn check_consistency(@moondockit.DocSite) -> ConsistencyReport
+
+pub fn consistency_to_markdown(ConsistencyReport) -> String
+
+pub fn coverage_to_markdown(CoverageReport) -> String
+
+pub fn default_ai_config() -> AiConfig
+
+pub fn default_quality_options() -> AiQualityOptions
+
+pub fn detect_cross_references(@moondockit.DocSite) -> XrefReport
+
+pub fn extract_json_field(String, String) -> String
+
+pub fn fill_prompt(String, Array[(String, String)]) -> String
+
+pub fn function_doc_template() -> PromptTemplate
+
+pub fn function_docs_to_markdown(Array[GeneratedFunctionDoc]) -> String
+
+pub fn generate_function_doc(AiConfig, @moondockit.ApiSymbol, String) -> GeneratedFunctionDoc
+
+pub fn generate_module_overview(AiConfig, @moondockit.ApiReference) -> GeneratedModuleDoc
+
+pub fn generate_page_seo(@moondockit.DocPage) -> PageSeoMeta
+
+pub fn generate_recommendations(@moondockit.DocSite) -> RecommendationReport
+
+pub fn generate_site_seo(@moondockit.DocSite) -> SeoReport
+
+pub fn generate_symbol_tests(AiConfig, @moondockit.ApiReference) -> GeneratedTestSuite
+
+pub fn module_overview_to_markdown(GeneratedModuleDoc) -> String
+
+pub fn quality_template() -> PromptTemplate
+
+pub fn quality_to_markdown(DocQualityAssessment) -> String
+
+pub fn recommendations_to_markdown(RecommendationReport) -> String
+
+pub fn seo_to_markdown(SeoReport) -> String
+
+pub fn site_quality_to_markdown(SiteQualityReport) -> String
+
+pub fn site_summary_to_markdown(String, Array[PageSummary]) -> String
+
+pub fn summarize_page(String, String) -> PageSummary
+
+pub fn summarize_site(@moondockit.DocSite) -> Array[PageSummary]
+
+pub fn summary_to_markdown(PageSummary) -> String
+
+pub fn test_gen_template() -> PromptTemplate
+
+pub fn tests_to_moonbit(GeneratedTestSuite) -> String
+
+pub fn xref_to_markdown(XrefReport) -> String
+
+// Errors
+
+// Types and methods
+pub(all) struct AiConfig {
+  provider : String
+  api_key : String
+  api_base : String
+  model : String
+  temperature : Double
+  max_tokens : Int
+  timeout_ms : Int
+}
+
+pub(all) struct AiQualityOptions {
+  enable_ai_analysis : Bool
+  max_suggestions : Int
+  focus_areas : Array[String]
+}
+
+pub(all) struct ChatMessage {
+  role : String
+  content : String
+}
+
+pub(all) struct ChatResponse {
+  content : String
+  tokens_used : Int
+  success : Bool
+  error : String
+}
+
+pub(all) struct ConsistencyIssue {
+  issue_type : String
+  pages : Array[String]
+  description : String
+  severity : String
+  suggestion : String
+}
+
+pub(all) struct ConsistencyReport {
+  total_issues : Int
+  errors : Int
+  warnings : Int
+  info : Int
+  issues : Array[ConsistencyIssue]
+  style_score : Int
+}
+
+pub(all) struct CoverageReport {
+  total_symbols : Int
+  documented_symbols : Int
+  undocumented_symbols : Int
+  coverage_percentage : Int
+  by_kind : Array[(String, Int, Int)]
+  undocumented_list : Array[SymbolCoverage]
+  recommendations : Array[String]
+}
+
+pub(all) struct CrossReference {
+  source_page : String
+  target_page : String
+  relevance_score : Int
+  reason : String
+  shared_keywords : Array[String]
+}
+
+pub(all) struct DocQualityAssessment {
+  overall_score : Int
+  completeness_score : Int
+  readability_score : Int
+  example_coverage_score : Int
+  structure_score : Int
+  suggestions : Array[String]
+  strengths : Array[String]
+}
+
+pub(all) struct GeneratedFunctionDoc {
+  name : String
+  kind : String
+  description : String
+  parameters : String
+  returns : String
+  examples : String
+  notes : String
+  complexity : String
+  usage_frequency : String
+}
+
+pub(all) struct GeneratedModuleDoc {
+  module_name : String
+  overview : String
+  function_docs : Array[GeneratedFunctionDoc]
+  symbol_stats : Array[(String, Int)]
+}
+
+pub(all) struct GeneratedTest {
+  name : String
+  description : String
+  test_code : String
+  test_type : String
+}
+
+pub(all) struct GeneratedTestSuite {
+  module_name : String
+  tests : Array[GeneratedTest]
+}
+
+pub(all) struct LearningPath {
+  steps : Array[String]
+  description : String
+  difficulty : String
+  estimated_time : Int
+}
+
+pub(all) struct PageSeoMeta {
+  page_title : String
+  meta_description : String
+  slug : String
+  tags : Array[String]
+  og_type : String
+  reading_time : Int
+  keyword_density : Array[(String, Int)]
+  search_boost : Int
+}
+
+pub(all) struct PageSummary {
+  title : String
+  summary : String
+  keywords : Array[String]
+  key_sections : Array[String]
+  estimated_audience : String
+  content_type : String
+}
+
+pub(all) struct PromptTemplate {
+  name : String
+  version : String
+  system : String
+  user : String
+}
+
+pub(all) struct Recommendation {
+  from_page : String
+  to_page : String
+  reason : String
+  confidence : Int
+}
+
+pub(all) struct RecommendationReport {
+  next_steps : Array[Recommendation]
+  related_pages : Array[Recommendation]
+  learning_paths : Array[LearningPath]
+  top_hub_pages : Array[(String, Int)]
+  recommendations_count : Int
+}
+
+pub(all) struct SeoReport {
+  total_pages : Int
+  pages_with_descriptions : Int
+  pages_missing_descriptions : Int
+  avg_keyword_count : Int
+  pages_with_low_search_boost : Array[String]
+  page_metas : Array[PageSeoMeta]
+  recommendations : Array[String]
+}
+
+pub(all) struct SiteQualityReport {
+  total_pages : Int
+  average_score : Int
+  best_page : String
+  best_score : Int
+  worst_page : String
+  worst_score : Int
+  pages_below_threshold : Int
+  quality_distribution : Array[(String, Int)]
+  common_suggestions : Array[String]
+}
+
+pub(all) struct SymbolCoverage {
+  symbol_name : String
+  kind : String
+  is_documented : Bool
+  coverage_level : String
+  found_in_pages : Array[String]
+  missing_fields : Array[String]
+}
+
+pub(all) struct XrefReport {
+  total_references : Int
+  references : Array[CrossReference]
+  orphan_pages : Array[String]
+  most_referenced : Array[(String, Int)]
+}
+
+// Type aliases
+
+// Traits
+
