@@ -827,7 +827,7 @@ test "theme dimensions and language fall back to safe defaults" {
     options,
   )
   assert_true(rendered.html.contains("<html lang=\"en\">"))
-  assert_true(rendered.html.contains("width:240px"))
+  assert_true(rendered.html.contains("width:260px"))
   assert_true(rendered.html.contains("max-width:820px"))
   assert_true(
     rendered.html.contains("href=\"https://docs.example/base/guide.html\""),

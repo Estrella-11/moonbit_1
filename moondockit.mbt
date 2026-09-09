@@ -482,14 +482,14 @@ fn api_section_title(kind : String) -> String {
 /// Return the default MoonDocKit page theme.
 pub fn default_theme() -> SiteTheme {
   {
-    background: "#f7f8fb",
+    background: "#fafbff",
     surface: "#ffffff",
-    text: "#172033",
-    accent: "#2457c5",
-    border: "#dde3ee",
-    code_background: "#101828",
-    code_text: "#eef4ff",
-    sidebar_width_px: 240,
+    text: "#1a1a2e",
+    accent: "#6c5ce7",
+    border: "#e8eaf3",
+    code_background: "#0f172a",
+    code_text: "#e2e8f0",
+    sidebar_width_px: 260,
     content_width_px: 820,
   }
 }
@@ -2039,30 +2039,48 @@ fn route_for_page(page : DocPage) -> RouteEntry {
 
 ///|
 fn render_theme_style(theme : SiteTheme) -> String {
-  let sidebar_width = positive_or_default(theme.sidebar_width_px, 240)
+  let sidebar_width = positive_or_default(theme.sidebar_width_px, 260)
   let content_width = positive_or_default(theme.content_width_px, 820)
   let main_margin = sidebar_width + 60
   let out = StringBuilder()
+  out.write_string("<style>:root{color-scheme:light;--accent:")
+  out.write_string(theme.accent)
+  out.write_string(";--accent-light:")
+  out.write_string(theme.accent)
+  out.write_string("22;--surface:")
+  out.write_string(theme.surface)
+  out.write_string(";--bg:")
+  out.write_string(theme.background)
+  out.write_string(";--text:")
+  out.write_string(theme.text)
+  out.write_string(";--border:")
+  out.write_string(theme.border)
+  out.write_string(";--code-bg:")
+  out.write_string(theme.code_background)
+  out.write_string(";--code-text:")
+  out.write_string(theme.code_text)
   out.write_string(
-    "<style>:root{color-scheme:light}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font:16px/1.7 system-ui,-apple-system,\"Segoe UI\",sans-serif;color:",
+    "}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font:16px/1.7 system-ui,-apple-system,\"Segoe UI\",sans-serif;color:",
   )
   out.write_string(theme.text)
   out.write_string(";background:")
   out.write_string(theme.background)
-  out.write_string("}aside{position:fixed;z-index:2;inset:0 auto 0 0;width:")
+  out.write_string(
+    ";transition:background .3s}aside{position:fixed;z-index:2;inset:0 auto 0 0;width:",
+  )
   out.write_string(sidebar_width.to_string())
   out.write_string("px;padding:28px 20px;overflow-y:auto;background:")
   out.write_string(theme.surface)
   out.write_string(";border-right:1px solid ")
   out.write_string(theme.border)
   out.write_string(
-    "}.skip-link{position:absolute;left:12px;top:12px;z-index:4;transform:translateY(-160%);padding:8px 10px;border-radius:6px;background:",
+    ";box-shadow:2px 0 12px rgba(0,0,0,.03)}.skip-link{position:absolute;left:12px;top:12px;z-index:4;transform:translateY(-160%);padding:8px 10px;border-radius:8px;background:",
   )
   out.write_string(theme.accent)
   out.write_string(";color:")
   out.write_string(theme.surface)
   out.write_string(
-    ";font-weight:700}.skip-link:focus{transform:translateY(0);outline:2px solid ",
+    ";font-weight:700;transition:transform .2s}.skip-link:focus{transform:translateY(0);outline:2px solid ",
   )
   out.write_string(theme.text)
   out.write_string(
@@ -2070,89 +2088,121 @@ fn render_theme_style(theme : SiteTheme) -> String {
   )
   out.write_string(theme.text)
   out.write_string(
-    ";font-weight:750;font-size:17px}.brand-mark{display:grid;place-items:center;width:30px;height:30px;border-radius:7px;background:",
+    ";font-weight:800;font-size:17px;text-decoration:none}.brand:hover{text-decoration:none}.brand-mark{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,",
   )
   out.write_string(theme.accent)
-  out.write_string(";color:")
+  out.write_string(",")
+  out.write_string(theme.accent)
+  out.write_string("cc);color:")
   out.write_string(theme.surface)
+  out.write_string(";box-shadow:0 4px 12px ")
+  out.write_string(theme.accent)
   out.write_string(
-    "}.search{position:relative;margin:24px 0 12px}.search label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.search input{width:100%;padding:9px 10px;border:1px solid ",
+    "40;font-size:16px;font-weight:800}.search{position:relative;margin:24px 0 12px}.search label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.search input{width:100%;padding:10px 12px;border:1px solid ",
   )
   out.write_string(theme.border)
-  out.write_string(";border-radius:6px;background:")
+  out.write_string(";border-radius:8px;background:")
   out.write_string(theme.background)
   out.write_string(";color:")
   out.write_string(theme.text)
-  out.write_string("}.search input:focus{outline:2px solid ")
+  out.write_string(
+    ";transition:border-color .2s,box-shadow .2s}.search input:focus{outline:none;border-color:",
+  )
+  out.write_string(theme.accent)
+  out.write_string(";box-shadow:0 0 0 3px ")
   out.write_string(theme.accent)
   out.write_string(
-    ";outline-offset:1px}.search-results{display:grid;position:absolute;z-index:3;top:44px;left:0;right:0;max-height:320px;overflow:auto;padding:6px;border:1px solid ",
+    "1a}.search-results{display:grid;position:absolute;z-index:3;top:48px;left:0;right:0;max-height:320px;overflow:auto;padding:6px;border:1px solid ",
   )
   out.write_string(theme.border)
-  out.write_string(";border-radius:7px;background:")
+  out.write_string(";border-radius:10px;background:")
   out.write_string(theme.surface)
   out.write_string(
-    ";box-shadow:0 12px 30px rgba(23,32,51,.14)}.search-results[hidden]{display:none}.search-results a{display:grid;gap:2px;padding:8px;border-radius:5px;color:",
+    ";box-shadow:0 12px 40px rgba(0,0,0,.12)}.search-results[hidden]{display:none}.search-results a{display:grid;gap:2px;padding:8px 10px;border-radius:6px;color:",
   )
   out.write_string(theme.text)
-  out.write_string("}.search-results a:hover{background:")
+  out.write_string(
+    ";transition:background .15s}.search-results a:hover{background:",
+  )
   out.write_string(theme.background)
   out.write_string(
-    ";text-decoration:none}.search-results span{padding:8px;font-size:13px;line-height:1.35;opacity:.72}.search-results a span{padding:0}nav{display:grid;gap:4px;margin-top:16px}nav a{padding:8px 10px;border-radius:6px;color:",
+    ";text-decoration:none}.search-results span{padding:8px;font-size:13px;line-height:1.35;opacity:.72}.search-results a span{padding:0}nav{display:grid;gap:2px;margin-top:16px}nav a{padding:9px 12px;border-radius:8px;color:",
   )
   out.write_string(theme.text)
-  out.write_string("}nav a:hover{background:")
+  out.write_string(
+    ";transition:all .15s;position:relative}nav a:hover{background:",
+  )
   out.write_string(theme.background)
-  out.write_string("}nav a.active{background:")
-  out.write_string(theme.background)
-  out.write_string(";color:")
+  out.write_string(";text-decoration:none}nav a.active{background:")
   out.write_string(theme.accent)
-  out.write_string(";font-weight:650}a{color:")
+  out.write_string("1a;color:")
   out.write_string(theme.accent)
   out.write_string(
-    ";text-decoration:none}a:hover{text-decoration:underline}main{min-height:100vh;margin-left:",
+    ";font-weight:600}nav a.active::before{content:\"\";position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:60%;background:",
+  )
+  out.write_string(theme.accent)
+  out.write_string(";border-radius:0 3px 3px 0}a{color:")
+  out.write_string(theme.accent)
+  out.write_string(";text-decoration:none;transition:color .15s}a:hover{color:")
+  out.write_string(theme.accent)
+  out.write_string(
+    "cc;text-decoration:underline}main{min-height:100vh;margin-left:",
   )
   out.write_string(sidebar_width.to_string())
   out.write_string("px}.content{max-width:")
   out.write_string(content_width.to_string())
   out.write_string(
-    "px;margin:0 auto;padding:52px 36px 72px}h1,h2{line-height:1.25;letter-spacing:0}h1{font-size:36px;margin:0 0 22px}h2{font-size:24px;margin:42px 0 14px;padding-top:10px;border-top:1px solid ",
+    "px;margin:0 auto;padding:52px 36px 72px}h1,h2,h3{line-height:1.25;letter-spacing:-0.02em}h1{font-size:38px;margin:0 0 24px;font-weight:800}h2{font-size:26px;margin:44px 0 16px;padding-top:14px;border-top:1px solid ",
   )
   out.write_string(theme.border)
   out.write_string(
-    "}p,ul,blockquote{margin:0 0 18px}blockquote{padding:10px 18px;border-left:3px solid ",
+    ";font-weight:700}h3{font-size:20px;margin:28px 0 10px;font-weight:650}p,ul,blockquote{margin:0 0 18px}ul li{margin-bottom:6px}blockquote{padding:14px 20px;border-left:4px solid ",
   )
   out.write_string(theme.accent)
   out.write_string(";background:")
   out.write_string(theme.surface)
-  out.write_string("}.toc{padding:16px 18px;margin:0 0 34px;border:1px solid ")
+  out.write_string(
+    ";border-radius:0 8px 8px 0;box-shadow:0 2px 8px rgba(0,0,0,.04)}.toc{padding:18px 20px;margin:0 0 34px;border:1px solid ",
+  )
   out.write_string(theme.border)
   out.write_string(";background:")
   out.write_string(theme.surface)
   out.write_string(
-    ";border-radius:7px}.toc-title{font-weight:700;margin-bottom:8px}.toc a{display:block;padding:2px 0}.toc .level-2{padding-left:16px}pre{padding:18px 20px;border-radius:7px;background:",
+    ";border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.03)}.toc-title{font-weight:700;margin-bottom:10px;font-size:14px;text-transform:uppercase;letter-spacing:0.05em;opacity:.6}.toc a{display:block;padding:3px 0;transition:color .15s}.toc a:hover{color:",
+  )
+  out.write_string(theme.accent)
+  out.write_string(
+    "}.toc .level-2{padding-left:18px}pre{padding:20px 22px;border-radius:10px;background:",
   )
   out.write_string(theme.code_background)
   out.write_string(";color:")
   out.write_string(theme.code_text)
   out.write_string(
-    ";overflow:auto}code{font-family:ui-monospace,\"Cascadia Code\",monospace}p code,li code,footer code{padding:2px 5px;border:1px solid ",
+    ";overflow:auto;box-shadow:0 4px 16px rgba(0,0,0,.1);position:relative}pre code{font-size:14px;line-height:1.6}code{font-family:ui-monospace,\"Cascadia Code\",\"Fira Code\",monospace}p code,li code,footer code{padding:3px 6px;border:1px solid ",
   )
   out.write_string(theme.border)
-  out.write_string(";border-radius:4px;background:")
+  out.write_string(";border-radius:5px;background:")
   out.write_string(theme.surface)
   out.write_string(
-    "}footer{margin-top:52px;padding-top:20px;border-top:1px solid ",
+    ";font-size:0.9em}footer{margin-top:56px;padding-top:22px;border-top:1px solid ",
   )
   out.write_string(theme.border)
-  out.write_string(";font-size:14px;opacity:.75}@media(max-width:")
+  out.write_string(
+    ";font-size:14px;opacity:.65}table{border-collapse:collapse;width:100%;margin:0 0 18px}th,td{padding:10px 14px;border:1px solid ",
+  )
+  out.write_string(theme.border)
+  out.write_string(";text-align:left}th{background:")
+  out.write_string(theme.surface)
+  out.write_string(";font-weight:650}tr:hover{background:")
+  out.write_string(theme.background)
+  out.write_string("}@media(max-width:")
   out.write_string((main_margin + content_width).to_string())
   out.write_string(
     "px){.content{margin:0;padding-left:32px;padding-right:32px}}@media(max-width:760px){aside{position:relative;width:auto;padding:18px 20px;border-right:0;border-bottom:1px solid ",
   )
   out.write_string(theme.border)
   out.write_string(
-    "}.brand{padding:0}.search{margin:16px 0 10px}.search-results{position:relative;top:6px}nav{display:flex;gap:6px;margin-top:14px;overflow-x:auto}nav a{white-space:nowrap}main{margin-left:0}.content{padding:32px 20px 56px}h1{font-size:30px}h2{font-size:22px}.toc{margin-bottom:28px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}</style>\n",
+    "}.brand{padding:0}.search{margin:16px 0 10px}.search-results{position:relative;top:6px}nav{display:flex;gap:6px;margin-top:14px;overflow-x:auto}nav a{white-space:nowrap}nav a.active::before{display:none}main{margin-left:0}.content{padding:32px 20px 56px}h1{font-size:30px}h2{font-size:22px}.toc{margin-bottom:28px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}</style>\n",
   )
   out.to_string()
 }
