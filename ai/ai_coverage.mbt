@@ -28,6 +28,9 @@ fn find_symbol_in_pages(
   site : @lib.DocSite,
 ) -> Array[String] {
   let found_in : Array[String] = []
+  if symbol_name.length() == 0 {
+    return found_in
+  }
   for page in site.pages {
     if page.source.contains(symbol_name) {
       found_in.push(page.title)

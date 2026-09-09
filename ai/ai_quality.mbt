@@ -86,7 +86,9 @@ fn detect_code_languages(blocks : Array[@lib.MarkdownBlock]) -> Array[String] {
 ///|
 /// Check for title quality (length, clarity).
 fn title_quality_score(title : String) -> (Int, Array[String], Array[String]) {
-  let score = if title.length() >= 3 && title.length() <= 60 {
+  let score = if title.length() == 0 {
+    0
+  } else if title.length() >= 3 && title.length() <= 60 {
     100
   } else if title.length() >= 2 && title.length() <= 80 {
     70
@@ -97,10 +99,11 @@ fn title_quality_score(title : String) -> (Int, Array[String], Array[String]) {
   }
   let suggestions : Array[String] = []
   let strengths : Array[String] = []
-  if title.length() > 80 {
+  if title.length() == 0 {
+    suggestions.push("Title is empty; add a descriptive title")
+  } else if title.length() > 80 {
     suggestions.push("Title is too long (over 80 chars); consider shortening")
-  }
-  if title.length() < 3 {
+  } else if title.length() < 3 {
     suggestions.push("Title is too short; add more descriptive text")
   }
   if title.length() >= 3 && title.length() <= 60 {
@@ -251,10 +254,10 @@ fn rule_based_quality_assessment(
     strengths.push("Well-structured with multiple paragraphs")
   }
   while suggestions.length() > 8 {
-    let _ = suggestions.remove(0)
+    let _ = suggestions.pop()
   }
   while strengths.length() > 8 {
-    let _ = strengths.remove(0)
+    let _ = strengths.pop()
   }
   {
     overall_score: overall,
@@ -404,20 +407,7 @@ pub fn aggregate_site_quality(
       below_threshold = below_threshold + 1
     }
     for s in assessment.suggestions {
-      let mut found = false
-      let mut j = 0
-      while j < suggestion_counts.length() {
-        if suggestion_counts[j].0 == s {
-          let cnt = suggestion_counts[j].1
-          suggestion_counts[j] = (s, cnt + 1)
-          found = true
-          j = suggestion_counts.length()
-        }
-        j = j + 1
-      }
-      if !found {
-        suggestion_counts.push((s, 1))
-      }
+      increment_count(suggestion_counts, s)
     }
   }
   let avg = sum / total
@@ -427,30 +417,11 @@ pub fn aggregate_site_quality(
     ("Fair (40-59)", fair_count),
     ("Poor (0-39)", poor_count),
   ]
-  let common = suggestion_counts
-  let mut i = 0
-  while i < common.length() {
-    let mut max_idx = i
-    let mut k = i + 1
-    while k < common.length() {
-      if common[k].1 > common[max_idx].1 {
-        max_idx = k
-      }
-      k = k + 1
-    }
-    if max_idx != i {
-      let tmp = common[i]
-      common[i] = common[max_idx]
-      common[max_idx] = tmp
-    }
-    i = i + 1
-  }
+  let sorted_counts = sort_by_count(suggestion_counts)
+  let top_pairs = take_top_n_pairs(sorted_counts, 5)
   let top_suggestions : Array[String] = []
-  let limit = if common.length() < 5 { common.length() } else { 5 }
-  let mut idx = 0
-  while idx < limit {
-    top_suggestions.push("\{common[idx].1} pages: \{common[idx].0}")
-    idx = idx + 1
+  for pair in top_pairs {
+    top_suggestions.push("\{pair.1} pages: \{pair.0}")
   }
   {
     total_pages: total,

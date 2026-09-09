@@ -96,15 +96,22 @@ fn replace_all(input : String, target : String, replacement : String) -> String 
   }
   let out = StringBuilder(size_hint=input.length())
   let mut i = 0
+  let mut seg_start = 0
   while i < input.length() {
     if i + target.length() <= input.length() &&
       input[i:i + target.length()] == target {
+      if seg_start < i {
+        out.write_string(input[seg_start:i].to_owned())
+      }
       out.write_string(replacement)
       i = i + target.length()
+      seg_start = i
     } else {
-      out.write_string(input[i:i + 1].to_owned())
       i = i + 1
     }
+  }
+  if seg_start < input.length() {
+    out.write_string(input[seg_start:].to_owned())
   }
   out.to_string()
 }
@@ -128,7 +135,7 @@ fn find_substring(haystack : String, needle : String) -> Int {
 ///|
 /// Parse a JSON response field by extracting the value between quotes.
 pub fn extract_json_field(json : String, field : String) -> String {
-  let key = "\"" + field + "\":\""
+  let key = "\"\{field}\":\""
   let pos = find_substring(json, key)
   if pos < 0 {
     return ""

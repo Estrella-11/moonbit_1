@@ -62,61 +62,12 @@ fn first_sentence(text : String) -> String {
 }
 
 ///|
-/// Count word frequency and return the top keywords.
+/// Extract the top keywords from content using shared word frequency utility.
 fn extract_keywords(content : String, max_count : Int) -> Array[String] {
-  let words = content.split(" ").collect()
-  let unique_words : Array[String] = []
-  let counts : Array[Int] = []
-  for word in words {
-    let w = word.trim().to_owned().to_lower()
-    if w.length() < 4 {
-      continue
-    }
-    let mut found = false
-    let mut j = 0
-    while j < unique_words.length() {
-      if unique_words[j] == w {
-        counts[j] = counts[j] + 1
-        found = true
-        j = unique_words.length()
-      }
-      j = j + 1
-    }
-    if !found {
-      unique_words.push(w)
-      counts.push(1)
-    }
-  }
-  let mut idx = 0
-  while idx < unique_words.length() {
-    let mut max_idx = idx
-    let mut k = idx + 1
-    while k < unique_words.length() {
-      if counts[k] > counts[max_idx] {
-        max_idx = k
-      }
-      k = k + 1
-    }
-    if max_idx != idx {
-      let tmp_word = unique_words[idx]
-      unique_words[idx] = unique_words[max_idx]
-      unique_words[max_idx] = tmp_word
-      let tmp_count = counts[idx]
-      counts[idx] = counts[max_idx]
-      counts[max_idx] = tmp_count
-    }
-    idx = idx + 1
-  }
+  let pairs = word_frequency(content, max_count, 4)
   let result : Array[String] = []
-  let limit = if unique_words.length() < max_count {
-    unique_words.length()
-  } else {
-    max_count
-  }
-  let mut i = 0
-  while i < limit {
-    result.push(unique_words[i])
-    i = i + 1
+  for pair in pairs {
+    result.push(pair.0)
   }
   result
 }
@@ -153,18 +104,9 @@ pub fn summarize_page(title : String, content : String) -> PageSummary {
       key_sections.push(h.title)
     }
   }
-  let mut first_para = ""
-  for block in blocks {
-    match block {
-      @lib.MarkdownBlock::Paragraph(text) =>
-        if first_para == "" {
-          first_para = first_sentence(text)
-        }
-      _ => ()
-    }
-  }
+  let first_para = find_first_paragraph(blocks)
   let summary = if first_para != "" {
-    first_para
+    first_sentence(first_para)
   } else {
     "This page covers \{title} with \{metrics.word_count} words across \{metrics.heading_count} sections."
   }

@@ -25,18 +25,11 @@ pub(all) struct SeoReport {
 
 ///|
 /// Generate a meta description from page content (max 160 chars).
-fn generate_meta_description(title : String, content : String) -> String {
-  let blocks = @lib.parse_blocks(content)
-  let mut first_para = ""
-  for block in blocks {
-    match block {
-      @lib.MarkdownBlock::Paragraph(text) =>
-        if first_para == "" {
-          first_para = text.trim().to_owned()
-        }
-      _ => ()
-    }
-  }
+fn generate_meta_description(
+  title : String,
+  blocks : Array[@lib.MarkdownBlock],
+) -> String {
+  let first_para = find_first_paragraph(blocks)
   if first_para == "" {
     let desc = "\{title} documentation page with guides and examples."
     return desc
@@ -57,72 +50,17 @@ fn generate_meta_description(title : String, content : String) -> String {
 }
 
 ///|
-/// Calculate keyword density for a page.
+/// Calculate keyword density for a page using shared word frequency utility.
 fn calculate_keyword_density(
   content : String,
   max_count : Int,
 ) -> Array[(String, Int)] {
-  let words = content.split(" ").collect()
-  let unique_words : Array[String] = []
-  let counts : Array[Int] = []
-  for word in words {
-    let w = word.trim().to_owned().to_lower()
-    if w.length() < 4 {
-      continue
-    }
-    let mut found = false
-    let mut j = 0
-    while j < unique_words.length() {
-      if unique_words[j] == w {
-        counts[j] = counts[j] + 1
-        found = true
-        j = unique_words.length()
-      }
-      j = j + 1
-    }
-    if !found {
-      unique_words.push(w)
-      counts.push(1)
-    }
-  }
-  let mut idx = 0
-  while idx < unique_words.length() {
-    let mut max_idx = idx
-    let mut k = idx + 1
-    while k < unique_words.length() {
-      if counts[k] > counts[max_idx] {
-        max_idx = k
-      }
-      k = k + 1
-    }
-    if max_idx != idx {
-      let tmp_word = unique_words[idx]
-      unique_words[idx] = unique_words[max_idx]
-      unique_words[max_idx] = tmp_word
-      let tmp_count = counts[idx]
-      counts[idx] = counts[max_idx]
-      counts[max_idx] = tmp_count
-    }
-    idx = idx + 1
-  }
-  let result : Array[(String, Int)] = []
-  let limit = if unique_words.length() < max_count {
-    unique_words.length()
-  } else {
-    max_count
-  }
-  let mut i = 0
-  while i < limit {
-    result.push((unique_words[i], counts[i]))
-    i = i + 1
-  }
-  result
+  word_frequency(content, max_count, 4)
 }
 
 ///|
-/// Determine OpenGraph type for a page.
-fn determine_og_type(content : String) -> String {
-  let blocks = @lib.parse_blocks(content)
+/// Determine OpenGraph type for a page based on block types.
+fn determine_og_type(blocks : Array[@lib.MarkdownBlock]) -> String {
   let mut has_code = false
   let mut has_headings = false
   for block in blocks {
@@ -134,10 +72,10 @@ fn determine_og_type(content : String) -> String {
   }
   if has_code && has_headings {
     "article"
-  } else if has_code {
+  } else if has_headings {
     "article"
   } else {
-    "article"
+    "website"
   }
 }
 
@@ -174,10 +112,11 @@ fn calculate_search_boost(
 ///|
 /// Generate SEO metadata for a single page.
 pub fn generate_page_seo(page : @lib.DocPage) -> PageSeoMeta {
-  let metrics = @lib.measure_document(page.source)
+  let blocks = @lib.parse_blocks(page.source)
+  let metrics = @lib.measure_blocks(blocks)
   let density = calculate_keyword_density(page.source, 5)
-  let desc = generate_meta_description(page.title, page.source)
-  let og_type = determine_og_type(page.source)
+  let desc = generate_meta_description(page.title, blocks)
+  let og_type = determine_og_type(blocks)
   let boost = calculate_search_boost(metrics, density.length())
   let tags : Array[String] = []
   for i in 0..<density.length() {

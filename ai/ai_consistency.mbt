@@ -51,12 +51,15 @@ fn check_heading_styles(site : @lib.DocSite) -> Array[ConsistencyIssue] {
       pages_without_h1.push(page.title)
     }
   }
-  if pages_without_h1.length() > 0 &&
-    pages_without_h1.length() < site.pages.length() {
+  if pages_without_h1.length() > 0 {
     issues.push({
       issue_type: "heading_style",
       pages: pages_without_h1,
-      description: "Some pages start with H1, others do not",
+      description: if pages_without_h1.length() == site.pages.length() {
+        "No pages start with an H1 heading"
+      } else {
+        "Some pages start with H1, others do not"
+      },
       severity: "warning",
       suggestion: "Ensure all pages start with an H1 heading for consistency",
     })
@@ -89,20 +92,7 @@ fn check_code_languages(site : @lib.DocSite) -> Array[ConsistencyIssue] {
           if trimmed == "" {
             has_unlabeled = true
           } else {
-            let mut found = false
-            let mut j = 0
-            while j < lang_counts.length() {
-              if lang_counts[j].0 == trimmed {
-                let cnt = lang_counts[j].1
-                lang_counts[j] = (trimmed, cnt + 1)
-                found = true
-                j = lang_counts.length()
-              }
-              j = j + 1
-            }
-            if !found {
-              lang_counts.push((trimmed, 1))
-            }
+            increment_count(lang_counts, trimmed)
           }
         }
         _ => ()
@@ -156,21 +146,22 @@ fn check_content_length(site : @lib.DocSite) -> Array[ConsistencyIssue] {
   if site.pages.length() < 3 {
     return issues
   }
+  let page_metrics : Array[(String, Int)] = []
   let mut total_words = 0
   for page in site.pages {
     let metrics = @lib.measure_document(page.source)
     total_words = total_words + metrics.word_count
+    page_metrics.push((page.title, metrics.word_count))
   }
   let avg = total_words / site.pages.length()
   let short_pages : Array[String] = []
   let long_pages : Array[String] = []
-  for page in site.pages {
-    let metrics = @lib.measure_document(page.source)
-    if avg > 10 && metrics.word_count < avg / 3 {
-      short_pages.push(page.title)
+  for pair in page_metrics {
+    if avg > 10 && pair.1 < avg / 3 {
+      short_pages.push(pair.0)
     }
-    if metrics.word_count > avg * 3 && avg > 5 {
-      long_pages.push(page.title)
+    if pair.1 > avg * 3 && avg > 5 {
+      long_pages.push(pair.0)
     }
   }
   if short_pages.length() > 0 {
@@ -198,14 +189,16 @@ fn check_content_length(site : @lib.DocSite) -> Array[ConsistencyIssue] {
 /// Check for duplicate content across pages.
 fn check_duplicates(site : @lib.DocSite) -> Array[ConsistencyIssue] {
   let issues : Array[ConsistencyIssue] = []
+  let page_blocks : Array[(String, Array[@lib.MarkdownBlock])] = []
+  for page in site.pages {
+    page_blocks.push((page.title, @lib.parse_blocks(page.source)))
+  }
   let mut i = 0
-  while i < site.pages.length() {
+  while i < page_blocks.length() {
     let mut j = i + 1
-    while j < site.pages.length() {
-      let page_a = site.pages[i]
-      let page_b = site.pages[j]
-      let blocks_a = @lib.parse_blocks(page_a.source)
-      let blocks_b = @lib.parse_blocks(page_b.source)
+    while j < page_blocks.length() {
+      let (title_a, blocks_a) = page_blocks[i]
+      let (title_b, blocks_b) = page_blocks[j]
       let mut shared_paragraphs = 0
       for block_a in blocks_a {
         match block_a {
@@ -227,7 +220,7 @@ fn check_duplicates(site : @lib.DocSite) -> Array[ConsistencyIssue] {
       if shared_paragraphs > 0 {
         issues.push({
           issue_type: "duplicate_content",
-          pages: [page_a.title, page_b.title],
+          pages: [title_a, title_b],
           description: "\{shared_paragraphs} identical paragraph(s) shared between pages",
           severity: "warning",
           suggestion: "Deduplicate content; link between pages instead of repeating",
