@@ -1273,3 +1273,154 @@ test "check_consistency style score is high for uniform site" {
   let report = @ai.check_consistency(site)
   assert_true(report.style_score > 50)
 }
+
+///|
+test "increment_count adds new key and increments existing" {
+  let arr : Array[(String, Int)] = []
+  @ai.increment_count(arr, "alpha")
+  @ai.increment_count(arr, "beta")
+  @ai.increment_count(arr, "alpha")
+  assert_eq(arr.length(), 2)
+  assert_eq(arr[0].0, "alpha")
+  assert_eq(arr[0].1, 2)
+  assert_eq(arr[1].0, "beta")
+  assert_eq(arr[1].1, 1)
+}
+
+///|
+test "sort_by_count sorts descending by count" {
+  let arr : Array[(String, Int)] = [("c", 3), ("a", 10), ("b", 5)]
+  let sorted = @ai.sort_by_count(arr)
+  assert_eq(sorted[0].0, "a")
+  assert_eq(sorted[0].1, 10)
+  assert_eq(sorted[1].0, "b")
+  assert_eq(sorted[1].1, 5)
+  assert_eq(sorted[2].0, "c")
+  assert_eq(sorted[2].1, 3)
+}
+
+///|
+test "take_top_n_pairs limits result count" {
+  let arr : Array[(String, Int)] = [
+    ("a", 10),
+    ("b", 8),
+    ("c", 6),
+    ("d", 4),
+    ("e", 2),
+  ]
+  let top3 = @ai.take_top_n_pairs(arr, 3)
+  assert_eq(top3.length(), 3)
+  assert_eq(top3[0].0, "a")
+  assert_eq(top3[2].0, "c")
+  let top10 = @ai.take_top_n_pairs(arr, 10)
+  assert_eq(top10.length(), 5)
+}
+
+///|
+test "take_top_n_strings limits result count" {
+  let arr : Array[String] = ["a", "b", "c", "d", "e"]
+  let top3 = @ai.take_top_n_strings(arr, 3)
+  assert_eq(top3.length(), 3)
+  assert_eq(top3[0], "a")
+  assert_eq(top3[2], "c")
+}
+
+///|
+test "word_frequency returns sorted pairs with counts" {
+  let content = "hello world hello moonbit world hello"
+  let freq = @ai.word_frequency(content, 5, 4)
+  assert_true(freq.length() >= 1)
+  assert_eq(freq[0].0, "hello")
+  assert_eq(freq[0].1, 3)
+}
+
+///|
+test "find_first_paragraph returns empty for no paragraphs" {
+  let blocks = @lib.parse_blocks("# Heading Only")
+  let para = @ai.find_first_paragraph(blocks)
+  assert_eq(para, "")
+}
+
+///|
+test "find_first_paragraph returns first paragraph text" {
+  let blocks = @lib.parse_blocks(
+    "# Title\n\nFirst paragraph here.\n\nSecond paragraph.",
+  )
+  let para = @ai.find_first_paragraph(blocks)
+  assert_true(para.contains("First paragraph"))
+}
+
+///|
+test "write_markdown_list writes items with dash prefix" {
+  let out = StringBuilder()
+  let items : Array[String] = ["apple", "banana", "cherry"]
+  @ai.write_markdown_list(out, items)
+  let md = out.to_string()
+  assert_true(md.contains("- apple"))
+  assert_true(md.contains("- banana"))
+  assert_true(md.contains("- cherry"))
+}
+
+///|
+test "quality assessment handles empty title" {
+  let config = @ai.default_ai_config()
+  let options = @ai.default_quality_options()
+  let content = "# Test\n\nSome content here.\n\n```\ncode\n```"
+  let result = @ai.assess_page_quality(config, "", content, options)
+  assert_true(result.overall_score >= 0)
+  let mut has_empty_title_msg = false
+  for s in result.suggestions {
+    if s.contains("empty") {
+      has_empty_title_msg = true
+    }
+  }
+  assert_true(has_empty_title_msg)
+}
+
+///|
+test "consistency detects all pages missing H1" {
+  let site : @lib.DocSite = {
+    title: "No H1 Site",
+    pages: [
+      { title: "A", slug: "a", source: "## Heading\n\nNo H1 here." },
+      { title: "B", slug: "b", source: "## Another\n\nStill no H1." },
+    ],
+  }
+  let report = @ai.check_consistency(site)
+  let mut has_all_missing = false
+  for issue in report.issues {
+    if issue.description.contains("No pages start with an H1") {
+      has_all_missing = true
+    }
+  }
+  assert_true(has_all_missing)
+}
+
+///|
+test "SEO determine_og_type returns website for no-code page" {
+  let page : @lib.DocPage = {
+    title: "Plain",
+    slug: "plain",
+    source: "# Plain\n\nJust text, no code.",
+  }
+  let meta = @ai.generate_page_seo(page)
+  assert_eq(meta.og_type, "article")
+  let code_page : @lib.DocPage = {
+    title: "Code",
+    slug: "code",
+    source: "# Code\n\nSome text.\n\n```moonbit\nlet x = 1\n```",
+  }
+  let code_meta = @ai.generate_page_seo(code_page)
+  assert_eq(code_meta.og_type, "article")
+}
+
+///|
+test "coverage find_symbol_in_pages handles empty symbol name" {
+  let site : @lib.DocSite = {
+    title: "Test",
+    pages: [{ title: "P", slug: "p", source: "Some content here." }],
+  }
+  let api_ref : @lib.ApiReference = { package_name: "test", symbols: [] }
+  let report = @ai.analyze_coverage(api_ref, site)
+  assert_eq(report.total_symbols, 0)
+}

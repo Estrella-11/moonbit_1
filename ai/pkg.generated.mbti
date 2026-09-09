@@ -32,6 +32,8 @@ pub fn extract_json_field(String, String) -> String
 
 pub fn fill_prompt(String, Array[(String, String)]) -> String
 
+pub fn find_first_paragraph(Array[@moondockit.MarkdownBlock]) -> String
+
 pub fn function_doc_template() -> PromptTemplate
 
 pub fn function_docs_to_markdown(Array[GeneratedFunctionDoc]) -> String
@@ -48,6 +50,8 @@ pub fn generate_site_seo(@moondockit.DocSite) -> SeoReport
 
 pub fn generate_symbol_tests(AiConfig, @moondockit.ApiReference) -> GeneratedTestSuite
 
+pub fn increment_count(Array[(String, Int)], String) -> Unit
+
 pub fn module_overview_to_markdown(GeneratedModuleDoc) -> String
 
 pub fn quality_template() -> PromptTemplate
@@ -62,15 +66,25 @@ pub fn site_quality_to_markdown(SiteQualityReport) -> String
 
 pub fn site_summary_to_markdown(String, Array[PageSummary]) -> String
 
+pub fn sort_by_count(Array[(String, Int)]) -> Array[(String, Int)]
+
 pub fn summarize_page(String, String) -> PageSummary
 
 pub fn summarize_site(@moondockit.DocSite) -> Array[PageSummary]
 
 pub fn summary_to_markdown(PageSummary) -> String
 
+pub fn take_top_n_pairs(Array[(String, Int)], Int) -> Array[(String, Int)]
+
+pub fn take_top_n_strings(Array[String], Int) -> Array[String]
+
 pub fn test_gen_template() -> PromptTemplate
 
 pub fn tests_to_moonbit(GeneratedTestSuite) -> String
+
+pub fn word_frequency(String, Int, Int) -> Array[(String, Int)]
+
+pub fn write_markdown_list(StringBuilder, Array[String]) -> Unit
 
 pub fn xref_to_markdown(XrefReport) -> String
 
