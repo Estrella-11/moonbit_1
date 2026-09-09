@@ -7,6 +7,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.0] — 2026-09-07
 
+### Added — Shared Utilities
+
+- New `ai_common.mbt` module with 7 shared utility functions:
+  `increment_count`, `sort_by_count`, `take_top_n_pairs`,
+  `take_top_n_strings`, `word_frequency`, `find_first_paragraph`,
+  `write_markdown_list`. Eliminates ~200 lines of duplicated logic.
+- 18 new tests for shared utilities and boundary cases (total: 136).
+- Chinese README (`README_CN.md`) with full feature documentation.
+- `tools/benchmark_ai.py`: AI module performance benchmark script.
+- AI-enhanced adoption example config (`moondockit-ai.json`).
+- `docs/architecture.md`: AI module architecture diagram and design
+  principles.
+- `docs/feature-evidence-map.md`: 13 AI evidence rows mapping features to
+  source, tests, and output.
+- `docs/reviewer-scorecard.md`: Updated reviewer checklist with AI evidence.
+- `docs/self-assessment.md`: Detailed self-assessment for hackathon.
+
+### Changed — Code Quality Consolidation
+
+- Refactored `ai_xref.mbt` and `ai_recommend.mbt` to use shared
+  `sort_by_count` and `take_top_n_pairs` (replaces 4 manual selection
+  sort implementations).
+- Replaced manual count-increment in `ai_quality.mbt`,
+  `ai_consistency.mbt`, `ai_recommend.mbt` with shared `increment_count`.
+- Refactored `ai_summary.mbt` and `ai_seo.mbt` to use shared
+  `word_frequency` (replaces 2 near-identical keyword extraction
+  implementations).
+- Refactored `ai_summary.mbt` and `ai_seo.mbt` to use shared
+  `find_first_paragraph`.
+- Refactored `xref_to_markdown` and `summary_to_markdown` to use shared
+  `write_markdown_list`.
+- Pre-cache `parse_blocks` results in `generate_recommendations` and
+  `check_duplicates` to eliminate O(n²) re-parsing.
+- Pre-cache `measure_document` results in `build_learning_path`.
+- Pre-cache `parse_blocks` in `generate_page_seo` (was parsing 3 times).
+
+### Fixed — Boundary Cases and Performance
+
+- Fix `generate_page_seo` parsing blocks 3 times → single parse with
+  cached result.
+- Fix `check_duplicates` O(n²) re-parsing → pre-parse all pages once.
+- Fix `find_related` O(n²) re-parsing → use cached blocks from
+  `generate_recommendations`.
+- Fix `build_learning_path` calling `measure_document` in nested loop →
+  pre-compute reading times.
+- Fix `replace_all` per-char StringBuilder writes → batch-write unmatched
+  segments.
+- Fix `determine_og_type` always returning "article" → now returns
+  "website" for pages without code or headings.
+- Fix `check_heading_styles` not reporting when ALL pages miss H1 →
+  now reports with distinct message.
+- Fix `find_symbol_in_pages` matching all pages for empty symbol →
+  early return for empty input.
+- Fix `title_quality_score` scoring 20 for empty title → now scores 0.
+- Fix `first_sentence` returning whitespace-only string → now trims and
+  returns empty to trigger fallback.
+- Replace `remove(0)` (O(n)) with `pop()` (O(1)) for array truncation.
+
 ### Added — AI Documentation Suite
 
 Eleven new AI modules providing comprehensive documentation analysis and
