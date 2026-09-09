@@ -240,11 +240,7 @@ pub fn coverage_to_markdown(report : CoverageReport) -> String {
   }
   if report.recommendations.length() > 0 {
     out.write_string("## Recommendations\n\n")
-    for r in report.recommendations {
-      out.write_string("- ")
-      out.write_string(r)
-      out.write_string("\n")
-    }
+    write_markdown_list(out, report.recommendations)
   }
   out.to_string()
 }

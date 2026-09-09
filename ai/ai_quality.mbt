@@ -323,17 +323,9 @@ pub fn quality_to_markdown(assessment : DocQualityAssessment) -> String {
   out.write_string("\{assessment.structure_score}")
   out.write_string("/100\n\n")
   out.write_string("### Strengths\n\n")
-  for s in assessment.strengths {
-    out.write_string("- ")
-    out.write_string(s)
-    out.write_string("\n")
-  }
+  write_markdown_list(out, assessment.strengths)
   out.write_string("\n### Suggestions\n\n")
-  for s in assessment.suggestions {
-    out.write_string("- ")
-    out.write_string(s)
-    out.write_string("\n")
-  }
+  write_markdown_list(out, assessment.suggestions)
   out.to_string()
 }
 
@@ -462,10 +454,6 @@ pub fn site_quality_to_markdown(report : SiteQualityReport) -> String {
     out.write_string(" pages\n")
   }
   out.write_string("\n## Common Suggestions\n\n")
-  for s in report.common_suggestions {
-    out.write_string("- ")
-    out.write_string(s)
-    out.write_string("\n")
-  }
+  write_markdown_list(out, report.common_suggestions)
   out.to_string()
 }

@@ -145,20 +145,7 @@ pub fn generate_module_overview(
   }
   let stats : Array[(String, Int)] = []
   for doc in function_docs {
-    let mut found = false
-    let mut j = 0
-    while j < stats.length() {
-      if stats[j].0 == doc.kind {
-        let cnt = stats[j].1
-        stats[j] = (doc.kind, cnt + 1)
-        found = true
-        j = stats.length()
-      }
-      j = j + 1
-    }
-    if !found {
-      stats.push((doc.kind, 1))
-    }
+    increment_count(stats, doc.kind)
   }
   let overview = "The `\{api_ref.package_name}` module contains \{api_ref.symbols.length()} public symbol(s) " +
     "across \{stats.length()} category(ies)."

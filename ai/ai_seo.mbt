@@ -206,11 +206,7 @@ pub fn seo_to_markdown(report : SeoReport) -> String {
   )
   if report.pages_with_low_search_boost.length() > 0 {
     out.write_string("## Pages with Low Search Boost\n\n")
-    for p in report.pages_with_low_search_boost {
-      out.write_string("- ")
-      out.write_string(p)
-      out.write_string("\n")
-    }
+    write_markdown_list(out, report.pages_with_low_search_boost)
     out.write_string("\n")
   }
   out.write_string("## Page Metadata\n\n")
@@ -244,11 +240,7 @@ pub fn seo_to_markdown(report : SeoReport) -> String {
   }
   if report.recommendations.length() > 0 {
     out.write_string("## Recommendations\n\n")
-    for r in report.recommendations {
-      out.write_string("- ")
-      out.write_string(r)
-      out.write_string("\n")
-    }
+    write_markdown_list(out, report.recommendations)
   }
   out.to_string()
 }

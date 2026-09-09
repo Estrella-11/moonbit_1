@@ -1521,3 +1521,97 @@ test "summary first_sentence handles whitespace-only text" {
   assert_true(summary.summary.length() > 0)
   assert_true(summary.summary.contains("Test"))
 }
+
+///|
+test "integration: quality + summary + seo on same page" {
+  let config = @ai.default_ai_config()
+  let options = @ai.default_quality_options()
+  let content = "# Getting Started Guide\n\nWelcome to MoonBit. This tutorial covers basics.\n\n## Installation\n\n- Install the toolchain\n- Set up PATH\n\n```moonbit\nfn main { println(\"hello\") }\n```"
+  let quality = @ai.assess_page_quality(
+    config, "Getting Started", content, options,
+  )
+  let summary = @ai.summarize_page("Getting Started", content)
+  let page : @lib.DocPage = {
+    title: "Getting Started",
+    slug: "getting-started",
+    source: content,
+  }
+  let seo = @ai.generate_page_seo(page)
+  assert_true(quality.overall_score > 0)
+  assert_true(summary.summary.length() > 0)
+  assert_true(seo.meta_description.length() > 0)
+  assert_true(seo.search_boost > 0)
+}
+
+///|
+test "integration: xref + recommend on multi-page site" {
+  let site : @lib.DocSite = {
+    title: "Integration",
+    pages: [
+      {
+        title: "Getting Started",
+        slug: "start",
+        source: "# Getting Started\n\nWelcome to the installation guide for MoonBit.",
+      },
+      {
+        title: "Installation",
+        slug: "install",
+        source: "# Installation\n\nFollow the getting started guide for setup.",
+      },
+      {
+        title: "API Reference",
+        slug: "api",
+        source: "# API Reference\n\nComplete API documentation for MoonBit functions.",
+      },
+    ],
+  }
+  let xref = @ai.detect_cross_references(site)
+  let recs = @ai.generate_recommendations(site)
+  assert_true(xref.total_references > 0)
+  assert_true(recs.recommendations_count > 0)
+  assert_true(
+    xref.most_referenced.length() > 0 || xref.orphan_pages.length() > 0,
+  )
+}
+
+///|
+test "integration: consistency + coverage on documentation site" {
+  let site : @lib.DocSite = {
+    title: "Consistency Test",
+    pages: [
+      {
+        title: "Guide",
+        slug: "guide",
+        source: "# Guide\n\n## Section\n\nContent here.\n\n```moonbit\nlet x = 1\n```",
+      },
+      {
+        title: "Reference",
+        slug: "reference",
+        source: "# Reference\n\n## API\n\nDetailed reference.\n\n```moonbit\nlet y = 2\n```",
+      },
+    ],
+  }
+  let consistency = @ai.check_consistency(site)
+  let api_ref : @lib.ApiReference = {
+    package_name: "test",
+    symbols: [
+      {
+        kind: "fn",
+        name: "foo",
+        signature: "fn() -> Int",
+        arity: 0,
+        return_type: "Int",
+      },
+      {
+        kind: "fn",
+        name: "bar",
+        signature: "fn(x : Int) -> String",
+        arity: 1,
+        return_type: "String",
+      },
+    ],
+  }
+  let coverage = @ai.analyze_coverage(api_ref, site)
+  assert_true(consistency.style_score > 0)
+  assert_eq(coverage.total_symbols, 2)
+}
