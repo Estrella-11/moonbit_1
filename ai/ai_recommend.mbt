@@ -76,6 +76,7 @@ fn is_prerequisite(page_a : @lib.DocPage, page_b : @lib.DocPage) -> (Bool, Int) 
 fn find_related(
   page : @lib.DocPage,
   all_pages : Array[@lib.DocPage],
+  cached_blocks : Array[(String, Array[@lib.MarkdownBlock])],
 ) -> Array[(String, Int)] {
   let related : Array[(String, Int)] = []
   let page_blocks = @lib.parse_blocks(page.source)
@@ -123,7 +124,17 @@ fn find_related(
     if other.title == page.title {
       continue
     }
-    let other_blocks = @lib.parse_blocks(other.source)
+    let mut other_blocks : Array[@lib.MarkdownBlock] = []
+    let mut found_cache = false
+    for cache in cached_blocks {
+      if cache.0 == other.title {
+        other_blocks = cache.1
+        found_cache = true
+      }
+    }
+    if !found_cache {
+      other_blocks = @lib.parse_blocks(other.source)
+    }
     let mut shared = 0
     for block in other_blocks {
       match block {
@@ -160,24 +171,7 @@ fn find_related(
       related.push((other.title, shared * 15))
     }
   }
-  let mut idx = 0
-  while idx < related.length() {
-    let mut max_idx = idx
-    let mut k = idx + 1
-    while k < related.length() {
-      if related[k].1 > related[max_idx].1 {
-        max_idx = k
-      }
-      k = k + 1
-    }
-    if max_idx != idx {
-      let tmp = related[idx]
-      related[idx] = related[max_idx]
-      related[max_idx] = tmp
-    }
-    idx = idx + 1
-  }
-  related
+  sort_by_count(related)
 }
 
 ///|
@@ -218,11 +212,15 @@ fn build_learning_path(
     i = i + 1
   }
   let mut total_time = 0
+  let reading_cache : Array[(String, Int)] = []
+  for p in all_pages {
+    let metrics = @lib.measure_document(p.source)
+    reading_cache.push((p.title, metrics.reading_minutes))
+  }
   for s in steps {
-    for p in all_pages {
-      if p.title == s {
-        let metrics = @lib.measure_document(p.source)
-        total_time = total_time + metrics.reading_minutes
+    for pair in reading_cache {
+      if pair.0 == s {
+        total_time = total_time + pair.1
       }
     }
   }
@@ -241,6 +239,10 @@ pub fn generate_recommendations(site : @lib.DocSite) -> RecommendationReport {
   let next_steps : Array[Recommendation] = []
   let related : Array[Recommendation] = []
   let hub_counts : Array[(String, Int)] = []
+  let cached_blocks : Array[(String, Array[@lib.MarkdownBlock])] = []
+  for page in site.pages {
+    cached_blocks.push((page.title, @lib.parse_blocks(page.source)))
+  }
   let mut i = 0
   while i < site.pages.length() {
     let page = site.pages[i]
@@ -256,25 +258,12 @@ pub fn generate_recommendations(site : @lib.DocSite) -> RecommendationReport {
             reason: "Natural progression from \{page.title} to \{candidate.title}",
             confidence: conf,
           })
-          let mut found = false
-          let mut k = 0
-          while k < hub_counts.length() {
-            if hub_counts[k].0 == candidate.title {
-              let cnt = hub_counts[k].1
-              hub_counts[k] = (candidate.title, cnt + 1)
-              found = true
-              k = hub_counts.length()
-            }
-            k = k + 1
-          }
-          if !found {
-            hub_counts.push((candidate.title, 1))
-          }
+          increment_count(hub_counts, candidate.title)
         }
       }
       j = j + 1
     }
-    let related_pages = find_related(page, site.pages)
+    let related_pages = find_related(page, site.pages, cached_blocks)
     for pair in related_pages {
       let mut already = false
       for r in related {
@@ -307,30 +296,8 @@ pub fn generate_recommendations(site : @lib.DocSite) -> RecommendationReport {
       paths.push(build_learning_path(page, site.pages))
     }
   }
-  let mut idx = 0
-  while idx < hub_counts.length() {
-    let mut max_idx = idx
-    let mut k = idx + 1
-    while k < hub_counts.length() {
-      if hub_counts[k].1 > hub_counts[max_idx].1 {
-        max_idx = k
-      }
-      k = k + 1
-    }
-    if max_idx != idx {
-      let tmp = hub_counts[idx]
-      hub_counts[idx] = hub_counts[max_idx]
-      hub_counts[max_idx] = tmp
-    }
-    idx = idx + 1
-  }
-  let top_hubs : Array[(String, Int)] = []
-  let limit = if hub_counts.length() < 5 { hub_counts.length() } else { 5 }
-  let mut h = 0
-  while h < limit {
-    top_hubs.push(hub_counts[h])
-    h = h + 1
-  }
+  let sorted_hubs = sort_by_count(hub_counts)
+  let top_hubs = take_top_n_pairs(sorted_hubs, 5)
   {
     next_steps,
     related_pages: related,

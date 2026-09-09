@@ -1424,3 +1424,100 @@ test "coverage find_symbol_in_pages handles empty symbol name" {
   let report = @ai.analyze_coverage(api_ref, site)
   assert_eq(report.total_symbols, 0)
 }
+
+///|
+test "xref detect_cross_references handles single-page site" {
+  let site : @lib.DocSite = {
+    title: "Single",
+    pages: [{ title: "Only", slug: "only", source: "# Only Page\n\nContent." }],
+  }
+  let report = @ai.detect_cross_references(site)
+  assert_eq(report.total_references, 0)
+  assert_eq(report.orphan_pages.length(), 1)
+  assert_eq(report.most_referenced.length(), 0)
+}
+
+///|
+test "xref detect_cross_references finds shared keywords" {
+  let site : @lib.DocSite = {
+    title: "Multi",
+    pages: [
+      {
+        title: "Getting Started",
+        slug: "start",
+        source: "# Getting Started\n\nWelcome to the installation guide.",
+      },
+      {
+        title: "Installation",
+        slug: "install",
+        source: "# Installation\n\nFollow the getting started guide.",
+      },
+    ],
+  }
+  let report = @ai.detect_cross_references(site)
+  assert_true(report.total_references > 0)
+}
+
+///|
+test "xref_to_markdown renders all sections" {
+  let report : @ai.XrefReport = {
+    total_references: 2,
+    references: [
+      {
+        source_page: "A",
+        target_page: "B",
+        relevance_score: 60,
+        reason: "Shares 3 keywords",
+        shared_keywords: ["moonbit", "guide", "intro"],
+      },
+    ],
+    orphan_pages: ["C"],
+    most_referenced: [("B", 2)],
+  }
+  let md = @ai.xref_to_markdown(report)
+  assert_true(md.contains("Cross-Reference"))
+  assert_true(md.contains("Orphan"))
+  assert_true(md.contains("Most Referenced"))
+}
+
+///|
+test "recommend generate_recommendations for single page" {
+  let site : @lib.DocSite = {
+    title: "Single",
+    pages: [
+      { title: "Intro", slug: "intro", source: "# Intro\n\nBasic content." },
+    ],
+  }
+  let report = @ai.generate_recommendations(site)
+  assert_eq(report.recommendations_count, 0)
+  assert_eq(report.top_hub_pages.length(), 0)
+}
+
+///|
+test "recommendations_to_markdown renders hub pages and next steps" {
+  let report : @ai.RecommendationReport = {
+    next_steps: [
+      {
+        from_page: "Start",
+        to_page: "Advanced",
+        reason: "Natural progression",
+        confidence: 80,
+      },
+    ],
+    related_pages: [],
+    learning_paths: [],
+    top_hub_pages: [("Advanced", 2)],
+    recommendations_count: 1,
+  }
+  let md = @ai.recommendations_to_markdown(report)
+  assert_true(md.contains("Recommendations"))
+  assert_true(md.contains("Next Steps"))
+  assert_true(md.contains("Hub Pages"))
+}
+
+///|
+test "summary first_sentence handles whitespace-only text" {
+  let summary = @ai.summarize_page("Test", "   \n\n   \t  ")
+  assert_true(summary.summary.length() > 0)
+  assert_true(summary.summary.contains("Test"))
+}

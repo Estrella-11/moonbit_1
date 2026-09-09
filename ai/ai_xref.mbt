@@ -166,30 +166,8 @@ pub fn detect_cross_references(site : @lib.DocSite) -> XrefReport {
       ref_counts.push((page, count))
     }
   }
-  let mut idx = 0
-  while idx < ref_counts.length() {
-    let mut max_idx = idx
-    let mut k = idx + 1
-    while k < ref_counts.length() {
-      if ref_counts[k].1 > ref_counts[max_idx].1 {
-        max_idx = k
-      }
-      k = k + 1
-    }
-    if max_idx != idx {
-      let tmp = ref_counts[idx]
-      ref_counts[idx] = ref_counts[max_idx]
-      ref_counts[max_idx] = tmp
-    }
-    idx = idx + 1
-  }
-  let top_referenced : Array[(String, Int)] = []
-  let limit = if ref_counts.length() < 5 { ref_counts.length() } else { 5 }
-  let mut i = 0
-  while i < limit {
-    top_referenced.push(ref_counts[i])
-    i = i + 1
-  }
+  let sorted_refs = sort_by_count(ref_counts)
+  let top_referenced = take_top_n_pairs(sorted_refs, 5)
   {
     total_references: references.length(),
     references,
@@ -214,11 +192,7 @@ pub fn xref_to_markdown(report : XrefReport) -> String {
   out.write_string("- **Orphan Pages:** \{report.orphan_pages.length()}\n\n")
   if report.orphan_pages.length() > 0 {
     out.write_string("## Orphan Pages (No Incoming References)\n\n")
-    for p in report.orphan_pages {
-      out.write_string("- ")
-      out.write_string(p)
-      out.write_string("\n")
-    }
+    write_markdown_list(out, report.orphan_pages)
     out.write_string("\n")
   }
   if report.most_referenced.length() > 0 {

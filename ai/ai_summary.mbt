@@ -41,6 +41,10 @@ fn detect_content_type(blocks : Array[@lib.MarkdownBlock]) -> String {
 ///|
 /// Extract the first sentence from text content as a summary fragment.
 fn first_sentence(text : String) -> String {
+  let trimmed = text.trim().to_owned()
+  if trimmed.length() == 0 {
+    return ""
+  }
   let mut end = 0
   while end < text.length() {
     let ch = text[end:end + 1]
@@ -161,11 +165,7 @@ pub fn summary_to_markdown(summary : PageSummary) -> String {
   out.write_string("\n\n")
   if summary.key_sections.length() > 0 {
     out.write_string("**Key Sections:**\n")
-    for s in summary.key_sections {
-      out.write_string("- ")
-      out.write_string(s)
-      out.write_string("\n")
-    }
+    write_markdown_list(out, summary.key_sections)
   }
   out.to_string()
 }
