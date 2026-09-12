@@ -16,7 +16,7 @@ let guide : @moondockit.DocPage = {
 }
 
 ///|
-let site : @moondockit.DocSite = { title: "Package Docs", pages: [guide] }
+let site : @moondockit.DocSite = { title: "Package Docs", pages: [guide], }
 
 ///|
 let files = @moondockit.build_site_manifest(site)

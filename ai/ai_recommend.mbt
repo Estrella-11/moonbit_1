@@ -230,7 +230,7 @@ fn build_learning_path(
   } else {
     "Single-page path starting with \{steps[0]}."
   }
-  { steps, description: desc, difficulty, estimated_time: total_time }
+  { steps, description: desc, difficulty, estimated_time: total_time, }
 }
 
 ///|

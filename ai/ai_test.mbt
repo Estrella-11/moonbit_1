@@ -10,7 +10,7 @@ test "default_ai_config returns mock provider" {
 ///|
 test "build_chat_request_json produces valid JSON" {
   let config = @ai.default_ai_config()
-  let messages : Array[@ai.ChatMessage] = [{ role: "user", content: "Hello" }]
+  let messages : Array[@ai.ChatMessage] = [{ role: "user", content: "Hello", }]
   let json = @ai.build_chat_request_json(config, messages)
   assert_true(json.contains("\"model\""))
   assert_true(json.contains("\"messages\""))
@@ -174,7 +174,7 @@ test "assess_site_quality evaluates multiple pages" {
     slug: "page-two",
     source: "# Page Two\n\nMore content.",
   }
-  let site : @lib.DocSite = { title: "Test Site", pages: [page1, page2] }
+  let site : @lib.DocSite = { title: "Test Site", pages: [page1, page2], }
   let results = @ai.assess_site_quality(config, site, options)
   assert_eq(results.length(), 2)
 }
@@ -189,7 +189,10 @@ test "module_overview_to_markdown produces overview page" {
     arity: 0,
     return_type: "",
   }
-  let api_ref : @lib.ApiReference = { package_name: "mymod", symbols: [symbol] }
+  let api_ref : @lib.ApiReference = {
+    package_name: "mymod",
+    symbols: [symbol],
+  }
   let doc = @ai.generate_module_overview(config, api_ref)
   let markdown = @ai.module_overview_to_markdown(doc)
   assert_true(markdown.contains("mymod"))
@@ -251,7 +254,7 @@ test "summarize_site generates summaries for all pages" {
     slug: "page-two",
     source: "# Page Two\n\nSecond page content here.",
   }
-  let site : @lib.DocSite = { title: "Test Site", pages: [page1, page2] }
+  let site : @lib.DocSite = { title: "Test Site", pages: [page1, page2], }
   let summaries = @ai.summarize_site(site)
   assert_eq(summaries.length(), 2)
   assert_eq(summaries[0].title, "Page One")
@@ -331,7 +334,7 @@ test "aggregate_site_quality produces site report" {
     slug: "short",
     source: "Tiny.",
   }
-  let site : @lib.DocSite = { title: "Test", pages: [page1, page2] }
+  let site : @lib.DocSite = { title: "Test", pages: [page1, page2], }
   let assessments = @ai.assess_site_quality(config, site, options)
   let report = @ai.aggregate_site_quality(assessments)
   assert_eq(report.total_pages, 2)
@@ -348,7 +351,7 @@ test "site_quality_to_markdown generates readable report" {
     slug: "test",
     source: "# Test\n\nContent here.",
   }
-  let site : @lib.DocSite = { title: "Site", pages: [page] }
+  let site : @lib.DocSite = { title: "Site", pages: [page], }
   let assessments = @ai.assess_site_quality(config, site, options)
   let report = @ai.aggregate_site_quality(assessments)
   let markdown = @ai.site_quality_to_markdown(report)
@@ -579,7 +582,7 @@ test "detect_cross_references handles single page site" {
   let site : @lib.DocSite = {
     title: "Single",
     pages: [
-      { title: "Only Page", slug: "only", source: "# Only Page\n\nContent." },
+      { title: "Only Page", slug: "only", source: "# Only Page\n\nContent.", },
     ],
   }
   let report = @ai.detect_cross_references(site)
@@ -686,8 +689,8 @@ test "analyze_coverage reports 100% for fully documented API" {
 
 ///|
 test "analyze_coverage handles empty API" {
-  let api_ref : @lib.ApiReference = { package_name: "emptymod", symbols: [] }
-  let site : @lib.DocSite = { title: "Test", pages: [] }
+  let api_ref : @lib.ApiReference = { package_name: "emptymod", symbols: [], }
+  let site : @lib.DocSite = { title: "Test", pages: [], }
   let report = @ai.analyze_coverage(api_ref, site)
   assert_eq(report.total_symbols, 0)
   assert_eq(report.coverage_percentage, 100)
@@ -834,7 +837,7 @@ test "analyze_coverage generates recommendations" {
   }
   let site : @lib.DocSite = {
     title: "Test",
-    pages: [{ title: "Home", slug: "home", source: "# Home\n\nWelcome." }],
+    pages: [{ title: "Home", slug: "home", source: "# Home\n\nWelcome.", }],
   }
   let report = @ai.analyze_coverage(api_ref, site)
   assert_true(report.recommendations.length() > 0)
@@ -879,8 +882,8 @@ test "check_consistency detects missing H1 headings" {
   let site : @lib.DocSite = {
     title: "Test",
     pages: [
-      { title: "Good Page", slug: "good", source: "# Good Page\n\nHas H1." },
-      { title: "Bad Page", slug: "bad", source: "## Bad Page\n\nNo H1 here." },
+      { title: "Good Page", slug: "good", source: "# Good Page\n\nHas H1.", },
+      { title: "Bad Page", slug: "bad", source: "## Bad Page\n\nNo H1 here.", },
     ],
   }
   let report = @ai.check_consistency(site)
@@ -980,7 +983,7 @@ test "check_consistency detects content length outliers" {
   let site : @lib.DocSite = {
     title: "Test",
     pages: [
-      { title: "Short", slug: "short", source: "# Short\n\nTiny." },
+      { title: "Short", slug: "short", source: "# Short\n\nTiny.", },
       {
         title: "Medium One",
         slug: "m1",
@@ -1013,9 +1016,9 @@ test "consistency_to_markdown produces valid markdown" {
   let site : @lib.DocSite = {
     title: "Test",
     pages: [
-      { title: "A", slug: "a", source: "# A\n\nContent here." },
-      { title: "B", slug: "b", source: "# B\n\nContent here." },
-      { title: "C", slug: "c", source: "# C\n\nContent here." },
+      { title: "A", slug: "a", source: "# A\n\nContent here.", },
+      { title: "B", slug: "b", source: "# B\n\nContent here.", },
+      { title: "C", slug: "c", source: "# C\n\nContent here.", },
     ],
   }
   let report = @ai.check_consistency(site)
@@ -1084,7 +1087,7 @@ test "generate_site_seo identifies low search boost pages" {
         slug: "good",
         source: "# Good Page\n\nThis page has sufficient content with multiple paragraphs and headings.\n\n## Section\n\nMore content here with code.\n\n```moonbit\nlet x = 1\n```",
       },
-      { title: "Bad", slug: "bad", source: "# Bad" },
+      { title: "Bad", slug: "bad", source: "# Bad", },
     ],
   }
   let report = @ai.generate_site_seo(site)
@@ -1213,7 +1216,7 @@ test "recommendations_to_markdown produces valid markdown" {
 
 ///|
 test "generate_recommendations handles empty site" {
-  let site : @lib.DocSite = { title: "Empty", pages: [] }
+  let site : @lib.DocSite = { title: "Empty", pages: [], }
   let report = @ai.generate_recommendations(site)
   assert_eq(report.recommendations_count, 0)
   assert_eq(report.next_steps.length(), 0)
@@ -1224,7 +1227,7 @@ test "generate_recommendations handles empty site" {
 test "check_consistency handles single page site" {
   let site : @lib.DocSite = {
     title: "Single",
-    pages: [{ title: "Only", slug: "only", source: "# Only\n\nContent." }],
+    pages: [{ title: "Only", slug: "only", source: "# Only\n\nContent.", }],
   }
   let report = @ai.check_consistency(site)
   assert_true(report.style_score >= 0)
@@ -1382,8 +1385,8 @@ test "consistency detects all pages missing H1" {
   let site : @lib.DocSite = {
     title: "No H1 Site",
     pages: [
-      { title: "A", slug: "a", source: "## Heading\n\nNo H1 here." },
-      { title: "B", slug: "b", source: "## Another\n\nStill no H1." },
+      { title: "A", slug: "a", source: "## Heading\n\nNo H1 here.", },
+      { title: "B", slug: "b", source: "## Another\n\nStill no H1.", },
     ],
   }
   let report = @ai.check_consistency(site)
@@ -1418,9 +1421,9 @@ test "SEO determine_og_type returns website for no-code page" {
 test "coverage find_symbol_in_pages handles empty symbol name" {
   let site : @lib.DocSite = {
     title: "Test",
-    pages: [{ title: "P", slug: "p", source: "Some content here." }],
+    pages: [{ title: "P", slug: "p", source: "Some content here.", }],
   }
-  let api_ref : @lib.ApiReference = { package_name: "test", symbols: [] }
+  let api_ref : @lib.ApiReference = { package_name: "test", symbols: [], }
   let report = @ai.analyze_coverage(api_ref, site)
   assert_eq(report.total_symbols, 0)
 }
@@ -1429,7 +1432,7 @@ test "coverage find_symbol_in_pages handles empty symbol name" {
 test "xref detect_cross_references handles single-page site" {
   let site : @lib.DocSite = {
     title: "Single",
-    pages: [{ title: "Only", slug: "only", source: "# Only Page\n\nContent." }],
+    pages: [{ title: "Only", slug: "only", source: "# Only Page\n\nContent.", }],
   }
   let report = @ai.detect_cross_references(site)
   assert_eq(report.total_references, 0)
@@ -1485,7 +1488,7 @@ test "recommend generate_recommendations for single page" {
   let site : @lib.DocSite = {
     title: "Single",
     pages: [
-      { title: "Intro", slug: "intro", source: "# Intro\n\nBasic content." },
+      { title: "Intro", slug: "intro", source: "# Intro\n\nBasic content.", },
     ],
   }
   let report = @ai.generate_recommendations(site)

@@ -35,7 +35,7 @@ fn generate_mock_test(symbol : @lib.ApiSymbol) -> GeneratedTest {
     "type" => "type-alias"
     _ => "basic"
   }
-  { name: test_name, description, test_code: code.to_string(), test_type }
+  { name: test_name, description, test_code: code.to_string(), test_type, }
 }
 
 ///|
@@ -48,7 +48,7 @@ pub fn generate_symbol_tests(
   for symbol in api_ref.symbols {
     tests.push(generate_mock_test(symbol))
   }
-  { module_name: api_ref.package_name, tests }
+  { module_name: api_ref.package_name, tests, }
 }
 
 ///|

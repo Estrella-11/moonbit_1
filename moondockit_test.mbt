@@ -185,7 +185,7 @@ test "build_site_manifest returns deterministic output files" {
     slug: "api",
     source: "---\norder: 1\n---\n# API",
   }
-  let site : @moondockit.DocSite = { title: "Docs", pages: [intro, api] }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [intro, api], }
   let files = @moondockit.build_site_manifest(site)
   inspect(files.length(), content="8")
   inspect(files[0].path, content="api.html")
@@ -219,7 +219,7 @@ test "custom themes change generated page style" {
     slug: "guide",
     source: "# Guide\n\nShip docs.",
   }
-  let site : @moondockit.DocSite = { title: "Docs", pages: [page] }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [page], }
   let theme : @moondockit.SiteTheme = {
     background: "#111111",
     surface: "#fafafa",
@@ -245,7 +245,7 @@ test "theme presets provide distinct documented styles" {
     slug: "guide",
     source: "# Guide\n\nShip docs.",
   }
-  let site : @moondockit.DocSite = { title: "Docs", pages: [page] }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [page], }
   let package_page = @moondockit.render_page_with_theme(
     site,
     page,
@@ -269,7 +269,7 @@ test "site options add page metadata and footer" {
     slug: "guide",
     source: "---\ntitle: Guide\n---\n# Guide\n\nShip docs.",
   }
-  let site : @moondockit.DocSite = { title: "Docs", pages: [page] }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [page], }
   let options : @moondockit.SiteOptions = {
     language: "zh-CN",
     description: "MoonBit docs <site>",
@@ -323,7 +323,7 @@ test "site options sanitize invalid language values" {
     slug: "guide",
     source: "# Guide",
   }
-  let site : @moondockit.DocSite = { title: "Docs", pages: [page] }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [page], }
   let options : @moondockit.SiteOptions = {
     language: "zh_CN<script>",
     description: "",
@@ -350,7 +350,7 @@ test "build_search_index serializes searchable page text" {
     slug: "guide",
     source: "---\ntags: [docs, moonbit]\n---\n# Guide\n\nUse \"safe\" docs.\n\n- fast",
   }
-  let site : @moondockit.DocSite = { title: "Docs", pages: [page] }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [page], }
   let entries = @moondockit.collect_search_entries(site)
   inspect(entries.length(), content="1")
   inspect(entries[0].path, content="guide.html")
@@ -373,7 +373,10 @@ test "build_sitemap serializes sorted page routes" {
     slug: "api",
     source: "---\norder: 1\n---\n# API",
   }
-  let sitemap = @moondockit.build_sitemap({ title: "Docs", pages: [intro, api] })
+  let sitemap = @moondockit.build_sitemap({
+    title: "Docs",
+    pages: [intro, api],
+  })
   assert_true(sitemap.contains("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"))
   assert_true(
     sitemap.contains(
@@ -395,9 +398,9 @@ test "build_robots_txt allows crawlers and references sitemap" {
 ///|
 test "inspect_manifest reports generated output files" {
   let files : Array[@moondockit.OutputFile] = [
-    { path: "index.html", content: "<html></html>" },
-    { path: "search-index.json", content: "[]" },
-    { path: "sitemap.xml", content: "<urlset></urlset>" },
+    { path: "index.html", content: "<html></html>", },
+    { path: "search-index.json", content: "[]", },
+    { path: "sitemap.xml", content: "<urlset></urlset>", },
   ]
   let report = @moondockit.inspect_manifest(files)
   inspect(report.file_count, content="3")
@@ -412,8 +415,8 @@ test "inspect_manifest reports generated output files" {
 ///|
 test "build_output_manifest_json serializes output metadata" {
   let files : Array[@moondockit.OutputFile] = [
-    { path: "guide.html", content: "<html></html>" },
-    { path: "search-index.json", content: "[]" },
+    { path: "guide.html", content: "<html></html>", },
+    { path: "search-index.json", content: "[]", },
   ]
   let manifest = @moondockit.build_output_manifest_json(files)
   assert_true(manifest.contains("\"file_count\": 2"))
@@ -430,7 +433,7 @@ test "build_site_report summarizes default manifest outputs" {
     slug: "guide",
     source: "# Guide\n\nShip docs.",
   }
-  let report = @moondockit.build_site_report({ title: "Docs", pages: [page] })
+  let report = @moondockit.build_site_report({ title: "Docs", pages: [page], })
   inspect(report.file_count, content="7")
   inspect(report.html_count, content="2")
   inspect(report.data_count, content="4")
@@ -462,7 +465,7 @@ test "measure_site aggregates page metrics" {
     slug: "b",
     source: "# B\n\n```mbt\nlet ok = true\n```",
   }
-  let metrics = @moondockit.measure_site({ title: "Docs", pages: [a, b] })
+  let metrics = @moondockit.measure_site({ title: "Docs", pages: [a, b], })
   inspect(metrics.page_count, content="2")
   inspect(metrics.heading_count, content="2")
   inspect(metrics.code_block_count, content="1")
@@ -477,7 +480,7 @@ test "evaluate_quality passes publishable sites" {
     slug: "guide",
     source: "# Guide\n\nShip docs.",
   }
-  let gate = @moondockit.evaluate_quality({ title: "Docs", pages: [page] })
+  let gate = @moondockit.evaluate_quality({ title: "Docs", pages: [page], })
   assert_true(gate.passed)
   inspect(gate.score, content="100")
   inspect(gate.checks.length(), content="4")
@@ -505,7 +508,7 @@ test "build_quality_report_json serializes review evidence" {
 
 ///|
 test "evaluate_quality fails empty sites" {
-  let gate = @moondockit.evaluate_quality({ title: "", pages: [] })
+  let gate = @moondockit.evaluate_quality({ title: "", pages: [], })
   assert_false(gate.passed)
   assert_true(gate.score < 100)
   assert_false(gate.checks[0].passed)
@@ -531,10 +534,10 @@ test "evaluate_quality scales across many readable pages" {
     })
     index = index + 1
   }
-  let gate = @moondockit.evaluate_quality({ title: "Large Docs", pages })
+  let gate = @moondockit.evaluate_quality({ title: "Large Docs", pages, })
   assert_true(gate.passed)
   assert_true(
-    @moondockit.measure_site({ title: "Large Docs", pages }).reading_minutes >
+    @moondockit.measure_site({ title: "Large Docs", pages, }).reading_minutes >
     30,
   )
 }
@@ -551,7 +554,7 @@ test "evaluate_quality flags one oversized page" {
   let gate = @moondockit.evaluate_quality({
     title: "Docs",
     pages: [
-      { title: "Long Guide", slug: "long-guide", source: source.to_string() },
+      { title: "Long Guide", slug: "long-guide", source: source.to_string(), },
     ],
   })
   assert_false(gate.passed)
@@ -570,7 +573,7 @@ test "summarize_site counts pages outputs search and tags" {
     slug: "b",
     source: "---\ntags: [docs]\n---\n# B",
   }
-  let summary = @moondockit.summarize_site({ title: "Docs", pages: [a, b] })
+  let summary = @moondockit.summarize_site({ title: "Docs", pages: [a, b], })
   inspect(summary.page_count, content="2")
   inspect(summary.output_count, content="8")
   inspect(summary.search_entry_count, content="2")
@@ -584,7 +587,7 @@ test "validate_site accepts healthy documentation sites" {
     slug: "guide",
     source: "# Guide\n\nShip docs.",
   }
-  let report = @moondockit.validate_site({ title: "Docs", pages: [page] })
+  let report = @moondockit.validate_site({ title: "Docs", pages: [page], })
   inspect(report.diagnostics.length(), content="0")
   assert_false(@moondockit.has_validation_errors(report))
   inspect(@moondockit.diagnostics_to_text(report), content="ok")
@@ -592,7 +595,7 @@ test "validate_site accepts healthy documentation sites" {
 
 ///|
 test "validate_site reports empty and duplicate routes" {
-  let empty_report = @moondockit.validate_site({ title: "", pages: [] })
+  let empty_report = @moondockit.validate_site({ title: "", pages: [], })
   inspect(empty_report.diagnostics.length(), content="2")
   assert_true(@moondockit.has_validation_errors(empty_report))
   let empty_text = @moondockit.diagnostics_to_text(empty_report)
@@ -683,7 +686,7 @@ test "render_site emits deterministic html pages" {
     slug: "guide",
     source: "# Guide\n\n## Install\n\nShip docs.",
   }
-  let site : @moondockit.DocSite = { title: "MoonDocKit", pages: [page] }
+  let site : @moondockit.DocSite = { title: "MoonDocKit", pages: [page], }
   let output = @moondockit.render_site(site)
   inspect(output.length(), content="1")
   inspect(output[0].path, content="guide.html")
@@ -704,9 +707,13 @@ test "rendered pages expose responsive and accessible navigation" {
     slug: "intro",
     source: "# Intro",
   }
-  let api : @moondockit.DocPage = { title: "API", slug: "api", source: "# API" }
+  let api : @moondockit.DocPage = {
+    title: "API",
+    slug: "api",
+    source: "# API",
+  }
   let rendered = @moondockit.render_page(
-    { title: "MoonDocKit", pages: [intro, api] },
+    { title: "MoonDocKit", pages: [intro, api], },
     api,
   )
   assert_true(rendered.html.contains("<nav aria-label=\"Documentation\">"))
@@ -733,7 +740,10 @@ test "rendered pages include safe interactive search" {
     slug: "guide",
     source: "# Guide\n\nSearch the documentation.",
   }
-  let rendered = @moondockit.render_page({ title: "Docs", pages: [page] }, page)
+  let rendered = @moondockit.render_page(
+    { title: "Docs", pages: [page], },
+    page,
+  )
   assert_true(rendered.html.contains("data-search-input"))
   assert_true(rendered.html.contains("data-search-results"))
   assert_true(rendered.html.contains("fetch(\"search-index.json\")"))
@@ -791,7 +801,10 @@ test "default rendering handles pages without headings" {
     slug: "note",
     source: "A short note without a heading.",
   }
-  let rendered = @moondockit.render_page({ title: "Docs", pages: [page] }, page)
+  let rendered = @moondockit.render_page(
+    { title: "Docs", pages: [page], },
+    page,
+  )
   assert_false(rendered.html.contains("<section class=\"toc\">"))
   assert_true(rendered.html.contains("<p>A short note without a heading.</p>"))
 }
@@ -821,7 +834,7 @@ test "theme dimensions and language fall back to safe defaults" {
     footer: "",
   }
   let rendered = @moondockit.render_page_with_options(
-    { title: "Docs", pages: [page] },
+    { title: "Docs", pages: [page], },
     page,
     theme,
     options,
@@ -841,7 +854,7 @@ test "search and sitemap escape structured output characters" {
     slug: "api&sdk",
     source: "# API\n\nUse C:\\docs.",
   }
-  let site : @moondockit.DocSite = { title: "Docs", pages: [page] }
+  let site : @moondockit.DocSite = { title: "Docs", pages: [page], }
   let search = @moondockit.build_search_index(site)
   let sitemap = @moondockit.build_sitemap(site)
   assert_true(search.contains("C:\\\\docs"))
@@ -850,8 +863,8 @@ test "search and sitemap escape structured output characters" {
 
 ///|
 test "validation reports empty page titles and routes" {
-  let page : @moondockit.DocPage = { title: "", slug: "", source: "# Content" }
-  let report = @moondockit.validate_site({ title: "Docs", pages: [page] })
+  let page : @moondockit.DocPage = { title: "", slug: "", source: "# Content", }
+  let report = @moondockit.validate_site({ title: "Docs", pages: [page], })
   let text = @moondockit.diagnostics_to_text(report)
   assert_true(text.contains("error empty-page-title"))
   assert_true(text.contains("error empty-route"))
@@ -881,7 +894,7 @@ test "index page points to the first planned route" {
     }
     None => fail("expected index page")
   }
-  match @moondockit.build_index_page({ title: "Empty", pages: [] }) {
+  match @moondockit.build_index_page({ title: "Empty", pages: [], }) {
     None => ()
     Some(_) => fail("expected no index page")
   }

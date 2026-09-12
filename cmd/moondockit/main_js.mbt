@@ -77,7 +77,7 @@ fn load_pages(directory : String, api_file : String) -> Array[@lib.DocPage] {
   while i + 1 < raw.length() {
     let name = raw[i]
     let page_stem = stem(name)
-    pages.push({ title: page_stem, slug: page_stem, source: raw[i + 1] })
+    pages.push({ title: page_stem, slug: page_stem, source: raw[i + 1], })
     i = i + 2
   }
   if api_file.trim().to_owned() != "" {
@@ -312,7 +312,7 @@ fn main {
       source: @ai.function_docs_to_markdown(module_doc.function_docs),
     })
   }
-  let site : @lib.DocSite = { title, pages }
+  let site : @lib.DocSite = { title, pages, }
   let validation = @lib.validate_site(site)
   let diagnostics = @lib.diagnostics_to_text(validation)
   let quality = @lib.evaluate_quality(site)
@@ -373,12 +373,12 @@ fn main {
     let ai_config = @ai.default_ai_config()
     let suite = @ai.generate_symbol_tests(ai_config, api_ref)
     let test_code = @ai.tests_to_moonbit(suite)
-    manifest.push({ path: "ai-generated-test.mbt", content: test_code })
+    manifest.push({ path: "ai-generated-test.mbt", content: test_code, })
   }
   if ai_summary_enabled {
     let summaries = @ai.summarize_site(site)
     let summary_md = @ai.site_summary_to_markdown(title, summaries)
-    manifest.push({ path: "ai-site-summary.md", content: summary_md })
+    manifest.push({ path: "ai-site-summary.md", content: summary_md, })
   }
   if ai_quality_enabled {
     let ai_config = @ai.default_ai_config()
@@ -386,33 +386,36 @@ fn main {
     let assessments = @ai.assess_site_quality(ai_config, site, ai_options)
     let site_report = @ai.aggregate_site_quality(assessments)
     let site_report_md = @ai.site_quality_to_markdown(site_report)
-    manifest.push({ path: "ai-site-quality-report.md", content: site_report_md })
+    manifest.push({
+      path: "ai-site-quality-report.md",
+      content: site_report_md,
+    })
   }
   if ai_xref_enabled {
     let xref_report = @ai.detect_cross_references(site)
     let xref_md = @ai.xref_to_markdown(xref_report)
-    manifest.push({ path: "ai-cross-reference.md", content: xref_md })
+    manifest.push({ path: "ai-cross-reference.md", content: xref_md, })
   }
   if ai_coverage_enabled && api_file.trim().to_owned() != "" {
     let api_ref = @lib.parse_mbti(read_text_file(api_file))
     let coverage = @ai.analyze_coverage(api_ref, site)
     let coverage_md = @ai.coverage_to_markdown(coverage)
-    manifest.push({ path: "ai-coverage-report.md", content: coverage_md })
+    manifest.push({ path: "ai-coverage-report.md", content: coverage_md, })
   }
   if ai_consistency_enabled {
     let consistency = @ai.check_consistency(site)
     let consistency_md = @ai.consistency_to_markdown(consistency)
-    manifest.push({ path: "ai-consistency-report.md", content: consistency_md })
+    manifest.push({ path: "ai-consistency-report.md", content: consistency_md, })
   }
   if ai_seo_enabled {
     let seo = @ai.generate_site_seo(site)
     let seo_md = @ai.seo_to_markdown(seo)
-    manifest.push({ path: "ai-seo-report.md", content: seo_md })
+    manifest.push({ path: "ai-seo-report.md", content: seo_md, })
   }
   if ai_recommend_enabled {
     let recs = @ai.generate_recommendations(site)
     let recs_md = @ai.recommendations_to_markdown(recs)
-    manifest.push({ path: "ai-recommendations.md", content: recs_md })
+    manifest.push({ path: "ai-recommendations.md", content: recs_md, })
   }
   let report = @lib.inspect_manifest(manifest)
   let written = if dry_run {

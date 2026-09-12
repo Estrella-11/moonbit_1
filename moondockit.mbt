@@ -210,7 +210,7 @@ pub(all) enum MarkdownBlock {
 ///|
 /// Return empty front matter metadata.
 pub fn empty_front_matter() -> FrontMatter {
-  { title: None, order: None, tags: [], fields: [] }
+  { title: None, order: None, tags: [], fields: [], }
 }
 
 ///|
@@ -265,7 +265,7 @@ pub fn parse_mbti(source : String) -> ApiReference {
     }
     i = i + 1
   }
-  { package_name, symbols }
+  { package_name, symbols, }
 }
 
 ///|
@@ -357,7 +357,7 @@ pub fn mbti_to_page(source : String) -> DocPage {
       }
     }
   }
-  { title, slug: "api-reference", source: out.to_string() }
+  { title, slug: "api-reference", source: out.to_string(), }
 }
 
 ///|
@@ -648,7 +648,7 @@ pub fn extract_headings(
         let base = slugify(title)
         let anchor = unique_anchor(base, seen)
         seen.push(anchor)
-        headings.push({ level, title, anchor })
+        headings.push({ level, title, anchor, })
       }
       _ => ()
     }
@@ -682,7 +682,7 @@ pub fn parse_blocks(markdown : String) -> Array[MarkdownBlock] {
 /// Parse optional front matter and Markdown blocks.
 pub fn parse_document(markdown : String) -> ParsedDocument {
   let (front_matter, body) = split_front_matter(markdown)
-  { front_matter, blocks: parse_body_blocks(body) }
+  { front_matter, blocks: parse_body_blocks(body), }
 }
 
 ///|
@@ -743,7 +743,7 @@ fn parse_front_matter_lines(lines : Array[String]) -> FrontMatter {
       None => ()
     }
   }
-  { title, order, tags, fields }
+  { title, order, tags, fields, }
 }
 
 ///|
@@ -1240,7 +1240,7 @@ pub fn render_page_with_options(
   out.write_string(render_search_script())
   out.write_string(render_ui_script())
   out.write_string("</body></html>\n")
-  { path: route.path, html: out.to_string() }
+  { path: route.path, html: out.to_string(), }
 }
 
 ///|
@@ -1522,19 +1522,19 @@ pub fn build_site_manifest_with_options(
   let files : Array[OutputFile] = []
   for page in site.pages {
     let rendered = render_page_with_options(site, page, theme, options)
-    files.push({ path: rendered.path, content: rendered.html })
+    files.push({ path: rendered.path, content: rendered.html, })
   }
   match build_index_page(site) {
-    Some(content) => files.push({ path: "index.html", content })
+    Some(content) => files.push({ path: "index.html", content, })
     None => ()
   }
-  files.push({ path: "search-index.json", content: build_search_index(site) })
+  files.push({ path: "search-index.json", content: build_search_index(site), })
   files.push({
     path: "quality-report.json",
     content: build_quality_report_json(site),
   })
-  files.push({ path: "sitemap.xml", content: build_sitemap(site) })
-  files.push({ path: "robots.txt", content: build_robots_txt() })
+  files.push({ path: "sitemap.xml", content: build_sitemap(site), })
+  files.push({ path: "robots.txt", content: build_robots_txt(), })
   files.push({
     path: "site-manifest.json",
     content: build_output_manifest_json(files),
@@ -1705,7 +1705,7 @@ pub fn inspect_manifest(files : Array[OutputFile]) -> BuildReport {
       data_count = data_count + 1
     }
     total_bytes = total_bytes + file.content.length()
-    infos.push({ path: file.path, kind, byte_count: file.content.length() })
+    infos.push({ path: file.path, kind, byte_count: file.content.length(), })
   }
   infos.sort_by((left, right) => left.path.compare(right.path))
   {

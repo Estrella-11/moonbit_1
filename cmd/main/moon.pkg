@@ -2,6 +2,4 @@ import {
   "Estrella-11/moondockit",
 }
 
-options(
-  "is-main": true,
-)
+pkgtype(kind: "executable")
