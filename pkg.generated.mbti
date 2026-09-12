@@ -260,4 +260,3 @@ pub(all) struct ValidationReport {
 // Type aliases
 
 // Traits
-

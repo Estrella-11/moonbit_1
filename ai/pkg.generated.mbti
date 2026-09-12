@@ -285,4 +285,3 @@ pub(all) struct XrefReport {
 // Type aliases
 
 // Traits
-
