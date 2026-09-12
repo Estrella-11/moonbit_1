@@ -28,6 +28,24 @@ Generated MoonBit API:
 - Public showcase: <https://estrella-11.github.io/moonbit_1/api-reference.html>
 - Repository artifact: `dist-cli-example/api-reference.html`
 
+## At a Glance
+
+| Signal | Value |
+| --- | --- |
+| Implementation language | MoonBit, end to end |
+| Non-test MoonBit source | 5,945 lines across 17 files |
+| Tests | 139 passing (50 core + 89 AI), 0 failures |
+| External dependencies | 0 — MoonBit standard library only |
+| Public API | 43 core functions, 41 AI functions |
+| CLI | 10 options, 11 flags including 9 `--ai-*` switches |
+| Generated per build | 13 files: 8 HTML pages, search index, sitemap, manifest, robots, quality report |
+| Release gate on generated sites | quality score 100 / 100 |
+| CI | 20 steps: check, test, interface, format, JS target, CLI scenarios, one-shot verification, AI suite |
+
+Every figure is re-measurable on your own checkout — the commands are listed in
+[`docs/capability-matrix.md`](docs/capability-matrix.md), and the reasoning
+behind them is in [`docs/award-benchmark.md`](docs/award-benchmark.md).
+
 ## Design
 
 Generated sites use a warm "editorial paper" theme: one deep teal accent, serif
@@ -447,7 +465,7 @@ The `ai/` package provides:
 | `ai_seo.mbt` | AI SEO metadata with meta descriptions, keyword density, search boost scoring, and recommendations |
 | `ai_recommend.mbt` | AI content recommendations with learning paths, next steps, related pages, and hub identification |
 | `ai_test_gen.mbt` | Test stub generation from API symbols |
-| `ai_test.mbt` | 118 blackbox tests covering all AI public functions |
+| `ai_test.mbt` | 89 blackbox tests covering all AI public functions |
 
 All AI functions accept an `AiConfig` parameter for future LLM provider
 configuration. The current baseline uses rule-based heuristics that produce
@@ -540,7 +558,7 @@ during the September competition cycle:
   content summarization, cross-reference detection, coverage analysis,
   consistency checking, SEO metadata, content recommendations, and test
   generation.
-- **118 tests** covering all AI public functions and edge cases.
+- **139 tests** (50 core + 89 AI) covering all public functions and edge cases.
 - **9 CLI AI flags** enabling comprehensive documentation analysis.
 - **CI pipeline** covering check, test, format, build, and full AI suite
   verification.

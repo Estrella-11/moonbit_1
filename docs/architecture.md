@@ -109,7 +109,7 @@ flowchart LR
 3. **Markdown-native**: AI output files use front matter and Markdown for
    seamless integration with the existing MoonDocKit rendering pipeline.
 
-4. **Test-driven**: 84 AI-specific tests cover all public functions, edge
+4. **Test-driven**: 89 AI-specific tests cover all public functions, edge
    cases (empty sites, single pages, duplicate content), and output
    formatting.
 
@@ -118,7 +118,7 @@ flowchart LR
 The current acceptance path verifies:
 
 - default and JavaScript MoonBit targets;
-- 118 tests (34 core + 84 AI), all passing;
+- 139 tests (50 core + 89 AI), all passing;
 - ten compiled CLI integration scenarios;
 - a runnable in-memory demo;
 - a real Markdown-directory CLI build;

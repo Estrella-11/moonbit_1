@@ -42,7 +42,7 @@ For a quick technical review:
 2. Read `docs/self-assessment.md` for the September hackathon self-assessment.
 3. Read `docs/security-model.md` for renderer and search safety.
 4. Inspect `moondockit_test.mbt` for behavior coverage.
-5. Inspect `ai/ai_test.mbt` for AI module test coverage (84 tests).
+5. Inspect `ai/ai_test.mbt` for AI module test coverage (89 tests).
 6. Inspect `tools/test_cli.py` for filesystem-level CLI checks.
 7. Open `dist-cli-example/api-reference.html` for generated MoonBit API docs.
 8. Inspect `dist-cli-example/quality-report.json` for structured release-gate

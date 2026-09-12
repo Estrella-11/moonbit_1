@@ -7,6 +7,22 @@ MoonDocKit 是一个 MoonBit 原生的文档站点工具包，面向 MoonBit 包
 它将包说明、指南和 API 接口文件转换为静态 HTML 文档站点，同时提供 11 个 AI
 驱动的文档分析模块。
 
+## 一览
+
+| 指标 | 数值 |
+|------|------|
+| 实现语言 | 全量 MoonBit |
+| 非测试 MoonBit 源码 | 5,945 行 / 17 个文件 |
+| 测试 | 139 个全部通过（核心 50 + AI 89） |
+| 外部依赖 | 0（仅使用 MoonBit 标准库） |
+| 公开 API | 核心 43 个函数 + AI 41 个函数 |
+| CLI | 10 个选项 + 11 个标志（含 9 个 `--ai-*`） |
+| 单次构建产物 | 13 个文件（8 个 HTML + 搜索索引 / sitemap / manifest / robots / 质量报告） |
+| 站点发布门禁 | 质量分 100 / 100 |
+| CI | 20 个步骤全部通过 |
+
+每一项都可在本地复测，命令见 [`docs/capability-matrix.md`](docs/capability-matrix.md)。
+
 ## 核心功能
 
 - Markdown 块级解析（H1-H3 标题、段落、列表、引用、代码块）
@@ -84,7 +100,7 @@ moon test
 # 编译检查
 moon check
 
-# 运行测试（118 个测试）
+# 运行测试（139 个测试）
 moon test --target wasm-gc
 
 # 构建示例站点
@@ -98,13 +114,13 @@ moon run --target js cmd/moondockit \
 
 ```
 moondockit-original/
-├── ai/                    # 11 个 AI 模块（3,836 行）
-├── cmd/moondockit/        # CLI 入口（453 行）
+├── ai/                    # 11 个 AI 模块（2,750 行）
+├── cmd/moondockit/        # CLI 入口（590 行）
 ├── docs/                  # 30+ 文档文件
 ├── examples/              # 3 个可运行示例
 ├── tools/                 # 验证和基准测试工具
-├── moondockit.mbt         # 核心库（2,090 行）
-├── moondockit_test.mbt    # 核心测试（34 个）
+├── moondockit.mbt         # 核心库（2,475 行）
+├── moondockit_test.mbt    # 核心测试（50 个）
 ├── pkg.generated.mbti     # 自动生成的接口文件
 ├── moon.mod               # 包配置
 ├── LICENSE                # Apache-2.0
@@ -114,10 +130,10 @@ moondockit-original/
 ## 测试
 
 ```bash
-# 运行全部 118 个测试
+# 运行全部 139 个测试
 moon test --target wasm-gc
 
-# AI 模块测试（84 个）
+# AI 模块测试（89 个）
 # 包含在 ai/ai_test.mbt 中，覆盖所有公开函数和边缘情况
 ```
 
@@ -126,8 +142,8 @@ moon test --target wasm-gc
 本项目参加 2026 年 9 月 MoonBit 黑客松大赛，参赛方向为**季度优秀社区项目评选**。
 
 9 月新增贡献：
-- 11 个 AI 模块（3,836 行 MoonBit 代码）
-- 84 个 AI 测试
+- 11 个 AI 模块（2,750 行 MoonBit 代码）
+- 89 个 AI 测试
 - 9 个 CLI AI 标志
 - CI 流程覆盖 AI 全功能构建验证
 - 发布到 mooncakes.io（版本 0.2.0）

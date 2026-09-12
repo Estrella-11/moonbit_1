@@ -34,12 +34,12 @@ evidence.
 ## Code Quality
 
 - Reusable MoonBit library APIs: `moondockit.mbt`
-- AI module suite: `ai/` (11 modules, 3,836 lines)
+- AI module suite: `ai/` (11 modules, 2,750 lines)
 - Generated public interface: `pkg.generated.mbti`
 - AI public interface: `ai/pkg.generated.mbti`
 - Blackbox tests: `moondockit_test.mbt`
-- AI module tests: `ai/ai_test.mbt` (84 tests)
-- Total test count: 118 (all passing)
+- AI module tests: `ai/ai_test.mbt` (89 tests)
+- Total test count: 139 (all passing)
 - Accessibility notes for generated pages: `docs/accessibility-notes.md`
 - Security model and escaping boundaries: `docs/security-model.md`
 - Compiled CLI integration suite: `tools/test_cli.py`

@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Submission evidence
+
+- `docs/award-benchmark.md`: research into how previous MoonBit competition
+  projects were judged, which of those patterns MoonDocKit already meets, which
+  were presentation gaps, and which fixes were deliberately declined with
+  reasons.
+- `docs/capability-matrix.md`: an enumerable capability inventory with a
+  reproduction command per area, plus the MoonBit language capabilities the
+  design actually depends on.
+- `README.md` and `README_CN.md`: an `At a Glance` / 「一览」 block that puts the
+  quantified signals — source size, test count, dependencies, API surface,
+  generated artifacts, CI steps — ahead of any prose.
+
+### Fixed — Stale metrics across documentation
+
+- Re-measured and corrected figures that had drifted through the AI
+  de-duplication refactor and the theme work: test totals (118 → 139), AI tests
+  (84 → 89), core tests (34 → 50), and line counts for the core library, the CLI
+  entry and the AI modules.
+- `docs/self-assessment.md` no longer lists "September code not yet committed to
+  git" as an open risk, and its action table now records the actual outcome of
+  each item, including the CI repairs below.
+
 ### Changed — Generated site design
 
 - Replaced the default generated-site theme with the "editorial paper" system:
