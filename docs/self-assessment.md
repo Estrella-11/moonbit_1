@@ -120,7 +120,9 @@ MoonDocKit 是一个 MoonBit 原生的文档站点工具包，本届比赛期间
 - 通过 mooncakes.io 发布，可 `moon add` 直接引用
 
 **不足：**
-- 缺少真实下游包采用案例
+- 缺少真实下游包采用案例。本轮已补充可复现的采用案例研究
+  （`docs/adoption-case-study.md`）和可直接复制的起步模板
+  （`templates/quickstart/`），但案例基于仓库内置夹具，第三方自主采用证据仍未获得
 
 ### 3.3 工程质量 (自评: 9/10)
 
@@ -156,6 +158,8 @@ MoonDocKit 是一个 MoonBit 原生的文档站点工具包，本届比赛期间
 
 **不足：**
 - `moon check --target js` 仍有 4 条 JavaScript FFI 弃用告警，已记录在 `docs/award-benchmark.md`
+- 补充材料：`docs/ai-transparency.md` 逐项说明 AI 参与环节、人工把控范围、被
+  拒绝的 AI 建议，以及 `ai/` 模块为规则基线（非真实大模型调用）的诚实限定
 
 ## 四、关键问题与行动计划
 

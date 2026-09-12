@@ -94,6 +94,21 @@ moon check
 moon test
 ```
 
+## 从模板开始
+
+`templates/quickstart/` 是一份可直接复制的起步包：三篇带 front matter 的页面、
+一份 `moondockit.json` 配置，以及一个 GitHub Pages 工作流模板。
+
+```bash
+cp -r templates/quickstart my-docs
+cd my-docs
+moon run --target js cmd/moondockit --config moondockit.json --strict
+```
+
+构建产物写入 `dist/`，根目录自带 `index.html`，可直接部署到任意静态托管。
+完整步骤见 `templates/quickstart/README.md`，完整采用路径见
+`docs/adoption-playbook.md`。
+
 ## 快速开始
 
 ```bash

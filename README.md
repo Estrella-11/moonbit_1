@@ -171,6 +171,22 @@ moon check
 moon test
 ```
 
+## Start From The Template
+
+`templates/quickstart/` is a copy-ready starter for your own package: three
+pages with front matter, a `moondockit.json` config, and a GitHub Pages
+workflow template.
+
+```bash
+cp -r templates/quickstart my-docs
+cd my-docs
+moon run --target js cmd/moondockit --config moondockit.json --strict
+```
+
+The build writes `dist/` with a root `index.html`, so any static host works
+without extra configuration. See `templates/quickstart/README.md` for the
+walkthrough and `docs/adoption-playbook.md` for the full adoption path.
+
 ## Quick Start
 
 ```bash
@@ -495,6 +511,9 @@ For competition review, start with:
 - Reviewer scorecard: `docs/reviewer-scorecard.md`
 - Feature evidence map: `docs/feature-evidence-map.md`
 - Reviewer FAQ: `docs/reviewer-faq.md`
+- AI transparency: `docs/ai-transparency.md`
+- Adoption case study: `docs/adoption-case-study.md`
+- Copy-ready starter: `templates/quickstart/`
 - Final submission notes: `docs/final-submission.md`
 - Release notes: `docs/release.md`
 - Architecture and design decisions: `docs/architecture.md`

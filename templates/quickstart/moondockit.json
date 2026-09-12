@@ -1,0 +1,9 @@
+{
+  "source": "site",
+  "output": "dist",
+  "title": "My Package Docs",
+  "site_url": "https://example.com/my-package",
+  "language": "en",
+  "description": "Documentation for my MoonBit package",
+  "footer": "Built with `MoonDocKit`"
+}

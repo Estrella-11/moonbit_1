@@ -20,6 +20,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   quantified signals — source size, test count, dependencies, API surface,
   generated artifacts, CI steps — ahead of any prose.
 
+### Added — Adoption and transparency
+
+- `templates/quickstart/`: a copy-ready starter package — three pages with front
+  matter, a `moondockit.json` config, and a GitHub Pages workflow template — so
+  another MoonBit package can publish documentation without copying
+  project-specific assumptions from this repository.
+- `docs/ai-transparency.md`: records where AI tools assisted, which decisions
+  remain participant-controlled, which AI suggestions were rejected and why, and
+  the honest limitation that the `ai/` package is a rule-based baseline rather
+  than live model calls. Every claim carries a reproduction command.
+- `docs/adoption-case-study.md`: a reproducible downstream adoption case with
+  inputs, the exact build command, generated artifacts, a before/after
+  comparison, and an explicit note that the fixture is repository-internal
+  rather than evidence of third-party adoption.
+
 ### Fixed — Stale metrics across documentation
 
 - Re-measured and corrected figures that had drifted through the AI

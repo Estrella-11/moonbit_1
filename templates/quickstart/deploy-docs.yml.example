@@ -1,0 +1,70 @@
+# MoonDocKit documentation deployment
+#
+# Copy this file to `.github/workflows/deploy-docs.yml` in your own repository,
+# then set `site_url` in `moondockit.json` to your real Pages URL.
+#
+# It is kept as `.yml.example` here so the template is not executed as a
+# workflow inside the MoonDocKit repository itself.
+
+name: Deploy docs
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up MoonBit
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+
+      - name: Show toolchain
+        run: moon version
+
+      - name: Refresh public interface
+        run: moon info
+
+      - name: Build documentation site
+        run: moon run --target js cmd/moondockit --config moondockit.json --strict --api pkg.generated.mbti
+
+      - name: Verify release gate
+        run: |
+          test -f dist/index.html
+          test -f dist/quality-report.json
+          test -f dist/search-index.json
+          grep -q '"passed": *true' dist/quality-report.json
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
