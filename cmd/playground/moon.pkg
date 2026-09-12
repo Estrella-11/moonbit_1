@@ -1,0 +1,12 @@
+import {
+  "Estrella-11/moondockit" @lib,
+}
+
+pkgtype(kind: "executable")
+
+options(
+  targets: {
+    "main_js.mbt": [ "js" ],
+    "main_nonjs.mbt": [ "not", "js" ],
+  },
+)

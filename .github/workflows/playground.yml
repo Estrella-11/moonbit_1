@@ -1,0 +1,42 @@
+name: Playground bundle
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up MoonBit
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+
+      - name: Show toolchain
+        run: moon version
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Build the browser bundle
+        run: moon build --target js cmd/playground
+
+      - name: Locate the bundle
+        run: |
+          find _build -path '*playground*' -name '*.js' -not -name '*.map' | sort
+          BUNDLE="$(find _build -path '*playground*' -name '*.js' -not -name '*.map' | sort | head -1)"
+          if [ -z "$BUNDLE" ]; then
+            echo "no playground bundle found under _build"
+            exit 1
+          fi
+          echo "PLAYGROUND_BUNDLE=$BUNDLE" >> "$GITHUB_ENV"
+
+      - name: Verify the bundle runs outside the browser
+        run: node tools/test_playground_js.mjs "$PLAYGROUND_BUNDLE"

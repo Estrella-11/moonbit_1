@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MoonDocKit Playground — Markdown to docs, in your browser</title>
+    <meta
+      name="description"
+      content="Type Markdown and watch MoonDocKit render a documentation page. The renderer is the real MoonBit library, compiled to JavaScript and running in your browser."
+    />
+    <link rel="stylesheet" href="playground.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="masthead">
+        <h1>MoonDocKit Playground</h1>
+        <span class="badge">Live MoonBit</span>
+        <p class="tagline">
+          The renderer below is the real MoonDocKit library, compiled from MoonBit
+          to JavaScript and running in your browser — no install, no server.
+        </p>
+        <button class="theme-toggle" id="theme-toggle" type="button">
+          Dark mode
+        </button>
+      </header>
+
+      <div class="controls">
+        <div class="field">
+          <label for="title-input">Page title</label>
+          <input id="title-input" type="text" value="Playground" />
+        </div>
+        <div class="field">
+          <label for="theme-select">Theme</label>
+          <select id="theme-select">
+            <option value="default">Editorial paper</option>
+            <option value="package">Package green</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="sample-select">Example</label>
+          <select id="sample-select">
+            <option value="guide">Feature guide</option>
+            <option value="api">API page</option>
+            <option value="tutorial">Tutorial</option>
+            <option value="empty">Empty page</option>
+          </select>
+        </div>
+        <div class="actions">
+          <button class="action" id="copy-btn" type="button">
+            Copy Markdown
+          </button>
+          <button class="action" id="download-btn" type="button">
+            Download HTML
+          </button>
+        </div>
+      </div>
+
+      <main class="workspace">
+        <section class="pane">
+          <header>
+            <h2>Markdown</h2>
+            <span class="hint" id="editor-hint">0 characters</span>
+          </header>
+          <textarea
+            id="editor"
+            spellcheck="false"
+            aria-label="Markdown source"
+          ></textarea>
+        </section>
+
+        <section class="pane">
+          <header>
+            <h2>Rendered page</h2>
+            <span class="hint">live</span>
+          </header>
+          <div class="preview-host">
+            <iframe
+              id="preview"
+              title="Rendered documentation page"
+              sandbox="allow-scripts allow-same-origin"
+            ></iframe>
+          </div>
+        </section>
+      </main>
+
+      <section class="metrics" id="metrics" aria-live="polite"></section>
+      <div class="checks" id="checks"></div>
+
+      <p class="status is-loading" id="status">
+        Loading the MoonBit renderer…
+      </p>
+
+      <p class="note">
+        Metrics come from <code>measure_site</code> and
+        <code>evaluate_quality</code> — the same functions the CLI runs during a
+        release gate. To build sites from files instead, install the MoonBit
+        toolchain and run
+        <code>moon run --target js cmd/moondockit</code>.
+      </p>
+    </div>
+
+    <script type="module" src="playground.js"></script>
+  </body>
+</html>
