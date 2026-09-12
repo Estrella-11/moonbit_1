@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — In-browser playground
+
+- `cmd/playground/`: a MoonBit entry point that exposes `renderPage(markdown,
+  title, theme)` and `pageStats(markdown, title)` on `globalThis` when compiled
+  with `moon build --target js`. Only plain strings cross the MoonBit/JavaScript
+  boundary, so no JSON encoding can disagree between the two languages.
+- `playground/`: a two-pane web editor served from GitHub Pages — type Markdown,
+  see the real renderer's output live, switch themes and examples, read the
+  same quality metrics the release gate enforces, and copy or download results.
+- `tools/test_playground_js.mjs`: loads the generated bundle in Node and asserts
+  on real output (17 checks), including that user Markdown cannot inject HTML.
+  Wired into CI so the browser boundary is exercised on every push.
+- `.github/workflows/pages.yml`: deploys the playground at `/playground/` next
+  to the generated showcase.
+
 ### Added — Submission evidence
 
 - `docs/award-benchmark.md`: research into how previous MoonBit competition

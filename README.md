@@ -23,6 +23,9 @@ Repository mirrors:
 
 Public showcase: <https://estrella-11.github.io/moonbit_1/>
 
+**Live playground** — the renderer running in your browser, no install:
+<https://estrella-11.github.io/moonbit_1/playground/>
+
 Generated MoonBit API:
 
 - Public showcase: <https://estrella-11.github.io/moonbit_1/api-reference.html>
@@ -41,6 +44,7 @@ Generated MoonBit API:
 | Generated per build | 13 files: 8 HTML pages, search index, sitemap, manifest, robots, quality report |
 | Release gate on generated sites | quality score 100 / 100 |
 | CI | 20 steps: check, test, interface, format, JS target, CLI scenarios, one-shot verification, AI suite |
+| In-browser playground | real renderer compiled to JS, verified in CI by `tools/test_playground_js.mjs` (17 assertions) |
 
 Every figure is re-measurable on your own checkout — the commands are listed in
 [`docs/capability-matrix.md`](docs/capability-matrix.md), and the reasoning

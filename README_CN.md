@@ -7,6 +7,9 @@ MoonDocKit 是一个 MoonBit 原生的文档站点工具包，面向 MoonBit 包
 它将包说明、指南和 API 接口文件转换为静态 HTML 文档站点，同时提供 11 个 AI
 驱动的文档分析模块。
 
+**在线 Playground** —— 渲染器直接跑在浏览器里，无需安装任何工具链：
+<https://estrella-11.github.io/moonbit_1/playground/>
+
 ## 一览
 
 | 指标 | 数值 |

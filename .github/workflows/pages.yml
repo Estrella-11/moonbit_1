@@ -61,6 +61,25 @@ jobs:
             find dist-showcase -maxdepth 1 -type f -printf '%f\n' | sort | sed 's/^/- /'
           } >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Build playground bundle
+        run: moon build --target js cmd/playground
+
+      - name: Assemble playground
+        run: |
+          mkdir -p dist-showcase/playground
+          cp _build/js/debug/build/cmd/playground/playground.js dist-showcase/playground/moondockit-playground.js
+          cp playground/index.html playground/playground.css playground/playground.js dist-showcase/playground/
+          test -f dist-showcase/playground/index.html
+          test -f dist-showcase/playground/moondockit-playground.js
+          test -f dist-showcase/playground/playground.js
+          test -f dist-showcase/playground/playground.css
+          {
+            echo "## Playground"
+            echo
+            echo "- Live URL: \`/playground/\`"
+            echo "- Bundle size: $(du -h dist-showcase/playground/moondockit-playground.js | cut -f1)"
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
