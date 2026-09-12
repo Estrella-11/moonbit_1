@@ -5,6 +5,39 @@ All notable changes to MoonDocKit are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed — Generated site design
+
+- Replaced the default generated-site theme with the "editorial paper" system:
+  warm paper surface, one deep teal accent, serif display headings, a fluid type
+  scale, and a token-driven light/dark palette. `default_theme()` now seeds the
+  new palette, so CLI-generated sites and the published showcase adopt it.
+- Dark mode now overrides the shared tokens under both
+  `:root[data-theme="dark"]` and `:root:not([data-theme="light"])`, so it applies
+  from `prefers-color-scheme` before JavaScript runs, and components that cannot
+  be expressed by tokens alone carry explicit dark overrides.
+- Scoped the two-column rule to `.content:has(> .toc)`. `:has()` is
+  descendant-based, so the previous form also matched once the table of contents
+  had been nested one level deeper, and the two-column grid was then applied to
+  the wrong element.
+
+### Added — Design documentation
+
+- `docs/design-system.md`: the generated site's colour, typography, layout,
+  motion and accessibility contract, with commands that reproduce each value
+  from a build.
+- README design section with light and dark captures of the generated output
+  (`docs/assets/design-light.png`, `docs/assets/design-dark.png`).
+
+### Verification
+
+- `moon check`, `moon fmt` and `moon test` are green (139 tests).
+- Public interface unchanged: the added helpers are private, so
+  `pkg.generated.mbti` is unaffected.
+- `moon run --target js cmd/moondockit` over `examples/site` reports quality 100
+  across 13 generated files.
+
 ## [0.2.0] — 2026-09-07
 
 ### Added — Shared Utilities

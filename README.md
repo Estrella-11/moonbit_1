@@ -28,6 +28,21 @@ Generated MoonBit API:
 - Public showcase: <https://estrella-11.github.io/moonbit_1/api-reference.html>
 - Repository artifact: `dist-cli-example/api-reference.html`
 
+## Design
+
+Generated sites use a warm "editorial paper" theme: one deep teal accent, serif
+display headings, sans-serif body copy, and a fixed reading measure. Light and
+dark modes are token substitutions rather than separate stylesheets, so every
+component is styled once and reviewed once.
+
+![MoonDocKit documentation site, light mode](docs/assets/design-light.png)
+
+![MoonDocKit documentation site, dark mode](docs/assets/design-dark.png)
+
+The palette, type scale, layout constants, motion rules and accessibility
+behaviour are recorded in [`docs/design-system.md`](docs/design-system.md),
+together with the commands that reproduce each value from a build.
+
 ## Current Features
 
 - Safe HTML escaping for generated pages.
