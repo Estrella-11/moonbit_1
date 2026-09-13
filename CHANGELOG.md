@@ -5,7 +5,7 @@ All notable changes to MoonDocKit are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.5.0] — 2026-09-13
 
 ### Added
 - Playground share links: the in-browser Playground encodes the current Markdown,
@@ -20,6 +20,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   between `- ` and `N. ` markers splits the input into separate lists.
 - **Strikethrough** (`~~text~~`) renders as `<del>text</del>` and may nest bold
   or inline code. Covered by new regression tests in `moondockit_test.mbt`.
+- **GitHub-flavored tables**: a header row followed by a `| --- | --- |` separator
+  row renders as `<table>` with `<thead>`/`<tbody>`; the separator may carry `:`
+  to set column alignment (` :--- ` left, ` ---: ` right, ` :---: ` center). Cell
+  content supports inline formatting (code, bold, links).
+- **Nested lists**: indentation (2 spaces per level) creates real sublist nesting; a
+  nested list keeps its own marker style (a `- ` item containing `1. ` children renders
+  `<ul><ol>`). The parser builds a tree from flat `(indent, marker, text)` entries.
+- **Task lists**: `- [ ]` / `- [x]` (case-insensitive) render as a disabled checkbox
+  `<input type="checkbox" disabled>` (or `checked`), without affecting list nesting.
+- `ai/ai_summary.mbt` now recognizes the unified `List` block when classifying content
+  type.
 
 ## [0.4.0] — 2026-09-14
 

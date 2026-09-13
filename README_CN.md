@@ -16,7 +16,7 @@ MoonDocKit 是一个 MoonBit 原生的文档站点工具包，面向 MoonBit 包
 |------|------|
 | 实现语言 | 全量 MoonBit |
 | 非测试 MoonBit 源码 | 6,243 行 / 19 个文件 |
-| 测试 | 148 个全部通过（核心 56 + AI 89 + 文档示例 3） |
+| 测试 | 159 个全部通过（核心 66 + AI 89 + 文档示例 3 + 代理对回归 1） |
 | 外部依赖 | 0（仅使用 MoonBit 标准库） |
 | 公开 API | 核心 47 个函数 + AI 41 个函数 |
 | CLI | 12 个选项 + 11 个标志（含 9 个 `--ai-*`） |
@@ -118,7 +118,7 @@ moon run --target js cmd/moondockit --config moondockit.json --strict
 # 编译检查
 moon check
 
-# 运行测试（148 个测试）
+# 运行测试（159 个测试）
 moon test --target wasm-gc
 
 # 构建示例站点
@@ -138,7 +138,7 @@ moondockit-original/
 ├── examples/              # 3 个可运行示例
 ├── tools/                 # 验证和基准测试工具
 ├── moondockit.mbt         # 核心库（2,475 行）
-├── moondockit_test.mbt    # 核心测试（50 个）
+├── moondockit_test.mbt    # 核心测试（66 个）
 ├── pkg.generated.mbti     # 自动生成的接口文件
 ├── moon.mod               # 包配置
 ├── LICENSE                # Apache-2.0
@@ -148,7 +148,7 @@ moondockit-original/
 ## 测试
 
 ```bash
-# 运行全部 148 个测试
+# 运行全部 159 个测试
 moon test --target wasm-gc
 
 # AI 模块测试（89 个）
@@ -185,7 +185,7 @@ MoonBit 只允许在 `moon.pkg` 中声明 import，所以生成的文件把所�
 - 89 个 AI 测试
 - 9 个 CLI AI 标志
 - CI 流程覆盖 AI 全功能构建验证
-- 发布到 mooncakes.io（版本 0.4.0）
+- 发布到 mooncakes.io（版本 0.5.0）
 
 ## 许可证
 

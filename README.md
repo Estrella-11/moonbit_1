@@ -37,7 +37,7 @@ Generated MoonBit API:
 | --- | --- |
 | Implementation language | MoonBit, end to end |
 | Non-test MoonBit source | 6,243 lines across 19 files |
-| Tests | 149 passing (56 core + 89 AI + 3 documented examples + 1 surrogate-pair regression), 0 failures |
+| Tests | 159 passing (66 core + 89 AI + 3 documented examples + 1 surrogate-pair regression), 0 failures |
 | External dependencies | 0 — MoonBit standard library only |
 | Public API | 47 core functions, 41 AI functions |
 | CLI | 12 options, 11 flags including 9 `--ai-*` switches |

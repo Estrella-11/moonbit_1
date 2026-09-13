@@ -20,7 +20,7 @@ fn detect_content_type(blocks : Array[@lib.MarkdownBlock]) -> String {
     match block {
       @lib.MarkdownBlock::CodeBlock(_, _) => has_code = true
       @lib.MarkdownBlock::Heading(_, _) => has_headings = true
-      @lib.MarkdownBlock::UnorderedList(_) => has_lists = true
+      @lib.MarkdownBlock::List(_) => has_lists = true
       @lib.MarkdownBlock::Paragraph(_) => has_paragraphs = true
       _ => ()
     }

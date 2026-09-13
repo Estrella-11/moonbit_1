@@ -11,10 +11,10 @@
   } catch (error) {}
 })();
 </script>
-<meta name="description" content="MoonDocKit end-to-end CLI example">
+<meta name="description" content="MoonDocKit verification site">
 <title>MoonBit API - MoonDocKit CLI Example</title>
 <meta property="og:title" content="MoonBit API - MoonDocKit CLI Example">
-<meta property="og:description" content="MoonDocKit end-to-end CLI example">
+<meta property="og:description" content="MoonDocKit verification site">
 <link rel="canonical" href="https://example.com/moondockit-cli/api-reference.html">
 <meta property="og:url" content="https://example.com/moondockit-cli/api-reference.html">
 <style>*,*::before,*::after{box-sizing:border-box}
@@ -186,12 +186,12 @@ html{scroll-behavior:auto}
 </style>
 </head><body><div class="reading-progress" data-progress></div><a class="skip-link" href="#content">Skip to content</a><aside><a class="brand" href="overview.html"><span class="brand-mark">M</span><span>MoonDocKit CLI Example</span></a><div class="search"><label for="site-search">Search documentation</label><input id="site-search" data-search-input type="search" placeholder="Search docs" autocomplete="off"><div class="search-results" data-search-results aria-live="polite" hidden></div></div><nav aria-label="Documentation"><a href="overview.html">Why MoonDocKit</a><a href="quick-start.html">Quick Start</a><a href="api.html">Library Guide</a><a href="quality.html">Quality Gate</a><a href="deployment.html">Deployment</a><a href="changelog.html">Changelog</a><a href="api-reference.html" class="active" aria-current="page">MoonBit API</a></nav><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-text">Nightfall</span></button></aside><main id="content"><div class="content">
 <div class="prose"><h1 id="moonbit-api">MoonBit API</h1>
-<p>Package <code>Estrella-11/moondockit</code> exposes 73 public declarations.</p>
+<p>Package <code>Estrella-11/moondockit</code> exposes 77 public declarations.</p>
 <h2 id="api-summary">API Summary</h2>
 <ul>
 <li>Functions: 47</li>
 <li>Structs: 24</li>
-<li>Enums: 2</li>
+<li>Enums: 6</li>
 </ul>
 <h2 id="review-notes">Review Notes</h2>
 <ul>
@@ -280,7 +280,11 @@ html{scroll-behavior:auto}
 <h3 id="enums">Enums</h3>
 <ul>
 <li><a href="#diagnosticlevel">DiagnosticLevel</a></li>
+<li><a href="#listblock">ListBlock</a></li>
+<li><a href="#listitem">ListItem</a></li>
+<li><a href="#listkind">ListKind</a></li>
 <li><a href="#markdownblock">MarkdownBlock</a></li>
+<li><a href="#tablealign">TableAlign</a></li>
 </ul>
 <h2 id="functions-2">Functions</h2>
 <h3 id="api-reference-theme">api_reference_theme</h3>
@@ -802,16 +806,41 @@ html{scroll-behavior:auto}
   DiagWarning
 }
 </code></pre>
+<h3 id="listblock">ListBlock</h3>
+<pre><code class="language-mbt">pub(all) enum ListBlock {
+  ListBlock(ListKind, Array[ListItem])
+}
+</code></pre>
+<h3 id="listitem">ListItem</h3>
+<pre><code class="language-mbt">pub(all) enum ListItem {
+  ListItem(String, Bool?, ListBlock?)
+}
+</code></pre>
+<h3 id="listkind">ListKind</h3>
+<pre><code class="language-mbt">pub(all) enum ListKind {
+  Bullet
+  Number
+}
+</code></pre>
 <h3 id="markdownblock">MarkdownBlock</h3>
 <pre><code class="language-mbt">pub(all) enum MarkdownBlock {
   Heading(Int, String)
   Paragraph(String)
-  UnorderedList(Array[String])
+  List(ListBlock)
   BlockQuote(String)
   CodeBlock(String, String)
+  Table(Array[String], Array[TableAlign], Array[Array[String]])
 }
 </code></pre>
-<footer>Built and verified by <code>MoonDocKit</code></footer>
+<h3 id="tablealign">TableAlign</h3>
+<pre><code class="language-mbt">pub(all) enum TableAlign {
+  AlignDefault
+  AlignLeft
+  AlignCenter
+  AlignRight
+}
+</code></pre>
+<footer>Verified by <code>MoonDocKit</code></footer>
 </div><section class="toc"><div class="toc-title">On this page</div>
 <a class="level-1" href="#moonbit-api">MoonBit API</a>
 <a class="level-2" href="#api-summary">API Summary</a>
@@ -895,7 +924,11 @@ html{scroll-behavior:auto}
 <a class="level-3" href="#validationreport">ValidationReport</a>
 <a class="level-2" href="#enums-2">Enums</a>
 <a class="level-3" href="#diagnosticlevel">DiagnosticLevel</a>
+<a class="level-3" href="#listblock">ListBlock</a>
+<a class="level-3" href="#listitem">ListItem</a>
+<a class="level-3" href="#listkind">ListKind</a>
 <a class="level-3" href="#markdownblock">MarkdownBlock</a>
+<a class="level-3" href="#tablealign">TableAlign</a>
 </section>
 </div></main><script>
 (() => {

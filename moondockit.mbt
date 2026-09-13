@@ -198,14 +198,42 @@ pub(all) struct AnchoredHeading {
 }
 
 ///|
+/// Table column alignment parsed from a GFM separator row.
+pub(all) enum TableAlign {
+  AlignDefault
+  AlignLeft
+  AlignCenter
+  AlignRight
+}
+
+///|
+/// Whether a list is bulleted or numbered.
+pub(all) enum ListKind {
+  Bullet
+  Number
+}
+
+///|
+/// A single list entry; may carry a checkbox state and a nested sublist.
+pub(all) enum ListItem {
+  ListItem(String, Bool?, ListBlock?)
+}
+
+///|
+/// A rendered list (root or nested) that owns its marker style.
+pub(all) enum ListBlock {
+  ListBlock(ListKind, Array[ListItem])
+}
+
+///|
 /// Block-level Markdown nodes used by the documentation pipeline.
 pub(all) enum MarkdownBlock {
   Heading(Int, String)
   Paragraph(String)
-  UnorderedList(Array[String])
-  OrderedList(Array[String])
+  List(ListBlock)
   BlockQuote(String)
   CodeBlock(String, String)
+  Table(Array[String], Array[TableAlign], Array[Array[String]])
 }
 
 ///|
@@ -802,21 +830,30 @@ fn parse_positive_int(value : String) -> Int? {
 ///|
 fn parse_body_blocks(markdown : String) -> Array[MarkdownBlock] {
   let blocks : Array[MarkdownBlock] = []
+  let lines = markdown.split("\n").to_array()
+  let mut idx = 0
   let mut in_code = false
   let mut code_language = ""
   let code = StringBuilder()
   let mut in_list = false
   let mut list_ordered = false
-  let list_items : Array[String] = []
+  let list_raw : Array[(Int, ListKind, String, Bool?)] = []
   let paragraph = StringBuilder()
-  for raw in markdown.split("\n") {
-    let line = raw.to_owned()
-    let trimmed = line.trim().to_owned()
+  let mut in_table = false
+  let table_rows : Array[String] = []
+  while idx < lines.length() {
+    let raw = lines[idx].to_owned()
+    let trimmed = raw.trim().to_owned()
     if trimmed.has_prefix("```") {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list, list_ordered)
+      close_pending_list(blocks, list_raw, in_list, list_ordered)
       in_list = false
       list_ordered = false
+      if in_table {
+        finalize_table(blocks, table_rows)
+        in_table = false
+        table_rows.clear()
+      }
       if in_code {
         blocks.push(CodeBlock(code_language, code.to_string()))
         code.reset()
@@ -826,91 +863,135 @@ fn parse_body_blocks(markdown : String) -> Array[MarkdownBlock] {
         code_language = trimmed[3:].to_owned().trim().to_owned()
       }
       in_code = !in_code
+      idx = idx + 1
       continue
     }
     if in_code {
-      code.write_string(line)
+      code.write_string(raw)
       code.write_char('\n')
+      idx = idx + 1
       continue
     }
     if trimmed == "" {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list, list_ordered)
+      close_pending_list(blocks, list_raw, in_list, list_ordered)
       in_list = false
       list_ordered = false
+      if in_table {
+        finalize_table(blocks, table_rows)
+        in_table = false
+        table_rows.clear()
+      }
+      idx = idx + 1
+      continue
+    }
+    if in_table {
+      if is_table_row(trimmed) {
+        table_rows.push(trimmed)
+        idx = idx + 1
+        continue
+      } else {
+        finalize_table(blocks, table_rows)
+        in_table = false
+        table_rows.clear()
+      }
+    }
+    let has_next = idx + 1 < lines.length()
+    let table_next = if has_next {
+      lines[idx + 1].trim().to_owned()
+    } else {
+      ""
+    }
+    if is_table_start(trimmed, has_next, table_next) {
+      close_pending_paragraph(blocks, paragraph)
+      close_pending_list(blocks, list_raw, in_list, list_ordered)
+      in_list = false
+      list_ordered = false
+      in_table = true
+      table_rows.clear()
+      table_rows.push(trimmed)
+      idx = idx + 1
       continue
     }
     if trimmed.has_prefix("# ") {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list, list_ordered)
+      close_pending_list(blocks, list_raw, in_list, list_ordered)
       in_list = false
       list_ordered = false
       blocks.push(Heading(1, trimmed[2:].to_owned()))
     } else if trimmed.has_prefix("## ") {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list, list_ordered)
+      close_pending_list(blocks, list_raw, in_list, list_ordered)
       in_list = false
       list_ordered = false
       blocks.push(Heading(2, trimmed[3:].to_owned()))
     } else if trimmed.has_prefix("### ") {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list, list_ordered)
+      close_pending_list(blocks, list_raw, in_list, list_ordered)
       in_list = false
       list_ordered = false
       blocks.push(Heading(3, trimmed[4:].to_owned()))
     } else if trimmed.has_prefix("#### ") {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list, list_ordered)
+      close_pending_list(blocks, list_raw, in_list, list_ordered)
       in_list = false
       list_ordered = false
       blocks.push(Heading(4, trimmed[5:].to_owned()))
     } else if trimmed.has_prefix("##### ") {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list, list_ordered)
+      close_pending_list(blocks, list_raw, in_list, list_ordered)
       in_list = false
       list_ordered = false
       blocks.push(Heading(5, trimmed[6:].to_owned()))
     } else if trimmed.has_prefix("###### ") {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list, list_ordered)
+      close_pending_list(blocks, list_raw, in_list, list_ordered)
       in_list = false
       list_ordered = false
       blocks.push(Heading(6, trimmed[7:].to_owned()))
     } else if trimmed.has_prefix("- ") {
       close_pending_paragraph(blocks, paragraph)
       if in_list && list_ordered {
-        close_pending_list(blocks, list_items, in_list, list_ordered)
+        close_pending_list(blocks, list_raw, in_list, list_ordered)
         in_list = false
       }
       in_list = true
       list_ordered = false
-      list_items.push(trimmed[2:].to_owned())
+      let (text, checked) = parse_task_marker(trimmed[2:].to_owned())
+      list_raw.push((indent_of(raw), Bullet, text, checked))
     } else if ordered_marker_len(trimmed) > 0 {
       close_pending_paragraph(blocks, paragraph)
       if in_list && !list_ordered {
-        close_pending_list(blocks, list_items, in_list, list_ordered)
+        close_pending_list(blocks, list_raw, in_list, list_ordered)
         in_list = false
       }
       in_list = true
       list_ordered = true
-      list_items.push(trimmed[ordered_marker_len(trimmed):].to_owned())
+      let (text, checked) = parse_task_marker(
+        trimmed[ordered_marker_len(trimmed):].to_owned(),
+      )
+      list_raw.push((indent_of(raw), Number, text, checked))
     } else if trimmed.has_prefix("> ") {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list, list_ordered)
+      close_pending_list(blocks, list_raw, in_list, list_ordered)
       in_list = false
       list_ordered = false
       blocks.push(BlockQuote(trimmed[2:].to_owned()))
     } else {
       if in_list {
-        close_pending_list(blocks, list_items, in_list, list_ordered)
+        close_pending_list(blocks, list_raw, in_list, list_ordered)
         in_list = false
         list_ordered = false
       }
       append_paragraph_line(paragraph, trimmed)
     }
+    idx = idx + 1
   }
   close_pending_paragraph(blocks, paragraph)
-  close_pending_list(blocks, list_items, in_list, list_ordered)
+  close_pending_list(blocks, list_raw, in_list, list_ordered)
+  if in_table {
+    finalize_table(blocks, table_rows)
+  }
   if in_code {
     blocks.push(CodeBlock(code_language, code.to_string()))
   }
@@ -957,17 +1038,236 @@ fn ordered_marker_len(line : String) -> Int {
 ///|
 fn close_pending_list(
   blocks : Array[MarkdownBlock],
-  list_items : Array[String],
+  list_raw : Array[(Int, ListKind, String, Bool?)],
   is_open : Bool,
-  is_ordered : Bool,
+  _is_ordered : Bool,
 ) -> Unit {
   if is_open {
-    if is_ordered {
-      blocks.push(OrderedList(list_items.copy()))
-    } else {
-      blocks.push(UnorderedList(list_items.copy()))
+    blocks.push(List(build_list_block(list_raw)))
+    list_raw.clear()
+  }
+}
+
+///|
+fn indent_of(raw : String) -> Int {
+  let mut n = 0
+  while n < raw.length() && raw[n] == ' ' {
+    n = n + 1
+  }
+  n
+}
+
+///|
+fn parse_task_marker(text : String) -> (String, Bool?) {
+  if text.has_prefix("[ ] ") {
+    (text[4:].to_owned(), Some(false))
+  } else if text.has_prefix("[x] ") || text.has_prefix("[X] ") {
+    (text[4:].to_owned(), Some(true))
+  } else {
+    (text, None)
+  }
+}
+
+///|
+
+///| True when `trimmed` looks like a table row and the following line is a
+
+///|
+/// GFM separator row (so the two together open a table).
+fn is_table_start(trimmed : String, has_next : Bool, next : String) -> Bool {
+  has_next && is_table_row(trimmed) && is_table_separator(next)
+}
+
+///|
+fn is_table_row(trimmed : String) -> Bool {
+  if !trimmed.contains("|") {
+    return false
+  }
+  if trimmed.has_prefix("#") {
+    return false
+  }
+  if trimmed.has_prefix("> ") {
+    return false
+  }
+  if trimmed.has_prefix("```") {
+    return false
+  }
+  trimmed != ""
+}
+
+///|
+fn is_table_separator(line : String) -> Bool {
+  if !line.contains("|") {
+    return false
+  }
+  let cells = split_table_row(line)
+  if cells.length() == 0 {
+    return false
+  }
+  for c in cells {
+    let t = c.trim().to_owned()
+    if t == "" {
+      return false
     }
-    list_items.clear()
+    let mut has_dash = false
+    for _, ch in t {
+      if ch == '-' {
+        has_dash = true
+      } else if ch == ':' {
+        continue
+      } else if ch == ' ' {
+        continue
+      } else {
+        return false
+      }
+    }
+    if !has_dash {
+      return false
+    }
+  }
+  true
+}
+
+///|
+fn split_table_row(line : String) -> Array[String] {
+  let mut s = line.trim().to_owned()
+  if s.has_prefix("|") {
+    s = s[1:].to_owned()
+  }
+  if s.length() > 0 && s[s.length() - 1] == '|' {
+    s = s[:s.length() - 1].to_owned()
+  }
+  s.split("|").to_array().map(fn(x) { x.to_owned() })
+}
+
+///|
+fn parse_table_row(line : String) -> Array[String] {
+  let cells = split_table_row(line)
+  let out : Array[String] = []
+  for c in cells {
+    out.push(c.trim().to_owned())
+  }
+  out
+}
+
+///|
+fn parse_table_aligns(line : String) -> Array[TableAlign] {
+  let cells = split_table_row(line)
+  let out : Array[TableAlign] = []
+  for c in cells {
+    let t = c.trim().to_owned()
+    let left = t.has_prefix(":")
+    let right = t.length() > 0 && t[t.length() - 1] == ':'
+    if left && right {
+      out.push(AlignCenter)
+    } else if left {
+      out.push(AlignLeft)
+    } else if right {
+      out.push(AlignRight)
+    } else {
+      out.push(AlignDefault)
+    }
+  }
+  out
+}
+
+///|
+fn finalize_table(
+  blocks : Array[MarkdownBlock],
+  table_rows : Array[String],
+) -> Unit {
+  if table_rows.length() < 2 {
+    return
+  }
+  let header = parse_table_row(table_rows[0])
+  let aligns = parse_table_aligns(table_rows[1])
+  let body : Array[Array[String]] = []
+  let mut r = 2
+  while r < table_rows.length() {
+    body.push(parse_table_row(table_rows[r]))
+    r = r + 1
+  }
+  blocks.push(Table(header, aligns, body))
+}
+
+///|
+/// Build a nested list tree from flat (indent, kind, text, checked) entries.
+fn build_list_block(raw : Array[(Int, ListKind, String, Bool?)]) -> ListBlock {
+  let n = raw.length()
+  let child_idx : Array[Array[Int]] = []
+  let mut k = 0
+  while k < n {
+    child_idx.push([])
+    k = k + 1
+  }
+  let mut i = 1
+  while i < n {
+    let cur = raw[i].0
+    let mut j = i - 1
+    while j >= 0 {
+      if raw[j].0 < cur {
+        let mut ok = true
+        let mut m = j + 1
+        while m < i {
+          if raw[m].0 > raw[j].0 && raw[m].0 < cur {
+            ok = false
+          }
+          m = m + 1
+        }
+        if ok {
+          child_idx[j].push(i)
+          break
+        }
+      }
+      j = j - 1
+    }
+    i = i + 1
+  }
+  let root_items : Array[ListItem] = []
+  let mut p = 0
+  while p < n {
+    let mut is_root = true
+    let mut j = p - 1
+    while j >= 0 {
+      if raw[j].0 < raw[p].0 {
+        let mut ok = true
+        let mut m = j + 1
+        while m < p {
+          if raw[m].0 > raw[j].0 && raw[m].0 < raw[p].0 {
+            ok = false
+          }
+          m = m + 1
+        }
+        if ok {
+          is_root = false
+          break
+        }
+      }
+      j = j - 1
+    }
+    if is_root {
+      root_items.push(build_item(p, child_idx, raw))
+    }
+    p = p + 1
+  }
+  ListBlock(raw[0].1, root_items)
+}
+
+///|
+fn build_item(
+  i : Int,
+  child_idx : Array[Array[Int]],
+  raw : Array[(Int, ListKind, String, Bool?)],
+) -> ListItem {
+  if child_idx[i].length() == 0 {
+    ListItem(raw[i].2, raw[i].3, None)
+  } else {
+    let child_items : Array[ListItem] = []
+    for c in child_idx[i] {
+      child_items.push(build_item(c, child_idx, raw))
+    }
+    let child_kind = raw[child_idx[i][0]].1
+    ListItem(raw[i].2, raw[i].3, Some(ListBlock(child_kind, child_items)))
   }
 }
 
@@ -997,23 +1297,29 @@ pub fn render_blocks(blocks : Array[MarkdownBlock]) -> String {
         out.write_string(render_inline(text))
         out.write_string("</p>\n")
       }
-      UnorderedList(items) => {
-        out.write_string("<ul>\n")
-        for item in items {
-          out.write_string("<li>")
-          out.write_string(render_inline(item))
-          out.write_string("</li>\n")
+      List(list) => render_list_block(out, list)
+      Table(header, aligns, body) => {
+        out.write_string("<table>\n<thead><tr>")
+        for i, h in header {
+          out.write_string("<th")
+          write_align(out, align_for(aligns, i))
+          out.write_string(">")
+          out.write_string(html_escape(h))
+          out.write_string("</th>")
         }
-        out.write_string("</ul>\n")
-      }
-      OrderedList(items) => {
-        out.write_string("<ol>\n")
-        for item in items {
-          out.write_string("<li>")
-          out.write_string(render_inline(item))
-          out.write_string("</li>\n")
+        out.write_string("</tr></thead>\n<tbody>")
+        for row in body {
+          out.write_string("<tr>")
+          for i, c in row {
+            out.write_string("<td")
+            write_align(out, align_for(aligns, i))
+            out.write_string(">")
+            out.write_string(render_inline(c))
+            out.write_string("</td>")
+          }
+          out.write_string("</tr>\n")
         }
-        out.write_string("</ol>\n")
+        out.write_string("</tbody></table>\n")
       }
       BlockQuote(text) => {
         out.write_string("<blockquote>")
@@ -1034,6 +1340,68 @@ pub fn render_blocks(blocks : Array[MarkdownBlock]) -> String {
     }
   }
   out.to_string()
+}
+
+///|
+fn render_list_block(out : StringBuilder, list : ListBlock) -> Unit {
+  match list {
+    ListBlock(kind, items) => {
+      match kind {
+        Bullet => out.write_string("<ul>\n")
+        Number => out.write_string("<ol>\n")
+      }
+      for item in items {
+        render_list_item(out, item)
+      }
+      match kind {
+        Bullet => out.write_string("</ul>\n")
+        Number => out.write_string("</ol>\n")
+      }
+    }
+  }
+}
+
+///|
+fn render_list_item(out : StringBuilder, item : ListItem) -> Unit {
+  out.write_string("<li>")
+  match item {
+    ListItem(text, checked, children) => {
+      match checked {
+        Some(true) =>
+          out.write_string("<input type=\"checkbox\" checked disabled> ")
+        Some(false) => out.write_string("<input type=\"checkbox\" disabled> ")
+        None => ()
+      }
+      out.write_string(render_inline(text))
+      match children {
+        Some(child) => {
+          out.write_char('\n')
+          render_list_block(out, child)
+        }
+        None => ()
+      }
+    }
+  }
+  out.write_string("</li>\n")
+}
+
+///|
+fn write_align(out : StringBuilder, align : TableAlign) -> Unit {
+  match align {
+    AlignLeft => out.write_string(" align=\"left\"")
+    AlignCenter => out.write_string(" align=\"center\"")
+    AlignRight => out.write_string(" align=\"right\"")
+    AlignDefault => ()
+  }
+}
+
+///|
+fn align_for(aligns : Array[TableAlign], i : Int) -> TableAlign {
+  if i >= 0 && i < aligns.length() {
+    aligns[i]
+  } else {
+    AlignDefault
+  }
 }
 
 ///|
@@ -2001,11 +2369,21 @@ pub fn measure_blocks(blocks : Array[MarkdownBlock]) -> DocumentMetrics {
         paragraph_count = paragraph_count + 1
         word_count = word_count + count_words(text)
       }
-      UnorderedList(items) | OrderedList(items) =>
-        for item in items {
-          list_item_count = list_item_count + 1
-          word_count = word_count + count_words(item)
+      List(list) => {
+        let (ic, wc) = measure_list_block(list)
+        list_item_count = list_item_count + ic
+        word_count = word_count + wc
+      }
+      Table(header, _aligns, body) => {
+        for h in header {
+          word_count = word_count + count_words(h)
         }
+        for row in body {
+          for c in row {
+            word_count = word_count + count_words(c)
+          }
+        }
+      }
       CodeBlock(_, _) => code_block_count = code_block_count + 1
     }
   }
@@ -2016,6 +2394,33 @@ pub fn measure_blocks(blocks : Array[MarkdownBlock]) -> DocumentMetrics {
     code_block_count,
     word_count,
     reading_minutes: reading_minutes_for_words(word_count),
+  }
+}
+
+///|
+fn measure_list_block(list : ListBlock) -> (Int, Int) {
+  match list {
+    ListBlock(_, items) => {
+      let mut ic = 0
+      let mut wc = 0
+      for item in items {
+        match item {
+          ListItem(text, _, children) => {
+            ic = ic + 1
+            wc = wc + count_words(text)
+            match children {
+              Some(child) => {
+                let (cic, cwc) = measure_list_block(child)
+                ic = ic + cic
+                wc = wc + cwc
+              }
+              None => ()
+            }
+          }
+        }
+      }
+      (ic, wc)
+    }
   }
 }
 
@@ -2162,14 +2567,39 @@ fn blocks_to_plain_text(blocks : Array[MarkdownBlock]) -> String {
     match block {
       Heading(_, text) | Paragraph(text) | BlockQuote(text) =>
         append_search_text(out, text)
-      UnorderedList(items) | OrderedList(items) =>
-        for item in items {
-          append_search_text(out, item)
+      List(list) => plain_list_block(out, list)
+      Table(header, _aligns, body) => {
+        for h in header {
+          append_search_text(out, h)
         }
+        for row in body {
+          for c in row {
+            append_search_text(out, c)
+          }
+        }
+      }
       CodeBlock(_, code) => append_search_text(out, code)
     }
   }
   out.to_string()
+}
+
+///|
+fn plain_list_block(out : StringBuilder, list : ListBlock) -> Unit {
+  match list {
+    ListBlock(_, items) =>
+      for item in items {
+        match item {
+          ListItem(text, _, children) => {
+            append_search_text(out, text)
+            match children {
+              Some(child) => plain_list_block(out, child)
+              None => ()
+            }
+          }
+        }
+      }
+  }
 }
 
 ///|

@@ -2,19 +2,19 @@
   "file_count": 12,
   "html_count": 8,
   "data_count": 3,
-  "total_bytes": 259104,
+  "total_bytes": 260426,
   "files": [
-    {"path":"api.html","kind":"html","bytes":31213},
+    {"path":"api.html","kind":"html","bytes":31193},
     {"path":"index.html","kind":"html","bytes":319},
     {"path":"robots.txt","kind":"asset","bytes":44},
     {"path":"sitemap.xml","kind":"data","bytes":381},
-    {"path":"quality.html","kind":"html","bytes":30940},
-    {"path":"overview.html","kind":"html","bytes":31081},
-    {"path":"changelog.html","kind":"html","bytes":30281},
-    {"path":"deployment.html","kind":"html","bytes":30742},
-    {"path":"quick-start.html","kind":"html","bytes":31578},
-    {"path":"search-index.json","kind":"data","bytes":16393},
-    {"path":"api-reference.html","kind":"html","bytes":55530},
+    {"path":"quality.html","kind":"html","bytes":30920},
+    {"path":"overview.html","kind":"html","bytes":31061},
+    {"path":"changelog.html","kind":"html","bytes":30261},
+    {"path":"deployment.html","kind":"html","bytes":30722},
+    {"path":"quick-start.html","kind":"html","bytes":31558},
+    {"path":"search-index.json","kind":"data","bytes":16850},
+    {"path":"api-reference.html","kind":"html","bytes":56515},
     {"path":"quality-report.json","kind":"data","bytes":602}
   ]
 }

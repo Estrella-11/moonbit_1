@@ -163,13 +163,26 @@ pub(all) struct FrontMatter {
   fields : Array[(String, String)]
 }
 
+pub(all) enum ListBlock {
+  ListBlock(ListKind, Array[ListItem])
+}
+
+pub(all) enum ListItem {
+  ListItem(String, Bool?, ListBlock?)
+}
+
+pub(all) enum ListKind {
+  Bullet
+  Number
+}
+
 pub(all) enum MarkdownBlock {
   Heading(Int, String)
   Paragraph(String)
-  UnorderedList(Array[String])
-  OrderedList(Array[String])
+  List(ListBlock)
   BlockQuote(String)
   CodeBlock(String, String)
+  Table(Array[String], Array[TableAlign], Array[Array[String]])
 }
 
 pub(all) struct OutputFile {
@@ -259,6 +272,13 @@ pub(all) struct SiteTheme {
   code_text : String
   sidebar_width_px : Int
   content_width_px : Int
+}
+
+pub(all) enum TableAlign {
+  AlignDefault
+  AlignLeft
+  AlignCenter
+  AlignRight
 }
 
 pub(all) struct TocItem {

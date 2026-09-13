@@ -105,11 +105,62 @@ test "render_markdown keeps unordered and ordered lists separate" {
 }
 
 ///|
+test "render_markdown renders github flavored tables" {
+  let md = "| Name | Role |\n| --- | --- |\n| Ada | author |\n| Lin | editor |"
+  let html = @moondockit.render_markdown(md)
+  assert_true(html.contains("<table>"))
+  assert_true(html.contains("<th>Name</th>"))
+  assert_true(html.contains("<th>Role</th>"))
+  assert_true(html.contains("<td>Ada</td>"))
+  assert_true(html.contains("<td>editor</td>"))
+  assert_true(html.contains("<tbody>"))
+}
+
+///|
+test "render_markdown honors table column alignment" {
+  let md = "| Left | Center | Right |\n| :--- | :---: | ---: |\n| a | b | c |"
+  let html = @moondockit.render_markdown(md)
+  assert_true(html.contains("<th align=\"left\">Left</th>"))
+  assert_true(html.contains("<th align=\"center\">Center</th>"))
+  assert_true(html.contains("<th align=\"right\">Right</th>"))
+}
+
+///|
+test "render_markdown renders nested lists by indentation" {
+  let md = "- top\n  - mid\n    - deep\n- next"
+  let html = @moondockit.render_markdown(md)
+  assert_true(
+    html.contains(
+      "<ul>\n<li>top\n<ul>\n<li>mid\n<ul>\n<li>deep</li>\n</ul>\n</li>\n</ul>\n</li>\n<li>next</li>\n</ul>",
+    ),
+  )
+}
+
+///|
+test "render_markdown renders task lists with checkboxes" {
+  let md = "- [ ] todo\n- [x] done"
+  let html = @moondockit.render_markdown(md)
+  assert_true(html.contains("<input type=\"checkbox\" disabled> todo"))
+  assert_true(html.contains("<input type=\"checkbox\" checked disabled> done"))
+}
+
+///|
+test "render_markdown supports inline formatting inside table cells" {
+  let md = "| API | Note |\n| --- | --- |\n| `run` | **fast** |"
+  let html = @moondockit.render_markdown(md)
+  assert_true(html.contains("<code>run</code>"))
+  assert_true(html.contains("<strong>fast</strong>"))
+}
+
+///|
 test "parse_blocks builds ordered lists" {
   let blocks = @moondockit.parse_blocks("1. alpha\n2. beta")
   inspect(blocks.length(), content="1")
   match blocks[0] {
-    OrderedList(items) => inspect(items.length(), content="2")
+    List(list) =>
+      match list {
+        ListBlock(_, items) => inspect(items.length(), content="2")
+      }
     _ => fail("expected ordered list")
   }
 }
@@ -709,10 +760,15 @@ test "parse_blocks builds stable block ast" {
     _ => fail("expected detail heading")
   }
   match blocks[3] {
-    UnorderedList(items) => {
-      inspect(items.length(), content="2")
-      inspect(items[1], content="two")
-    }
+    List(list) =>
+      match list {
+        ListBlock(_, items) => {
+          inspect(items.length(), content="2")
+          match items[1] {
+            ListItem(text, _, _) => assert_true(text == "two")
+          }
+        }
+      }
     _ => fail("expected list")
   }
   match blocks[5] {
@@ -835,7 +891,10 @@ test "parser closes lists and unclosed code blocks at end of input" {
   )
   inspect(blocks.length(), content="3")
   match blocks[0] {
-    UnorderedList(items) => inspect(items.length(), content="1")
+    List(list) =>
+      match list {
+        ListBlock(_, items) => inspect(items.length(), content="1")
+      }
     _ => fail("expected list")
   }
   match blocks[2] {
