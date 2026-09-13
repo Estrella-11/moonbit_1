@@ -6,7 +6,7 @@ This document records the package metadata and release path.
 ## Package Metadata
 
 - Package name: `Estrella-11/moondockit`
-- Version: `0.1.0`
+- Version: `0.3.0`
 - License: `Apache-2.0`
 - Repository: `https://github.com/Estrella-11/moonbit_1`
 - Description: `A MoonBit-first documentation site toolkit for package authors.`
@@ -39,10 +39,10 @@ Also verify:
 - GitHub and Gitlink are synchronized.
 - No generated private credentials or local-only files are included.
 
-The 0.1.0 package dry run succeeds and creates:
+The 0.3.0 package dry run succeeds and creates:
 
 ```text
-_build/publish/Estrella-11-moondockit-0.1.0.zip
+_build/publish/Estrella-11-moondockit-0.3.0.zip
 ```
 
 ## Publish Command

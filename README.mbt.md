@@ -3,6 +3,11 @@
 MoonDocKit is a MoonBit-first toolkit for turning package guides and generated
 interfaces into deployable static documentation sites.
 
+**Try it without installing anything:** the real renderer, compiled from this
+MoonBit source to JavaScript, runs in the browser at
+<https://estrella-11.github.io/moonbit_1/playground/>. Type Markdown on the
+left, see the generated page on the right, with live quality metrics.
+
 ## Library API
 
 Create pages and build a deterministic output manifest:
