@@ -56,6 +56,7 @@ jobs:
       - name: Documented examples are current
         run: |
           moon run --target js cmd/moondockit --source examples/doctest --output _doctest_site --title "Doc Test Source" --doctest-output doctests/doc_examples_test.mbt --doctest-package "Estrella-11/moondockit"
+          moon fmt
           git diff --exit-code doctests/doc_examples_test.mbt
 
       - name: Test compiled CLI
