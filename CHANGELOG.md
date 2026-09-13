@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `docs/markdown-support.md`: an honest boundary declaration of the Markdown
   subset the renderer supports and deliberately does not support, plus the link
   security model.
+- Markdown heading levels **H4–H6** (`####` / `#####` / `######`) are now
+  rendered as `<h4>`–`<h6>` with stable id anchors.
+- **Ordered lists** (`1. ` / `2. ` …) render as `<ol><li>…</li></ol>`; switching
+  between `- ` and `N. ` markers splits the input into separate lists.
+- **Strikethrough** (`~~text~~`) renders as `<del>text</del>` and may nest bold
+  or inline code. Covered by new regression tests in `moondockit_test.mbt`.
 
 ## [0.4.0] — 2026-09-14
 

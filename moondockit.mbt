@@ -203,6 +203,7 @@ pub(all) enum MarkdownBlock {
   Heading(Int, String)
   Paragraph(String)
   UnorderedList(Array[String])
+  OrderedList(Array[String])
   BlockQuote(String)
   CodeBlock(String, String)
 }
@@ -805,6 +806,7 @@ fn parse_body_blocks(markdown : String) -> Array[MarkdownBlock] {
   let mut code_language = ""
   let code = StringBuilder()
   let mut in_list = false
+  let mut list_ordered = false
   let list_items : Array[String] = []
   let paragraph = StringBuilder()
   for raw in markdown.split("\n") {
@@ -812,8 +814,9 @@ fn parse_body_blocks(markdown : String) -> Array[MarkdownBlock] {
     let trimmed = line.trim().to_owned()
     if trimmed.has_prefix("```") {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list)
+      close_pending_list(blocks, list_items, in_list, list_ordered)
       in_list = false
+      list_ordered = false
       if in_code {
         blocks.push(CodeBlock(code_language, code.to_string()))
         code.reset()
@@ -832,46 +835,82 @@ fn parse_body_blocks(markdown : String) -> Array[MarkdownBlock] {
     }
     if trimmed == "" {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list)
+      close_pending_list(blocks, list_items, in_list, list_ordered)
       in_list = false
+      list_ordered = false
       continue
     }
     if trimmed.has_prefix("# ") {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list)
+      close_pending_list(blocks, list_items, in_list, list_ordered)
       in_list = false
+      list_ordered = false
       blocks.push(Heading(1, trimmed[2:].to_owned()))
     } else if trimmed.has_prefix("## ") {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list)
+      close_pending_list(blocks, list_items, in_list, list_ordered)
       in_list = false
+      list_ordered = false
       blocks.push(Heading(2, trimmed[3:].to_owned()))
     } else if trimmed.has_prefix("### ") {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list)
+      close_pending_list(blocks, list_items, in_list, list_ordered)
       in_list = false
+      list_ordered = false
       blocks.push(Heading(3, trimmed[4:].to_owned()))
+    } else if trimmed.has_prefix("#### ") {
+      close_pending_paragraph(blocks, paragraph)
+      close_pending_list(blocks, list_items, in_list, list_ordered)
+      in_list = false
+      list_ordered = false
+      blocks.push(Heading(4, trimmed[5:].to_owned()))
+    } else if trimmed.has_prefix("##### ") {
+      close_pending_paragraph(blocks, paragraph)
+      close_pending_list(blocks, list_items, in_list, list_ordered)
+      in_list = false
+      list_ordered = false
+      blocks.push(Heading(5, trimmed[6:].to_owned()))
+    } else if trimmed.has_prefix("###### ") {
+      close_pending_paragraph(blocks, paragraph)
+      close_pending_list(blocks, list_items, in_list, list_ordered)
+      in_list = false
+      list_ordered = false
+      blocks.push(Heading(6, trimmed[7:].to_owned()))
     } else if trimmed.has_prefix("- ") {
       close_pending_paragraph(blocks, paragraph)
+      if in_list && list_ordered {
+        close_pending_list(blocks, list_items, in_list, list_ordered)
+        in_list = false
+      }
       in_list = true
+      list_ordered = false
       list_items.push(trimmed[2:].to_owned())
+    } else if ordered_marker_len(trimmed) > 0 {
+      close_pending_paragraph(blocks, paragraph)
+      if in_list && !list_ordered {
+        close_pending_list(blocks, list_items, in_list, list_ordered)
+        in_list = false
+      }
+      in_list = true
+      list_ordered = true
+      list_items.push(trimmed[ordered_marker_len(trimmed):].to_owned())
     } else if trimmed.has_prefix("> ") {
       close_pending_paragraph(blocks, paragraph)
-      close_pending_list(blocks, list_items, in_list)
+      close_pending_list(blocks, list_items, in_list, list_ordered)
       in_list = false
+      list_ordered = false
       blocks.push(BlockQuote(trimmed[2:].to_owned()))
     } else {
       if in_list {
-        close_pending_list(blocks, list_items, in_list)
+        close_pending_list(blocks, list_items, in_list, list_ordered)
         in_list = false
+        list_ordered = false
       }
       append_paragraph_line(paragraph, trimmed)
     }
   }
   close_pending_paragraph(blocks, paragraph)
-  if in_list {
-    blocks.push(UnorderedList(list_items.copy()))
-  }
+  close_pending_list(blocks, list_items, in_list, list_ordered)
   if in_code {
     blocks.push(CodeBlock(code_language, code.to_string()))
   }
@@ -898,13 +937,36 @@ fn close_pending_paragraph(
 }
 
 ///|
+/// Length of an ordered-list marker prefix ("1. ", "10. ", ...) or 0 when the
+/// line does not start with a numeric list marker.
+fn ordered_marker_len(line : String) -> Int {
+  let mut i = 0
+  if line.length() == 0 {
+    return 0
+  }
+  while i < line.length() && line[i] >= '0' && line[i] <= '9' {
+    i = i + 1
+  }
+  if i > 0 && i + 1 < line.length() && line[i] == '.' && line[i + 1] == ' ' {
+    i + 2
+  } else {
+    0
+  }
+}
+
+///|
 fn close_pending_list(
   blocks : Array[MarkdownBlock],
   list_items : Array[String],
   is_open : Bool,
+  is_ordered : Bool,
 ) -> Unit {
   if is_open {
-    blocks.push(UnorderedList(list_items.copy()))
+    if is_ordered {
+      blocks.push(OrderedList(list_items.copy()))
+    } else {
+      blocks.push(UnorderedList(list_items.copy()))
+    }
     list_items.clear()
   }
 }
@@ -943,6 +1005,15 @@ pub fn render_blocks(blocks : Array[MarkdownBlock]) -> String {
           out.write_string("</li>\n")
         }
         out.write_string("</ul>\n")
+      }
+      OrderedList(items) => {
+        out.write_string("<ol>\n")
+        for item in items {
+          out.write_string("<li>")
+          out.write_string(render_inline(item))
+          out.write_string("</li>\n")
+        }
+        out.write_string("</ol>\n")
       }
       BlockQuote(text) => {
         out.write_string("<blockquote>")
@@ -999,6 +1070,19 @@ fn render_inline(input : String) -> String {
         }
         None => {
           out.write_string("**")
+          i = i + 2
+        }
+      }
+    } else if starts_with_at(input, i, "~~") {
+      match find_marker_from(input, i + 2, "~~") {
+        Some(close) => {
+          out.write_string("<del>")
+          out.write_string(render_inline(input[i + 2:close].to_owned()))
+          out.write_string("</del>")
+          i = close + 2
+        }
+        None => {
+          out.write_string("~~")
           i = i + 2
         }
       }
@@ -1917,7 +2001,7 @@ pub fn measure_blocks(blocks : Array[MarkdownBlock]) -> DocumentMetrics {
         paragraph_count = paragraph_count + 1
         word_count = word_count + count_words(text)
       }
-      UnorderedList(items) =>
+      UnorderedList(items) | OrderedList(items) =>
         for item in items {
           list_item_count = list_item_count + 1
           word_count = word_count + count_words(item)
@@ -2078,7 +2162,7 @@ fn blocks_to_plain_text(blocks : Array[MarkdownBlock]) -> String {
     match block {
       Heading(_, text) | Paragraph(text) | BlockQuote(text) =>
         append_search_text(out, text)
-      UnorderedList(items) =>
+      UnorderedList(items) | OrderedList(items) =>
         for item in items {
           append_search_text(out, item)
         }

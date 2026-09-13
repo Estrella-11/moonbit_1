@@ -70,6 +70,51 @@ test "render_markdown supports emphasis inside inline content" {
 }
 
 ///|
+test "render_markdown supports heading levels 4 through 6" {
+  let html = @moondockit.render_markdown(
+    "#### Subsection\n\n##### Minor\n\n###### Fine print",
+  )
+  assert_true(html.contains("<h4 id=\""))
+  assert_true(html.contains("<h5 id=\""))
+  assert_true(html.contains("<h6 id=\""))
+}
+
+///|
+test "render_markdown supports ordered lists" {
+  let html = @moondockit.render_markdown("1. first\n2. second\n3. third")
+  assert_true(html.contains("<ol>\n<li>first</li>"))
+  assert_true(html.contains("<li>second</li>"))
+  assert_true(html.contains("<li>third</li>\n</ol>"))
+  let rich = @moondockit.render_markdown("1. read **docs** and `code`")
+  assert_true(
+    rich.contains("<li>read <strong>docs</strong> and <code>code</code></li>"),
+  )
+}
+
+///|
+test "render_markdown supports strikethrough" {
+  let html = @moondockit.render_markdown("This is ~~deprecated~~ supported.")
+  assert_true(html.contains("<del>deprecated</del>"))
+}
+
+///|
+test "render_markdown keeps unordered and ordered lists separate" {
+  let html = @moondockit.render_markdown("- a\n- b\n\n1. one\n2. two")
+  assert_true(html.contains("<ul>\n<li>a</li>\n<li>b</li>\n</ul>"))
+  assert_true(html.contains("<ol>\n<li>one</li>\n<li>two</li>\n</ol>"))
+}
+
+///|
+test "parse_blocks builds ordered lists" {
+  let blocks = @moondockit.parse_blocks("1. alpha\n2. beta")
+  inspect(blocks.length(), content="1")
+  match blocks[0] {
+    OrderedList(items) => inspect(items.length(), content="2")
+    _ => fail("expected ordered list")
+  }
+}
+
+///|
 test "render_markdown supports safe image syntax" {
   let html = @moondockit.render_markdown(
     "Preview ![MoonBit <logo>](./assets/logo.png) and block ![bad](javascript:alert(1)).",
