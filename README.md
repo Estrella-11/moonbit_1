@@ -564,6 +564,7 @@ For competition review, start with:
 - Mooncakes publishing plan: `docs/mooncakes-publishing.md`
 - Known limitations & honest self-assessment: `docs/limitations.md`
 - Real-world corpus benchmark (compatibility on external docs): `docs/benchmark-corpus.json`
+- Markdown support scope (honest boundary of the parser): `docs/markdown-support.md`
 - Award sprint plan: `docs/award-sprint.md`
 - Development log: `docs/development-log.md`
 - Benchmark notes: `docs/benchmark-notes.md`
