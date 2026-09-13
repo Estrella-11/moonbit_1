@@ -5,6 +5,41 @@ All notable changes to MoonDocKit are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] — 2026-09-14
+
+### Fixed — UTF-16 surrogate pairs no longer crash inline rendering
+
+MoonDocKit's Markdown renderer iterated by UTF-16 code unit and emitted one
+code unit at a time. A character such as an emoji (`👉`, `🙌`) is a surrogate
+pair, so slicing a single code unit produced a lone surrogate. MoonBit's
+`String::sub` validates UTF-16 and panicked, taking down the whole build for
+any real-world document that contained an emoji in a paragraph, list, or link
+label.
+
+- `starts_with_at` now compares code units directly instead of creating a
+  substring, so a length-1 probe over a surrogate half can no longer panic.
+- The inline emitter advances by a full code point when it sees a high
+  surrogate, emitting the complete emoji rather than a broken fragment.
+
+Regression tests cover emoji in headings, paragraphs, link labels, and bare
+runs. Found and fixed while rendering four real MoonBit open-source repos
+(see `docs/benchmark-corpus.json`).
+
+### Added — Real-world corpus benchmark
+
+`tools/benchmark_corpus.py` runs MoonDocKit against real MoonBit repositories
+cloned from GitHub (markdown.mbt, mocket, rabbita, js.mbt) and records how the
+tool fares on externally-authored docs it was never tuned for. Output includes
+pages rendered, quality score, and timing. This is a compatibility/quality
+measurement, **not** a claim of third-party adoption.
+
+### Added — Honest limitations document
+
+`docs/limitations.md` states the known boundaries up front: rule-based (not
+LLM) AI modules, doctest integration steps, `moon info` dependency, JS/Node
+backend, search-index scaling, no incremental build, and the current adoption
+status.
+
 ## [0.3.0] — 2026-09-13
 
 This release also carries the 0.2.0 changes, which were tagged in the

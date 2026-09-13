@@ -1060,6 +1060,12 @@ fn render_inline(input : String) -> String {
           i = i + 1
         }
       }
+      // Emit a full code point so UTF-16 surrogate pairs (e.g. emoji) are
+      // never sliced into a lone surrogate, which would break downstream
+      // code-point iteration in html_escape.
+    } else if input[i] >= 0xD800 && input[i] <= 0xDBFF && i + 1 < input.length() {
+      out.write_string(html_escape(input[i:i + 2].to_owned()))
+      i = i + 2
     } else {
       out.write_string(html_escape(input[i:i + 1].to_owned()))
       i = i + 1
@@ -1070,8 +1076,21 @@ fn render_inline(input : String) -> String {
 
 ///|
 fn starts_with_at(input : String, index : Int, marker : String) -> Bool {
-  index + marker.length() <= input.length() &&
-  input[index:index + marker.length()].to_owned() == marker
+  let mlen = marker.length()
+  if index < 0 || index + mlen > input.length() {
+    return false
+  }
+  // Compare code units directly instead of slicing: a single-code-unit slice
+  // that lands on a UTF-16 surrogate half would create an invalid string and
+  // panic the runtime (e.g. an emoji in the line being tested for a "`" prefix).
+  let mut k = 0
+  while k < mlen {
+    if input[index + k] != marker[k] {
+      return false
+    }
+    k = k + 1
+  }
+  true
 }
 
 ///|

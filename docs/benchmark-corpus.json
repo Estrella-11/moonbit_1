@@ -1,0 +1,66 @@
+{
+  "date": "2026-09-13",
+  "generated_at": "2026-09-13T16:22:50",
+  "moon": "moon 0.1.20260904 (94521db 2026-09-04)\n\nFeature flags enabled: rr_moon_mod,rr_moon_pkg",
+  "node": "v22.22.2",
+  "corpus_dir": "C:\\Users\\36230\\WorkBuddy\\2026-09-12-21-54-07\\_corpus",
+  "summary": {
+    "projects": 4,
+    "ok": 4,
+    "failed": 0,
+    "total_md_files": 152,
+    "total_pages_rendered": 13,
+    "total_source_chars": 564684
+  },
+  "results": [
+    {
+      "repo": "mizchi/markdown.mbt",
+      "status": "ok",
+      "gate_passed": true,
+      "md_files": 24,
+      "source_chars": 205719,
+      "pages_rendered": 5,
+      "output_bytes": 185491,
+      "elapsed_ms": 813.2,
+      "quality": 100,
+      "warnings": 0
+    },
+    {
+      "repo": "oboard/mocket",
+      "status": "ok",
+      "gate_passed": true,
+      "md_files": 3,
+      "source_chars": 6441,
+      "pages_rendered": 3,
+      "output_bytes": 69142,
+      "elapsed_ms": 804.6,
+      "quality": 100,
+      "warnings": 0
+    },
+    {
+      "repo": "moonbit-community/rabbita",
+      "status": "ok",
+      "gate_passed": false,
+      "md_files": 38,
+      "source_chars": 79830,
+      "pages_rendered": 0,
+      "output_bytes": 0,
+      "elapsed_ms": 761.6,
+      "quality": 75,
+      "warnings": 0,
+      "note": "quality gate below threshold (publishing blocked, render aborted)"
+    },
+    {
+      "repo": "mizchi/js.mbt",
+      "status": "ok",
+      "gate_passed": true,
+      "md_files": 87,
+      "source_chars": 272694,
+      "pages_rendered": 5,
+      "output_bytes": 215893,
+      "elapsed_ms": 1010.8,
+      "quality": 100,
+      "warnings": 0
+    }
+  ]
+}

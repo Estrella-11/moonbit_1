@@ -8,7 +8,7 @@
     {"name":"outputs","passed":true,"message":"manifest includes html pages and data outputs"},
     {"name":"readability","passed":true,"message":"every page is within the baseline reading threshold"}
   ],
-  "metrics": {"page_count":7,"heading_count":103,"code_block_count":69,"word_count":1274,"reading_minutes":7},
+  "metrics": {"page_count":7,"heading_count":108,"code_block_count":74,"word_count":1336,"reading_minutes":7},
   "diagnostics": [
   ]
 }

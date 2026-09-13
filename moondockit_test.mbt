@@ -28,6 +28,23 @@ test "render_markdown supports the first block set" {
 }
 
 ///|
+test "render_markdown survives utf-16 surrogate pairs (emoji)" {
+  // Regression: emoji are UTF-16 surrogate pairs. Rendering them used to slice
+  // a lone surrogate and panic the runtime. Heading path is fine, the bug was
+  // in inline paragraphs with `starts_with_at`/single-code-unit slicing.
+  let with_heading = @moondockit.render_markdown(
+    "# Title\n\nSee 👉 now and 🙌 celebrate",
+  )
+  assert_true(with_heading.contains("See 👉 now and 🙌 celebrate"))
+  let link_emoji = @moondockit.render_markdown(
+    "[👉 Documentation](https://example.com)",
+  )
+  assert_true(link_emoji.contains("<a href=\"https://example.com\">👉 Documentation</a>"))
+  let bare = @moondockit.render_markdown("👉👉")
+  assert_true(bare.contains("👉👉"))
+}
+
+///|
 test "render_markdown supports inline code strong and links" {
   let html = @moondockit.render_markdown(
     "Use `moon test`, read **safe docs**, and open [MoonBit](https://www.moonbitlang.com).",

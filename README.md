@@ -37,7 +37,7 @@ Generated MoonBit API:
 | --- | --- |
 | Implementation language | MoonBit, end to end |
 | Non-test MoonBit source | 6,243 lines across 19 files |
-| Tests | 148 passing (56 core + 89 AI + 3 documented examples), 0 failures |
+| Tests | 149 passing (56 core + 89 AI + 3 documented examples + 1 surrogate-pair regression), 0 failures |
 | External dependencies | 0 — MoonBit standard library only |
 | Public API | 47 core functions, 41 AI functions |
 | CLI | 12 options, 11 flags including 9 `--ai-*` switches |
@@ -562,6 +562,8 @@ For competition review, start with:
 - Ecosystem impact: `docs/ecosystem-impact.md`
 - Windows toolchain troubleshooting: `docs/windows-toolchain-troubleshooting.md`
 - Mooncakes publishing plan: `docs/mooncakes-publishing.md`
+- Known limitations & honest self-assessment: `docs/limitations.md`
+- Real-world corpus benchmark (compatibility on external docs): `docs/benchmark-corpus.json`
 - Award sprint plan: `docs/award-sprint.md`
 - Development log: `docs/development-log.md`
 - Benchmark notes: `docs/benchmark-notes.md`
