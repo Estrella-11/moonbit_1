@@ -39,7 +39,11 @@ test "render_markdown survives utf-16 surrogate pairs (emoji)" {
   let link_emoji = @moondockit.render_markdown(
     "[👉 Documentation](https://example.com)",
   )
-  assert_true(link_emoji.contains("<a href=\"https://example.com\">👉 Documentation</a>"))
+  assert_true(
+    link_emoji.contains(
+      "<a href=\"https://example.com\">👉 Documentation</a>",
+    ),
+  )
   let bare = @moondockit.render_markdown("👉👉")
   assert_true(bare.contains("👉👉"))
 }
