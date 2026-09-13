@@ -167,6 +167,7 @@ pub(all) enum MarkdownBlock {
   Heading(Int, String)
   Paragraph(String)
   UnorderedList(Array[String])
+  OrderedList(Array[String])
   BlockQuote(String)
   CodeBlock(String, String)
 }
