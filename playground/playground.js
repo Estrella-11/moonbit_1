@@ -95,6 +95,40 @@ const sampleSelect = document.getElementById("sample-select");
 const editorHint = document.getElementById("editor-hint");
 const themeToggle = document.getElementById("theme-toggle");
 
+// --- Shareable link support (page state encoded in the URL hash) ---
+function utf8ToBase64(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = "";
+  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+function base64ToUtf8(b64) {
+  b64 = b64.replace(/-/g, "+").replace(/_/g, "/");
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+function encodeState() {
+  const payload = JSON.stringify({
+    m: editor.value,
+    t: titleInput.value.trim() || "Playground",
+    th: themeSelect.value,
+  });
+  return utf8ToBase64(payload);
+}
+function decodeState(hash) {
+  const match = hash.match(/[#&]s=([^&]+)/);
+  if (!match) return null;
+  try {
+    const data = JSON.parse(base64ToUtf8(match[1]));
+    if (typeof data.m !== "string") return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
 let lastHtml = "";
 let ready = false;
 
@@ -207,6 +241,18 @@ sampleSelect.addEventListener("change", () => {
   render();
 });
 
+document.getElementById("share-btn").addEventListener("click", async () => {
+  const base = location.href.split("#")[0];
+  const url = base + "#s=" + encodeState();
+  history.replaceState(null, "", url);
+  try {
+    await navigator.clipboard.writeText(url);
+    setStatus("Share link copied to the clipboard.");
+  } catch {
+    setStatus("Share link: " + url, "error");
+  }
+});
+
 document.getElementById("copy-btn").addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(editor.value);
@@ -237,7 +283,15 @@ themeToggle.addEventListener("click", () => {
   themeToggle.textContent = dark ? "Dark mode" : "Light mode";
 });
 
-editor.value = SAMPLES.guide;
+const shared = decodeState(location.hash);
+if (shared) {
+  editor.value = shared.m;
+  if (typeof shared.t === "string") titleInput.value = shared.t;
+  if (typeof shared.th === "string") themeSelect.value = shared.th;
+  setStatus("Loaded a shared playground link.");
+} else {
+  editor.value = SAMPLES.guide;
+}
 
 loadBridge()
   .then(() => {
@@ -252,3 +306,13 @@ loadBridge()
       "error",
     );
   });
+
+window.addEventListener("hashchange", () => {
+  const next = decodeState(location.hash);
+  if (!next) return;
+  editor.value = next.m;
+  if (typeof next.t === "string") titleInput.value = next.t;
+  if (typeof next.th === "string") themeSelect.value = next.th;
+  render();
+  setStatus("Loaded a shared playground link.");
+});
