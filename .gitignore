@@ -8,3 +8,4 @@ __pycache__/
 *.pyc
 dist-ai-example/
 dist-adoption-ai-example/
+_doctest_site/

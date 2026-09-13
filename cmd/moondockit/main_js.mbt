@@ -70,6 +70,34 @@ fn stem(filename : String) -> String {
 }
 
 ///|
+fn split_path(path : String) -> (String, String) {
+  let mut last = -1
+  let mut i = 0
+  for ch in path {
+    if ch == '/' || ch == '\\' {
+      last = i
+    }
+    i = i + 1
+  }
+  let dir = StringBuilder()
+  let name = StringBuilder()
+  let mut j = 0
+  for ch in path {
+    if j < last {
+      dir.write_char(ch)
+    } else if j > last {
+      name.write_char(ch)
+    }
+    j = j + 1
+  }
+  if dir.to_string() == "" {
+    (".", name.to_string())
+  } else {
+    (dir.to_string(), name.to_string())
+  }
+}
+
+///|
 fn load_pages(directory : String, api_file : String) -> Array[@lib.DocPage] {
   let raw = read_markdown_directory(directory)
   let pages : Array[@lib.DocPage] = []
@@ -206,6 +234,16 @@ fn main {
         about="Theme preset: default, package, or api.",
         default_values=[""],
       ),
+      @argparse.OptionArg(
+        "doctest-output",
+        about="Write runnable MoonBit examples to a test source file.",
+        default_values=[""],
+      ),
+      @argparse.OptionArg(
+        "doctest-package",
+        about="Package to import in the generated doc test file.",
+        default_values=[""],
+      ),
     ],
   )
   let matches = command.parse(argv=cli_arguments()) catch {
@@ -265,6 +303,16 @@ fn main {
     config_value(config_file, "theme"),
     "default",
   )
+  let doctest_output = choose_value(
+    first_value(matches, "doctest-output", ""),
+    config_value(config_file, "doctest_output"),
+    "",
+  )
+  let doctest_package = choose_value(
+    first_value(matches, "doctest-package", ""),
+    config_value(config_file, "doctest_package"),
+    "",
+  )
   let dry_run = flag_enabled(matches, "dry-run")
   let strict = flag_enabled(matches, "strict")
   let ai_doc_enabled = flag_enabled(matches, "ai-doc")
@@ -313,6 +361,18 @@ fn main {
     })
   }
   let site : @lib.DocSite = { title, pages, }
+  if doctest_output != "" {
+    let examples : Array[@lib.DocExample] = []
+    for page in pages {
+      for example in @lib.extract_doc_examples(page.source) {
+        examples.push({ index: examples.length(), code: example.code, })
+      }
+    }
+    let test_source = @lib.render_doc_test_file(examples, doctest_package)
+    let target = split_path(doctest_output)
+    let _ = write_output_directory(target.0, [target.1], [test_source])
+    println("doc tests: \{examples.length()} example(s) -> \{doctest_output}")
+  }
   let validation = @lib.validate_site(site)
   let diagnostics = @lib.diagnostics_to_text(validation)
   let quality = @lib.evaluate_quality(site)

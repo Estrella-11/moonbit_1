@@ -53,6 +53,11 @@ jobs:
       - name: Test playground bundle in Node
         run: node tools/test_playground_js.mjs _build/js/debug/build/cmd/playground/playground.js
 
+      - name: Documented examples are current
+        run: |
+          moon run --target js cmd/moondockit --source examples/doctest --output _doctest_site --title "Doc Test Source" --doctest-output doctests/doc_examples_test.mbt --doctest-package "Estrella-11/moondockit"
+          git diff --exit-code doctests/doc_examples_test.mbt
+
       - name: Test compiled CLI
         run: python tools/test_cli.py
 

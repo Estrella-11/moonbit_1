@@ -11,6 +11,21 @@ This release also carries the 0.2.0 changes, which were tagged in the
 repository but never pushed to mooncakes.io.
 
 
+### Added — Documented examples run as tests
+
+MoonBit's toolchain does not execute code blocks written in Markdown or in `///`
+documentation comments, so documented snippets can drift without any signal.
+MoonDocKit now closes that gap using its own Markdown parser:
+
+- `extract_doc_examples` / `count_doc_examples` collect fenced blocks tagged
+  `mbt` or `moonbit`, skipping anything tagged `nocheck`.
+- `render_doc_test_file` turns them into MoonBit `test` blocks. MoonBit only
+  accepts imports in `moon.pkg`, so the required package is emitted as a header
+  comment rather than a declaration that would fail to compile.
+- `--doctest-output` and `--doctest-package` wire this into the CLI.
+- `examples/doctest/` and `doctests/` apply the feature to this repository:
+  CI regenerates the file and fails when the committed copy is stale.
+
 ### Added — In-browser playground
 
 - `cmd/playground/`: a MoonBit entry point that exposes `renderPage(markdown,

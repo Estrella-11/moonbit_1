@@ -15,14 +15,14 @@ MoonDocKit 是一个 MoonBit 原生的文档站点工具包，面向 MoonBit 包
 | 指标 | 数值 |
 |------|------|
 | 实现语言 | 全量 MoonBit |
-| 非测试 MoonBit 源码 | 5,945 行 / 17 个文件 |
-| 测试 | 139 个全部通过（核心 50 + AI 89） |
+| 非测试 MoonBit 源码 | 6,243 行 / 19 个文件 |
+| 测试 | 148 个全部通过（核心 56 + AI 89 + 文档示例 3） |
 | 外部依赖 | 0（仅使用 MoonBit 标准库） |
-| 公开 API | 核心 43 个函数 + AI 41 个函数 |
-| CLI | 10 个选项 + 11 个标志（含 9 个 `--ai-*`） |
+| 公开 API | 核心 47 个函数 + AI 41 个函数 |
+| CLI | 12 个选项 + 11 个标志（含 9 个 `--ai-*`） |
 | 单次构建产物 | 13 个文件（8 个 HTML + 搜索索引 / sitemap / manifest / robots / 质量报告） |
 | 站点发布门禁 | 质量分 100 / 100 |
-| CI | 20 个步骤全部通过 |
+| CI | 19 个步骤全部通过 |
 
 每一项都可在本地复测，命令见 [`docs/capability-matrix.md`](docs/capability-matrix.md)。
 
@@ -118,7 +118,7 @@ moon run --target js cmd/moondockit --config moondockit.json --strict
 # 编译检查
 moon check
 
-# 运行测试（139 个测试）
+# 运行测试（148 个测试）
 moon test --target wasm-gc
 
 # 构建示例站点
@@ -148,12 +148,33 @@ moondockit-original/
 ## 测试
 
 ```bash
-# 运行全部 139 个测试
+# 运行全部 148 个测试
 moon test --target wasm-gc
 
 # AI 模块测试（89 个）
 # 包含在 ai/ai_test.mbt 中，覆盖所有公开函数和边缘情况
 ```
+
+## 文档示例即测试
+
+MoonBit 工具链不会执行 Markdown 或 `///` 文档注释里的代码块，因此文档示例
+可能在无人察觉的情况下失效。MoonDocKit 用自己的提取器补上这个缺口：
+
+- 标记为 `mbt` 或 `moonbit` 的代码块会变成 `test` 用例。
+- 标记 `nocheck` 的块保持"仅示意"，会被跳过（沿用 MoonBit 的文档约定）。
+- 其他语言一律忽略。
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/doctest \
+  --output _doctest_site \
+  --doctest-output doctests/doc_examples_test.mbt \
+  --doctest-package "Estrella-11/moondockit"
+```
+
+MoonBit 只允许在 `moon.pkg` 中声明 import，所以生成的文件把所需 import 写成
+头部注释，而不是输出一段无法编译的声明。本仓库用这个功能验证自己：`doctests/`
+存放生成的文件，`moon test` 执行它，CI 会重新生成并检查提交的版本是否过期。
 
 ## 比赛信息
 

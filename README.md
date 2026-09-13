@@ -36,15 +36,16 @@ Generated MoonBit API:
 | Signal | Value |
 | --- | --- |
 | Implementation language | MoonBit, end to end |
-| Non-test MoonBit source | 5,945 lines across 17 files |
-| Tests | 139 passing (50 core + 89 AI), 0 failures |
+| Non-test MoonBit source | 6,243 lines across 19 files |
+| Tests | 148 passing (56 core + 89 AI + 3 documented examples), 0 failures |
 | External dependencies | 0 — MoonBit standard library only |
-| Public API | 43 core functions, 41 AI functions |
-| CLI | 10 options, 11 flags including 9 `--ai-*` switches |
+| Public API | 47 core functions, 41 AI functions |
+| CLI | 12 options, 11 flags including 9 `--ai-*` switches |
 | Generated per build | 13 files: 8 HTML pages, search index, sitemap, manifest, robots, quality report |
 | Release gate on generated sites | quality score 100 / 100 |
-| CI | 20 steps: check, test, interface, format, JS target, CLI scenarios, one-shot verification, AI suite |
+| CI | 19 steps: check, test, interface, format, JS target, playground, doc tests, CLI scenarios, one-shot verification, AI suite |
 | In-browser playground | real renderer compiled to JS, verified in CI by `tools/test_playground_js.mjs` (17 assertions) |
+| Documented examples are tests | `moonbit`/`mbt` fenced blocks become `moon test` cases; `nocheck` blocks stay illustrative |
 
 Every figure is re-measurable on your own checkout — the commands are listed in
 [`docs/capability-matrix.md`](docs/capability-matrix.md), and the reasoning
@@ -137,6 +138,31 @@ together with the commands that reproduce each value from a build.
 - AI test stub generation from API symbols for quick test bootstrapping.
 - Prompt template system with variable substitution for LLM integration.
 - OpenAI-compatible chat request JSON builder for external LLM calls.
+
+## Documented Examples Run As Tests
+
+MoonBit's toolchain does not execute code blocks found in Markdown or in `///`
+documentation comments, so documented snippets can drift out of date without
+anyone noticing. MoonDocKit closes that gap with its own extractor:
+
+- Fenced blocks tagged `mbt` or `moonbit` become `test` cases.
+- Blocks tagged `nocheck` stay illustrative and are skipped, matching MoonBit's
+  own documentation convention.
+- Every other language is ignored.
+
+```bash
+moon run --target js cmd/moondockit \
+  --source examples/doctest \
+  --output _doctest_site \
+  --doctest-output doctests/doc_examples_test.mbt \
+  --doctest-package "Estrella-11/moondockit"
+```
+
+MoonBit only accepts imports in `moon.pkg`, so the generated file states the
+required import as a header comment instead of emitting a declaration that
+would not compile. This repository uses the feature on itself: `doctests/`
+holds the generated file, `moon test` runs it, and CI regenerates it and fails
+if the committed copy is stale.
 
 ## Installation
 
