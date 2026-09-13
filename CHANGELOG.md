@@ -5,6 +5,33 @@ All notable changes to MoonDocKit are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] — 2026-09-13
+
+### Added
+- **UI internationalization (i18n)**: generated page chrome (search label/placeholder, theme
+  toggle, skip link, table-of-contents title, no-results message, language switcher) is
+  localized by `options.language`. `en` (default) and `zh-CN` are supported; a client-side
+  language switcher persists the choice in `localStorage` and re-applies it on load. Content
+  language remains the author's responsibility. Covered by a zh-CN rendering regression test.
+- **Benchmark visualization report**: `tools/build_benchmark_report.py` renders
+  `docs/benchmark-corpus.json` into a dependency-free `docs/benchmark-report.html`
+  (inline CSS + CSS/SVG bar charts) showing per-repo markdown file counts, source size,
+  rendered pages, quality score and pass rate.
+- **Real-repo compatibility showcase**: `docs/adoption-showcase.md` records MoonDocKit
+  rendering the real, externally-authored `mizchi/markdown.mbt` repository (quality 100/100,
+  4 pages, 56 headings, 31 code blocks). The generated `dist-showcase-real/` is committed as
+  verifiable evidence that the renderer handles non-curated input. This is compatibility
+  evidence, explicitly **not** a claim of upstream adoption.
+- **Adopt MoonDocKit starter template**: `examples/adopt-starter/` is a copy-paste, no-`.mbti`
+  kit that builds a docs site in one command (`moon run ... --config examples/adopt-starter/moondockit.json --strict`),
+  lowering the friction for a third party to adopt the tool.
+- **Benchmark visualization report**: `tools/build_benchmark_report.py` turns
+  `docs/benchmark-corpus.json` into a dependency-free `docs/benchmark-report.html` with
+  proportional bar charts — a visible, reviewable engineering-quality artifact.
+- **UI localization (i18n)**: page chrome (search label, placeholder, theme toggle, skip
+  link, table-of-contents title, and the "no matching pages" message) is now localized for
+  `en` and `zh-CN` via `SiteOptions.language`, with an in-page language switcher.
+
 ## [0.5.0] — 2026-09-13
 
 ### Added

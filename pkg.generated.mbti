@@ -163,6 +163,16 @@ pub(all) struct FrontMatter {
   fields : Array[(String, String)]
 }
 
+pub(all) struct I18n {
+  search_label : String
+  search_placeholder : String
+  theme_toggle : String
+  skip_link : String
+  toc_title : String
+  no_results : String
+  lang_toggle : String
+}
+
 pub(all) enum ListBlock {
   ListBlock(ListKind, Array[ListItem])
 }

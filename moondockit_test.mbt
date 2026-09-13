@@ -431,6 +431,15 @@ test "site options add page metadata and footer" {
       "<footer>Built with <code>MoonDocKit</code></footer>",
     ),
   )
+  // UI chrome is localized for zh-CN.
+  assert_true(rendered.html.contains("data-i18n=\"skip_link\""))
+  assert_true(rendered.html.contains(">跳到正文</a>"))
+  assert_true(rendered.html.contains("data-i18n=\"search_label\""))
+  assert_true(rendered.html.contains(">搜索文档</label>"))
+  assert_true(rendered.html.contains("data-i18n=\"theme_toggle\""))
+  assert_true(rendered.html.contains(">夜间模式</span>"))
+  assert_true(rendered.html.contains("data-lang-toggle"))
+  assert_true(rendered.html.contains("__MDK_I18N__"))
 }
 
 ///|
@@ -841,7 +850,7 @@ test "rendered pages expose responsive and accessible navigation" {
   assert_true(rendered.html.contains("<nav aria-label=\"Documentation\">"))
   assert_true(
     rendered.html.contains(
-      "<a class=\"skip-link\" href=\"#content\">Skip to content</a>",
+      "<a class=\"skip-link\" href=\"#content\" data-i18n=\"skip_link\">Skip to content</a>",
     ),
   )
   assert_true(rendered.html.contains("<main id=\"content\">"))

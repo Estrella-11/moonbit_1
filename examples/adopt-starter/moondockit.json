@@ -1,0 +1,10 @@
+{
+  "source": "examples/adopt-starter/site",
+  "output": "dist-adopt-starter",
+  "title": "My Project Docs",
+  "site_url": "https://example.com/my-project",
+  "language": "en",
+  "theme": "default",
+  "description": "Documentation for my project, generated with MoonDocKit",
+  "footer": "Built with `MoonDocKit`"
+}

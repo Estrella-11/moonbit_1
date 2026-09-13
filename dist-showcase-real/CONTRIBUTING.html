@@ -11,12 +11,12 @@
   } catch (error) {}
 })();
 </script>
-<meta name="description" content="MoonDocKit verification site">
-<title>Deployment - MoonDocKit CLI Example</title>
-<meta property="og:title" content="Deployment - MoonDocKit CLI Example">
-<meta property="og:description" content="MoonDocKit verification site">
-<link rel="canonical" href="https://example.com/moondockit-cli/deployment.html">
-<meta property="og:url" content="https://example.com/moondockit-cli/deployment.html">
+<meta name="description" content="Real Repo: mizchi/markdown.mbt documentation">
+<title>CONTRIBUTING - Real Repo: mizchi/markdown.mbt</title>
+<meta property="og:title" content="CONTRIBUTING - Real Repo: mizchi/markdown.mbt">
+<meta property="og:description" content="Real Repo: mizchi/markdown.mbt documentation">
+<link rel="canonical" href="https://example.com/corpus/CONTRIBUTING.html">
+<meta property="og:url" content="https://example.com/corpus/CONTRIBUTING.html">
 <style>*,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;scrollbar-color:color-mix(in oklab,var(--ink) 26%,transparent) transparent;scrollbar-width:thin}
 ::selection{background:color-mix(in oklab,var(--accent) 26%,transparent);color:var(--ink)}
@@ -184,21 +184,89 @@ html{scroll-behavior:auto}
 .reading-progress{transition:none}
 }
 </style>
-</head><body><div class="reading-progress" data-progress></div><a class="skip-link" href="#content" data-i18n="skip_link">Skip to content</a><aside><a class="brand" href="overview.html"><span class="brand-mark">M</span><span>MoonDocKit CLI Example</span></a><div class="search"><label for="site-search" data-i18n="search_label">Search documentation</label><input id="site-search" data-search-input type="search" placeholder="Search docs" data-i18n="search_placeholder" autocomplete="off"><div class="search-results" data-search-results aria-live="polite" hidden></div></div><nav aria-label="Documentation"><a href="overview.html">Why MoonDocKit</a><a href="quick-start.html">Quick Start</a><a href="api.html">Library Guide</a><a href="quality.html">Quality Gate</a><a href="deployment.html" class="active" aria-current="page">Deployment</a><a href="changelog.html">Changelog</a><a href="api-reference.html">MoonBit API</a></nav><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-text" data-i18n="theme_toggle">Nightfall</span></button><button class="lang-toggle" type="button" data-lang-toggle data-i18n="lang_toggle">中文</button></aside><main id="content"><div class="content">
-<div class="prose"><h1 id="deployment">Deployment</h1>
-<p>MoonDocKit outputs ordinary static files and does not require a server runtime.</p>
-<h2 id="github-pages">GitHub Pages</h2>
-<p>The repository workflow runs the MoonBit CLI, verifies the generated MoonBit API, uploads the static artifact, and deploys it through GitHub Pages.</p>
-<h2 id="other-hosts">Other Hosts</h2>
-<p>The same output directory can be published to any service that hosts HTML, JSON, XML, and text files.</p>
-<h2 id="package-release">Package Release</h2>
-<p><code>moon package</code> creates the mooncakes.io publication archive. The final release flow verifies the package README, repository metadata, Apache-2.0 license, and public API before running <code>moon publish</code>.</p>
-<footer>Verified by <code>MoonDocKit</code></footer>
+</head><body><div class="reading-progress" data-progress></div><a class="skip-link" href="#content" data-i18n="skip_link">Skip to content</a><aside><a class="brand" href="TODO.html"><span class="brand-mark">M</span><span>Real Repo: mizchi/markdown.mbt</span></a><div class="search"><label for="site-search" data-i18n="search_label">Search documentation</label><input id="site-search" data-search-input type="search" placeholder="Search docs" data-i18n="search_placeholder" autocomplete="off"><div class="search-results" data-search-results aria-live="polite" hidden></div></div><nav aria-label="Documentation"><a href="TODO.html">TODO</a><a href="CLAUDE.html">CLAUDE</a><a href="README.html">README</a><a href="CONTRIBUTING.html" class="active" aria-current="page">CONTRIBUTING</a></nav><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-text" data-i18n="theme_toggle">Nightfall</span></button><button class="lang-toggle" type="button" data-lang-toggle data-i18n="lang_toggle">中文</button></aside><main id="content"><div class="content">
+<div class="prose"><h1 id="contributing">Contributing</h1>
+<h2 id="development-setup">Development Setup</h2>
+<pre><code class="language-bash"># Install dependencies
+npm install
+
+# Run tests
+moon test --target js src
+
+# Run benchmarks
+moon bench
+
+# Literal renderer core only
+pnpm run bench:literal:core
+
+# Literal browser/editor controller
+pnpm run bench:literal
+</code></pre>
+<p>Browser benchmarks should reuse <code>e2e/helpers/browser-benchmark.ts</code> for CLI parsing, Vite startup, Playwright lifecycle, frame-settled timing, percentile summaries, and Markdown/JSON output. Keep each concrete benchmark file focused on page setup and scenario definitions.</p>
+<h2 id="commonmark-compatibility-tests">CommonMark Compatibility Tests</h2>
+<p>This project includes compatibility tests against the CommonMark spec, comparing output with <code>remark-gfm</code>.</p>
+<h3 id="generating-tests">Generating Tests</h3>
+<p>Tests are auto-generated from the CommonMark spec. The generated files are in <code>src/cmark_tests/</code> and are git-ignored.</p>
+<pre><code class="language-bash"># Generate/regenerate tests
+node scripts/gen-tests.js
+
+# Run CommonMark tests
+moon test --target js src/cmark_tests
+</code></pre>
+<h3 id="managing-skipped-tests">Managing Skipped Tests</h3>
+<p>Skipped tests are managed in <code>scripts/gen-tests.js</code> in the <code>SKIP_TESTS</code> object, which lists the CommonMark example numbers per spec section:</p>
+<pre><code class="language-javascript">const SKIP_TESTS = {
+  &#39;Section Name&#39;: [123, 456, 789],
+};
+</code></pre>
+<p>When regenerating tests, skipped tests will automatically get <code>#skip(&quot;reason&quot;)</code> annotations.</p>
+<h3 id="adding-new-skips">Adding New Skips</h3>
+<ol>
+<li>Run tests to identify failures: <code>moon test --target js src/cmark_tests</code></li>
+<li>Add failing example numbers to the appropriate section in <code>SKIP_TESTS</code></li>
+<li>Regenerate tests: <code>node scripts/gen-tests.js</code></li>
+<li>Verify: <code>moon test --target js src/cmark_tests</code></li>
+</ol>
+<h3 id="test-summary">Test Summary</h3>
+<ul>
+<li><strong>Total tests</strong>: 542</li>
+<li><strong>Passing</strong>: 397 (73.2%)</li>
+<li><strong>Skipped</strong>: 145 (26.8%)</li>
+</ul>
+<p>What is left is serialization, not parsing: link reference definitions are dropped rather than written back out, setext headings are kept instead of being normalized to ATX, and a handful of escaping and autolink details differ. Parsing itself is checked separately, and exactly, by the conformance suite below.</p>
+<h2 id="commonmark-spec-conformance-tests">CommonMark Spec Conformance Tests</h2>
+<p><code>gen-tests.js</code> above checks how our <em>Markdown</em> serialization lines up with remark. The conformance suite is stricter and independent: it renders every example in the CommonMark spec and requires byte-identical HTML. All 652 pass, and <code>SKIP_TESTS</code> in its generator is empty — keep it that way.</p>
+<pre><code class="language-bash"># Generate/regenerate the suite (spec.json is cached under node_modules/.cache)
+node scripts/gen-spec-tests.js
+
+# Run it
+moon test src/spec_tests --target js
+</code></pre>
+<p>The generated files live in <code>src/spec_tests/</code> and are git-ignored; only <code>scripts/gen-spec-tests.js</code> is checked in. Should a change ever regress an example, list it in that generator&#39;s <code>SKIP_TESTS</code> table so the gap is explicit, and use <code>--no-skip</code> to run the whole spec regardless:</p>
+<pre><code class="language-bash">node scripts/gen-spec-tests.js --no-skip
+moon test src/spec_tests --target js
+</code></pre>
+<p>Bare-URL autolinking is a GFM extension, so the suite renders with <code>autolink=false</code>.</p>
+<h2 id="architecture">Architecture</h2>
+<p>See <a href="docs/markdown.md">docs/markdown.md</a> for detailed architecture documentation.</p>
+<h2 id="code-style">Code Style</h2>
+<ul>
+<li>Run <code>moon fmt</code> before committing</li>
+<li>Follow existing patterns in the codebase</li>
+<li>Add tests for new features</li>
+</ul>
+<footer>Generated by <code>MoonDocKit</code></footer>
 </div><section class="toc"><div class="toc-title" data-i18n="toc_title">On this page</div>
-<a class="level-1" href="#deployment">Deployment</a>
-<a class="level-2" href="#github-pages">GitHub Pages</a>
-<a class="level-2" href="#other-hosts">Other Hosts</a>
-<a class="level-2" href="#package-release">Package Release</a>
+<a class="level-1" href="#contributing">Contributing</a>
+<a class="level-2" href="#development-setup">Development Setup</a>
+<a class="level-2" href="#commonmark-compatibility-tests">CommonMark Compatibility Tests</a>
+<a class="level-3" href="#generating-tests">Generating Tests</a>
+<a class="level-3" href="#managing-skipped-tests">Managing Skipped Tests</a>
+<a class="level-3" href="#adding-new-skips">Adding New Skips</a>
+<a class="level-3" href="#test-summary">Test Summary</a>
+<a class="level-2" href="#commonmark-spec-conformance-tests">CommonMark Spec Conformance Tests</a>
+<a class="level-2" href="#architecture">Architecture</a>
+<a class="level-2" href="#code-style">Code Style</a>
 </section>
 </div></main><script>
 (() => {

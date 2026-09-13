@@ -1,0 +1,17 @@
+{
+  "file_count": 9,
+  "html_count": 5,
+  "data_count": 3,
+  "total_bytes": 191258,
+  "files": [
+    {"path":"TODO.html","kind":"html","bytes":36805},
+    {"path":"index.html","kind":"html","bytes":327},
+    {"path":"robots.txt","kind":"asset","bytes":44},
+    {"path":"CLAUDE.html","kind":"html","bytes":40113},
+    {"path":"README.html","kind":"html","bytes":49885},
+    {"path":"sitemap.xml","kind":"data","bytes":258},
+    {"path":"CONTRIBUTING.html","kind":"html","bytes":35934},
+    {"path":"search-index.json","kind":"data","bytes":27282},
+    {"path":"quality-report.json","kind":"data","bytes":610}
+  ]
+}

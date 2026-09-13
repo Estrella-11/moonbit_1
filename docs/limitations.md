@@ -89,7 +89,8 @@ CLI 以 MoonBit `--target js` 编译为 `moondockit.js`，由 Node 执行。
 ## 11. 真实项目语料验证（兼容性实测，非采用声明）
 
 `tools/benchmark_corpus.py` 把 MoonDocKit 跑在 4 个真实 MoonBit 开源仓库的文档上
-（非本项目编写，用于检验对外部输入的健壮性）。数据见 `docs/benchmark-corpus.json`。
+（非本项目编写，用于检验对外部输入的健壮性）。数据见 `docs/benchmark-corpus.json`，
+可视化报告见 `docs/benchmark-report.html`。
 
 | 项目 | md 文件 | 渲染页数 | 质量分 | 结果 |
 |------|---------|----------|--------|------|

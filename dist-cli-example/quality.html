@@ -184,7 +184,7 @@ html{scroll-behavior:auto}
 .reading-progress{transition:none}
 }
 </style>
-</head><body><div class="reading-progress" data-progress></div><a class="skip-link" href="#content">Skip to content</a><aside><a class="brand" href="overview.html"><span class="brand-mark">M</span><span>MoonDocKit CLI Example</span></a><div class="search"><label for="site-search">Search documentation</label><input id="site-search" data-search-input type="search" placeholder="Search docs" autocomplete="off"><div class="search-results" data-search-results aria-live="polite" hidden></div></div><nav aria-label="Documentation"><a href="overview.html">Why MoonDocKit</a><a href="quick-start.html">Quick Start</a><a href="api.html">Library Guide</a><a href="quality.html" class="active" aria-current="page">Quality Gate</a><a href="deployment.html">Deployment</a><a href="changelog.html">Changelog</a><a href="api-reference.html">MoonBit API</a></nav><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-text">Nightfall</span></button></aside><main id="content"><div class="content">
+</head><body><div class="reading-progress" data-progress></div><a class="skip-link" href="#content" data-i18n="skip_link">Skip to content</a><aside><a class="brand" href="overview.html"><span class="brand-mark">M</span><span>MoonDocKit CLI Example</span></a><div class="search"><label for="site-search" data-i18n="search_label">Search documentation</label><input id="site-search" data-search-input type="search" placeholder="Search docs" data-i18n="search_placeholder" autocomplete="off"><div class="search-results" data-search-results aria-live="polite" hidden></div></div><nav aria-label="Documentation"><a href="overview.html">Why MoonDocKit</a><a href="quick-start.html">Quick Start</a><a href="api.html">Library Guide</a><a href="quality.html" class="active" aria-current="page">Quality Gate</a><a href="deployment.html">Deployment</a><a href="changelog.html">Changelog</a><a href="api-reference.html">MoonBit API</a></nav><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-text" data-i18n="theme_toggle">Nightfall</span></button><button class="lang-toggle" type="button" data-lang-toggle data-i18n="lang_toggle">中文</button></aside><main id="content"><div class="content">
 <div class="prose"><h1 id="quality-gate">Quality Gate</h1>
 <p>A documentation build should explain why it is ready to publish.</p>
 <h2 id="validation">Validation</h2>
@@ -196,7 +196,7 @@ html{scroll-behavior:auto}
 <h2 id="verification">Verification</h2>
 <p>The repository runs default and JavaScript target checks, 50 blackbox tests, ten compiled CLI integration scenarios, API artifact assertions, and the one-shot verification script.</p>
 <footer>Verified by <code>MoonDocKit</code></footer>
-</div><section class="toc"><div class="toc-title">On this page</div>
+</div><section class="toc"><div class="toc-title" data-i18n="toc_title">On this page</div>
 <a class="level-1" href="#quality-gate">Quality Gate</a>
 <a class="level-2" href="#validation">Validation</a>
 <a class="level-2" href="#metrics">Metrics</a>
@@ -249,7 +249,8 @@ html{scroll-behavior:auto}
     }
     if (matches.length === 0) {
       const empty = document.createElement("span");
-      empty.textContent = "No matching pages";
+      const _t = window.__MDK_I18N__[window.__MDK_LOCALE__] || window.__MDK_I18N__.en;
+      empty.textContent = _t.no_results;
       results.append(empty);
     }
     results.hidden = false;
@@ -280,7 +281,7 @@ html{scroll-behavior:auto}
   });
 })();
 </script>
-<script>
+<script>(() => {const KEY="moondockit-locale";window.__MDK_I18N__={en:{search_label:"Search documentation",search_placeholder:"Search docs",theme_toggle:"Nightfall",skip_link:"Skip to content",toc_title:"On this page",no_results:"No matching pages",lang_toggle:"中文"},zh:{search_label:"搜索文档",search_placeholder:"搜索文档",theme_toggle:"夜间模式",skip_link:"跳到正文",toc_title:"本页目录",no_results:"无匹配结果",lang_toggle:"EN"}};window.__MDK_LOCALE__="en";const dict=window.__MDK_I18N__;function apply(loc){const t=dict[loc]||dict.en;document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.getAttribute("data-i18n");if(t[k]!=null){el.textContent=t[k];}});const inp=document.querySelector("[data-search-input]");if(inp&&t.search_placeholder){inp.placeholder=t.search_placeholder;}}const btn=document.querySelector("[data-lang-toggle]");const order=["en","zh"];if(btn){btn.addEventListener("click",()=>{const cur=localStorage.getItem(KEY)||window.__MDK_LOCALE__||"en";const next=order.find(x=>x!==cur)||"en";localStorage.setItem(KEY,next);apply(next);if(btn){btn.textContent=dict[next].lang_toggle;}});}const saved=localStorage.getItem(KEY);if(saved&&saved!==(window.__MDK_LOCALE__||"en")){apply(saved);}})();</script><script>
 (() => {
   const root = document.documentElement;
   const toggles = document.querySelectorAll("[data-theme-toggle]");

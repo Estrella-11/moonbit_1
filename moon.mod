@@ -11,7 +11,7 @@
 
 name = "Estrella-11/moondockit"
 
-version = "0.5.0"
+version = "0.6.0"
 
 readme = "README.mbt.md"
 

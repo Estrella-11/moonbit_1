@@ -1,5 +1,5 @@
 {
-  "site_title": "MoonDocKit CLI Example",
+  "site_title": "Real Repo: mizchi/markdown.mbt",
   "passed": true,
   "score": 100,
   "checks": [
@@ -8,7 +8,7 @@
     {"name":"outputs","passed":true,"message":"manifest includes html pages and data outputs"},
     {"name":"readability","passed":true,"message":"every page is within the baseline reading threshold"}
   ],
-  "metrics": {"page_count":7,"heading_count":113,"code_block_count":79,"word_count":1351,"reading_minutes":7},
+  "metrics": {"page_count":4,"heading_count":56,"code_block_count":31,"word_count":2266,"reading_minutes":12},
   "diagnostics": [
   ]
 }

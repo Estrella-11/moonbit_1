@@ -185,7 +185,7 @@ MoonBit 只允许在 `moon.pkg` 中声明 import，所以生成的文件把所�
 - 89 个 AI 测试
 - 9 个 CLI AI 标志
 - CI 流程覆盖 AI 全功能构建验证
-- 发布到 mooncakes.io（版本 0.5.0）
+- 发布到 mooncakes.io（版本 0.6.0）
 
 ## 许可证
 

@@ -11,12 +11,12 @@
   } catch (error) {}
 })();
 </script>
-<meta name="description" content="MoonDocKit verification site">
-<title>Deployment - MoonDocKit CLI Example</title>
-<meta property="og:title" content="Deployment - MoonDocKit CLI Example">
-<meta property="og:description" content="MoonDocKit verification site">
-<link rel="canonical" href="https://example.com/moondockit-cli/deployment.html">
-<meta property="og:url" content="https://example.com/moondockit-cli/deployment.html">
+<meta name="description" content="Real Repo: mizchi/markdown.mbt documentation">
+<title>README - Real Repo: mizchi/markdown.mbt</title>
+<meta property="og:title" content="README - Real Repo: mizchi/markdown.mbt">
+<meta property="og:description" content="Real Repo: mizchi/markdown.mbt documentation">
+<link rel="canonical" href="https://example.com/corpus/README.html">
+<meta property="og:url" content="https://example.com/corpus/README.html">
 <style>*,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;scrollbar-color:color-mix(in oklab,var(--ink) 26%,transparent) transparent;scrollbar-width:thin}
 ::selection{background:color-mix(in oklab,var(--accent) 26%,transparent);color:var(--ink)}
@@ -184,21 +184,299 @@ html{scroll-behavior:auto}
 .reading-progress{transition:none}
 }
 </style>
-</head><body><div class="reading-progress" data-progress></div><a class="skip-link" href="#content" data-i18n="skip_link">Skip to content</a><aside><a class="brand" href="overview.html"><span class="brand-mark">M</span><span>MoonDocKit CLI Example</span></a><div class="search"><label for="site-search" data-i18n="search_label">Search documentation</label><input id="site-search" data-search-input type="search" placeholder="Search docs" data-i18n="search_placeholder" autocomplete="off"><div class="search-results" data-search-results aria-live="polite" hidden></div></div><nav aria-label="Documentation"><a href="overview.html">Why MoonDocKit</a><a href="quick-start.html">Quick Start</a><a href="api.html">Library Guide</a><a href="quality.html">Quality Gate</a><a href="deployment.html" class="active" aria-current="page">Deployment</a><a href="changelog.html">Changelog</a><a href="api-reference.html">MoonBit API</a></nav><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-text" data-i18n="theme_toggle">Nightfall</span></button><button class="lang-toggle" type="button" data-lang-toggle data-i18n="lang_toggle">中文</button></aside><main id="content"><div class="content">
-<div class="prose"><h1 id="deployment">Deployment</h1>
-<p>MoonDocKit outputs ordinary static files and does not require a server runtime.</p>
-<h2 id="github-pages">GitHub Pages</h2>
-<p>The repository workflow runs the MoonBit CLI, verifies the generated MoonBit API, uploads the static artifact, and deploys it through GitHub Pages.</p>
-<h2 id="other-hosts">Other Hosts</h2>
-<p>The same output directory can be published to any service that hosts HTML, JSON, XML, and text files.</p>
-<h2 id="package-release">Package Release</h2>
-<p><code>moon package</code> creates the mooncakes.io publication archive. The final release flow verifies the package README, repository metadata, Apache-2.0 license, and public API before running <code>moon publish</code>.</p>
-<footer>Verified by <code>MoonDocKit</code></footer>
+</head><body><div class="reading-progress" data-progress></div><a class="skip-link" href="#content" data-i18n="skip_link">Skip to content</a><aside><a class="brand" href="TODO.html"><span class="brand-mark">M</span><span>Real Repo: mizchi/markdown.mbt</span></a><div class="search"><label for="site-search" data-i18n="search_label">Search documentation</label><input id="site-search" data-search-input type="search" placeholder="Search docs" data-i18n="search_placeholder" autocomplete="off"><div class="search-results" data-search-results aria-live="polite" hidden></div></div><nav aria-label="Documentation"><a href="TODO.html">TODO</a><a href="CLAUDE.html">CLAUDE</a><a href="README.html" class="active" aria-current="page">README</a><a href="CONTRIBUTING.html">CONTRIBUTING</a></nav><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-text" data-i18n="theme_toggle">Nightfall</span></button><button class="lang-toggle" type="button" data-lang-toggle data-i18n="lang_toggle">中文</button></aside><main id="content"><div class="content">
+<div class="prose"><h1 id="mizchi-markdown">@mizchi/markdown</h1>
+<p>CST-based incremental Markdown parser for JavaScript/MoonBit.</p>
+<p>A cross-platform (JS/WASM/native) Markdown compiler optimized for real-time editing with incremental parsing.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Fast</strong>: Edit-position based incremental updates inspired by <a href="https://josephg.com/blog/crdts-go-brrr/">CRDTs Go Brrr</a></li>
+<li><strong>CommonMark compliant</strong>: passes all 652 examples of the CommonMark 0.31.2 spec</li>
+<li><strong>Source-oriented CST</strong>: Retains node spans so byte-preserving tools can edit the original source</li>
+<li><strong>Incremental parsing</strong>: Re-parses only changed blocks (up to 42x faster)</li>
+<li><strong>GFM</strong>: GitHub Flavored Markdown support (tables, task lists, strikethrough)</li>
+<li><strong>Cross-platform</strong>: Works on JS, WASM-GC, and native targets</li>
+<li><strong>HTML rendering</strong>: Built-in HTML renderer with remark-html compatible output</li>
+<li><strong>mdast compatible</strong>: AST follows <a href="https://github.com/syntax-tree/mdast">mdast</a> specification</li>
+</ul>
+<p>----</p>
+<h2 id="javascript-api">JavaScript API</h2>
+<pre><code class="language-bash">npm install @mizchi/markdown
+</code></pre>
+<h3 id="usage">Usage</h3>
+<pre><code class="language-javascript">import { parse, toHtml, toMarkdown } from &quot;@mizchi/markdown&quot;;
+
+// Parse to AST
+const ast = parse(&quot;# Hello\n\n**Bold** text&quot;);
+console.log(ast.children[0].type); // &quot;heading&quot;
+
+// Convert to HTML
+const html = toHtml(&quot;See https://example.com/docs\n&quot;);
+// =&gt; &#39;&lt;p&gt;See &lt;a href=&quot;https://example.com/docs&quot;&gt;https://example.com/docs&lt;/a&gt;&lt;/p&gt;\n&#39;
+
+// Disable bare URL links when you need plain text output
+const plain = toHtml(&quot;See https://example.com/docs\n&quot;, { autolink: false });
+// =&gt; &quot;&lt;p&gt;See https://example.com/docs&lt;/p&gt;\n&quot;
+
+// Match CommonMark 0.31.2 rendering by disabling GFM renderer extensions
+const commonmark = toHtml(&quot;&lt;script&gt;raw&lt;/script&gt;\n\nhttps://example.com\n&quot;, {
+  autolink: false,
+  tagfilter: false,
+});
+// =&gt; &quot;&lt;script&gt;raw&lt;/script&gt;\n&lt;p&gt;https://example.com&lt;/p&gt;\n&quot;
+
+// Normalize markdown
+const normalized = toMarkdown(&quot;# Hello\n\n\n\nWorld&quot;);
+// =&gt; &quot;# Hello\n\nWorld\n&quot;
+</code></pre>
+<h3 id="webassembly-api">WebAssembly API</h3>
+<p>The same one-shot API is available from a Wasm GC build using JS String Builtins. JavaScript strings cross the Wasm boundary directly, without a UTF-8 linear-memory copy. <code>parse()</code> also builds ordinary JavaScript objects through <code>externref</code> imports, avoiding an AST JSON stringify/parse round trip. The module initializes its Wasm instance once and then exposes synchronous functions:</p>
+<pre><code class="language-javascript">import { parse, toHtml, toMarkdown } from &quot;@mizchi/markdown/wasm&quot;;
+
+const ast = parse(&quot;# Hello&quot;);
+const html = toHtml(&quot;See https://example.com/docs\n&quot;);
+const markdown = toMarkdown(&quot;# Hello\n\n\nWorld&quot;);
+</code></pre>
+<p>This subpath requires an ESM runtime with Wasm GC, JS String Builtins, and top-level <code>await</code> support. The handle-based incremental API remains available from the default <code>@mizchi/markdown</code> entry point.</p>
+<h3 id="cloudflare-workers">Cloudflare Workers</h3>
+<p>The default <code>@mizchi/markdown</code> entry point cannot currently run inside a Cloudflare Worker. It imports the SIMD module through WebAssembly ESM Integration named exports, while Wrangler exposes imported <code>.wasm</code> files as a default-exported <code>WebAssembly.Module</code>. Supporting workerd therefore requires a workerd-specific bridge that instantiates that module, selected through a <code>workerd</code> conditional export. See Cloudflare&#39;s documentation for <a href="https://developers.cloudflare.com/workers/wrangler/bundling/#including-non-javascript-modules">Wasm module bundling</a> and <a href="https://developers.cloudflare.com/workers/wrangler/bundling/#conditional-exports">conditional exports</a>.</p>
+<p>The repository&#39;s current playground deployment is unaffected because its Worker only serves prebuilt static assets; it does not import the parser into the workerd runtime.</p>
+<h3 id="optional-wikilinks">Optional WikiLinks</h3>
+<p>WikiLinks are disabled by default to keep CommonMark-compatible behavior. Pass <code>{ wikilinks: true }</code> to parse <code>[[target]]</code> and <code>[[target|label]]</code>.</p>
+<pre><code class="language-javascript">import { parse, toHtml } from &quot;@mizchi/markdown&quot;;
+
+const ast = parse(&quot;[[MoonBit#syntax|MoonBit syntax]]&quot;, { wikilinks: true });
+// ast.children[0].children[0].type === &quot;wikiLink&quot;
+
+const html = toHtml(&quot;[[MoonBit|MoonBit notes]]&quot;, { wikilinks: true });
+// =&gt; &#39;&lt;p&gt;&lt;a href=&quot;MoonBit&quot;&gt;MoonBit notes&lt;/a&gt;&lt;/p&gt;\n&#39;
+</code></pre>
+<h3 id="extended-syntax">Extended syntax</h3>
+<p>The parser also exposes semantic nodes for GitHub alerts, footnotes, display math, container/text directives, definition lists, and block attributes:</p>
+<pre><code class="language-markdown">&gt; [!WARNING]
+&gt; Check this first.[^details]
+
+$$
+E = mc^2
+$$
+
+:::note Optional title
+Markdown stays available inside the container.
+:::
+
+Use :badge[stable]{.green level=high}.
+
+Term
+: Definition
+
+# Attributed heading
+{#intro .wide}
+
+[^details]: Footnote content.
+</code></pre>
+<p>Display math is represented as a <code>math</code> block with a raw <code>value</code>. The default HTML output is an escaped <code>&lt;pre&gt;</code> fallback, so JavaScript consumers can instead send the AST value to KaTeX or another math renderer.</p>
+<h3 id="incremental-parsing">Incremental Parsing</h3>
+<p>For real-time editing scenarios:</p>
+<pre><code class="language-javascript">import { createDocument, insertEdit } from &quot;@mizchi/markdown&quot;;
+
+// Create document handle
+const doc = createDocument(&quot;# Hello&quot;);
+
+// Access AST, HTML, or Markdown
+console.log(doc.ast);        // Parsed AST
+console.log(doc.toHtml());   // &quot;&lt;h1&gt;Hello&lt;/h1&gt;\n&quot;
+console.log(doc.toMarkdown()); // &quot;# Hello\n&quot;
+
+// Incremental update (faster than full re-parse)
+const edit = insertEdit(7, 6); // Insert 6 chars at position 7
+const newDoc = doc.update(&quot;# Hello World&quot;, edit);
+
+// Free resources when done
+doc.dispose();
+newDoc.dispose();
+</code></pre>
+<h3 id="typescript-support">TypeScript Support</h3>
+<p>Full TypeScript definitions are included:</p>
+<pre><code class="language-typescript">import { parse, Document, Block, Inline } from &quot;@mizchi/markdown&quot;;
+
+const ast: Document = parse(&quot;# Hello&quot;);
+const heading = ast.children[0] as HeadingBlock;
+console.log(heading.level); // 1
+</code></pre>
+<p>----</p>
+<h2 id="moonbit-api">MoonBit API</h2>
+<h3 id="installation">Installation</h3>
+<pre><code class="language-bash">moon add mizchi/markdown
+</code></pre>
+<h3 id="usage-2">Usage</h3>
+<pre><code class="language-moonbit">// Parse markdown
+let result = @markdown.parse(&quot;# Hello\n\nWorld&quot;)
+let doc = result.document
+
+// Serialize back to canonical, normalized Markdown
+let output = @markdown.serialize(doc)
+
+// Render to HTML
+let html = @markdown.render_html(doc)
+
+// Or use convenience function
+let html = @markdown.md_to_html(&quot;# Hello\n\nWorld&quot;)
+let linked = @markdown.md_to_html(&quot;See https://example.com/docs\n&quot;)
+let plain = @markdown.md_to_html(&quot;See https://example.com/docs\n&quot;, autolink=false)
+
+// Disable the GFM tagfilter when matching plain CommonMark raw-HTML output
+let commonmark_html = @markdown.md_to_html(&quot;&lt;script&gt;raw&lt;/script&gt;\n&quot;, tagfilter=false)
+
+// Enable the WikiLink extension explicitly
+let wiki_html = @markdown.md_to_html(&quot;[[MoonBit|MoonBit notes]]&quot;, wikilinks=true)
+</code></pre>
+<h3 id="display-math-renderer">Display-math renderer</h3>
+<p>The MoonBit HTML renderer has an explicit display-math boundary. The callback receives the raw block contents and returns trusted HTML, making KaTeX or a different backend replaceable without coupling it to the parser:</p>
+<pre><code class="language-moonbit">let document = @markdown.parse(&quot;$$\nx^2\n$$\n&quot;).document
+let options = @markdown.RenderOptions::default().with_math_block_renderer(
+  fn(source) { render_with_katex(source) },
+)
+let html = @markdown.render_html_with_options(document, options)
+</code></pre>
+<p>Without a callback, math is safely HTML-escaped in <code>&lt;pre class=&quot;math math-display&quot;&gt;&lt;code&gt;…&lt;/code&gt;&lt;/pre&gt;</code>.</p>
+<h3 id="native-cli">Native CLI</h3>
+<p>Build the native command with <code>just build-native</code>. The executable is produced from <code>src/cmd/mmmd-native</code> and can be installed or renamed as <code>mmmd</code>:</p>
+<pre><code class="language-bash">_build/native/release/build/cmd/mmmd-native/mmmd-native.exe --format html &lt; document.md
+_build/native/release/build/cmd/mmmd-native/mmmd-native.exe --format tui &lt; document.md
+</code></pre>
+<p>The native TUI format emits normalized Markdown. Mermaid remains an ordinary fenced code block; diagram rendering is available in the JavaScript/Wasm CLI.</p>
+<h3 id="incremental-parsing-2">Incremental Parsing</h3>
+<pre><code class="language-moonbit">// Initial parse
+let result = @markdown.parse(source)
+let doc = result.document
+
+// Create edit info
+let edit = @markdown.EditInfo::replace(
+  change_start,    // Start position
+  old_length,      // Length of replaced text
+  new_length       // Length of new text
+)
+
+// Incremental update (reuses unchanged blocks)
+let inc_result = @markdown.parse_incremental(doc, old_source, new_source, edit)
+let new_doc = inc_result.document
+</code></pre>
+<h3 id="typed-mdx-declarations">Typed MDX Declarations</h3>
+<p><code>mizchi/markdown/x/mdx</code> extracts MDX JSX components and validates their attributes against a closed, typed schema. It is intended for document metadata and domain declarations, rather than evaluating arbitrary MDX code.</p>
+<p>Expressions use a deterministic literal-only subset: strings, booleans, and arrays of strings. For example, <code>requires={[&quot;auth.mfa&quot;]}</code> is valid, while <code>requires={loadRequirements()}</code> is rejected.</p>
+<pre><code class="language-moonbit">import {
+  &quot;mizchi/markdown&quot;,
+  &quot;mizchi/markdown/x/mdx&quot; @mdx,
+}
+
+let schema = @mdx.MdxSchema::closed([
+  @mdx.ComponentSchema::new(
+    &quot;Fold&quot;,
+    [
+      @mdx.PropSchema::required(&quot;id&quot;, @mdx.MdxValueType::Text),
+      @mdx.PropSchema::required(
+        &quot;kind&quot;,
+        @mdx.MdxValueType::OneOf([&quot;concept&quot;, &quot;procedure&quot;]),
+      ),
+      @mdx.PropSchema::optional(&quot;requires&quot;, @mdx.MdxValueType::TextList),
+    ],
+  ),
+])
+
+let source = #|&lt;Fold id=&quot;auth.mfa&quot; kind=&quot;procedure&quot; requires={[&quot;auth.login&quot;]} /&gt;
+let checked = @mdx.type_check_mdx(@markdown.parse(source).document, schema)
+let is_valid = checked.is_valid()
+</code></pre>
+<h2 id="playground">Playground</h2>
+<pre><code class="language-bash">pnpm install
+moon build --target js
+pnpm exec vite
+</code></pre>
+<h2 id="frontend-editor-package">Frontend Editor Package</h2>
+<p><code>@mizchi/markdown/editor</code> exports the Luna-based markdown editor without bundling syntax highlighters into the initial module. Code block highlighters are loaded on demand through dynamic imports under <code>@mizchi/markdown/highlight</code>.</p>
+<p>The editor uses <a href="https://www.npmjs.com/package/@luna_ui/luna"><code>@luna_ui/luna</code></a> as a JSX runtime and signal library; it is declared as an <strong>optional peer dependency</strong> — install it alongside <code>@mizchi/markdown</code> only if you use the editor entry. See <code>frontend/editor/README.md</code> for the editor-specific docs.</p>
+<pre><code class="language-bash">pnpm add @mizchi/markdown @luna_ui/luna
+</code></pre>
+<pre><code class="language-tsx">import { SyntaxHighlightEditor } from &quot;@mizchi/markdown/editor&quot;;
+import &quot;@mizchi/markdown/editor/style.css&quot;;
+
+&lt;SyntaxHighlightEditor
+  value={() =&gt; markdown}
+  onChange={(next) =&gt; setMarkdown(next)}
+/&gt;;
+</code></pre>
+<p>You can also preload or call a language highlighter explicitly:</p>
+<pre><code class="language-ts">import { loadHighlighter } from &quot;@mizchi/markdown/highlight&quot;;
+
+const highlightMoonBit = await loadHighlighter(&quot;moonbit&quot;);
+const html = highlightMoonBit?.(&quot;fn main { println(\&quot;hi\&quot;) }&quot;);
+</code></pre>
+<p>The currently split lazy highlighter entries are <code>typescript</code>, <code>moonbit</code>, <code>json</code>, <code>html</code>, <code>css</code>, <code>bash</code>, and <code>rust</code>.</p>
+<h2 id="performance">Performance</h2>
+<table>
+<thead><tr><th>Document</th><th>Full Parse</th><th>Incremental</th><th>Speedup</th></tr></thead>
+<tbody><tr><td>10 paragraphs</td><td>68.89µs</td><td>7.36µs</td><td>9.4x</td></tr>
+<tr><td>50 paragraphs</td><td>327.99µs</td><td>8.67µs</td><td>37.8x</td></tr>
+<tr><td>100 paragraphs</td><td>651.14µs</td><td>15.25µs</td><td>42.7x</td></tr>
+</tbody></table>
+<h3 id="native-cpu-profiling">Native CPU profiling</h3>
+<p><code>moon run --profile</code> can sample the same approximately 1 MiB corpus used by the competitor benchmark. On macOS it records an Instruments Time Profiler trace; on Linux Moon uses <code>perf</code>.</p>
+<pre><code class="language-sh">just profile-native parse 100
+just profile-native render 200
+just profile-native parse-render 100
+</code></pre>
+<p><code>parse</code> rebuilds the document each iteration, <code>render</code> repeatedly renders one pre-parsed document, and <code>parse-render</code> measures the public combined path. Moon prints a demangled hot-function summary and writes <code>profile.json</code> plus the full trace below <code>_build/native/release/profile/cmd/profile/</code>.</p>
+<p>The same corpus can be profiled on the JavaScript backend with Node&#39;s V8 CPU profiler. The resulting <code>*.cpuprofile</code> file can be opened in Chrome DevTools:</p>
+<pre><code class="language-sh">just profile-js parse 50
+</code></pre>
+<p>Profiles are written below <code>_build/js/release/profile/cmd/profile/</code>.</p>
+<h3 id="javascript-wasm-simd-via-esm-integration">JavaScript Wasm SIMD via ESM Integration</h3>
+<p>On the JavaScript target, ASCII inline-text runs of at least 64 UTF-16 code units use a 396-byte Wasm SIMD scanner. The default npm entry point statically imports <code>js/inline_marker_simd.wasm</code> through WebAssembly ESM Integration; there is no inline byte array or manual <code>WebAssembly.instantiate</code> step. <code>TextEncoder</code> writes directly into reusable Wasm memory, while a non-ASCII prefix falls back to the UTF-16 scalar scanner so source offsets remain exact.</p>
+<p>The WAT source and generated <code>.wasm</code> artifact can be rebuilt and checked separately. <code>just bench-js</code> preloads the same ESM bridge for MoonBit&#39;s direct JS benchmark runner:</p>
+<pre><code class="language-sh">just inline-wasm-build
+just inline-wasm-check
+just bench-js
+</code></pre>
+<h2 id="documentation">Documentation</h2>
+<p>See <a href="./docs/markdown.md">docs/markdown.md</a> for detailed architecture and design.</p>
+<h2 id="commonmark-compatibility">CommonMark Compatibility</h2>
+<p><code>md_to_html</code> and the public JavaScript <code>toHtml()</code> API render all 652 examples of the <a href="https://spec.commonmark.org/0.31.2/">CommonMark 0.31.2 spec</a> byte for byte. Use <code>{ autolink: false, tagfilter: false }</code> with <code>toHtml()</code> to select the CommonMark-faithful renderer configuration. <code>scripts/gen-spec-tests.js</code> checks the MoonBit API on every test run, while the JavaScript regression suite locks the 11 examples affected by these two GFM renderer extensions.</p>
+<p>Bare-URL autolinking, tables, strikethrough, task lists and footnotes are GFM extensions on top of CommonMark. Tagfilter is also a GFM extension and escapes raw <code>script</code>, <code>style</code>, and <code>textarea</code> tags when enabled.</p>
+<p>Markdown output (<code>md_to_markdown</code>) is normalized rather than byte-preserving. It uses stable markers and block spacing, and emits parsed link reference definitions in a canonical trailing section. Use node spans and the original source when an editor needs byte-preserving updates.</p>
+<h2 id="credits">Credits</h2>
+<ul>
+<li>Fonts: <a href="https://github.com/yuru7/PlemolJP">PlemolJP</a> (SIL Open Font License 1.1) — bundled in <code>playground/public/fonts/</code></li>
+</ul>
+<h2 id="license">License</h2>
+<p>MIT</p>
+<footer>Generated by <code>MoonDocKit</code></footer>
 </div><section class="toc"><div class="toc-title" data-i18n="toc_title">On this page</div>
-<a class="level-1" href="#deployment">Deployment</a>
-<a class="level-2" href="#github-pages">GitHub Pages</a>
-<a class="level-2" href="#other-hosts">Other Hosts</a>
-<a class="level-2" href="#package-release">Package Release</a>
+<a class="level-1" href="#mizchi-markdown">@mizchi/markdown</a>
+<a class="level-2" href="#features">Features</a>
+<a class="level-2" href="#javascript-api">JavaScript API</a>
+<a class="level-3" href="#usage">Usage</a>
+<a class="level-3" href="#webassembly-api">WebAssembly API</a>
+<a class="level-3" href="#cloudflare-workers">Cloudflare Workers</a>
+<a class="level-3" href="#optional-wikilinks">Optional WikiLinks</a>
+<a class="level-3" href="#extended-syntax">Extended syntax</a>
+<a class="level-3" href="#incremental-parsing">Incremental Parsing</a>
+<a class="level-3" href="#typescript-support">TypeScript Support</a>
+<a class="level-2" href="#moonbit-api">MoonBit API</a>
+<a class="level-3" href="#installation">Installation</a>
+<a class="level-3" href="#usage-2">Usage</a>
+<a class="level-3" href="#display-math-renderer">Display-math renderer</a>
+<a class="level-3" href="#native-cli">Native CLI</a>
+<a class="level-3" href="#incremental-parsing-2">Incremental Parsing</a>
+<a class="level-3" href="#typed-mdx-declarations">Typed MDX Declarations</a>
+<a class="level-2" href="#playground">Playground</a>
+<a class="level-2" href="#frontend-editor-package">Frontend Editor Package</a>
+<a class="level-2" href="#performance">Performance</a>
+<a class="level-3" href="#native-cpu-profiling">Native CPU profiling</a>
+<a class="level-3" href="#javascript-wasm-simd-via-esm-integration">JavaScript Wasm SIMD via ESM Integration</a>
+<a class="level-2" href="#documentation">Documentation</a>
+<a class="level-2" href="#commonmark-compatibility">CommonMark Compatibility</a>
+<a class="level-2" href="#credits">Credits</a>
+<a class="level-2" href="#license">License</a>
 </section>
 </div></main><script>
 (() => {

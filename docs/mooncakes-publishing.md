@@ -6,7 +6,7 @@ This document records the package metadata and release path.
 ## Package Metadata
 
 - Package name: `Estrella-11/moondockit`
-- Version: `0.4.0`
+- Version: `0.6.0`
 - License: `Apache-2.0`
 - Repository: `https://github.com/Estrella-11/moonbit_1`
 - Description: `A MoonBit-first documentation site toolkit for package authors.`

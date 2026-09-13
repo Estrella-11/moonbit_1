@@ -11,12 +11,12 @@
   } catch (error) {}
 })();
 </script>
-<meta name="description" content="MoonDocKit verification site">
-<title>Deployment - MoonDocKit CLI Example</title>
-<meta property="og:title" content="Deployment - MoonDocKit CLI Example">
-<meta property="og:description" content="MoonDocKit verification site">
-<link rel="canonical" href="https://example.com/moondockit-cli/deployment.html">
-<meta property="og:url" content="https://example.com/moondockit-cli/deployment.html">
+<meta name="description" content="Real Repo: mizchi/markdown.mbt documentation">
+<title>TODO - Real Repo: mizchi/markdown.mbt</title>
+<meta property="og:title" content="TODO - Real Repo: mizchi/markdown.mbt">
+<meta property="og:description" content="Real Repo: mizchi/markdown.mbt documentation">
+<link rel="canonical" href="https://example.com/corpus/TODO.html">
+<meta property="og:url" content="https://example.com/corpus/TODO.html">
 <style>*,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;scrollbar-color:color-mix(in oklab,var(--ink) 26%,transparent) transparent;scrollbar-width:thin}
 ::selection{background:color-mix(in oklab,var(--accent) 26%,transparent);color:var(--ink)}
@@ -184,21 +184,65 @@ html{scroll-behavior:auto}
 .reading-progress{transition:none}
 }
 </style>
-</head><body><div class="reading-progress" data-progress></div><a class="skip-link" href="#content" data-i18n="skip_link">Skip to content</a><aside><a class="brand" href="overview.html"><span class="brand-mark">M</span><span>MoonDocKit CLI Example</span></a><div class="search"><label for="site-search" data-i18n="search_label">Search documentation</label><input id="site-search" data-search-input type="search" placeholder="Search docs" data-i18n="search_placeholder" autocomplete="off"><div class="search-results" data-search-results aria-live="polite" hidden></div></div><nav aria-label="Documentation"><a href="overview.html">Why MoonDocKit</a><a href="quick-start.html">Quick Start</a><a href="api.html">Library Guide</a><a href="quality.html">Quality Gate</a><a href="deployment.html" class="active" aria-current="page">Deployment</a><a href="changelog.html">Changelog</a><a href="api-reference.html">MoonBit API</a></nav><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-text" data-i18n="theme_toggle">Nightfall</span></button><button class="lang-toggle" type="button" data-lang-toggle data-i18n="lang_toggle">中文</button></aside><main id="content"><div class="content">
-<div class="prose"><h1 id="deployment">Deployment</h1>
-<p>MoonDocKit outputs ordinary static files and does not require a server runtime.</p>
-<h2 id="github-pages">GitHub Pages</h2>
-<p>The repository workflow runs the MoonBit CLI, verifies the generated MoonBit API, uploads the static artifact, and deploys it through GitHub Pages.</p>
-<h2 id="other-hosts">Other Hosts</h2>
-<p>The same output directory can be published to any service that hosts HTML, JSON, XML, and text files.</p>
-<h2 id="package-release">Package Release</h2>
-<p><code>moon package</code> creates the mooncakes.io publication archive. The final release flow verifies the package README, repository metadata, Apache-2.0 license, and public API before running <code>moon publish</code>.</p>
-<footer>Verified by <code>MoonDocKit</code></footer>
+</head><body><div class="reading-progress" data-progress></div><a class="skip-link" href="#content" data-i18n="skip_link">Skip to content</a><aside><a class="brand" href="TODO.html"><span class="brand-mark">M</span><span>Real Repo: mizchi/markdown.mbt</span></a><div class="search"><label for="site-search" data-i18n="search_label">Search documentation</label><input id="site-search" data-search-input type="search" placeholder="Search docs" data-i18n="search_placeholder" autocomplete="off"><div class="search-results" data-search-results aria-live="polite" hidden></div></div><nav aria-label="Documentation"><a href="TODO.html" class="active" aria-current="page">TODO</a><a href="CLAUDE.html">CLAUDE</a><a href="README.html">README</a><a href="CONTRIBUTING.html">CONTRIBUTING</a></nav><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-text" data-i18n="theme_toggle">Nightfall</span></button><button class="lang-toggle" type="button" data-lang-toggle data-i18n="lang_toggle">中文</button></aside><main id="content"><div class="content">
+<div class="prose"><h1 id="todo">TODO</h1>
+<h2 id="current-status">Current status</h2>
+<ul>
+<li>Core parser tests: 302/302 on both JavaScript and Wasm.</li>
+<li>CommonMark HTML conformance: 652/652 with no skipped examples.</li>
+<li>Public JavaScript API CommonMark conformance: 652/652 with <code>{ autolink: false, tagfilter: false }</code>.</li>
+<li>Markdown serialization parity with remark: 464 active examples and 78 skipped examples.</li>
+<li>CommonMark semantic round-trip: 611/652; 41 examples still change rendered HTML after normalization.</li>
+<li>GFM extension serialization comparison: 23 active examples and 1 intentional skipped example.</li>
+<li>Official GFM HTML conformance: 24/24 on both JavaScript and Wasm.</li>
+<li>A native <code>mmmd</code> implementation is available under <code>src/cmd/mmmd-native</code>.</li>
+<li>The only open GitHub issue is #1; its implementation is present locally but the issue remains open pending release/closure.</li>
+<li>The <code>strict</code> argument remains for compatibility; parsing is always CommonMark-conformant.</li>
+</ul>
+<h2 id="p0-completed">P0: Completed</h2>
+<ul>
+<li><input type="checkbox" checked disabled> Gate GFM behavior against the official cmark-gfm HTML for all 24 extension examples on JavaScript and Wasm.</li>
+<li><input type="checkbox" checked disabled> Implement GFM disallowed-raw-HTML tag filtering for block and inline HTML.</li>
+<li><input type="checkbox" checked disabled> Keep GFM table bodies open for pipe-less continuation rows until a blank line or a new block begins.</li>
+<li><input type="checkbox" checked disabled> Implement GFM extended autolinks, including boundary, host, punctuation, entity, and balanced-parenthesis rules.</li>
+<li><input type="checkbox" checked disabled> Add a native CLI for <a href="https://github.com/mizchi/markdown.mbt/issues/1">issue #1</a>. Native TUI output deliberately leaves Mermaid as an ordinary fenced code block because the diagram renderer is JavaScript/Wasm-only.</li>
+<li><input type="checkbox" checked disabled> Define <code>serialize</code> as a stable normalized format: ATX headings, canonical markers and spacing, a trailing reference-definition section, preserved reference styles, and idempotent/semantic round-trip tests.</li>
+</ul>
+<h2 id="p1-correctness-and-maintenance">P1: Correctness and maintenance</h2>
+<ul>
+<li><input type="checkbox" disabled> Fix the 41 CommonMark semantic round-trip cases classified in <code>docs/serializer-compat.md</code>; prioritize block/list structure, block-start escaping, and reference definitions.</li>
+<li><input type="checkbox" disabled> Decide whether the 47 formatting-only remark differences are worth matching. They do not change rendered HTML and often conflict with the normalized serializer contract.</li>
+<li><input type="checkbox" disabled> Decide whether the experimental notebook package remains in this repository. Its separate backlog is in <code>src/x/notebook/TODO.md</code>.</li>
+</ul>
+<h2 id="p1-performance">P1: Performance</h2>
+<ul>
+<li><input type="checkbox" disabled> Establish stable serializer and large-table baselines before optimizing them. The old percentage-regression notes were not backed by the current benchmark baseline.</li>
+<li><input type="checkbox" disabled> Keep <code>just bench-simd</code> as the regression gate for line scanning and long HTML terminator searches.</li>
+</ul>
+<h2 id="completed-or-removed">Completed or removed</h2>
+<ul>
+<li><input type="checkbox" checked disabled> Full CommonMark HTML conformance, including nested lists, setext headings, emphasis, and reference-link resolution.</li>
+<li><input type="checkbox" checked disabled> Split block parsing into focused files.</li>
+<li><input type="checkbox" checked disabled> SIMD line scanning and HTML terminator search benchmarks.</li>
+<li><input type="checkbox" checked disabled> Official GFM HTML conformance, tagfilter, table continuation, and extended autolinks.</li>
+<li><input type="checkbox" checked disabled> Escaped pipes inside table inline elements (<a href="https://github.com/mizchi/markdown.mbt/issues/6">issue #6</a>, including official GFM example 200).</li>
+<li><input type="checkbox" checked disabled> Native <code>mmmd</code> CLI with a deterministic Mermaid fallback.</li>
+<li><input type="checkbox" checked disabled> Stable normalized serializer contract and canonical reference definitions.</li>
+<li><input type="checkbox" checked disabled> GitHub alert blocks and complete footnote rendering with repeated back references.</li>
+<li><input type="checkbox" checked disabled> Display-math blocks with a replaceable trusted-HTML renderer boundary for KaTeX-style integrations.</li>
+<li><input type="checkbox" checked disabled> Container/text directives, definition lists, and standalone block attributes.</li>
+<li><input type="checkbox" checked disabled> Shift nested ordered/unordered list-item and child-block spans during incremental reuse.</li>
+<li><input type="checkbox" checked disabled> Resolve 5 of 6 GFM serializer differences. Keep example 204 intentionally different because remark exposes an overflow cell that official GFM ignores.</li>
+<li><input type="checkbox" checked disabled> Remove the experimental Folddown package, public API, viewer, workflow, and documentation.</li>
+</ul>
+<footer>Generated by <code>MoonDocKit</code></footer>
 </div><section class="toc"><div class="toc-title" data-i18n="toc_title">On this page</div>
-<a class="level-1" href="#deployment">Deployment</a>
-<a class="level-2" href="#github-pages">GitHub Pages</a>
-<a class="level-2" href="#other-hosts">Other Hosts</a>
-<a class="level-2" href="#package-release">Package Release</a>
+<a class="level-1" href="#todo">TODO</a>
+<a class="level-2" href="#current-status">Current status</a>
+<a class="level-2" href="#p0-completed">P0: Completed</a>
+<a class="level-2" href="#p1-correctness-and-maintenance">P1: Correctness and maintenance</a>
+<a class="level-2" href="#p1-performance">P1: Performance</a>
+<a class="level-2" href="#completed-or-removed">Completed or removed</a>
 </section>
 </div></main><script>
 (() => {

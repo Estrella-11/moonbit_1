@@ -565,6 +565,9 @@ For competition review, start with:
 - Known limitations & honest self-assessment: `docs/limitations.md`
 - Real-world corpus benchmark (compatibility on external docs): `docs/benchmark-corpus.json`
 - Markdown support scope (honest boundary of the parser): `docs/markdown-support.md`
+- Real-repo compatibility showcase (renders a real external MoonBit project): `docs/adoption-showcase.md`
+- Benchmark visualization report (from the real-world corpus): `docs/benchmark-report.html`
+- Adopt MoonDocKit starter template (one-command adoption): `examples/adopt-starter/`
 - Award sprint plan: `docs/award-sprint.md`
 - Development log: `docs/development-log.md`
 - Benchmark notes: `docs/benchmark-notes.md`

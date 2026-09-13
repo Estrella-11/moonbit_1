@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MoonDocKit — Real-world Corpus Benchmark</title>
+<style>
+  :root {
+    --bg:#0b1020; --surface:#121a30; --text:#e8edf6; --muted:#9fb0c8;
+    --accent:#0f766e; --border:#223052;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(180deg,#0b1020,#0d1426); color:var(--text); padding:32px 18px 64px; }
+  .wrap { max-width:960px; margin:0 auto; }
+  h1 { font-size:26px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 24px; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px; margin:0 0 28px; }
+  .stat { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px 16px; }
+  .stat .n { font-size:24px; font-weight:700; }
+  .stat .k { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }
+  .pass { color:#34d399; }
+  .cards { display:grid; gap:16px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px 20px; }
+  .card-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
+  .card-head h3 { margin:0; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:15px; }
+  .badge { font-size:11px; color:#fff; padding:3px 9px; border-radius:999px; white-space:nowrap; }
+  .bars { display:grid; gap:12px; }
+  .metric-head { display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px; }
+  .metric-label { color:var(--muted); }
+  .metric-val { font-variant-numeric:tabular-nums; }
+  .track { height:10px; background:#0a0f1e; border:1px solid var(--border); border-radius:999px; overflow:hidden; }
+  .fill { height:100%; border-radius:999px; }
+  .card-foot { display:flex; flex-wrap:wrap; gap:14px; margin-top:14px; color:var(--muted); font-size:12px; }
+  .card-foot strong { color:var(--text); }
+  .note { margin-top:30px; padding:14px 16px; border-left:3px solid var(--accent); background:rgba(15,118,110,.12);
+    border-radius:8px; color:var(--muted); font-size:13px; }
+  .note strong { color:var(--text); }
+  footer { margin-top:28px; color:var(--muted); font-size:12px; text-align:center; }
+  code { background:#0a0f1e; padding:1px 5px; border-radius:5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Real-world Corpus Benchmark</h1>
+  <p class="sub">MoonDocKit rendered against 4 real, externally-authored MoonBit documentation sets.
+    Generated 2026-09-13T16:22:50.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="n">4</div><div class="k">Projects</div></div>
+    <div class="stat"><div class="n pass">4</div><div class="k">Rendered OK</div></div>
+    <div class="stat"><div class="n">0</div><div class="k">Failures</div></div>
+    <div class="stat"><div class="n pass">100.0%</div><div class="k">Pass rate</div></div>
+    <div class="stat"><div class="n">152</div><div class="k">Markdown files</div></div>
+    <div class="stat"><div class="n">13</div><div class="k">Pages rendered</div></div>
+    <div class="stat"><div class="n">564,684</div><div class="k">Source chars</div></div>
+  </div>
+
+  <div class="cards">
+    
+    <article class="card">
+      <header class="card-head">
+        <h3>mizchi/markdown.mbt</h3>
+        <span class="badge" style="background:#0f766e">quality gate passed</span>
+      </header>
+      <div class="bars">
+        
+      <div class="metric">
+        <div class="metric-head"><span class="metric-label">Markdown files</span><span class="metric-val">24</span></div>
+        <div class="track"><div class="fill" style="width:27.6%;background:#0f766e"></div></div>
+      </div>
+        
+      <div class="metric">
+        <div class="metric-head"><span class="metric-label">Source characters</span><span class="metric-val">205,719</span></div>
+        <div class="track"><div class="fill" style="width:75.4%;background:#2563eb"></div></div>
+      </div>
+        
+      <div class="metric">
+        <div class="metric-head"><span class="metric-label">Pages rendered</span><span class="metric-val">5</span></div>
+        <div class="track"><div class="fill" style="width:100.0%;background:#7c3aed"></div></div>
+      </div>
+      </div>
+      <div class="card-foot">
+        <span>quality <strong>100/100</strong></span>
+        <span>205,719 chars</span>
+        <span>24 md files</span>
+        <span>5 pages</span>
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-head">
+        <h3>oboard/mocket</h3>
+        <span class="badge" style="background:#0f766e">quality gate passed</span>
+      </header>
+      <div class="bars">
+        
+      <div class="metric">
+        <div class="metric-head"><span class="metric-label">Markdown files</span><span class="metric-val">3</span></div>
+        <div class="track"><div class="fill" style="width:3.4%;background:#0f766e"></div></div>
+      </div>
+        
+      <div class="metric">
+        <div class="metric-head"><span class="metric-label">Source characters</span><span class="metric-val">6,441</span></div>
+        <div class="track"><div class="fill" style="width:2.4%;background:#2563eb"></div></div>
+      </div>
+        
+      <div class="metric">
+        <div class="metric-head"><span class="metric-label">Pages rendered</span><span class="metric-val">3</span></div>
+        <div class="track"><div class="fill" style="width:60.0%;background:#7c3aed"></div></div>
+      </div>
+      </div>
+      <div class="card-foot">
+        <span>quality <strong>100/100</strong></span>
+        <span>6,441 chars</span>
+        <span>3 md files</span>
+        <span>3 pages</span>
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-head">
+        <h3>moonbit-community/rabbita</h3>
+        <span class="badge" style="background:#b45309">quality gate below threshold</span>
+      </header>
+      <div class="bars">
+        
+      <div class="metric">
+        <div class="metric-head"><span class="metric-label">Markdown files</span><span class="metric-val">38</span></div>
+        <div class="track"><div class="fill" style="width:43.7%;background:#0f766e"></div></div>
+      </div>
+        
+      <div class="metric">
+        <div class="metric-head"><span class="metric-label">Source characters</span><span class="metric-val">79,830</span></div>
+        <div class="track"><div class="fill" style="width:29.3%;background:#2563eb"></div></div>
+      </div>
+        
+      <div class="metric">
+        <div class="metric-head"><span class="metric-label">Pages rendered</span><span class="metric-val">0</span></div>
+        <div class="track"><div class="fill" style="width:0.0%;background:#7c3aed"></div></div>
+      </div>
+      </div>
+      <div class="card-foot">
+        <span>quality <strong>75/100</strong></span>
+        <span>79,830 chars</span>
+        <span>38 md files</span>
+        <span>0 pages</span>
+      </div>
+    </article>
+
+    <article class="card">
+      <header class="card-head">
+        <h3>mizchi/js.mbt</h3>
+        <span class="badge" style="background:#0f766e">quality gate passed</span>
+      </header>
+      <div class="bars">
+        
+      <div class="metric">
+        <div class="metric-head"><span class="metric-label">Markdown files</span><span class="metric-val">87</span></div>
+        <div class="track"><div class="fill" style="width:100.0%;background:#0f766e"></div></div>
+      </div>
+        
+      <div class="metric">
+        <div class="metric-head"><span class="metric-label">Source characters</span><span class="metric-val">272,694</span></div>
+        <div class="track"><div class="fill" style="width:100.0%;background:#2563eb"></div></div>
+      </div>
+        
+      <div class="metric">
+        <div class="metric-head"><span class="metric-label">Pages rendered</span><span class="metric-val">5</span></div>
+        <div class="track"><div class="fill" style="width:100.0%;background:#7c3aed"></div></div>
+      </div>
+      </div>
+      <div class="card-foot">
+        <span>quality <strong>100/100</strong></span>
+        <span>272,694 chars</span>
+        <span>87 md files</span>
+        <span>5 pages</span>
+      </div>
+    </article>
+  </div>
+
+  <div class="note">
+    <strong>What this measures.</strong> These repositories were never written for MoonDocKit. The benchmark
+    runs the real renderer against their documentation and records compatibility and quality. A "quality gate
+    below threshold" result (e.g. <code>rabbita</code>) is itself a finding: it shows where MoonDocKit's
+    publishing gate blocks low-coverage output rather than shipping broken docs. This is
+    <strong>compatibility evidence, not a claim that these projects adopted MoonDocKit.</strong>
+  </div>
+
+  <footer>Toolchain: moon 0.1.20260904 (94521db 2026-09-04) · Node v22.22.2</footer>
+</div>
+</body>
+</html>

@@ -96,4 +96,4 @@
 ---
 
 *最后核对：基于 `moondockit.mbt`（`parse_body_blocks` / `render_inline` / `render_blocks` /
-`safe_href` / `parse_autolink`）实现，对应 0.5.0 代码。*
+`safe_href` / `parse_autolink`）实现，对应 0.6.0 代码。*

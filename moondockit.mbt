@@ -1649,8 +1649,10 @@ pub fn render_page_with_options(
 ) -> RenderedPage {
   let route = route_for_page(page)
   let body = render_markdown(page.source)
-  let toc = render_toc(extract_toc(page.source))
   let routes = plan_routes(site)
+  let locale = locale_for(options.language)
+  let i18n = i18n_for(locale)
+  let toc = render_toc(extract_toc(page.source), locale)
   let out = StringBuilder(size_hint=body.length() + 1024)
   out.write_string("<!doctype html>\n<html lang=\"")
   out.write_string(html_escape(safe_language(options.language)))
@@ -1672,8 +1674,10 @@ pub fn render_page_with_options(
   write_social_metadata(out, site, route, options)
   out.write_string(render_theme_style(theme))
   out.write_string(
-    "</head><body><div class=\"reading-progress\" data-progress></div><a class=\"skip-link\" href=\"#content\">Skip to content</a><aside><a class=\"brand\" href=\"",
+    "</head><body><div class=\"reading-progress\" data-progress></div><a class=\"skip-link\" href=\"#content\" data-i18n=\"skip_link\">",
   )
+  out.write_string(html_escape(i18n.skip_link))
+  out.write_string("</a><aside><a class=\"brand\" href=\"")
   if routes.length() > 0 {
     out.write_string(html_escape(routes[0].path))
   } else {
@@ -1682,7 +1686,15 @@ pub fn render_page_with_options(
   out.write_string("\"><span class=\"brand-mark\">M</span><span>")
   out.write_string(html_escape(site.title))
   out.write_string(
-    "</span></a><div class=\"search\"><label for=\"site-search\">Search documentation</label><input id=\"site-search\" data-search-input type=\"search\" placeholder=\"Search docs\" autocomplete=\"off\"><div class=\"search-results\" data-search-results aria-live=\"polite\" hidden></div></div><nav aria-label=\"Documentation\">",
+    "</span></a><div class=\"search\"><label for=\"site-search\" data-i18n=\"search_label\">",
+  )
+  out.write_string(html_escape(i18n.search_label))
+  out.write_string(
+    "</label><input id=\"site-search\" data-search-input type=\"search\" placeholder=\"",
+  )
+  out.write_string(html_escape(i18n.search_placeholder))
+  out.write_string(
+    "\" data-i18n=\"search_placeholder\" autocomplete=\"off\"><div class=\"search-results\" data-search-results aria-live=\"polite\" hidden></div></div><nav aria-label=\"Documentation\">",
   )
   for item in routes {
     out.write_string("<a href=\"")
@@ -1696,7 +1708,15 @@ pub fn render_page_with_options(
     out.write_string("</a>")
   }
   out.write_string(
-    "</nav><button class=\"theme-toggle\" type=\"button\" data-theme-toggle aria-pressed=\"false\"><span class=\"toggle-track\"><span class=\"toggle-thumb\"></span></span><span class=\"toggle-text\">Nightfall</span></button></aside><main id=\"content\"><div class=\"content\">\n",
+    "</nav><button class=\"theme-toggle\" type=\"button\" data-theme-toggle aria-pressed=\"false\"><span class=\"toggle-track\"><span class=\"toggle-thumb\"></span></span><span class=\"toggle-text\" data-i18n=\"theme_toggle\">",
+  )
+  out.write_string(html_escape(i18n.theme_toggle))
+  out.write_string(
+    "</span></button><button class=\"lang-toggle\" type=\"button\" data-lang-toggle data-i18n=\"lang_toggle\">",
+  )
+  out.write_string(html_escape(i18n.lang_toggle))
+  out.write_string(
+    "</button></aside><main id=\"content\"><div class=\"content\">\n",
   )
   out.write_string("<div class=\"prose\">")
   out.write_string(body)
@@ -1709,6 +1729,7 @@ pub fn render_page_with_options(
   out.write_string(toc)
   out.write_string("</div></main>")
   out.write_string(render_search_script())
+  out.write_string(render_i18n_script(locale))
   out.write_string(render_ui_script())
   out.write_string("</body></html>\n")
   { path: route.path, html: out.to_string(), }
@@ -1810,7 +1831,8 @@ fn render_search_script() -> String {
     #|    }
     #|    if (matches.length === 0) {
     #|      const empty = document.createElement("span");
-    #|      empty.textContent = "No matching pages";
+    #|      const _t = window.__MDK_I18N__[window.__MDK_LOCALE__] || window.__MDK_I18N__.en;
+    #|      empty.textContent = _t.no_results;
     #|      results.append(empty);
     #|    }
     #|    results.hidden = false;
@@ -1843,6 +1865,40 @@ fn render_search_script() -> String {
     #|</script>
     #|
   )
+}
+
+///|
+/// Emit an inline script that defines the UI string dictionary for the current
+/// and alternate locales and wires the in-page language switcher. Content language
+/// is the author's responsibility; this only localizes the generated UI chrome.
+fn render_i18n_script(locale : Locale) -> String {
+  let lc = match locale {
+    Zh => "zh"
+    En => "en"
+  }
+  let out = StringBuilder()
+  out.write_string("<script>(() => {")
+  out.write_string("const KEY=\"moondockit-locale\";")
+  out.write_string(
+    "window.__MDK_I18N__={en:{search_label:\"Search documentation\",search_placeholder:\"Search docs\",theme_toggle:\"Nightfall\",skip_link:\"Skip to content\",toc_title:\"On this page\",no_results:\"No matching pages\",lang_toggle:\"中文\"},zh:{search_label:\"搜索文档\",search_placeholder:\"搜索文档\",theme_toggle:\"夜间模式\",skip_link:\"跳到正文\",toc_title:\"本页目录\",no_results:\"无匹配结果\",lang_toggle:\"EN\"}};",
+  )
+  out.write_string("window.__MDK_LOCALE__=\"")
+  out.write_string(lc)
+  out.write_string("\";const dict=window.__MDK_I18N__;")
+  out.write_string(
+    "function apply(loc){const t=dict[loc]||dict.en;document.querySelectorAll(\"[data-i18n]\").forEach(el=>{const k=el.getAttribute(\"data-i18n\");if(t[k]!=null){el.textContent=t[k];}});const inp=document.querySelector(\"[data-search-input]\");if(inp&&t.search_placeholder){inp.placeholder=t.search_placeholder;}}",
+  )
+  out.write_string(
+    "const btn=document.querySelector(\"[data-lang-toggle]\");const order=[\"en\",\"zh\"];",
+  )
+  out.write_string(
+    "if(btn){btn.addEventListener(\"click\",()=>{const cur=localStorage.getItem(KEY)||window.__MDK_LOCALE__||\"en\";const next=order.find(x=>x!==cur)||\"en\";localStorage.setItem(KEY,next);apply(next);if(btn){btn.textContent=dict[next].lang_toggle;}});}",
+  )
+  out.write_string(
+    "const saved=localStorage.getItem(KEY);if(saved&&saved!==(window.__MDK_LOCALE__||\"en\")){apply(saved);}",
+  )
+  out.write_string("})();</script>")
+  out.to_string()
 }
 
 ///|
@@ -2971,6 +3027,66 @@ fn positive_or_default(value : Int, fallback : Int) -> Int {
 }
 
 ///|
+/// UI locale for generated page chrome. Internal; not part of the public API.
+priv enum Locale {
+  En
+  Zh
+}
+
+///|
+/// Localized UI strings for the generated documentation chrome.
+pub(all) struct I18n {
+  search_label : String
+  search_placeholder : String
+  theme_toggle : String
+  skip_link : String
+  toc_title : String
+  no_results : String
+  lang_toggle : String
+}
+
+///|
+/// Map a site language code to an internal locale (zh-CN / zh / cn -> Zh).
+fn locale_for(language : String) -> Locale {
+  let value = language.trim().to_owned()
+  if value == "" {
+    return En
+  }
+  let first = value[0:2].to_owned()
+  if first == "zh" || first == "cn" {
+    return Zh
+  }
+  En
+}
+
+///|
+/// Return the localized chrome string set for a locale.
+fn i18n_for(locale : Locale) -> I18n {
+  match locale {
+    En =>
+      I18n::{
+        search_label: "Search documentation",
+        search_placeholder: "Search docs",
+        theme_toggle: "Nightfall",
+        skip_link: "Skip to content",
+        toc_title: "On this page",
+        no_results: "No matching pages",
+        lang_toggle: "中文",
+      }
+    Zh =>
+      I18n::{
+        search_label: "搜索文档",
+        search_placeholder: "搜索文档",
+        theme_toggle: "夜间模式",
+        skip_link: "跳到正文",
+        toc_title: "本页目录",
+        no_results: "无匹配结果",
+        lang_toggle: "EN",
+      }
+  }
+}
+
+///|
 fn safe_language(language : String) -> String {
   let value = language.trim().to_owned()
   if value == "" {
@@ -2986,14 +3102,16 @@ fn safe_language(language : String) -> String {
 }
 
 ///|
-fn render_toc(items : Array[TocItem]) -> String {
+fn render_toc(items : Array[TocItem], locale : Locale) -> String {
   if items.length() == 0 {
     return ""
   }
   let out = StringBuilder()
   out.write_string(
-    "<section class=\"toc\"><div class=\"toc-title\">On this page</div>\n",
+    "<section class=\"toc\"><div class=\"toc-title\" data-i18n=\"toc_title\">",
   )
+  out.write_string(html_escape(i18n_for(locale).toc_title))
+  out.write_string("</div>\n")
   for item in items {
     out.write_string("<a class=\"level-")
     out.write_string(item.level.to_string())

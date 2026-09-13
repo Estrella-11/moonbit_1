@@ -11,12 +11,12 @@
   } catch (error) {}
 })();
 </script>
-<meta name="description" content="MoonDocKit verification site">
-<title>Deployment - MoonDocKit CLI Example</title>
-<meta property="og:title" content="Deployment - MoonDocKit CLI Example">
-<meta property="og:description" content="MoonDocKit verification site">
-<link rel="canonical" href="https://example.com/moondockit-cli/deployment.html">
-<meta property="og:url" content="https://example.com/moondockit-cli/deployment.html">
+<meta name="description" content="Real Repo: mizchi/markdown.mbt documentation">
+<title>CLAUDE - Real Repo: mizchi/markdown.mbt</title>
+<meta property="og:title" content="CLAUDE - Real Repo: mizchi/markdown.mbt">
+<meta property="og:description" content="Real Repo: mizchi/markdown.mbt documentation">
+<link rel="canonical" href="https://example.com/corpus/CLAUDE.html">
+<meta property="og:url" content="https://example.com/corpus/CLAUDE.html">
 <style>*,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;scrollbar-color:color-mix(in oklab,var(--ink) 26%,transparent) transparent;scrollbar-width:thin}
 ::selection{background:color-mix(in oklab,var(--accent) 26%,transparent);color:var(--ink)}
@@ -184,21 +184,175 @@ html{scroll-behavior:auto}
 .reading-progress{transition:none}
 }
 </style>
-</head><body><div class="reading-progress" data-progress></div><a class="skip-link" href="#content" data-i18n="skip_link">Skip to content</a><aside><a class="brand" href="overview.html"><span class="brand-mark">M</span><span>MoonDocKit CLI Example</span></a><div class="search"><label for="site-search" data-i18n="search_label">Search documentation</label><input id="site-search" data-search-input type="search" placeholder="Search docs" data-i18n="search_placeholder" autocomplete="off"><div class="search-results" data-search-results aria-live="polite" hidden></div></div><nav aria-label="Documentation"><a href="overview.html">Why MoonDocKit</a><a href="quick-start.html">Quick Start</a><a href="api.html">Library Guide</a><a href="quality.html">Quality Gate</a><a href="deployment.html" class="active" aria-current="page">Deployment</a><a href="changelog.html">Changelog</a><a href="api-reference.html">MoonBit API</a></nav><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-text" data-i18n="theme_toggle">Nightfall</span></button><button class="lang-toggle" type="button" data-lang-toggle data-i18n="lang_toggle">中文</button></aside><main id="content"><div class="content">
-<div class="prose"><h1 id="deployment">Deployment</h1>
-<p>MoonDocKit outputs ordinary static files and does not require a server runtime.</p>
-<h2 id="github-pages">GitHub Pages</h2>
-<p>The repository workflow runs the MoonBit CLI, verifies the generated MoonBit API, uploads the static artifact, and deploys it through GitHub Pages.</p>
-<h2 id="other-hosts">Other Hosts</h2>
-<p>The same output directory can be published to any service that hosts HTML, JSON, XML, and text files.</p>
-<h2 id="package-release">Package Release</h2>
-<p><code>moon package</code> creates the mooncakes.io publication archive. The final release flow verifies the package README, repository metadata, Apache-2.0 license, and public API before running <code>moon publish</code>.</p>
-<footer>Verified by <code>MoonDocKit</code></footer>
+</head><body><div class="reading-progress" data-progress></div><a class="skip-link" href="#content" data-i18n="skip_link">Skip to content</a><aside><a class="brand" href="TODO.html"><span class="brand-mark">M</span><span>Real Repo: mizchi/markdown.mbt</span></a><div class="search"><label for="site-search" data-i18n="search_label">Search documentation</label><input id="site-search" data-search-input type="search" placeholder="Search docs" data-i18n="search_placeholder" autocomplete="off"><div class="search-results" data-search-results aria-live="polite" hidden></div></div><nav aria-label="Documentation"><a href="TODO.html">TODO</a><a href="CLAUDE.html" class="active" aria-current="page">CLAUDE</a><a href="README.html">README</a><a href="CONTRIBUTING.html">CONTRIBUTING</a></nav><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"><span class="toggle-track"><span class="toggle-thumb"></span></span><span class="toggle-text" data-i18n="theme_toggle">Nightfall</span></button><button class="lang-toggle" type="button" data-lang-toggle data-i18n="lang_toggle">中文</button></aside><main id="content"><div class="content">
+<div class="prose"><h1 id="moonbit-markdown-parser">MoonBit Markdown Parser</h1>
+<p>CST-based incremental Markdown parser implemented in MoonBit.</p>
+<h2 id="project-structure">Project Structure</h2>
+<pre><code>src/
+├── types.mbt                       # CST type definitions (Span, Block, Inline)
+├── scanner.mbt                     # O(1) character access (Array[Char])
+├── unicode.mbt                     # Shared Unicode classification helpers
+├── entity.mbt                      # Entity / numeric character reference decoding
+├── entity_data.mbt                 # Generated HTML5 named reference table
+├── block_parser.mbt                # Block container algorithm / paragraph / blockquote / thematic break
+├── block_parser_heading.mbt        # ATX &amp; setext heading parsing
+├── block_parser_code.mbt           # Fenced &amp; indented code-block parsing
+├── block_parser_link_def.mbt       # Link reference &amp; GFM footnote definitions
+├── block_parser_list.mbt           # Bullet &amp; ordered list parsing
+├── block_parser_table.mbt          # GFM table parsing
+├── block_parser_html.mbt           # HTML block parsing
+├── block_parser_frontmatter.mbt    # YAML frontmatter parsing
+├── inline_parser.mbt               # Inline scan: text, escapes, code spans, autolinks, raw HTML
+├── inline_parser_emphasis.mbt      # `*` / `_` / `~` delimiter stack
+├── inline_parser_link.mbt          # Links, images, wikilinks, footnote refs
+├── incremental.mbt                 # Incremental parsing (EditInfo)
+├── serializer.mbt                  # Lossless block serializer + md_parse_and_render
+├── serializer_inline.mbt           # Inline serialization (text, emphasis, links, ...)
+├── renderer.mbt                    # HTML renderer + md_to_html
+├── renderer_autolink.mbt           # Bare-URL autolink boundary helpers
+├── renderer_literal.mbt            # Source-preserving HTML renderer (block dispatch + helpers)
+├── renderer_literal_inline.mbt     # Inline rendering for the literal renderer
+├── plugin.mbt                      # CodeBlockInfo + RenderOptions + parse_code_block_info
+├── api/                            # FFI exports for JS/WASM consumers
+├── x/
+│   ├── crdt/                       # CRDT experimental code (isolated)
+│   ├── multipass/                  # Experimental multi-pass inline parser
+│   ├── notebook/                   # Notebook cells / executable code blocks
+│   ├── mdx/                        # MDX (JSX-in-Markdown) extraction
+│   ├── slide/                      # Slide-deck splitting
+│   ├── tui/                        # Terminal renderer
+│   └── purify/                     # HTML sanitization
+├── bench.mbt                       # Document parse/serialize/roundtrip benches
+├── bench_inline.mbt                # Inline parser benches
+├── bench_table.mbt                 # GFM table benches
+├── bench_scanner.mbt               # Scanner / block-only benches
+└── bench_incremental.mbt           # Incremental parser benches
+</code></pre>
+<h2 id="design-philosophy">Design Philosophy</h2>
+<ul>
+<li><strong>CST is the source of truth</strong>: Markdown text is the serialization of CST</li>
+<li><strong>Lossless</strong>: Preserves trivia (whitespace, newlines) and markers (<code>*</code> vs <code>_</code>)</li>
+<li><strong>Incremental</strong>: Re-parses only changed blocks, reuses before/after</li>
+<li><strong>Conformant</strong>: <code>md_to_html</code> matches all 652 CommonMark 0.31.2 examples</li>
+</ul>
+<h2 id="development-commands">Development Commands</h2>
+<pre><code class="language-bash">moon check           # Type check
+moon test            # Run all tests
+moon test --target js    # Test with JS target
+moon test --target wasm-gc  # Test with WASM-GC target
+moon bench           # Run benchmarks
+moon fmt             # Format code
+</code></pre>
+<h2 id="development-workflow">Development Workflow</h2>
+<h3 id="test-benchmark-iteration-cycle">Test / Benchmark / Iteration Cycle</h3>
+<p>When fixing features, follow this cycle:</p>
+<pre><code class="language-bash"># 1. Verify basic behavior with main tests
+moon test --target js src
+
+# 2. Check the CommonMark spec conformance suite (must stay at 100%)
+moon test --target js src/spec_tests
+
+# 3. Check the remark serialization comparison
+moon test --target js src/cmark_tests
+
+# 4. Run specific category tests (e.g., code spans)
+moon test --target js src/cmark_tests/code_spans_test.mbt
+
+# 5. Run benchmarks and compare with baseline
+moon bench
+# Compare visually with .bench-baseline
+
+# 6. If performance issues exist, re-test after optimization
+moon test --target js src  # Verify optimization didn&#39;t break anything
+moon bench                  # Confirm improvement
+
+# 7. Update baseline (when optimization is complete)
+just bench-accept
+</code></pre>
+<h3 id="generated-test-suites">Generated test suites</h3>
+<p><code>src/spec_tests/</code>, <code>src/cmark_tests/</code> and <code>src/gfm_tests/</code> are auto-generated, <strong>do not edit directly</strong>.</p>
+<ul>
+<li><code>src/spec_tests/</code> — CommonMark 0.31.2 HTML conformance, from</li>
+</ul>
+<p><code>scripts/gen-spec-tests.js</code>. All 652 examples pass; its <code>SKIP_TESTS</code> table is empty and should stay that way.</p>
+<ul>
+<li><code>src/cmark_tests/</code> — Markdown serialization compared with remark, from</li>
+</ul>
+<p><code>scripts/gen-tests.js</code>. Skips live in its <code>SKIP_TESTS</code> table.</p>
+<ul>
+<li>Details: <a href="./CONTRIBUTING.md">CONTRIBUTING.md</a></li>
+</ul>
+<h3 id="performance-optimization-tips">Performance Optimization Tips</h3>
+<ul>
+<li>Use <code>peek_at(n)</code> instead of <code>count_char</code> (O(n) → O(1))</li>
+<li>Use bitmasks instead of arrays (avoid allocations)</li>
+<li>Avoid String creation inside loops</li>
+</ul>
+<h2 id="key-types">Key Types</h2>
+<h3 id="block-block-elements">Block (Block Elements)</h3>
+<pre><code class="language-moonbit">pub(all) enum Block {
+  Paragraph(span~, children~)           # Paragraph
+  Heading(span~, level~, children~)     # Heading (h1-h6)
+  FencedCode(span~, fence_char~, fence_length~, info~, code~)
+  ThematicBreak(span~, marker_char~)    # ---
+  BlockQuote(span~, children~)          # &gt; Quote
+  List(span~, ordered~, start~, tight~, marker_char~, items~)
+  HtmlBlock(span~, content~)
+  LinkRefDef(span~, label~, dest~, title~)
+}
+</code></pre>
+<h3 id="inline-inline-elements">Inline (Inline Elements)</h3>
+<pre><code class="language-moonbit">pub(all) enum Inline {
+  Text(span~, content~)                 # Text
+  Code(span~, content~)                 # `code`
+  Emphasis(span~, marker~, children~)   # *em* or _em_
+  Strong(span~, marker~, children~)     # **strong** or __strong__
+  Link(span~, children~, dest~, title~)
+  Image(span~, alt~, dest~, title~)
+  SoftBreak(span~)                      # Line break
+  HardBreak(span~)                      # Two trailing spaces
+  HtmlInline(span~, content~)
+}
+</code></pre>
+<h2 id="api">API</h2>
+<pre><code class="language-moonbit">// Parse
+let doc = @markdown.parse(markdown_string)
+
+// Serialize (lossless)
+let output = @markdown.serialize(doc)
+assert_eq(output, markdown_string)
+
+// Incremental parse
+let edit = EditInfo::new(change_start, change_end, new_length)
+let new_doc = @markdown.parse_incremental(old_doc, new_text, edit)
+</code></pre>
+<h2 id="performance-characteristics">Performance Characteristics</h2>
+<table>
+<thead><tr><th>Document</th><th>Full Parse</th><th>Incremental</th><th>Speedup</th></tr></thead>
+<tbody><tr><td>10 paragraphs</td><td>68.89µs</td><td>7.36µs</td><td>9.4x</td></tr>
+<tr><td>50 paragraphs</td><td>327.99µs</td><td>8.67µs</td><td>37.8x</td></tr>
+<tr><td>100 paragraphs</td><td>651.14µs</td><td>15.25µs</td><td>42.7x</td></tr>
+</tbody></table>
+<h2 id="reference-documentation">Reference Documentation</h2>
+<ul>
+<li><a href="./docs/markdown.md">Architecture</a> - Detailed design document</li>
+</ul>
+<footer>Generated by <code>MoonDocKit</code></footer>
 </div><section class="toc"><div class="toc-title" data-i18n="toc_title">On this page</div>
-<a class="level-1" href="#deployment">Deployment</a>
-<a class="level-2" href="#github-pages">GitHub Pages</a>
-<a class="level-2" href="#other-hosts">Other Hosts</a>
-<a class="level-2" href="#package-release">Package Release</a>
+<a class="level-1" href="#moonbit-markdown-parser">MoonBit Markdown Parser</a>
+<a class="level-2" href="#project-structure">Project Structure</a>
+<a class="level-2" href="#design-philosophy">Design Philosophy</a>
+<a class="level-2" href="#development-commands">Development Commands</a>
+<a class="level-2" href="#development-workflow">Development Workflow</a>
+<a class="level-3" href="#test-benchmark-iteration-cycle">Test / Benchmark / Iteration Cycle</a>
+<a class="level-3" href="#generated-test-suites">Generated test suites</a>
+<a class="level-3" href="#performance-optimization-tips">Performance Optimization Tips</a>
+<a class="level-2" href="#key-types">Key Types</a>
+<a class="level-3" href="#block-block-elements">Block (Block Elements)</a>
+<a class="level-3" href="#inline-inline-elements">Inline (Inline Elements)</a>
+<a class="level-2" href="#api">API</a>
+<a class="level-2" href="#performance-characteristics">Performance Characteristics</a>
+<a class="level-2" href="#reference-documentation">Reference Documentation</a>
 </section>
 </div></main><script>
 (() => {
